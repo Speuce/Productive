@@ -1,6 +1,6 @@
 # Group 6
 
-# Productive Vision Statement 
+## Productive Vision Statement 
 
 <hr/>
 
