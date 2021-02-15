@@ -22,10 +22,19 @@ public interface TaskPersistenceManager {
     void insertTask(Task t);
 
     /**
-     * Gets a list of all tasks
+     * Gets a list of all tasks, sorted by
+     * priority then date created
      * @return an {@link List} of all tasks
      */
     List<Task> getAllTasks();
+
+    /**
+     * Gets a list of all complete/incomplete tasks,
+     * sorted by priorit then date created
+     * @param complete indicates whether to look for in/complete tasks.
+     * @return the list of tasks.
+     */
+    List<Task> getAllTasks(boolean complete);
 
     /**
      * Updates the database information of a task

@@ -26,11 +26,21 @@ public interface TaskDao extends TaskPersistenceManager {
     void insertTask(Task t);
 
     /**
-     * Gets a list of all tasks
+     * Gets a list of all tasks, sorted by priority
+     * then date created
      * @return an {@link List} of all tasks
      */
-    @Query("SELECT * FROM tasks;")
+    @Query("SELECT * FROM tasks ORDER BY priority, created;")
     List<Task> getAllTasks();
+
+    /**
+     * Gets a list of all complete/incomplete tasks,
+     * sorted by priorit then date created
+     * @param complete indicates whether to look for in/complete tasks.
+     * @return the list of tasks.
+     */
+    @Query("SELECT * FROM tasks WHERE completed = :complete ORDER BY priority, created;")
+    List<Task> getAllTasks(boolean complete);
 
     /**
      * Updates the database information of a task
