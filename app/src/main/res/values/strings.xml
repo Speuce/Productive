@@ -3,4 +3,20 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+
+    <string-array name="tasks">
+        <item>Task 1</item>
+        <item>Task 2</item>
+        <item>Task 3</item>
+    </string-array>
+    <string-array name="descriptions">
+        <item>desc 1</item>
+        <item>desc 2</item>
+        <item>desc 3</item>
+    </string-array>
+    <string-array name="difficulty">
+        <item>diff 1</item>
+        <item>diff 2</item>
+        <item>diff 3</item>
+    </string-array>
 </resources>
