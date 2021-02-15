@@ -3,6 +3,7 @@ package com.productive6.productive.logic.task;
 import com.productive6.productive.objects.Task;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Interface for interacting with the logic layer with regards to tasks
@@ -17,13 +18,13 @@ public interface TaskManager {
      * @return a list of the users current incomplete tasks,
      * sorted by highest priority first.
      */
-    List<Task> getTasksByPriority();
+    void getTasksByPriority(Consumer<List<Task>> outputparam);
 
     /**
      * @return a list of the users current incomplete tasks,
      * sorted by oldest creation first.
      */
-    List<Task> getTasksByCreation();
+    void getTasksByCreation(Consumer<List<Task>> outputparam);
 
     /**
      * Adds a new task to the users list of tasks
@@ -35,7 +36,7 @@ public interface TaskManager {
      * @return a list of {@link Task} objects that have been marked as
      * completed
      */
-    List<Task> getCompletedTasks();
+    void getCompletedTasks(Consumer<List<Task>> outputparam);
 
     /**
      * Updates an task that is already in the system,
