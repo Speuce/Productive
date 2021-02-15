@@ -12,7 +12,7 @@ import androidx.room.PrimaryKey;
  * @author Matt Kwiatkowski
  */
 @Entity(tableName = "tasks")
-public class Task {
+public class Task implements Comparable<Task>{
 
     @PrimaryKey(autoGenerate = true)
     private long id;
@@ -136,4 +136,16 @@ public class Task {
         this.createdTime = createdTime;
     }
 
+    /**
+     * Compares this object with another task,
+     * for comparable sorting.
+     */
+    @Override
+    public int compareTo(Task o) {
+        int prioritydiff = this.getPriority()-o.getPriority();
+        if(prioritydiff==0){
+            return (int) (this.getCreatedTime()-o.getCreatedTime());
+        }
+        return prioritydiff;
+    }
 }
