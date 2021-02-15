@@ -4,6 +4,7 @@ import com.productive6.productive.logic.task.TaskManager;
 import com.productive6.productive.objects.Task;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -26,12 +27,12 @@ public class DummyTaskManager implements TaskManager {
     }
 
     @Override
-    public void getTasksByPriority(Consumer<List<Task>> outputparam) {
+    public void getTasksByPriority(Consumer<Collection<Task>> outputparam) {
         outputparam.accept(tasks.stream().filter(t -> !t.isCompleted()).sorted().collect(Collectors.toList()));
     }
 
     @Override
-    public void getTasksByCreation(Consumer<List<Task>> outputparam) {
+    public void getTasksByCreation(Consumer<Collection<Task>> outputparam) {
         outputparam.accept(tasks.stream().filter(t -> !t.isCompleted()).sorted((o1, o2) ->
                 (int) (o2.getCreatedTime()-o1.getCreatedTime())).collect(Collectors.toList()));
     }
@@ -42,7 +43,7 @@ public class DummyTaskManager implements TaskManager {
     }
 
     @Override
-    public void getCompletedTasks(Consumer<List<Task>> outputparam) {
+    public void getCompletedTasks(Consumer<Collection<Task>> outputparam) {
         outputparam.accept(tasks.stream().filter(Task::isCompleted).sorted((o1, o2) ->
                 (int) (o2.getCreatedTime()-o1.getCreatedTime())).collect(Collectors.toList()));
     }
