@@ -7,7 +7,10 @@ import com.productive6.productive.objects.Task;
 import com.productive6.productive.persistence.DataManager;
 
 import java.util.Collection;
+import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
+
+import javax.inject.Inject;
 
 /**
  * A production-grade and persistent implementation of the
@@ -15,13 +18,15 @@ import java.util.function.Consumer;
  */
 public class PersistentTaskManager implements TaskManager {
 
-    /**
-     * An instance of datamanager for persistence operations.
-     */
-    private final DataManager data;
 
-    public PersistentTaskManager(DataManager data) {
+    private DataManager data;
+
+    private ExecutorService e;
+
+
+    public PersistentTaskManager(DataManager data, ExecutorService e) {
         this.data = data;
+        this.e = e;
     }
 
     @Override
