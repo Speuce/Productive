@@ -34,5 +34,5 @@ public class InMemoryDataManager implements DataManager{
     public TaskPersistenceManager task() {
         return db.getTaskDao();
     }
-    
+
 }
