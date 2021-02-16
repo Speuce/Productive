@@ -8,6 +8,8 @@ import com.productive6.productive.objects.Task;
 import com.productive6.productive.persistence.datamanage.DataManager;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Consumer;
 
 /**
@@ -37,7 +39,11 @@ public class PersistentTaskManager implements TaskManager {
 
     @Override
     public void getTasksByCreation(Consumer<Collection<Task>> outputparam) {
-
+        executor.runASync(() -> {
+            List<Task> ret = data.task().getAllTasks(false);
+            ret.sort((a, b) -> (int) (((Task) a).getCreatedTime() - ((Task) b).getCreatedTime()));
+            executor.runSync(() -> outputparam.accept(ret));
+        });
     }
 
     /**
@@ -58,15 +64,17 @@ public class PersistentTaskManager implements TaskManager {
         if(t.getCreatedTime() == 0){
             t.setCreatedTime(System.currentTimeMillis());
         }
-//        data.task().insertTask(t);
-        executor.runASync(() -> data.task().insertTask(t));
 
+        executor.runASync(() -> data.task().insertTask(t));
 
     }
 
     @Override
     public void getCompletedTasks(Consumer<Collection<Task>> outputparam) {
-
+        executor.runASync(() ->{
+            Collection<Task> ret = data.task().getAllTasks(true);
+            executor.runSync(() -> outputparam.accept(ret));
+        });
     }
 
     @Override
