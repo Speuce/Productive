@@ -13,9 +13,16 @@ buildscript {
 
 }
 buildscript {
+    ext.hilt_version = '2.32-alpha'
     repositories {
         jcenter()
         mavenCentral() // add repository
+//        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
+
+    }
+    dependencies {
+        // other plugins...
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
     }
 
 
