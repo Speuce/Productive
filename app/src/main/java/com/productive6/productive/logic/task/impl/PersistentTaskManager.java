@@ -1,5 +1,9 @@
 package com.productive6.productive.logic.task.impl;
 
+import android.os.Handler;
+import android.os.Looper;
+
+import com.productive6.productive.executor.RunnableExecutor;
 import com.productive6.productive.logic.exceptions.PersistentIDAssignmentException;
 import com.productive6.productive.logic.exceptions.TaskFormatException;
 import com.productive6.productive.logic.task.TaskManager;
@@ -10,8 +14,6 @@ import java.util.Collection;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 
-import javax.inject.Inject;
-
 /**
  * A production-grade and persistent implementation of the
  * {@link TaskManager} interface
@@ -21,17 +23,20 @@ public class PersistentTaskManager implements TaskManager {
 
     private DataManager data;
 
-    private ExecutorService e;
+    private RunnableExecutor executor;
 
 
-    public PersistentTaskManager(DataManager data, ExecutorService e) {
+    public PersistentTaskManager(DataManager data, RunnableExecutor e) {
         this.data = data;
-        this.e = e;
+        this.executor = e;
     }
 
     @Override
     public void getTasksByPriority(Consumer<Collection<Task>> outputparam) {
-
+        executor.runASync(() -> {
+            Collection<Task> ret = data.task().getAllTasks(false);
+            executor.runSync(() -> outputparam.accept(ret));
+        });
     }
 
     @Override
@@ -57,7 +62,8 @@ public class PersistentTaskManager implements TaskManager {
         if(t.getCreatedTime() == 0){
             t.setCreatedTime(System.currentTimeMillis());
         }
-        data.task().insertTask(t);
+//        data.task().insertTask(t);
+        executor.runASync(() -> data.task().insertTask(t));
 
 
     }
@@ -72,6 +78,6 @@ public class PersistentTaskManager implements TaskManager {
         if(t.getId() == 0){
             throw new PersistentIDAssignmentException();
         }
-        data.task().updateTask(t);
+        executor.runASync(() -> data.task().updateTask(t));
     }
 }

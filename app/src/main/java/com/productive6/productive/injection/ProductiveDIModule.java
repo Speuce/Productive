@@ -3,6 +3,8 @@ package com.productive6.productive.injection;
 import android.content.Context;
 import android.provider.ContactsContract;
 
+import com.productive6.productive.executor.AndroidExecutor;
+import com.productive6.productive.executor.RunnableExecutor;
 import com.productive6.productive.logic.task.TaskManager;
 import com.productive6.productive.logic.task.impl.PersistentTaskManager;
 import com.productive6.productive.persistence.DataManager;
@@ -11,6 +13,7 @@ import com.productive6.productive.persistence.PersistentDataManager;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Handler;
 
 import javax.inject.Singleton;
 
@@ -29,8 +32,8 @@ public class ProductiveDIModule {
 
     @Singleton
     @Provides
-    public ExecutorService provideExecutorService(){
-        return Executors.newFixedThreadPool(2);
+    public RunnableExecutor provideExecutorService(){
+        return new AndroidExecutor();
     }
 
     @Singleton
