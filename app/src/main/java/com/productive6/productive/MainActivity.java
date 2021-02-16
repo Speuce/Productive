@@ -35,12 +35,14 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
 
 
-        //initializing header elements
+        //connecting header elements to objects
         experienceBar = (ProgressBar) findViewById(R.id.experience_bar);
         username = (TextView) findViewById(R.id.user_name);
-        username.setTypeface(null, Typeface.BOLD);
         userTitle = (TextView) findViewById(R.id.user_title);
         coinCounter = (TextView) findViewById(R.id.coin_counter);
+
+        //setting username as bold text
+        username.setTypeface(null, Typeface.BOLD);
 
         //fake values
         experienceBar.setProgress(60);
