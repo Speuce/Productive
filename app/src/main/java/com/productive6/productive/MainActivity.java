@@ -1,5 +1,6 @@
 package com.productive6.productive;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -17,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar experienceBar;
     private TextView username;
     private TextView userTitle;
+    private TextView coinCounter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +38,15 @@ public class MainActivity extends AppCompatActivity {
         //initializing header elements
         experienceBar = (ProgressBar) findViewById(R.id.experience_bar);
         username = (TextView) findViewById(R.id.user_name);
+        username.setTypeface(null, Typeface.BOLD);
         userTitle = (TextView) findViewById(R.id.user_title);
+        coinCounter = (TextView) findViewById(R.id.coin_counter);
 
         //fake values
         experienceBar.setProgress(60);
         username.setText("Luke Morrow");
         userTitle.setText("Work Horse");
-        
+        coinCounter.setText("100");
 
 
     }
