@@ -10,10 +10,13 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
     private ProgressBar experienceBar;
+    private TextView username;
+    private TextView userTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +33,17 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
 
 
+        //initializing header elements
         experienceBar = (ProgressBar) findViewById(R.id.experience_bar);
+        username = (TextView) findViewById(R.id.user_name);
+        userTitle = (TextView) findViewById(R.id.user_title);
+
+        //fake values
+        experienceBar.setProgress(60);
+        username.setText("Luke Morrow");
+        userTitle.setText("Work Horse");
+        
+
 
     }
 
