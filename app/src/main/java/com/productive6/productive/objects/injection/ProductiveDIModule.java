@@ -6,10 +6,8 @@ import com.productive6.productive.executor.AndroidExecutor;
 import com.productive6.productive.executor.RunnableExecutor;
 import com.productive6.productive.logic.task.TaskManager;
 import com.productive6.productive.logic.task.impl.PersistentTaskManager;
-import com.productive6.productive.persistence.DataManager;
-import com.productive6.productive.persistence.PersistentDataManager;
-
-import java.util.concurrent.ExecutorService;
+import com.productive6.productive.persistence.datamanage.DataManager;
+import com.productive6.productive.persistence.datamanage.PersistentDataManager;
 
 import javax.inject.Singleton;
 
@@ -42,7 +40,7 @@ public class ProductiveDIModule {
 
     @Singleton
     @Provides
-    public TaskManager provideTaskManager(DataManager d, ExecutorService e){
+    public TaskManager provideTaskManager(DataManager d, RunnableExecutor e){
         return new PersistentTaskManager(d, e);
     }
 

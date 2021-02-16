@@ -1,10 +1,14 @@
-package com.productive6.productive.persistence;
+package com.productive6.productive.persistence.datamanage;
 
 import android.content.Context;
 
 import androidx.room.Room;
 
-import com.productive6.productive.objects.Task;
+import com.productive6.productive.persistence.ProductiveDB;
+import com.productive6.productive.persistence.TaskPersistenceManager;
+import com.productive6.productive.persistence.datamanage.DataManager;
+
+import javax.inject.Inject;
 
 /**
  * A production-grade {@link DataManager} implementation that persists data using a database
@@ -20,6 +24,7 @@ public class PersistentDataManager implements DataManager{
 
     private ProductiveDB db;
 
+    @Inject
     public PersistentDataManager(Context context) {
         this.context = context;
     }

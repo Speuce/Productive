@@ -1,17 +1,13 @@
 package com.productive6.productive.logic.task.impl;
 
-import android.os.Handler;
-import android.os.Looper;
-
 import com.productive6.productive.executor.RunnableExecutor;
 import com.productive6.productive.logic.exceptions.PersistentIDAssignmentException;
 import com.productive6.productive.logic.exceptions.TaskFormatException;
 import com.productive6.productive.logic.task.TaskManager;
 import com.productive6.productive.objects.Task;
-import com.productive6.productive.persistence.DataManager;
+import com.productive6.productive.persistence.datamanage.DataManager;
 
 import java.util.Collection;
-import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 
 /**

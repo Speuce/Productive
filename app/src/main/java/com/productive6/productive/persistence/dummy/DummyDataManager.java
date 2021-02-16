@@ -1,12 +1,6 @@
 package com.productive6.productive.persistence.dummy;
 
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-
-import androidx.room.Room;
-
-import com.productive6.productive.objects.Task;
-import com.productive6.productive.persistence.DataManager;
+import com.productive6.productive.persistence.datamanage.DataManager;
 import com.productive6.productive.persistence.TaskPersistenceManager;
 
 

@@ -1,4 +1,6 @@
-package com.productive6.productive.persistence;
+package com.productive6.productive.persistence.datamanage;
+
+import com.productive6.productive.persistence.TaskPersistenceManager;
 
 /**
  * Interface for classes managing persistent data
