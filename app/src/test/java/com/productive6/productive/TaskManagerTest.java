@@ -33,9 +33,25 @@ public class TaskManagerTest {
         Task testData = new Task("name", 1, System.currentTimeMillis(), false);
         testData.setId(1);
         assertThrows(
-                "Task Manager didn't catch an id exception",
+                "Task Manager didn't catch an id exception on insert.",
                 PersistentIDAssignmentException.class,
                 () -> taskManager.addTask(testData)
+
+        );
+    }
+
+    /**
+     * Tests that update id checking is functional
+     * when it needs tobe
+     */
+    @Test
+    public void testIDFormatUpdate() {
+        Task testData = new Task("name", 1, System.currentTimeMillis(), false);
+        testData.setId(0);
+        assertThrows(
+                "Task Manager didn't catch an id exception on update.",
+                PersistentIDAssignmentException.class,
+                () -> taskManager.updateTask(testData)
 
         );
     }
@@ -71,6 +87,7 @@ public class TaskManagerTest {
         taskManager.addTask(testData);
         assertTrue("Task Manager didn't autofill time correctly.", Math.abs(System.currentTimeMillis()-testData.getCreatedTime()) < 10000);
     }
+
 
 
 
