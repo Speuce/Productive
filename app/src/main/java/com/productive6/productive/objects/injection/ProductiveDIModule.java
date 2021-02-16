@@ -1,7 +1,6 @@
-package com.productive6.productive.injection;
+package com.productive6.productive.objects.injection;
 
 import android.content.Context;
-import android.provider.ContactsContract;
 
 import com.productive6.productive.executor.AndroidExecutor;
 import com.productive6.productive.executor.RunnableExecutor;
@@ -10,10 +9,7 @@ import com.productive6.productive.logic.task.impl.PersistentTaskManager;
 import com.productive6.productive.persistence.DataManager;
 import com.productive6.productive.persistence.PersistentDataManager;
 
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.logging.Handler;
 
 import javax.inject.Singleton;
 
