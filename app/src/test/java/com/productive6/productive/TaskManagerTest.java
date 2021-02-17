@@ -1,5 +1,6 @@
 package com.productive6.productive;
 
+import com.productive6.productive.executor.TestExecutor;
 import com.productive6.productive.logic.exceptions.PersistentIDAssignmentException;
 import com.productive6.productive.logic.exceptions.TaskFormatException;
 import com.productive6.productive.logic.task.TaskManager;
@@ -10,6 +11,11 @@ import com.productive6.productive.persistence.dummy.DummyDataManager;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.function.Consumer;
+
 import static org.junit.Assert.*;
 
 /**
@@ -19,9 +25,69 @@ public class TaskManagerTest {
 
     private TaskManager taskManager;
 
+    private DummyDataManager data;
+
     @Before
     public void init(){
-        taskManager = new PersistentTaskManager(new DummyDataManager());
+        data = new DummyDataManager();
+        taskManager = new PersistentTaskManager(data, new TestExecutor());
+    }
+
+
+    /**
+     * Tests that sorting tasks by priority functions as expected (higher priority first)
+     */
+    @Test
+    public void testGetByPriority(){
+        taskManager.addTask(new Task("task", 5, System.currentTimeMillis()));
+
+        Task t2 = new Task("task", 6, System.currentTimeMillis());
+        taskManager.addTask(t2);
+        taskManager.getTasksByPriority(tasks -> {
+            assertEquals("Task Manager is improperly getting completed tasks by priority!",
+                    tasks.iterator().next(), t2);
+        });
+    }
+
+    /**
+     * Tests that sorting tasks by completion functions as expected (higher priority first)
+     */
+    @Test
+    public void testGetByCreation() throws InterruptedException {
+        Task t1 = new Task("task", 5, System.currentTimeMillis());
+        //make t1 created 10ms before the second task.
+        Thread.sleep(10);
+        taskManager.addTask(new Task("task2", 5, System.currentTimeMillis()));
+        taskManager.addTask(t1);
+        taskManager.getTasksByCreation(tasks -> {
+            assertEquals("Task Manager is improperly getting completed tasks by creation!",
+                    tasks.iterator().next(), t1);
+        });
+    }
+
+    /**
+     * Tests that TaskManager.getCompletedTasks includes completed tasks
+     */
+    @Test
+    public void testGetCompletedIncludes(){
+        Task t1 = new Task("task", 5, System.currentTimeMillis());
+        taskManager.addTask(t1);
+        t1.setCompleted(true);
+        taskManager.getCompletedTasks(tasks -> {
+            assertTrue("TaskManager Get Completed tasks missed a completed task.", tasks.contains(t1));
+        });
+    }
+
+    /**
+     * Tests that TaskManager.getCompletedTasks excludes incompleted tasks
+     */
+    @Test
+    public void testGetCompletedExcludes(){
+        Task t2 = new Task("task2", 5, System.currentTimeMillis());
+        taskManager.addTask(t2);
+        taskManager.getCompletedTasks(tasks -> {
+            assertFalse("TaskManager Get Completed tasks didn't included an incomplete task.", tasks.contains(t2));
+        });
     }
 
     /**
