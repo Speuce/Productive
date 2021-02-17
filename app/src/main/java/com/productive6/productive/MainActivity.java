@@ -1,5 +1,6 @@
 package com.productive6.productive;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -9,8 +10,14 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+
+    private ProgressBar experienceBar;
+    private TextView userTitle;
+    private TextView coinCounter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +32,34 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
+        initializeHeader();
+
+        //remove before push to master
+        initHeaderPlaceholders();
+
+
+    }
+
+    protected void initializeHeader(){
+
+        //connecting header elements to objects
+
+        experienceBar = (ProgressBar) findViewById(R.id.experience_bar);
+        userTitle = (TextView) findViewById(R.id.user_title);
+        coinCounter = (TextView) findViewById(R.id.coin_counter);
+
+    }
+
+    /*FAKE PLACEHOLDER VALUES REMOVE BEFORE MERGING WITH MASTER
+     * These are only to show people how this function works and to initialize the UI
+     * As text boxes and progress bars look odd/broken uninitialized
+     */
+    private void initHeaderPlaceholders(){
+        experienceBar.setProgress(60);
+        userTitle.setText("Work Horse");
+        coinCounter.setText("100");
+
     }
 
 }
