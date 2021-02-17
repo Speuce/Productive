@@ -16,7 +16,6 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
 
     private ProgressBar experienceBar;
-    private TextView username;
     private TextView userTitle;
     private TextView coinCounter;
 
@@ -40,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         experienceBar.setProgress(45);
-        username.setText("Luke Morrow");
         userTitle.setText("Work Horse");
         coinCounter.setText("100");
 
@@ -52,12 +50,8 @@ public class MainActivity extends AppCompatActivity {
         //connecting header elements to objects
 
         experienceBar = (ProgressBar) findViewById(R.id.experience_bar);
-        username = (TextView) findViewById(R.id.user_name);
         userTitle = (TextView) findViewById(R.id.user_title);
         coinCounter = (TextView) findViewById(R.id.coin_counter);
-
-        //setting username as bold text
-        username.setTypeface(null, Typeface.BOLD);
 
     }
 
