@@ -41,6 +41,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Initializes the UI objects used in the header
+     * so that the progress bar and text boxes can be set
+     */
     protected void initializeHeader(){
 
         //connecting header elements to objects
