@@ -35,12 +35,8 @@ public class MainActivity extends AppCompatActivity {
 
         initializeHeader();
 
-        //fake values
-
-
-        experienceBar.setProgress(45);
-        userTitle.setText("Work Horse");
-        coinCounter.setText("100");
+        //remove before push to master
+        initHeaderPlaceholders();
 
 
     }
@@ -52,6 +48,17 @@ public class MainActivity extends AppCompatActivity {
         experienceBar = (ProgressBar) findViewById(R.id.experience_bar);
         userTitle = (TextView) findViewById(R.id.user_title);
         coinCounter = (TextView) findViewById(R.id.coin_counter);
+
+    }
+
+    /*FAKE PLACEHOLDER VALUES REMOVE BEFORE MERGING WITH MASTER
+     * These are only to show people how this function works and to initialize the UI
+     * As text boxes and progress bars look odd/broken uninitialized
+     */
+    private void initHeaderPlaceholders(){
+        experienceBar.setProgress(60);
+        userTitle.setText("Work Horse");
+        coinCounter.setText("100");
 
     }
 
