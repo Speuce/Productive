@@ -39,6 +39,9 @@ public class User {
      * The nothing constructor
      */
     public User() {
+        this.exp = 0;
+        this.level = 0;
+        this.coins = 0;
     }
 
     /**
