@@ -1,5 +1,6 @@
 package com.productive6.productive.persistence.daos;
 
+import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
@@ -9,6 +10,7 @@ import com.productive6.productive.persistence.UserPersistenceManager;
 
 import java.util.List;
 
+@Dao
 public interface UserDao extends UserPersistenceManager {
 
     /**

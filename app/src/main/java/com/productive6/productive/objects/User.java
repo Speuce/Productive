@@ -1,6 +1,7 @@
 package com.productive6.productive.objects;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 /**
@@ -38,6 +39,7 @@ public class User {
     /**
      * The nothing constructor
      */
+    @Ignore
     public User() {
         this.exp = 0;
         this.level = 0;
