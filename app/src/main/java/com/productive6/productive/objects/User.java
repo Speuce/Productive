@@ -108,4 +108,19 @@ public class User {
     public void setSelectedTitle(String selectedTitle) {
         this.selectedTitle = selectedTitle;
     }
+
+
+    /**
+     * @return id -- for persistence purposes.
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * @param id -- for persistence purposes.
+     */
+    public void setId(long id) {
+        this.id = id;
+    }
 }

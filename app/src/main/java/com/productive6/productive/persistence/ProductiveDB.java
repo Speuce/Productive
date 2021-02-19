@@ -5,6 +5,7 @@ import androidx.room.RoomDatabase;
 
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.persistence.daos.TaskDao;
+import com.productive6.productive.persistence.daos.UserDao;
 
 /**
  * Default database structure code required by Room
@@ -14,4 +15,6 @@ import com.productive6.productive.persistence.daos.TaskDao;
 public abstract class ProductiveDB extends RoomDatabase {
 
     public abstract TaskDao getTaskDao();
+
+    public abstract UserDao getUserDao();
 }
