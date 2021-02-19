@@ -1,13 +1,18 @@
 package com.productive6.productive.objects;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 /**
  * Encapsulates information of a user including XP, Coins, and applicable level
  */
+@Entity(tableName = "users")
 public class User {
 
     /**
      * id -- for persistence purposes.
      */
+    @PrimaryKey(autoGenerate = true)
     private long id;
 
     /**
