@@ -21,7 +21,7 @@ public class PersistentSingleUserManager implements UserManager {
     private DataManager data;
 
     /**
-     * The {@link RunnableExecutor} for running functions sync/async hrounously
+     * The {@link RunnableExecutor} for running functions synchronous/asynchronously
      */
     private RunnableExecutor executor;
 
