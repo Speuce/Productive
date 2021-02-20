@@ -1,5 +1,6 @@
 package com.productive6.productive.persistence.dummy;
 
+import com.productive6.productive.persistence.UserPersistenceManager;
 import com.productive6.productive.persistence.datamanage.DataManager;
 import com.productive6.productive.persistence.TaskPersistenceManager;
 
@@ -15,8 +16,11 @@ public class DummyDataManager implements DataManager {
      */
     private final TaskPersistenceManager taskPersistenceManager;
 
+    private final UserPersistenceManager userPersistenceManager;
+
     public DummyDataManager() {
         this.taskPersistenceManager = new DummyTaskPersistenceManager();
+        this.userPersistenceManager = new DummyUserPersistenceManager();
     }
 
     @Override
@@ -27,6 +31,11 @@ public class DummyDataManager implements DataManager {
     @Override
     public TaskPersistenceManager task() {
         return taskPersistenceManager;
+    }
+
+    @Override
+    public UserPersistenceManager user() {
+        return userPersistenceManager;
     }
 
 
