@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.productive6.productive.executor.AndroidExecutor;
 import com.productive6.productive.executor.RunnableExecutor;
+import com.productive6.productive.logic.rewards.TitleManager;
+import com.productive6.productive.logic.rewards.impl.DefaultTitleManager;
 import com.productive6.productive.logic.task.TaskManager;
 import com.productive6.productive.logic.task.impl.PersistentTaskManager;
 import com.productive6.productive.logic.user.UserManager;
@@ -50,6 +52,12 @@ public class ProductiveDIModule {
     @Provides
     public UserManager provideUserManager(DataManager d, RunnableExecutor e){
         return new PersistentSingleUserManager(d, e );
+    }
+
+    @Singleton
+    @Provides
+    public TitleManager provideUserManager(UserManager u, @ApplicationContext Context context){
+        return new DefaultTitleManager(u, context.getResources());
     }
 
 

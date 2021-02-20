@@ -3,9 +3,12 @@ package com.productive6.productive.logic.rewards.impl;
 
 import android.content.res.Resources;
 
+import com.productive6.productive.logic.user.UserManager;
 import com.productive6.productive.persistence.dummy.DummyTitleDataManager;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Consumer;
+
 import com.productive6.productive.R;
 import com.productive6.productive.objects.Title;
 import com.productive6.productive.logic.rewards.TitleManager;
@@ -13,10 +16,10 @@ import com.productive6.productive.persistence.datamanage.DataManager;
 
 public class DefaultTitleManager implements TitleManager{
 
-    protected DummyTitleDataManager data;
+    protected UserManager data;
     protected List<Title> titles;
 
-    public DefaultTitleManager(DummyTitleDataManager data, Resources res){
+    public DefaultTitleManager(UserManager data, Resources res){
 
         this.data = data;
         titles = getAllTitles(res);
@@ -38,8 +41,9 @@ public class DefaultTitleManager implements TitleManager{
 
 
     //ADD TESTING
-    private int getLevel(){
-        return data.getLevel();
+    private void getLevel(Consumer<Integer> i ){
+        data.getCurrentUser((user -> {i.accept(user.getLevel());}));
+//        return data.getLevel();
     }
 
     public Title getTitle(){return new Title(data.getTitle(), 0);}
