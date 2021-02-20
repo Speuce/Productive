@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="TitleStringArray">
+        <item>title1</item>
+        <item>title2</item>
+        <item>title3</item>
+    </string-array>
+
+    <integer-array name="TitleLevelArray">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </integer-array>
+</resources>
