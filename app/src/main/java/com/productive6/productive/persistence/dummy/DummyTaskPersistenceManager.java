@@ -14,6 +14,8 @@ import java.util.stream.Collectors;
  */
 public class DummyTaskPersistenceManager implements TaskPersistenceManager {
 
+
+
     /**
      * Internal list of tasks.
      */
