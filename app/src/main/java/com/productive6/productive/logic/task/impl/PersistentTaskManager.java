@@ -8,6 +8,7 @@ import com.productive6.productive.logic.task.TaskManager;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.events.task.TaskCompleteEvent;
 import com.productive6.productive.objects.events.task.TaskCreateEvent;
+import com.productive6.productive.objects.events.task.TaskUpdateEvent;
 import com.productive6.productive.persistence.datamanage.DataManager;
 
 import java.util.Collection;
@@ -88,6 +89,7 @@ public class PersistentTaskManager implements TaskManager {
             throw new PersistentIDAssignmentException();
         }
         executor.runASync(() -> data.task().updateTask(t));
+        EventDispatch.dispatchEvent(new TaskUpdateEvent(t));
     }
 
     @Override
