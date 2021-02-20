@@ -15,9 +15,12 @@ public interface UserManager {
 
     /**
      * Get the current (iteration 1: ONLY) user using this application.
-     * @param callback output parameter for when the user is found.
+     * @return the current user
+     *
+     * WARNING: only call this after usermanager has been loaded.
+     * Listen to {}
      */
-    void getCurrentUser(Consumer<User> callback);
+    User getCurrentUser();
 
     /**
      * Called when any information of user changes, such as xp
