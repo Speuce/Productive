@@ -1,17 +1,19 @@
 package com.productive6.productive;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import android.widget.ProgressBar;
-import android.widget.TextView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView userTitle;
     private TextView coinCounter;
     private TextView levelNumber;
+    private Button openCreateForm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
 
         initializeHeader();
-
+        initializeCreateButton();
         //remove before push to master
         initHeaderPlaceholders();
 
@@ -73,5 +76,12 @@ public class MainActivity extends AppCompatActivity {
         levelNumber.setText("23");
 
     }
-
+    protected void initializeCreateButton(){
+        openCreateForm = findViewById(R.id.createButton);
+        openCreateForm.setOnClickListener(v -> openActivity());
+    }
+    public void openActivity() {
+        Intent intent = new Intent(this, DeadlinePicker.class);
+        startActivity(intent);
+    }
 }

@@ -104,5 +104,15 @@
         app:layout_constraintTop_toTopOf="@+id/experience_bar"
         app:layout_constraintVertical_bias="0.476" />
 
+    <Button
+        android:id="@+id/createButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="500dp"
+        android:text="Create"
+        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintEnd_toEndOf="@+id/nav_host_fragment"
+        app:layout_constraintStart_toStartOf="@+id/nav_host_fragment"
+        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
