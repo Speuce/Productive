@@ -1,10 +1,14 @@
 package com.productive6.productive.logic.task.impl;
 
 import com.productive6.productive.executor.RunnableExecutor;
+import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.exceptions.PersistentIDAssignmentException;
 import com.productive6.productive.logic.exceptions.TaskFormatException;
 import com.productive6.productive.logic.task.TaskManager;
 import com.productive6.productive.objects.Task;
+import com.productive6.productive.objects.events.task.TaskCompleteEvent;
+import com.productive6.productive.objects.events.task.TaskCreateEvent;
+import com.productive6.productive.objects.events.task.TaskUpdateEvent;
 import com.productive6.productive.persistence.datamanage.DataManager;
 
 import java.util.Collection;
@@ -67,6 +71,8 @@ public class PersistentTaskManager implements TaskManager {
 
         executor.runASync(() -> data.task().insertTask(t));
 
+        EventDispatch.dispatchEvent(new TaskCreateEvent(t));
+
     }
 
     @Override
@@ -83,5 +89,16 @@ public class PersistentTaskManager implements TaskManager {
             throw new PersistentIDAssignmentException();
         }
         executor.runASync(() -> data.task().updateTask(t));
+        EventDispatch.dispatchEvent(new TaskUpdateEvent(t));
+    }
+
+    @Override
+    public void completeTask(Task t) {
+        if(t.isCompleted()){
+            throw new TaskFormatException("Task has already been completed!");
+        }
+        t.setCompleted(true);
+        updateTask(t);
+        EventDispatch.dispatchEvent(new TaskCompleteEvent(t));
     }
 }
