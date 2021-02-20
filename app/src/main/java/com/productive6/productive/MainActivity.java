@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar experienceBar;
     private TextView userTitle;
     private TextView coinCounter;
+    private TextView levelNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,12 @@ public class MainActivity extends AppCompatActivity {
         experienceBar = (ProgressBar) findViewById(R.id.experience_bar);
         userTitle = (TextView) findViewById(R.id.user_title);
         coinCounter = (TextView) findViewById(R.id.coin_counter);
+        levelNumber = (TextView) findViewById(R.id.level_number);
+
+        //setting level and title as bold text
+        levelNumber.setTypeface(null, Typeface.BOLD);
+        userTitle.setTypeface(null, Typeface.BOLD);
+
 
     }
 
@@ -63,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         experienceBar.setProgress(60);
         userTitle.setText("Work Horse");
         coinCounter.setText("100");
+        levelNumber.setText("23");
 
     }
 
