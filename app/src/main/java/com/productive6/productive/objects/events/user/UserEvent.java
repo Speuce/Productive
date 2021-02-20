@@ -11,26 +11,26 @@ public abstract class UserEvent extends ProductiveEvent {
     /**
      * The user who this event pertains to
      */
-    private User u;
+    private User user;
 
     /**
      * @param u The user who this event pertains to
      */
     public UserEvent(User u) {
-        this.u = u;
+        this.user = u;
     }
 
     /**
      * @return The user who this event pertains to
      */
-    public User getU() {
-        return u;
+    public User getUser() {
+        return user;
     }
 
     /**
-     * @param u The user who this event pertains to
+     * @param user The user who this event pertains to
      */
-    public void setU(User u) {
-        this.u = u;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

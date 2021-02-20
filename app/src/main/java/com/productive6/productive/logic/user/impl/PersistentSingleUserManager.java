@@ -51,6 +51,7 @@ public class PersistentSingleUserManager implements UserManager {
             User u;
             if(users.isEmpty()){
                 u = new User();
+                u.setCoins(10);
                 data.user().insertUser(u);
             }else{
                 u = users.get(0);
@@ -65,7 +66,7 @@ public class PersistentSingleUserManager implements UserManager {
     @Override
     public User getCurrentUser() {
         if(currentUser == null){
-            throw new AccessBeforeLoadedException("WHoa. Hold your horses there. I have no user to give you");
+            throw new AccessBeforeLoadedException("WHoa. Hold your horses there. I have no user to give you. Listen to UserLoadedEvent first");
         }
         return currentUser;
     }
