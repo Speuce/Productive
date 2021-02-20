@@ -3,19 +3,24 @@ package com.productive6.productive.logic.rewards.impl;
 
 import android.content.res.Resources;
 
+import com.productive6.productive.persistence.dummy.DummyTitleDataManager;
 import java.util.LinkedList;
 import java.util.List;
 import com.productive6.productive.R;
 import com.productive6.productive.objects.Title;
 import com.productive6.productive.logic.rewards.TitleManager;
+import com.productive6.productive.persistence.datamanage.DataManager;
 
 public class DefaultTitleManager implements TitleManager{
-    public final int PLACEHOLDER_LEVEL = 0;
 
-    List<Title> titles;
+    protected DummyTitleDataManager data;
+    protected List<Title> titles;
 
-    public DefaultTitleManager(Resources res){
+    public DefaultTitleManager(DummyTitleDataManager data, Resources res){
+
+        this.data = data;
         titles = getAllTitles(res);
+
     }
 
     public List<Title> getTitleOptions(){
@@ -31,11 +36,13 @@ public class DefaultTitleManager implements TitleManager{
         return options;
     }
 
+
+    //ADD TESTING
     private int getLevel(){
-        return PLACEHOLDER_LEVEL;
+        return data.getLevel();
     }
 
-    public Title getTitle(){return new Title("TEMP", 1);}
+    public Title getTitle(){return new Title(data.getTitle(), 0);}
 
     public void setTitle(Title t){}
 
