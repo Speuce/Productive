@@ -11,6 +11,7 @@ public class Title {
     }
 
     public int getLevelRequirement(){return levelRequirement;}
+
     public String getString(){return title;}
 
 }

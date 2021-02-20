@@ -5,20 +5,39 @@ import android.content.res.Resources;
 
 import java.util.LinkedList;
 import java.util.List;
-
 import com.productive6.productive.R;
 import com.productive6.productive.objects.Title;
 import com.productive6.productive.logic.rewards.TitleManager;
 
-public class DefaultTitleManager {
-    public final int PLACEHOLDER_LEVEL = 25;
+public class DefaultTitleManager implements TitleManager{
+    public final int PLACEHOLDER_LEVEL = 0;
 
     List<Title> titles;
 
     public DefaultTitleManager(Resources res){
         titles = getAllTitles(res);
     }
-    
+
+    public List<Title> getTitleOptions(){
+
+        List<Title> options = new LinkedList<Title>();
+
+        titles.iterator().forEachRemaining(curr -> {
+
+            if(curr.getLevelRequirement() <= getLevel())
+                options.add(new Title(curr.getString(),curr.getLevelRequirement()));
+
+        });
+        return options;
+    }
+
+    private int getLevel(){
+        return PLACEHOLDER_LEVEL;
+    }
+
+    public Title getTitle(){return new Title("TEMP", 1);}
+
+    public void setTitle(Title t){}
 
     /*
     * Returns a list of all the titles in the resources files
