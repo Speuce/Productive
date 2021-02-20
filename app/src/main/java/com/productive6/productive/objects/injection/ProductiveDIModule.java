@@ -56,7 +56,7 @@ public class ProductiveDIModule {
 
     @Singleton
     @Provides
-    public TitleManager provideUserManager(UserManager u, @ApplicationContext Context context){
+    public TitleManager provideTitleManager(UserManager u, @ApplicationContext Context context){
         return new DefaultTitleManager(u, context.getResources());
     }
 
