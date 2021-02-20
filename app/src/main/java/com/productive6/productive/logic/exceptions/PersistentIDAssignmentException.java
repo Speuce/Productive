@@ -6,7 +6,4 @@ package com.productive6.productive.logic.exceptions;
  * OR when no id was assigned, yet an assigned id is expected.
  */
 public class PersistentIDAssignmentException extends RuntimeException {
-
-    public PersistentIDAssignmentException() {
-    }
 }
