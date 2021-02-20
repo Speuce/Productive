@@ -45,4 +45,10 @@ public interface TaskManager {
      * @param t the {@link Task} to change.
      */
     void updateTask(Task t);
+
+    /**
+     * Marks a task as complete
+     * @param t the task that was completed.
+     */
+    void completeTask(Task t);
 }
