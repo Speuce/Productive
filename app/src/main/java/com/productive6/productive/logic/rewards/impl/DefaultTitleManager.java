@@ -4,7 +4,8 @@ package com.productive6.productive.logic.rewards.impl;
 import android.content.res.Resources;
 
 import com.productive6.productive.logic.user.UserManager;
-import com.productive6.productive.persistence.dummy.DummyTitleDataManager;
+
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -12,23 +13,27 @@ import java.util.function.Consumer;
 import com.productive6.productive.R;
 import com.productive6.productive.objects.Title;
 import com.productive6.productive.logic.rewards.TitleManager;
-import com.productive6.productive.persistence.datamanage.DataManager;
+import com.productive6.productive.objects.User;
+import com.productive6.productive.persistence.dummy.DummyTitleDataManager;
 
 public class DefaultTitleManager implements TitleManager{
 
-    protected UserManager data;
-    protected List<Title> titles;
+    private DummyTitleDataManager data;
+    private List<Title> titles;
 
-    public DefaultTitleManager(UserManager data, Resources res){
-
+    public DefaultTitleManager(DummyTitleDataManager data, Resources res){
         this.data = data;
         titles = getAllTitles(res);
-
     }
 
+    /**
+     * Creates a List of all possible title options for the user
+     * @return List<Title> of all options the user has for their displayed title
+     */
     public List<Title> getTitleOptions(){
 
         List<Title> options = new LinkedList<Title>();
+
 
         titles.iterator().forEachRemaining(curr -> {
 
@@ -39,18 +44,48 @@ public class DefaultTitleManager implements TitleManager{
         return options;
     }
 
+    /**
+     * Returns a String repersentation of the currently selected title
+     * @return String representing the current title
+     */
+    public String getTitleAsString(){return data.getTitle();}
 
-    //ADD TESTING
-    private void getLevel(Consumer<Integer> i ){
-        data.getCurrentUser((user -> {i.accept(user.getLevel());}));
-//        return data.getLevel();
+    /**
+     * @return integer representing current level
+     */
+    private int getLevel(){return data.getLevel();}
+
+
+    /**
+     * Checks if a new title is valid and sets it if it is
+     * @param newTitle: String representing new Title
+     */
+    @Override
+    public void setTitle(String newTitle) {
+
+        if(validateTitle(newTitle))
+            data.setTitle(newTitle);
+
     }
 
-    public Title getTitle(){return new Title(data.getTitle(), 0);}
+    /**
+     *
+     * @param str checks is str is a valid title option for the user
+     * @return returns true if it is, false if not
+     */
+    private boolean validateTitle(String str){
+        boolean valid = false;
+        Iterator<Title> options = getTitleOptions().listIterator();
 
-    public void setTitle(Title t){}
+        while(options.hasNext() && !valid){
+            if(options.next().getString().equals(str))
+                valid = true;
+        }
 
-    /*
+        return valid;
+    }
+
+    /**
     * Returns a list of all the titles in the resources files
     * @return a list of the all the titles that can be accessed in
     * res/values/titles.xml
@@ -73,4 +108,4 @@ public class DefaultTitleManager implements TitleManager{
     }
 
 
-}
+} //end class

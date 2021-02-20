@@ -16,12 +16,12 @@ public interface TitleManager {
      * @param newTitle : the new title that the user has requested
      *
      * */
-    void setTitle(Title newTitle);
+    void setTitle(String newTitle);
 
     /*
     * Returns the user's current title
     * @return the title the user currently has set
     * */
-    Title getTitle();
+    String getTitleAsString();
 
 }
