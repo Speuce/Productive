@@ -1,15 +1,23 @@
 package com.productive6.productive;
 
+import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.executor.impl.TestExecutor;
 import com.productive6.productive.logic.exceptions.PersistentIDAssignmentException;
 import com.productive6.productive.logic.exceptions.ObjectFormatException;
 import com.productive6.productive.logic.task.TaskManager;
 import com.productive6.productive.logic.task.impl.PersistentTaskManager;
 import com.productive6.productive.objects.Task;
+import com.productive6.productive.objects.events.ProductiveEventHandler;
+import com.productive6.productive.objects.events.ProductiveListener;
+import com.productive6.productive.objects.events.task.TaskCreateEvent;
+import com.productive6.productive.objects.events.task.TaskUpdateEvent;
+import com.productive6.productive.objects.events.user.UserUpdateEvent;
 import com.productive6.productive.persistence.dummy.DummyDataManager;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.junit.Assert.*;
 
@@ -147,6 +155,43 @@ public class TaskManagerTest {
         Task testData = new Task("name", 1, 0, false);
         taskManager.addTask(testData);
         assertTrue("Task Manager didn't autofill time correctly.", Math.abs(System.currentTimeMillis()-testData.getCreatedTime()) < 10000);
+    }
+
+    @Test
+    public void testCompleteTask(){
+        Task testData = new Task("name", 1, 0, false);
+        taskManager.addTask(testData);
+        taskManager.completeTask(testData);
+        assertTrue("Task Manager didn't autofill completion correctly.", testData.isCompleted());
+    }
+
+    @Test
+    public void testUpdateEvent(){
+        AtomicBoolean success = new AtomicBoolean(false);
+        EventDispatch.registerListener(new ProductiveListener() {
+            @ProductiveEventHandler
+            public void handleEvent(TaskUpdateEvent e){
+                success.set(true);
+            }
+        });
+        Task testData = new Task("name", 1, 0, false);
+        taskManager.addTask(testData);
+        taskManager.updateTask(testData);
+        assertTrue("TaskManager failed to trigger a user updated event when necessary.",success.get());
+    }
+
+    @Test
+    public void testAddEvent(){
+        AtomicBoolean success = new AtomicBoolean(false);
+        EventDispatch.registerListener(new ProductiveListener() {
+            @ProductiveEventHandler
+            public void handleEvent(TaskCreateEvent e){
+                success.set(true);
+            }
+        });
+        Task testData = new Task("name", 1, 0, false);
+        taskManager.addTask(testData);
+        assertTrue("TaskManager failed to trigger a user create event when necessary.",success.get());
     }
 
 
