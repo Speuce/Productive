@@ -3,27 +3,32 @@ package com.productive6.productive.logic.rewards.impl;
 
 import android.content.res.Resources;
 
+import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.user.UserManager;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.function.Consumer;
-
+import com.productive6.productive.objects.events.user.*;
 import com.productive6.productive.R;
 import com.productive6.productive.objects.Title;
 import com.productive6.productive.logic.rewards.TitleManager;
 import com.productive6.productive.objects.User;
-import com.productive6.productive.persistence.dummy.DummyTitleDataManager;
+import com.productive6.productive.objects.events.ProductiveEventHandler;
+import com.productive6.productive.objects.events.ProductiveListener;
 
-public class DefaultTitleManager implements TitleManager{
+public class DefaultTitleManager implements TitleManager, ProductiveListener{
 
-    private DummyTitleDataManager data;
+    private User person;
+    private UserManager data;
     private List<Title> titles;
 
-    public DefaultTitleManager(DummyTitleDataManager data, Resources res){
+    public DefaultTitleManager(UserManager data, Resources res){
+
+        EventDispatch.registerListener(this);
         this.data = data;
         titles = getAllTitles(res);
+        person = null;
     }
 
     /**
@@ -48,12 +53,12 @@ public class DefaultTitleManager implements TitleManager{
      * Returns a String repersentation of the currently selected title
      * @return String representing the current title
      */
-    public String getTitleAsString(){return data.getTitle();}
+    public String getTitleAsString(){return person.getSelectedTitle();}
 
     /**
      * @return integer representing current level
      */
-    private int getLevel(){return data.getLevel();}
+    private int getLevel(){return person.getLevel();}
 
 
     /**
@@ -63,9 +68,10 @@ public class DefaultTitleManager implements TitleManager{
     @Override
     public void setTitle(String newTitle) {
 
-        if(validateTitle(newTitle))
-            data.setTitle(newTitle);
-
+        if(validateTitle(newTitle)) {
+            person.setSelectedTitle(newTitle);
+            data.updateUser(person);
+        }
     }
 
     /**
@@ -107,5 +113,14 @@ public class DefaultTitleManager implements TitleManager{
         return titleList;
     }
 
+    @ProductiveEventHandler
+    public void initializeValues(UserLoadedEvent e){
+        person = e.getUser();
+    }
+
+    @ProductiveEventHandler
+    public void updateUser(UserUpdateEvent e){
+        person = e.getUser();
+    }
 
 } //end class
