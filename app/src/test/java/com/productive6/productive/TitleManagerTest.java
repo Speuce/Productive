@@ -9,6 +9,7 @@ import com.productive6.productive.logic.user.UserManager;
 import com.productive6.productive.objects.Title;
 import com.productive6.productive.objects.User;
 import com.productive6.productive.objects.events.user.UserLoadedEvent;
+import com.productive6.productive.objects.events.user.UserUpdateEvent;
 import com.productive6.productive.persistence.datamanage.DataManager;
 import com.productive6.productive.persistence.dummy.DummyTitleDataManager;
 
@@ -20,6 +21,7 @@ import org.mockito.junit.MockitoRule;
 
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
@@ -124,5 +126,22 @@ public class TitleManagerTest {
             assertTrue("First element string is not equal", testList.get(0).getString().equals("TEST1"));
             assertTrue("Second element string is not equal", testList.get(1).getString().equals("TEST2"));
             assertTrue("List is not of correct length", testList.size() == 2);
+    }
+
+    @Test
+    public void testEventUpdating() {
+        String[] tempTitles = {"TEST1", "TEST2", "TEST3"};
+        int[] tempVals = {1, 2, 3};
+
+        when(res.getStringArray(R.array.TitleStringArray)).thenReturn(tempTitles);
+        when(res.getIntArray(R.array.TitleLevelArray)).thenReturn(tempVals);
+        TitleManager titleManager = new DefaultTitleManager(data, res);
+        EventDispatch.dispatchEvent(new UserLoadedEvent(new User(0, 1, 0)));
+        assertTrue("Expected to have only 1 title option", titleManager.getTitleOptions().size() == 1 );
+
+
+        EventDispatch.dispatchEvent((new UserUpdateEvent(new User(0,3,0))));
+        assertTrue("Expected to have 3 title options", titleManager.getTitleOptions().size() == 3 );
+
     }
 }
