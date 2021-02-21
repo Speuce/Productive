@@ -2,7 +2,7 @@ package com.productive6.productive;
 
 import com.productive6.productive.logic.executor.impl.TestExecutor;
 import com.productive6.productive.logic.exceptions.PersistentIDAssignmentException;
-import com.productive6.productive.logic.exceptions.TaskFormatException;
+import com.productive6.productive.logic.exceptions.ObjectFormatException;
 import com.productive6.productive.logic.task.TaskManager;
 import com.productive6.productive.logic.task.impl.PersistentTaskManager;
 import com.productive6.productive.objects.Task;
@@ -124,7 +124,7 @@ public class TaskManagerTest {
     public void testCompletionChecking(){
         Task testData = new Task("name", 1, System.currentTimeMillis(), true);
         assertThrows("Task Manager missed a 'completed' flag = true",
-                TaskFormatException.class,
+                ObjectFormatException.class,
                 () -> taskManager.addTask(testData));
     }
 
@@ -135,7 +135,7 @@ public class TaskManagerTest {
     public void testPriorityChecking(){
         Task testData = new Task("name", -1, System.currentTimeMillis(), false);
         assertThrows("Task Manager missed a negative priority",
-                TaskFormatException.class,
+                ObjectFormatException.class,
                 () -> taskManager.addTask(testData));
     }
 
