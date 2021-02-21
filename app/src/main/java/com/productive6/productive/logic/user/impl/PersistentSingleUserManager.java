@@ -1,8 +1,6 @@
 package com.productive6.productive.logic.user.impl;
 
-import android.util.EventLog;
-
-import com.productive6.productive.executor.RunnableExecutor;
+import com.productive6.productive.logic.executor.IRunnableExecutor;
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.exceptions.AccessBeforeLoadedException;
 import com.productive6.productive.logic.user.UserManager;
@@ -12,7 +10,6 @@ import com.productive6.productive.objects.events.user.UserUpdateEvent;
 import com.productive6.productive.persistence.datamanage.DataManager;
 
 import java.util.List;
-import java.util.function.Consumer;
 
 /**
  * {@link com.productive6.productive.logic.user.UserManager} implementation that persists a single (main user).
@@ -27,16 +24,16 @@ public class PersistentSingleUserManager implements UserManager {
     private final DataManager data;
 
     /**
-     * The {@link RunnableExecutor} for running functions synchronous/asynchronously
+     * The {@link IRunnableExecutor} for running functions synchronous/asynchronously
      */
-    private final RunnableExecutor executor;
+    private final IRunnableExecutor executor;
 
     /**
      * The current user using the app.
      */
     private User currentUser;
 
-    public PersistentSingleUserManager(DataManager data, RunnableExecutor executor) {
+    public PersistentSingleUserManager(DataManager data, IRunnableExecutor executor) {
         this.data = data;
         this.executor = executor;
         loadCurrentUser();

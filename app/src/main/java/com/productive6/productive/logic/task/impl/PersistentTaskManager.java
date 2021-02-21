@@ -1,6 +1,6 @@
 package com.productive6.productive.logic.task.impl;
 
-import com.productive6.productive.executor.RunnableExecutor;
+import com.productive6.productive.logic.executor.IRunnableExecutor;
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.exceptions.PersistentIDAssignmentException;
 import com.productive6.productive.logic.exceptions.TaskFormatException;
@@ -12,7 +12,6 @@ import com.productive6.productive.objects.events.task.TaskUpdateEvent;
 import com.productive6.productive.persistence.datamanage.DataManager;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -25,10 +24,10 @@ public class PersistentTaskManager implements TaskManager {
 
     private DataManager data;
 
-    private RunnableExecutor executor;
+    private IRunnableExecutor executor;
 
 
-    public PersistentTaskManager(DataManager data, RunnableExecutor e) {
+    public PersistentTaskManager(DataManager data, IRunnableExecutor e) {
         this.data = data;
         this.executor = e;
     }
