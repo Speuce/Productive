@@ -1,8 +1,5 @@
 package com.productive6.productive.logic.rewards.impl;
 
-
-import android.content.res.Resources;
-
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.user.UserManager;
 
@@ -10,7 +7,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import com.productive6.productive.objects.events.user.*;
-import com.productive6.productive.R;
 import com.productive6.productive.objects.Title;
 import com.productive6.productive.logic.rewards.TitleManager;
 import com.productive6.productive.objects.User;
@@ -23,11 +19,11 @@ public class DefaultTitleManager implements TitleManager, ProductiveListener{
     private UserManager data;
     private List<Title> titles;
 
-    public DefaultTitleManager(UserManager data, Resources res){
+    public DefaultTitleManager(UserManager data, String[] titleString, int[] titleLevels){
 
         EventDispatch.registerListener(this);
         this.data = data;
-        titles = getAllTitles(res);
+        titles = getAllTitles(titleString,titleLevels);
         person = null;
     }
 
@@ -96,28 +92,29 @@ public class DefaultTitleManager implements TitleManager, ProductiveListener{
     * @return a list of the all the titles that can be accessed in
     * res/values/titles.xml
      */
-    private List<Title> getAllTitles(Resources titleResources){
+    private List<Title> getAllTitles(String[] titleStrings, int[] titleLevels){
         List<Title> titleList = new LinkedList<Title>();
 
-            try { //make sure that application can handle bad resource files
-                String[] titleStrings = titleResources.getStringArray(R.array.TitleStringArray);
-                int[] titleLevels = titleResources.getIntArray(R.array.TitleLevelArray);
-
-                for (int i = 0; (i < titleStrings.length) && (i < titleLevels.length); i++) {
+            for (int i = 0; (i < titleStrings.length) && (i < titleLevels.length); i++) {
                     titleList.add(new Title(titleStrings[i],titleLevels[i]));
-                }
-            }catch(Exception e){ //if an exception occurs while trying to access titles return an empty list of titles
-                titleList = new LinkedList<Title>();
             }
 
         return titleList;
     }
 
+    /**
+     * After the user is updated this object is notified
+     * @param e: the event that has this method handles
+     */
     @ProductiveEventHandler
     public void initializeValues(UserLoadedEvent e){
         person = e.getUser();
     }
 
+    /**
+     * After the user is updated this object is notified
+     * @param e: the event that has this method handles
+     */
     @ProductiveEventHandler
     public void updateUser(UserUpdateEvent e){
         person = e.getUser();

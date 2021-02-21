@@ -1,7 +1,5 @@
 package com.productive6.productive;
 
-import android.content.res.Resources;
-
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.rewards.TitleManager;
 import com.productive6.productive.logic.rewards.impl.DefaultTitleManager;
@@ -29,27 +27,23 @@ public class TitleManagerTest {
 
 
     @Mock
-    Resources res;
-
-    @Mock
     UserManager data;
 
-
     @Rule public MockitoRule rule = MockitoJUnit.rule();
+
+    TitleManager titleManager;
 
     @Before
     public void init(){
         String[] tempTitles = {"TEST1", "TEST2", "TEST3"};
         int[] tempVals = {1, 2, 3};
+        titleManager = new DefaultTitleManager(data,tempTitles,tempVals);
 
-        when(res.getStringArray(R.array.TitleStringArray)).thenReturn(tempTitles);
-        when(res.getIntArray(R.array.TitleLevelArray)).thenReturn(tempVals);
     }
 
     @Test
     public void testAllTitleStrings(){
 
-        TitleManager titleManager = new DefaultTitleManager(data,res);
         EventDispatch.dispatchEvent(new UserLoadedEvent(new User(0, 15, 0)));
         List<Title> testList = titleManager.getTitleOptions();
 
@@ -62,7 +56,6 @@ public class TitleManagerTest {
     @Test
     public void testAllTitleLevels(){
 
-        TitleManager titleManager = new DefaultTitleManager(data,res);
         EventDispatch.dispatchEvent(new UserLoadedEvent(new User(0, 15, 0)));
         List<Title> testList = titleManager.getTitleOptions();
 
@@ -74,7 +67,7 @@ public class TitleManagerTest {
 
     @Test
     public void testValidTitle(){
-        TitleManager titleManager = new DefaultTitleManager(data,res);
+
         EventDispatch.dispatchEvent(new UserLoadedEvent(new User(0, 10, 0)));
 
         titleManager.setTitle("TEST2");
@@ -86,7 +79,6 @@ public class TitleManagerTest {
     @Test
     public void testInvalidTitle(){
 
-        TitleManager titleManager = new DefaultTitleManager(data,res);
         EventDispatch.dispatchEvent(new UserLoadedEvent(new User(0, 10, 0)));
         titleManager.setTitle("TEST2");
         assertTrue("The title was not successfully set to TEST2",titleManager.getTitleAsString().equals("TEST2"));
@@ -99,7 +91,6 @@ public class TitleManagerTest {
     @Test
     public void testOptions(){
 
-            TitleManager titleManager = new DefaultTitleManager(data,res);
             EventDispatch.dispatchEvent(new UserLoadedEvent(new User(0, 2, 0)));
 
             List<Title> testList = titleManager.getTitleOptions();
@@ -109,10 +100,10 @@ public class TitleManagerTest {
             assertTrue("List is not of correct length", testList.size() == 2);
     }
 
+
     @Test
     public void testEventUpdating() {
 
-        TitleManager titleManager = new DefaultTitleManager(data, res);
         EventDispatch.dispatchEvent(new UserLoadedEvent(new User(0, 1, 0)));
         assertTrue("Expected to have only 1 title option", titleManager.getTitleOptions().size() == 1 );
 
