@@ -6,6 +6,7 @@ import androidx.room.Room;
 
 import com.productive6.productive.persistence.ProductiveDB;
 import com.productive6.productive.persistence.TaskPersistenceManager;
+import com.productive6.productive.persistence.UserPersistenceManager;
 import com.productive6.productive.persistence.datamanage.DataManager;
 
 import javax.inject.Inject;
@@ -38,6 +39,11 @@ public class PersistentDataManager implements DataManager{
     @Override
     public TaskPersistenceManager task() {
         return db.getTaskDao();
+    }
+
+    @Override
+    public UserPersistenceManager user() {
+        return db.getUserDao();
     }
 
 
