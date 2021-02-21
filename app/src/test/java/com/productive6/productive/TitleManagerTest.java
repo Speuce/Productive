@@ -10,9 +10,8 @@ import com.productive6.productive.objects.Title;
 import com.productive6.productive.objects.User;
 import com.productive6.productive.objects.events.user.UserLoadedEvent;
 import com.productive6.productive.objects.events.user.UserUpdateEvent;
-import com.productive6.productive.persistence.datamanage.DataManager;
-import com.productive6.productive.persistence.dummy.DummyTitleDataManager;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -21,7 +20,6 @@ import org.mockito.junit.MockitoRule;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
@@ -39,14 +37,17 @@ public class TitleManagerTest {
 
     @Rule public MockitoRule rule = MockitoJUnit.rule();
 
-    @Test
-    public void testAllTitleStrings(){
-        String[] tempTitles = {"TEST1", "TEST2","TEST3"};
-        int[] tempVals = {1,2,3};
+    @Before
+    public void init(){
+        String[] tempTitles = {"TEST1", "TEST2", "TEST3"};
+        int[] tempVals = {1, 2, 3};
 
         when(res.getStringArray(R.array.TitleStringArray)).thenReturn(tempTitles);
         when(res.getIntArray(R.array.TitleLevelArray)).thenReturn(tempVals);
+    }
 
+    @Test
+    public void testAllTitleStrings(){
 
         TitleManager titleManager = new DefaultTitleManager(data,res);
         EventDispatch.dispatchEvent(new UserLoadedEvent(new User(0, 15, 0)));
@@ -60,11 +61,6 @@ public class TitleManagerTest {
 
     @Test
     public void testAllTitleLevels(){
-        String[] tempTitles = {"TEST1", "TEST2","TEST3"};
-        int[] tempVals = {1,2,3};
-
-        when(res.getStringArray(R.array.TitleStringArray)).thenReturn(tempTitles);
-        when(res.getIntArray(R.array.TitleLevelArray)).thenReturn(tempVals);
 
         TitleManager titleManager = new DefaultTitleManager(data,res);
         EventDispatch.dispatchEvent(new UserLoadedEvent(new User(0, 15, 0)));
@@ -78,17 +74,10 @@ public class TitleManagerTest {
 
     @Test
     public void testValidTitle(){
-        String[] tempTitles = {"TEST1", "TEST2","TEST3"};
-        int[] tempVals = {1,2,3};
-
-        when(res.getStringArray(R.array.TitleStringArray)).thenReturn(tempTitles);
-        when(res.getIntArray(R.array.TitleLevelArray)).thenReturn(tempVals);
         TitleManager titleManager = new DefaultTitleManager(data,res);
         EventDispatch.dispatchEvent(new UserLoadedEvent(new User(0, 10, 0)));
 
-
         titleManager.setTitle("TEST2");
-
 
         assertTrue("The title has not been successfully set to TEST2",titleManager.getTitleAsString().equals("TEST2"));
 
@@ -96,11 +85,7 @@ public class TitleManagerTest {
 
     @Test
     public void testInvalidTitle(){
-        String[] tempTitles = {"TEST1", "TEST2","TEST3"};
-        int[] tempVals = {1,2,3};
 
-        when(res.getStringArray(R.array.TitleStringArray)).thenReturn(tempTitles);
-        when(res.getIntArray(R.array.TitleLevelArray)).thenReturn(tempVals);
         TitleManager titleManager = new DefaultTitleManager(data,res);
         EventDispatch.dispatchEvent(new UserLoadedEvent(new User(0, 10, 0)));
         titleManager.setTitle("TEST2");
@@ -113,11 +98,7 @@ public class TitleManagerTest {
 
     @Test
     public void testOptions(){
-            String[] tempTitles = {"TEST1", "TEST2","TEST3"};
-            int[] tempVals = {1,2,3};
 
-            when(res.getStringArray(R.array.TitleStringArray)).thenReturn(tempTitles);
-            when(res.getIntArray(R.array.TitleLevelArray)).thenReturn(tempVals);
             TitleManager titleManager = new DefaultTitleManager(data,res);
             EventDispatch.dispatchEvent(new UserLoadedEvent(new User(0, 2, 0)));
 
@@ -130,17 +111,13 @@ public class TitleManagerTest {
 
     @Test
     public void testEventUpdating() {
-        String[] tempTitles = {"TEST1", "TEST2", "TEST3"};
-        int[] tempVals = {1, 2, 3};
 
-        when(res.getStringArray(R.array.TitleStringArray)).thenReturn(tempTitles);
-        when(res.getIntArray(R.array.TitleLevelArray)).thenReturn(tempVals);
         TitleManager titleManager = new DefaultTitleManager(data, res);
         EventDispatch.dispatchEvent(new UserLoadedEvent(new User(0, 1, 0)));
         assertTrue("Expected to have only 1 title option", titleManager.getTitleOptions().size() == 1 );
 
-
         EventDispatch.dispatchEvent((new UserUpdateEvent(new User(0,3,0))));
+
         assertTrue("Expected to have 3 title options", titleManager.getTitleOptions().size() == 3 );
 
     }
