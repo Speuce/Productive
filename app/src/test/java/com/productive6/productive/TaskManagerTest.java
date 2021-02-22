@@ -6,15 +6,10 @@ import com.productive6.productive.logic.exceptions.TaskFormatException;
 import com.productive6.productive.logic.task.TaskManager;
 import com.productive6.productive.logic.task.impl.PersistentTaskManager;
 import com.productive6.productive.objects.Task;
-import com.productive6.productive.persistence.dummy.DummyDataManager;
+import com.productive6.productive.persistence.datamanage.dummy.DummyDataManager;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.function.Consumer;
 
 import static org.junit.Assert.*;
 
