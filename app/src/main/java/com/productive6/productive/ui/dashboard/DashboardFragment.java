@@ -13,8 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.productive6.productive.R;
 import com.productive6.productive.objects.Task;
+import com.productive6.productive.persistence.TaskPersistenceManager;
+import com.productive6.productive.persistence.daos.TaskDao;
+import com.productive6.productive.persistence.daos.TaskDao_Impl;
+import com.productive6.productive.persistence.datamanage.PersistentDataManager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class DashboardFragment extends Fragment {
@@ -40,17 +45,7 @@ public class DashboardFragment extends Fragment {
 
         RecyclerView taskDisplayView = root.findViewById(R.id.taskDisplayView);//Grab display
 
-        ArrayList<Task> tasks = new ArrayList<>();//Data
-        tasks.add(new Task("String taskName1", 1, 1, false));
-        tasks.add(new Task("String taskName2", 2, 2, false));
-        tasks.add(new Task("String taskName3", 3, 3, false));
-        tasks.add(new Task("String taskName4", 4, 4, false));
-        tasks.add(new Task("String taskName5", 5, 5, false));
-        tasks.add(new Task("String taskName1", 1, 1, false));
-        tasks.add(new Task("String taskName2", 2, 2, false));
-        tasks.add(new Task("String taskName3", 3, 3, false));
-        tasks.add(new Task("String taskName4", 4, 4, false));
-        tasks.add(new Task("String taskName5", 5, 5, false));
+        List<Task> tasks = fetchTasks(root);//Fetch data from backend
 
         TaskAdapter taskAdapter = new TaskAdapter();
         taskAdapter.setTasks(tasks);//Give data to view
@@ -58,4 +53,15 @@ public class DashboardFragment extends Fragment {
         taskDisplayView.setAdapter(taskAdapter);//attach display to view + data
         taskDisplayView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false));//Describe how the data should be laid out
     }
+
+    /**
+     * Fetch tasks from backend and return
+     * @return
+     */
+    private List<Task> fetchTasks(View root){
+        TaskPersistenceManager taskPersistenceManager = new PersistentDataManager(root.getContext()).task();
+        List<Task> tasks = taskPersistenceManager.getAllTasks();//get all tasks from backend
+
+        return tasks;
+    };
 }
