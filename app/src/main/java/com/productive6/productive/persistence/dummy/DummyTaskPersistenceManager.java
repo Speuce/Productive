@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 /**
  * A {@link com.productive6.productive.persistence.TaskPersistenceManager} for unit testing.
- * No database stuff is actually done. Everthing is just kept in internal lists.
+ * No database stuff is actually done. Everything is just kept in internal lists.
  */
 public class DummyTaskPersistenceManager implements TaskPersistenceManager {
 

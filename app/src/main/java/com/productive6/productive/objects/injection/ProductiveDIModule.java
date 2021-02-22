@@ -2,8 +2,12 @@ package com.productive6.productive.objects.injection;
 
 import android.content.Context;
 
+
 import com.productive6.productive.logic.executor.IRunnableExecutor;
 import com.productive6.productive.logic.executor.impl.AndroidExecutor;
+import com.productive6.productive.logic.rewards.TitleManager;
+import com.productive6.productive.logic.rewards.impl.DefaultTitleManager;
+
 import com.productive6.productive.logic.task.TaskManager;
 import com.productive6.productive.logic.task.impl.PersistentTaskManager;
 import com.productive6.productive.logic.user.UserManager;
@@ -53,6 +57,8 @@ public class ProductiveDIModule {
         ret.load();
         return ret;
     }
+
+
 
 
 }
