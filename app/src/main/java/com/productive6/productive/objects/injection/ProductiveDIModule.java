@@ -9,7 +9,7 @@ import com.productive6.productive.logic.task.impl.PersistentTaskManager;
 import com.productive6.productive.logic.user.UserManager;
 import com.productive6.productive.logic.user.impl.PersistentSingleUserManager;
 import com.productive6.productive.persistence.datamanage.IDataManager;
-import com.productive6.productive.persistence.datamanage.PersistentDataManager;
+import com.productive6.productive.persistence.datamanage.impl.PersistentDataManager;
 
 import javax.inject.Singleton;
 

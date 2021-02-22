@@ -1,4 +1,4 @@
-package com.productive6.productive.persistence.datamanage;
+package com.productive6.productive.persistence.datamanage.impl;
 
 import android.content.Context;
 
@@ -7,6 +7,7 @@ import androidx.room.Room;
 import com.productive6.productive.persistence.ProductiveDB;
 import com.productive6.productive.persistence.ITaskPersistenceManager;
 import com.productive6.productive.persistence.IUserPersistenceManager;
+import com.productive6.productive.persistence.datamanage.IDataManager;
 
 /**
  * A {@link IDataManager} implementation for system and integration testing
