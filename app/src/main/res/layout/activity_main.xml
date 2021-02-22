@@ -19,6 +19,64 @@
         app:layout_constraintRight_toRightOf="parent"
         app:menu="@menu/bottom_nav_menu" />
 
+    <ProgressBar
+        android:id="@+id/experience_bar"
+        android:layout_width="125dp"
+        android:layout_height="103dp"
+        android:indeterminateOnly="false"
+        android:progressDrawable="@drawable/experiencebar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.157"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/user_title"
+        android:layout_width="214dp"
+        android:layout_height="27dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="20dp"
+        android:gravity="left"
+        android:text="Slayer of TASKS"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/experience_bar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/experience_bar"
+        app:layout_constraintTop_toTopOf="@+id/experience_bar"
+        app:layout_constraintVertical_bias="0.16" />
+
+    <TextView
+        android:id="@+id/coin_counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="4dp"
+        android:gravity="left"
+        android:text="100"
+        app:layout_constraintBottom_toBottomOf="@+id/coin_icon"
+        app:layout_constraintHorizontal_bias="0.56"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/coin_icon"
+        app:layout_constraintTop_toBottomOf="@+id/user_title"
+        app:layout_constraintVertical_bias="0.47" />
+
+    <ImageView
+        android:id="@+id/coin_icon"
+        android:layout_width="29dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/experience_bar"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/experience_bar"
+        app:layout_constraintTop_toBottomOf="@+id/user_title"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/coins" />
+
     <fragment
         android:id="@+id/nav_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -26,9 +84,11 @@
         android:layout_height="match_parent"
         app:defaultNavHost="true"
         app:layout_constraintBottom_toTopOf="@id/nav_view"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
         app:navGraph="@navigation/mobile_navigation" />
 
     <ListView
@@ -41,5 +101,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
         app:layout_constraintVertical_bias="0.905" />
+
+    <TextView
+        android:id="@+id/level_number"
+        android:layout_width="58dp"
+        android:layout_height="57dp"
+        android:text="35"
+        android:textAlignment="center"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="@+id/experience_bar"
+        app:layout_constraintEnd_toEndOf="@+id/experience_bar"
+        app:layout_constraintStart_toStartOf="@+id/experience_bar"
+        app:layout_constraintTop_toTopOf="@+id/experience_bar"
+        app:layout_constraintVertical_bias="0.476" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
