@@ -8,18 +8,18 @@ import java.util.LinkedList;
 import java.util.List;
 import com.productive6.productive.objects.events.user.*;
 import com.productive6.productive.objects.Title;
-import com.productive6.productive.logic.rewards.TitleManager;
+import com.productive6.productive.logic.rewards.ITitleManager;
 import com.productive6.productive.objects.User;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
 
-public class DefaultTitleManager implements TitleManager, ProductiveListener{
+public class DefaultITitleManager implements ITitleManager, ProductiveListener{
 
     private User person;
     private UserManager data;
     private List<Title> titles;
 
-    public DefaultTitleManager(UserManager data, String[] titleString, int[] titleLevels){
+    public DefaultITitleManager(UserManager data, String[] titleString, int[] titleLevels){
 
         EventDispatch.registerListener(this);
         this.data = data;

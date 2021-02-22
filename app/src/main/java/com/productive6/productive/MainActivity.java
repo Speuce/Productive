@@ -1,6 +1,5 @@
 package com.productive6.productive;
 
-import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
@@ -13,11 +12,6 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.productive6.productive.logic.rewards.TitleManager;
-import com.productive6.productive.logic.rewards.impl.DefaultTitleManager;
-import com.productive6.productive.objects.Title;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
