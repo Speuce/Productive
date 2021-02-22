@@ -1,7 +1,7 @@
 package com.productive6.productive.persistence.datamanage;
 
-import com.productive6.productive.persistence.ITaskPersistenceManager;
-import com.productive6.productive.persistence.IUserPersistenceManager;
+import com.productive6.productive.persistence.access.ITaskAccess;
+import com.productive6.productive.persistence.access.IUserAccess;
 
 /**
  * Interface for classes managing persistent data
@@ -16,16 +16,16 @@ public interface IDataManager {
     void init();
 
     /**
-     * @return an instance of a {@link ITaskPersistenceManager}
+     * @return an instance of a {@link ITaskAccess}
      * to perform database inserts/updates of tasks.
      */
-    ITaskPersistenceManager task();
+    ITaskAccess task();
 
     /**
-     * @return an instance of a {@link IUserPersistenceManager}
+     * @return an instance of a {@link IUserAccess}
      * to perform CRUD operations with users.
      */
-    IUserPersistenceManager user();
+    IUserAccess user();
 
 
 }

@@ -6,7 +6,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.productive6.productive.objects.Task;
-import com.productive6.productive.persistence.ITaskPersistenceManager;
+import com.productive6.productive.persistence.access.ITaskAccess;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
  * Android-specific implementation of a data access object for Tasks
  */
 @Dao
-public interface TaskDao extends ITaskPersistenceManager {
+public interface TaskDao extends ITaskAccess {
 
     /**
      * Inserts a new (no-id)

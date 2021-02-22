@@ -5,8 +5,8 @@ import android.content.Context;
 import androidx.room.Room;
 
 import com.productive6.productive.persistence.ProductiveDB;
-import com.productive6.productive.persistence.ITaskPersistenceManager;
-import com.productive6.productive.persistence.IUserPersistenceManager;
+import com.productive6.productive.persistence.access.ITaskAccess;
+import com.productive6.productive.persistence.access.IUserAccess;
 import com.productive6.productive.persistence.datamanage.IDataManager;
 
 import javax.inject.Inject;
@@ -37,12 +37,12 @@ public class PersistentAndroidDataManager implements IDataManager {
     }
 
     @Override
-    public ITaskPersistenceManager task() {
+    public ITaskAccess task() {
         return db.getTaskDao();
     }
 
     @Override
-    public IUserPersistenceManager user() {
+    public IUserAccess user() {
         return db.getUserDao();
     }
 

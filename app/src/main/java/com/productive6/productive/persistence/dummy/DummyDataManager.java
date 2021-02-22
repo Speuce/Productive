@@ -1,8 +1,8 @@
 package com.productive6.productive.persistence.dummy;
 
-import com.productive6.productive.persistence.IUserPersistenceManager;
+import com.productive6.productive.persistence.access.IUserAccess;
 import com.productive6.productive.persistence.datamanage.IDataManager;
-import com.productive6.productive.persistence.ITaskPersistenceManager;
+import com.productive6.productive.persistence.access.ITaskAccess;
 
 
 /**
@@ -14,9 +14,9 @@ public class DummyDataManager implements IDataManager {
     /**
      * Associated {@link DummyTaskPersistenceManager}
      */
-    private final ITaskPersistenceManager taskPersistenceManager;
+    private final ITaskAccess taskPersistenceManager;
 
-    private final IUserPersistenceManager userPersistenceManager;
+    private final IUserAccess userPersistenceManager;
 
     public DummyDataManager() {
         this.taskPersistenceManager = new DummyTaskPersistenceManager();
@@ -29,12 +29,12 @@ public class DummyDataManager implements IDataManager {
     }
 
     @Override
-    public ITaskPersistenceManager task() {
+    public ITaskAccess task() {
         return taskPersistenceManager;
     }
 
     @Override
-    public IUserPersistenceManager user() {
+    public IUserAccess user() {
         return userPersistenceManager;
     }
 

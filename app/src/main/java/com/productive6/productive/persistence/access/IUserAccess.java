@@ -1,4 +1,4 @@
-package com.productive6.productive.persistence;
+package com.productive6.productive.persistence.access;
 
 import androidx.room.Insert;
 
@@ -7,9 +7,9 @@ import com.productive6.productive.objects.User;
 import java.util.List;
 
 /**
- * Interface specifically handling the persistence of users
+ * Interface specifically handling the access of Users in the database.
  */
-public interface IUserPersistenceManager {
+public interface IUserAccess {
 
 
     /**
