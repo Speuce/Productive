@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Interface specifically handling the persistence of users
  */
-public interface UserPersistenceManager {
+public interface IUserPersistenceManager {
 
 
     /**

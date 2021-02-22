@@ -9,10 +9,9 @@ import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.events.task.TaskCompleteEvent;
 import com.productive6.productive.objects.events.task.TaskCreateEvent;
 import com.productive6.productive.objects.events.task.TaskUpdateEvent;
-import com.productive6.productive.persistence.datamanage.DataManager;
+import com.productive6.productive.persistence.datamanage.IDataManager;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -23,12 +22,12 @@ import java.util.function.Consumer;
 public class PersistentTaskManager implements TaskManager {
 
 
-    private DataManager data;
+    private IDataManager data;
 
     private RunnableExecutor executor;
 
 
-    public PersistentTaskManager(DataManager data, RunnableExecutor e) {
+    public PersistentTaskManager(IDataManager data, RunnableExecutor e) {
         this.data = data;
         this.executor = e;
     }

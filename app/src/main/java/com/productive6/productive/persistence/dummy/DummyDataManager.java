@@ -1,22 +1,22 @@
 package com.productive6.productive.persistence.dummy;
 
-import com.productive6.productive.persistence.UserPersistenceManager;
-import com.productive6.productive.persistence.datamanage.DataManager;
-import com.productive6.productive.persistence.TaskPersistenceManager;
+import com.productive6.productive.persistence.IUserPersistenceManager;
+import com.productive6.productive.persistence.datamanage.IDataManager;
+import com.productive6.productive.persistence.ITaskPersistenceManager;
 
 
 /**
  * A data manager for unit tests.
  * No database stuff is actually done. Everthing is just kept in internal lists.
  */
-public class DummyDataManager implements DataManager {
+public class DummyDataManager implements IDataManager {
 
     /**
      * Associated {@link DummyTaskPersistenceManager}
      */
-    private final TaskPersistenceManager taskPersistenceManager;
+    private final ITaskPersistenceManager taskPersistenceManager;
 
-    private final UserPersistenceManager userPersistenceManager;
+    private final IUserPersistenceManager userPersistenceManager;
 
     public DummyDataManager() {
         this.taskPersistenceManager = new DummyTaskPersistenceManager();
@@ -29,12 +29,12 @@ public class DummyDataManager implements DataManager {
     }
 
     @Override
-    public TaskPersistenceManager task() {
+    public ITaskPersistenceManager task() {
         return taskPersistenceManager;
     }
 
     @Override
-    public UserPersistenceManager user() {
+    public IUserPersistenceManager user() {
         return userPersistenceManager;
     }
 

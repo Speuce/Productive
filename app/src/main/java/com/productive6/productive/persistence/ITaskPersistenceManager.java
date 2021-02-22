@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * An interface specifically handing the persistence of tasks
  */
-public interface TaskPersistenceManager {
+public interface ITaskPersistenceManager {
 
     /**
      * Inserts a new (no-id)

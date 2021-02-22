@@ -5,15 +5,14 @@ import android.content.Context;
 import androidx.room.Room;
 
 import com.productive6.productive.persistence.ProductiveDB;
-import com.productive6.productive.persistence.TaskPersistenceManager;
-import com.productive6.productive.persistence.UserPersistenceManager;
-import com.productive6.productive.persistence.datamanage.DataManager;
+import com.productive6.productive.persistence.ITaskPersistenceManager;
+import com.productive6.productive.persistence.IUserPersistenceManager;
 
 /**
- * A {@link DataManager} implementation for system and integration testing
+ * A {@link IDataManager} implementation for system and integration testing
  * using an in-memory database that will not be persisted between runs.
  */
-public class InMemoryDataManager implements DataManager{
+public class InMemoryDataManager implements IDataManager {
 
     /**
      * A reference to the actual app object
@@ -34,12 +33,12 @@ public class InMemoryDataManager implements DataManager{
     }
 
     @Override
-    public TaskPersistenceManager task() {
+    public ITaskPersistenceManager task() {
         return db.getTaskDao();
     }
 
     @Override
-    public UserPersistenceManager user() {
+    public IUserPersistenceManager user() {
         return db.getUserDao();
     }
 

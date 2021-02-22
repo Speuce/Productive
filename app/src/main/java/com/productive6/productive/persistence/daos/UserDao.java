@@ -6,12 +6,12 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.productive6.productive.objects.User;
-import com.productive6.productive.persistence.UserPersistenceManager;
+import com.productive6.productive.persistence.IUserPersistenceManager;
 
 import java.util.List;
 
 @Dao
-public interface UserDao extends UserPersistenceManager {
+public interface UserDao extends IUserPersistenceManager {
 
     /**
      * Inserts a new (no-id)

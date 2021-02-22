@@ -1,18 +1,17 @@
 package com.productive6.productive.persistence.dummy;
 
 import com.productive6.productive.objects.Task;
-import com.productive6.productive.persistence.TaskPersistenceManager;
+import com.productive6.productive.persistence.ITaskPersistenceManager;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * A {@link com.productive6.productive.persistence.TaskPersistenceManager} for unit testing.
+ * A {@link ITaskPersistenceManager} for unit testing.
  * No database stuff is actually done. Everything is just kept in internal lists.
  */
-public class DummyTaskPersistenceManager implements TaskPersistenceManager {
+public class DummyTaskPersistenceManager implements ITaskPersistenceManager {
 
 
 

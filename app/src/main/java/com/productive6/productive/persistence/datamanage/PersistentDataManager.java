@@ -5,17 +5,16 @@ import android.content.Context;
 import androidx.room.Room;
 
 import com.productive6.productive.persistence.ProductiveDB;
-import com.productive6.productive.persistence.TaskPersistenceManager;
-import com.productive6.productive.persistence.UserPersistenceManager;
-import com.productive6.productive.persistence.datamanage.DataManager;
+import com.productive6.productive.persistence.ITaskPersistenceManager;
+import com.productive6.productive.persistence.IUserPersistenceManager;
 
 import javax.inject.Inject;
 
 /**
- * A production-grade {@link DataManager} implementation that persists data using a database
+ * A production-grade {@link IDataManager} implementation that persists data using a database
  * saved locally on the device.
  */
-public class PersistentDataManager implements DataManager{
+public class PersistentDataManager implements IDataManager {
 
     /**
      * A reference to the actual app object
@@ -37,12 +36,12 @@ public class PersistentDataManager implements DataManager{
     }
 
     @Override
-    public TaskPersistenceManager task() {
+    public ITaskPersistenceManager task() {
         return db.getTaskDao();
     }
 
     @Override
-    public UserPersistenceManager user() {
+    public IUserPersistenceManager user() {
         return db.getUserDao();
     }
 

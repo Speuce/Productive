@@ -4,13 +4,11 @@ import android.content.Context;
 
 import com.productive6.productive.executor.AndroidExecutor;
 import com.productive6.productive.executor.RunnableExecutor;
-import com.productive6.productive.logic.rewards.TitleManager;
-import com.productive6.productive.logic.rewards.impl.DefaultTitleManager;
 import com.productive6.productive.logic.task.TaskManager;
 import com.productive6.productive.logic.task.impl.PersistentTaskManager;
 import com.productive6.productive.logic.user.UserManager;
 import com.productive6.productive.logic.user.impl.PersistentSingleUserManager;
-import com.productive6.productive.persistence.datamanage.DataManager;
+import com.productive6.productive.persistence.datamanage.IDataManager;
 import com.productive6.productive.persistence.datamanage.PersistentDataManager;
 
 import javax.inject.Singleton;
@@ -36,21 +34,21 @@ public class ProductiveDIModule {
 
     @Singleton
     @Provides
-    public DataManager provideDataManager(@ApplicationContext Context context){
-        DataManager d = new PersistentDataManager(context);
+    public IDataManager provideDataManager(@ApplicationContext Context context){
+        IDataManager d = new PersistentDataManager(context);
         d.init();
         return d;
     }
 
     @Singleton
     @Provides
-    public TaskManager provideTaskManager(DataManager d, RunnableExecutor e){
+    public TaskManager provideTaskManager(IDataManager d, RunnableExecutor e){
         return new PersistentTaskManager(d, e);
     }
 
     @Singleton
     @Provides
-    public UserManager provideUserManager(DataManager d, RunnableExecutor e){
+    public UserManager provideUserManager(IDataManager d, RunnableExecutor e){
         return new PersistentSingleUserManager(d, e );
     }
 

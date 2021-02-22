@@ -1,16 +1,16 @@
 package com.productive6.productive.persistence.dummy;
 
 import com.productive6.productive.objects.User;
-import com.productive6.productive.persistence.UserPersistenceManager;
+import com.productive6.productive.persistence.IUserPersistenceManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A {@link com.productive6.productive.persistence.UserPersistenceManager} implementation for unit testing.
+ * A {@link IUserPersistenceManager} implementation for unit testing.
  * No actual SQL/room database operations are performed. Everything is kept in an internal cache.
  */
-public class DummyUserPersistenceManager implements UserPersistenceManager {
+public class DummyUserPersistenceManager implements IUserPersistenceManager {
 
     /**
      * Internal cache of users to simulate an actual database

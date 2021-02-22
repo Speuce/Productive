@@ -1,13 +1,13 @@
 package com.productive6.productive.persistence.datamanage;
 
-import com.productive6.productive.persistence.TaskPersistenceManager;
-import com.productive6.productive.persistence.UserPersistenceManager;
+import com.productive6.productive.persistence.ITaskPersistenceManager;
+import com.productive6.productive.persistence.IUserPersistenceManager;
 
 /**
  * Interface for classes managing persistent data
  * @author matt
  */
-public interface DataManager {
+public interface IDataManager {
 
     /**
      * A chance for implementing classes to perform any
@@ -16,16 +16,16 @@ public interface DataManager {
     void init();
 
     /**
-     * @return an instance of a {@link TaskPersistenceManager}
+     * @return an instance of a {@link ITaskPersistenceManager}
      * to perform database inserts/updates of tasks.
      */
-    TaskPersistenceManager task();
+    ITaskPersistenceManager task();
 
     /**
-     * @return an instance of a {@link UserPersistenceManager}
+     * @return an instance of a {@link IUserPersistenceManager}
      * to perform CRUD operations with users.
      */
-    UserPersistenceManager user();
+    IUserPersistenceManager user();
 
 
 }
