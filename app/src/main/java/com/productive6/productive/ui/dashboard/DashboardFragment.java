@@ -38,22 +38,24 @@ public class DashboardFragment extends Fragment {
      */
     private void initializeTaskList(View root){
 
-        RecyclerView taskDisplayView = root.findViewById(R.id.taskDisplayView);
-        ArrayList<Task> tasks = new ArrayList<>();
-        tasks.add(new Task("String taskName1", 1, 1, false));
-        tasks.add(new Task("String taskName2", 2, 2, false));
-        tasks.add(new Task("String taskName3", 3, 3, false));
-        tasks.add(new Task("String taskName4", 4, 4, false));
-        tasks.add(new Task("String taskName5", 5, 5, false));
-        tasks.add(new Task("String taskName1", 1, 1, false));
-        tasks.add(new Task("String taskName2", 2, 2, false));
-        tasks.add(new Task("String taskName3", 3, 3, false));
-        tasks.add(new Task("String taskName4", 4, 4, false));
-        tasks.add(new Task("String taskName5", 5, 5, false));
-        TaskAdapter taskAdapter = new TaskAdapter();
-        taskAdapter.setTasks(tasks);
+        RecyclerView taskDisplayView = root.findViewById(R.id.taskDisplayView);//Grab display
 
-        taskDisplayView.setAdapter(taskAdapter);
-        taskDisplayView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false));
+        ArrayList<Task> tasks = new ArrayList<>();//Data
+        tasks.add(new Task("String taskName1", 1, 1, false));
+        tasks.add(new Task("String taskName2", 2, 2, false));
+        tasks.add(new Task("String taskName3", 3, 3, false));
+        tasks.add(new Task("String taskName4", 4, 4, false));
+        tasks.add(new Task("String taskName5", 5, 5, false));
+        tasks.add(new Task("String taskName1", 1, 1, false));
+        tasks.add(new Task("String taskName2", 2, 2, false));
+        tasks.add(new Task("String taskName3", 3, 3, false));
+        tasks.add(new Task("String taskName4", 4, 4, false));
+        tasks.add(new Task("String taskName5", 5, 5, false));
+
+        TaskAdapter taskAdapter = new TaskAdapter();
+        taskAdapter.setTasks(tasks);//Give data to view
+
+        taskDisplayView.setAdapter(taskAdapter);//attach display to view + data
+        taskDisplayView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false));//Describe how the data should be laid out
     }
 }
