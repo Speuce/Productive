@@ -2,16 +2,18 @@ package com.productive6.productive.persistence.datamanage.dummy;
 
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.persistence.access.ITaskAccess;
+import com.productive6.productive.persistence.datamanage.ITaskPersistenceManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
  * A {@link ITaskAccess} for unit testing.
  * No database stuff is actually done. Everything is just kept in internal lists.
  */
-public class DummyTaskPersistenceManager implements ITaskAccess {
+public class DummyTaskPersistenceManager implements ITaskPersistenceManager {
 
 
 
@@ -31,13 +33,13 @@ public class DummyTaskPersistenceManager implements ITaskAccess {
     }
 
     @Override
-    public List<Task> getAllTasks() {
-        return internalList.stream().sorted().collect(Collectors.toList());
+    public void getAllTasks(Consumer<List<Task>> callback) {
+        callback.accept(internalList.stream().sorted().collect(Collectors.toList()));
     }
 
     @Override
-    public List<Task> getAllTasks(boolean complete) {
-        return internalList.stream().filter(t -> t.isCompleted() == complete).sorted().collect(Collectors.toList());
+    public void getAllTasks(boolean complete, Consumer<List<Task>> callback) {
+        callback.accept(internalList.stream().filter(t -> t.isCompleted() == complete).sorted().collect(Collectors.toList()));
     }
 
     @Override

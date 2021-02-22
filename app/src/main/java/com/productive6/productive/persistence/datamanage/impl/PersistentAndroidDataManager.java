@@ -4,10 +4,14 @@ import android.content.Context;
 
 import androidx.room.Room;
 
+import com.productive6.productive.executor.RunnableExecutor;
+import com.productive6.productive.objects.Task;
 import com.productive6.productive.persistence.ProductiveDB;
 import com.productive6.productive.persistence.access.ITaskAccess;
 import com.productive6.productive.persistence.access.IUserAccess;
 import com.productive6.productive.persistence.datamanage.IDataManager;
+import com.productive6.productive.persistence.datamanage.ITaskPersistenceManager;
+import com.productive6.productive.persistence.datamanage.IUserPersistenceManager;
 
 import javax.inject.Inject;
 
@@ -25,9 +29,15 @@ public class PersistentAndroidDataManager implements IDataManager {
 
     private ProductiveDB db;
 
+    private final ITaskPersistenceManager taskPersistenceManager;
+
+    private final IUserPersistenceManager userPersistenceManager;
+
     @Inject
-    public PersistentAndroidDataManager(Context context) {
+    public PersistentAndroidDataManager(Context context, RunnableExecutor executor) {
         this.context = context;
+        this.taskPersistenceManager = new TaskPersistenceManager(executor, db.getTaskDao());
+        this.userPersistenceManager = new UserPersistenceManager(executor, db.getUserDao());
     }
 
     @Override
@@ -37,13 +47,13 @@ public class PersistentAndroidDataManager implements IDataManager {
     }
 
     @Override
-    public ITaskAccess task() {
-        return db.getTaskDao();
+    public ITaskPersistenceManager task() {
+        return taskPersistenceManager;
     }
 
     @Override
-    public IUserAccess user() {
-        return db.getUserDao();
+    public IUserPersistenceManager user() {
+        return userPersistenceManager;
     }
 
 

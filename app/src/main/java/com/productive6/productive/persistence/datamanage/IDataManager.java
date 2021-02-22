@@ -16,16 +16,16 @@ public interface IDataManager {
     void init();
 
     /**
-     * @return an instance of a {@link ITaskAccess}
-     * to perform database inserts/updates of tasks.
+     * @return an instance of a {@link ITaskPersistenceManager}
+     * to perform database operations with tasks.
      */
-    ITaskAccess task();
+    ITaskPersistenceManager task();
 
     /**
-     * @return an instance of a {@link IUserAccess}
-     * to perform CRUD operations with users.
+     * @return an instance of a {@link IUserPersistenceManager}
+     * to perform database operations with users.
      */
-    IUserAccess user();
+    IUserPersistenceManager user();
 
 
 }
