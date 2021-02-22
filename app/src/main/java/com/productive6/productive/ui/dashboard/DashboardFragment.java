@@ -4,15 +4,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.productive6.productive.R;
+import com.productive6.productive.objects.Task;
+
+import java.util.ArrayList;
 
 public class DashboardFragment extends Fragment {
 
@@ -23,13 +25,31 @@ public class DashboardFragment extends Fragment {
         dashboardViewModel =
                 new ViewModelProvider(this).get(DashboardViewModel.class);
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        final TextView textView = root.findViewById(R.id.text_dashboard);
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+
+        initializeTaskList(root);
+
         return root;
+    }
+
+
+    private void initializeTaskList(View root){
+
+        RecyclerView taskDisplayView = root.findViewById(R.id.taskDisplayView);
+        ArrayList<Task> tasks = new ArrayList<>();
+        tasks.add(new Task("String taskName1", 1, 1, false));
+        tasks.add(new Task("String taskName2", 2, 2, false));
+        tasks.add(new Task("String taskName3", 3, 3, false));
+        tasks.add(new Task("String taskName4", 4, 4, false));
+        tasks.add(new Task("String taskName5", 5, 5, false));
+        tasks.add(new Task("String taskName1", 1, 1, false));
+        tasks.add(new Task("String taskName2", 2, 2, false));
+        tasks.add(new Task("String taskName3", 3, 3, false));
+        tasks.add(new Task("String taskName4", 4, 4, false));
+        tasks.add(new Task("String taskName5", 5, 5, false));
+        TaskAdapter taskAdapter = new TaskAdapter();
+        taskAdapter.setTasks(tasks);
+
+        taskDisplayView.setAdapter(taskAdapter);
+        taskDisplayView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false));
     }
 }
