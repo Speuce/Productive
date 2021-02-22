@@ -1,5 +1,6 @@
 package com.productive6.productive.logic.rewards.impl;
 
+import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.rewards.IRewardManager;
 import com.productive6.productive.logic.user.UserManager;
 import com.productive6.productive.objects.Task;
@@ -16,13 +17,15 @@ public class RewardManager implements IRewardManager, ProductiveListener{
     final int XP_WEIGHT_CONSTANT = 4; //weight value for how much XP is added
     final int LEVEL_UP_CONSTANT = 100; //the amount of XP needed for a level up to occur
 
-    User person;
-    UserManager data;
-
+    private User person;
+    private UserManager data;
+    public int numTaskCompleteRuns; //DEBUGGING VAR
     /**
      * @param data a UserManager object used to update the user information in the database
      */
     public RewardManager(UserManager data){
+        numTaskCompleteRuns = 0;
+        EventDispatch.registerListener(this);
         this.data = data;
         person = null;
     }
@@ -41,6 +44,11 @@ public class RewardManager implements IRewardManager, ProductiveListener{
      * @return an integer representation of the amount of experience required for a level up
      */
     public int getLevelUpValue(){return LEVEL_UP_CONSTANT;}
+
+    /**
+     * @return integer representation of current user coin count
+     */
+    public int getCoins(){return person.getCoins();}
 
     /**
      * Updates all rewards the TaskManager is responsible, updates level if experience is has exceeded
@@ -100,6 +108,9 @@ public class RewardManager implements IRewardManager, ProductiveListener{
      */
     @ProductiveEventHandler
     public void taskCompleted(TaskCompleteEvent event){
+        System.out.println("stub");
+        numTaskCompleteRuns++;
+        counter.increment();
         updateRewards(event.getTask());
     }
 

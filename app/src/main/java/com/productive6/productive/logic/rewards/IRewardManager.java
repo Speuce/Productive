@@ -25,4 +25,9 @@ public interface IRewardManager {
      */
     int getLevelUpValue();
 
+    /**
+     * @Returns the user's current coin count as an int
+     */
+    int getCoins();
+
 }

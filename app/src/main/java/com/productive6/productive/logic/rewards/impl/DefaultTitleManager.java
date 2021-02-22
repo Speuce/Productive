@@ -13,13 +13,13 @@ import com.productive6.productive.objects.User;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
 
-public class DefaultITitleManager implements ITitleManager, ProductiveListener{
+public class DefaultTitleManager implements ITitleManager, ProductiveListener{
 
     private User person;
     private UserManager data;
     private List<Title> titles;
 
-    public DefaultITitleManager(UserManager data, String[] titleString, int[] titleLevels){
+    public DefaultTitleManager(UserManager data, String[] titleString, int[] titleLevels){
 
         EventDispatch.registerListener(this);
         this.data = data;
