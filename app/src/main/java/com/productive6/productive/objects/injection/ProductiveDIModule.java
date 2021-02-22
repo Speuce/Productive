@@ -34,22 +34,22 @@ public class ProductiveDIModule {
 
     @Singleton
     @Provides
-    public IDataManager provideDataManager(@ApplicationContext Context context){
-        IDataManager d = new PersistentAndroidDataManager(context);
+    public IDataManager provideDataManager(@ApplicationContext Context context, RunnableExecutor e){
+        IDataManager d = new PersistentAndroidDataManager(context, e);
         d.init();
         return d;
     }
 
     @Singleton
     @Provides
-    public TaskManager provideTaskManager(IDataManager d, RunnableExecutor e){
-        return new PersistentTaskManager(d, e);
+    public TaskManager provideTaskManager(IDataManager d){
+        return new PersistentTaskManager(d);
     }
 
     @Singleton
     @Provides
-    public UserManager provideUserManager(IDataManager d, RunnableExecutor e){
-        return new PersistentSingleUserManager(d, e );
+    public UserManager provideUserManager(IDataManager d){
+        return new PersistentSingleUserManager(d);
     }
 
 

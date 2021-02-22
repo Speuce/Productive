@@ -24,28 +24,22 @@ public class PersistentTaskManager implements TaskManager {
 
     private IDataManager data;
 
-    private RunnableExecutor executor;
 
 
-    public PersistentTaskManager(IDataManager data, RunnableExecutor e) {
+    public PersistentTaskManager(IDataManager data) {
         this.data = data;
-        this.executor = e;
     }
 
     @Override
-    public void getTasksByPriority(Consumer<Collection<Task>> outputparam) {
-        executor.runASync(() -> {
-            Collection<Task> ret = data.task().getAllTasks(false);
-            executor.runSync(() -> outputparam.accept(ret));
-        });
+    public void getTasksByPriority(Consumer<List<Task>> outputparam) {
+        data.task().getAllTasks(false, outputparam);
     }
 
     @Override
-    public void getTasksByCreation(Consumer<Collection<Task>> outputparam) {
-        executor.runASync(() -> {
-            List<Task> ret = data.task().getAllTasks(false);
+    public void getTasksByCreation(Consumer<List<Task>> outputparam) {
+        data.task().getAllTasks(false, ret ->{
             ret.sort((a, b) -> (int) (((Task) a).getCreatedTime() - ((Task) b).getCreatedTime()));
-            executor.runSync(() -> outputparam.accept(ret));
+            outputparam.accept(ret);
         });
     }
 
@@ -68,18 +62,14 @@ public class PersistentTaskManager implements TaskManager {
             t.setCreatedTime(System.currentTimeMillis());
         }
 
-        executor.runASync(() -> data.task().insertTask(t));
-
+        data.task().insertTask(t);
         EventDispatch.dispatchEvent(new TaskCreateEvent(t));
 
     }
 
     @Override
-    public void getCompletedTasks(Consumer<Collection<Task>> outputparam) {
-        executor.runASync(() ->{
-            Collection<Task> ret = data.task().getAllTasks(true);
-            executor.runSync(() -> outputparam.accept(ret));
-        });
+    public void getCompletedTasks(Consumer<List<Task>> outputparam) {
+        data.task().getAllTasks(true, outputparam);
     }
 
     @Override
@@ -87,7 +77,7 @@ public class PersistentTaskManager implements TaskManager {
         if(t.getId() == 0){
             throw new PersistentIDAssignmentException();
         }
-        executor.runASync(() -> data.task().updateTask(t));
+        data.task().updateTask(t);
         EventDispatch.dispatchEvent(new TaskUpdateEvent(t));
     }
 

@@ -24,18 +24,12 @@ public class PersistentSingleUserManager implements UserManager {
     private final IDataManager data;
 
     /**
-     * The {@link RunnableExecutor} for running functions synchronous/asynchronously
-     */
-    private final RunnableExecutor executor;
-
-    /**
      * The current user using the app.
      */
     private User currentUser;
 
-    public PersistentSingleUserManager(IDataManager data, RunnableExecutor executor) {
+    public PersistentSingleUserManager(IDataManager data) {
         this.data = data;
-        this.executor = executor;
         loadCurrentUser();
     }
 
@@ -43,8 +37,7 @@ public class PersistentSingleUserManager implements UserManager {
      * Loads the current user, or creates one if there is none.
      */
     private void loadCurrentUser(){
-        executor.runASync(() -> {
-            List<User> users = data.user().getAllUsers();
+        data.user().getAllUsers(users -> {
             User u;
             if(users.isEmpty()){
                 u = new User();
@@ -53,10 +46,8 @@ public class PersistentSingleUserManager implements UserManager {
             }else{
                 u = users.get(0);
             }
-            executor.runSync(() ->{
-                currentUser = u;
-                EventDispatch.dispatchEvent(new UserLoadedEvent(currentUser));
-            });
+            currentUser = u;
+            EventDispatch.dispatchEvent(new UserLoadedEvent(currentUser));
         });
     }
 
@@ -70,7 +61,7 @@ public class PersistentSingleUserManager implements UserManager {
 
     @Override
     public void updateUser(User u) {
-        executor.runASync(() -> {data.user().updateUser(u);});
+        data.user().updateUser(u);
         EventDispatch.dispatchEvent(new UserUpdateEvent(u));
     }
 }

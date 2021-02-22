@@ -25,7 +25,7 @@ public class TaskManagerTest {
     @Before
     public void init(){
         data = new DummyDataManager();
-        taskManager = new PersistentTaskManager(data, new TestExecutor());
+        taskManager = new PersistentTaskManager(data);
     }
 
 
