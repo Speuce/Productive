@@ -56,6 +56,7 @@ public class User {
         this.exp = exp;
         this.level = level;
         this.coins = coins;
+        selectedTitle = "title1";
     }
 
     /**
