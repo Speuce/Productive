@@ -20,8 +20,7 @@ import java.util.ArrayList;
  * fields inside the task list activity all in one easy-to-access place.
  */
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
-
-    private TextView taskName;
+    
     private ArrayList<Task> tasks = new ArrayList<>();
 
     /**
