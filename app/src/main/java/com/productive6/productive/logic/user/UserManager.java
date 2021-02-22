@@ -27,4 +27,9 @@ public interface UserManager {
      * @param u the user who's information has changed.
      */
     void updateUser(User u);
+
+    /**
+    * Reads data from the data layer and populates local variables.
+    */
+    void load();
 }
