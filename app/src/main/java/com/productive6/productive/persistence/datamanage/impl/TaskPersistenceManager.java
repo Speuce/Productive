@@ -13,7 +13,7 @@ import java.util.function.Consumer;
  * Thread-safe implementation of the {@link com.productive6.productive.persistence.datamanage.ITaskPersistenceManager} interface.
  * Essentailly a thread safe wrapper for the given {@link ITaskAccess}
  */
-public class ASyncTaskPersistenceManager implements ITaskPersistenceManager {
+public class TaskPersistenceManager implements ITaskPersistenceManager {
 
     /**
      * For accessing different threads
@@ -25,7 +25,7 @@ public class ASyncTaskPersistenceManager implements ITaskPersistenceManager {
      */
     private final ITaskAccess access;
 
-    public ASyncTaskPersistenceManager(RunnableExecutor executor, ITaskAccess access) {
+    public TaskPersistenceManager(RunnableExecutor executor, ITaskAccess access) {
         this.executor = executor;
         this.access = access;
     }

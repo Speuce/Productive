@@ -15,7 +15,7 @@ import java.util.function.Consumer;
  * Thread-safe implementation of the {@link IUserPersistenceManager} interface.
  * Essentailly a thread safe wrapper for the given {@link IUserAccess}
  */
-public class ASyncUserPersistenceManager implements IUserPersistenceManager {
+public class UserPersistenceManager implements IUserPersistenceManager {
 
     /**
      * For accessing different threads
@@ -27,7 +27,7 @@ public class ASyncUserPersistenceManager implements IUserPersistenceManager {
      */
     private final IUserAccess access;
 
-    public ASyncUserPersistenceManager(RunnableExecutor executor, IUserAccess access) {
+    public UserPersistenceManager(RunnableExecutor executor, IUserAccess access) {
         this.executor = executor;
         this.access = access;
     }
