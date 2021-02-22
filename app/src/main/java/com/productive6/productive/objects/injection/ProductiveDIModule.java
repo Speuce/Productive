@@ -9,7 +9,7 @@ import com.productive6.productive.logic.task.impl.PersistentTaskManager;
 import com.productive6.productive.logic.user.UserManager;
 import com.productive6.productive.logic.user.impl.PersistentSingleUserManager;
 import com.productive6.productive.persistence.datamanage.IDataManager;
-import com.productive6.productive.persistence.datamanage.impl.PersistentDataManager;
+import com.productive6.productive.persistence.datamanage.impl.PersistentAndroidDataManager;
 
 import javax.inject.Singleton;
 
@@ -35,7 +35,7 @@ public class ProductiveDIModule {
     @Singleton
     @Provides
     public IDataManager provideDataManager(@ApplicationContext Context context){
-        IDataManager d = new PersistentDataManager(context);
+        IDataManager d = new PersistentAndroidDataManager(context);
         d.init();
         return d;
     }

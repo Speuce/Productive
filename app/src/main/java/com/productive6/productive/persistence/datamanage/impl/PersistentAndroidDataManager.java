@@ -15,7 +15,7 @@ import javax.inject.Inject;
  * A production-grade {@link IDataManager} implementation that persists data using a database
  * saved locally on the device.
  */
-public class PersistentDataManager implements IDataManager {
+public class PersistentAndroidDataManager implements IDataManager {
 
     /**
      * A reference to the actual app object
@@ -26,7 +26,7 @@ public class PersistentDataManager implements IDataManager {
     private ProductiveDB db;
 
     @Inject
-    public PersistentDataManager(Context context) {
+    public PersistentAndroidDataManager(Context context) {
         this.context = context;
     }
 
