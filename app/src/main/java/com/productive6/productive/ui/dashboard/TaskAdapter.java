@@ -14,12 +14,19 @@ import com.productive6.productive.objects.Task;
 import java.util.ArrayList;
 
 
-
+/**
+ * Enabling the translation from data to view, TaskAdapter allows for the modification of the data
+ * inside the task list on the dashboard fragment. Task Adapter uses a ViewHolder class to keep the
+ * fields inside the task list activity all in one easy-to-access place.
+ */
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
     private TextView taskName;
     private ArrayList<Task> tasks = new ArrayList<>();
 
+    /**
+     * Holds the recyclerView view and it's components
+     */
     public class ViewHolder extends RecyclerView.ViewHolder{
         private TextView taskName;
 
@@ -29,9 +36,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         }
     }
 
-    public TaskAdapter(){
-
-    }
+    public TaskAdapter(){}
 
     @NonNull
     @Override

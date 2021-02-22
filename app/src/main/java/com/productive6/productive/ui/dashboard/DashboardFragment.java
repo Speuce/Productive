@@ -16,6 +16,7 @@ import com.productive6.productive.objects.Task;
 
 import java.util.ArrayList;
 
+
 public class DashboardFragment extends Fragment {
 
     private DashboardViewModel dashboardViewModel;
@@ -31,7 +32,10 @@ public class DashboardFragment extends Fragment {
         return root;
     }
 
-
+    /**
+     * Populates the task list in the dashboard fragment.
+     * @param root
+     */
     private void initializeTaskList(View root){
 
         RecyclerView taskDisplayView = root.findViewById(R.id.taskDisplayView);
