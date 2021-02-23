@@ -8,22 +8,39 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.productive6.productive.logic.event.EventDispatch;
+import com.productive6.productive.logic.rewards.ITitleManager;
 import com.productive6.productive.objects.Title;
-import com.productive6.productive.objects.User;
+import com.productive6.productive.objects.events.ProductiveEventHandler;
+import com.productive6.productive.objects.events.ProductiveListener;
+import com.productive6.productive.objects.events.user.UserTitleInitialized;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class TitleSelection extends AppCompatActivity {
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
+public class TitleSelection extends AppCompatActivity implements ProductiveListener {
+
+
     private Button submit, cancel;
     private String[] titleStrings;
     private int[] titleLevels;
-    private final User person = MainActivity.person;
+    private List<Title> titles;
+    @Inject
+    ITitleManager titleManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.title_selection);
-        String oldTitle = person.getSelectedTitle();
+
+        EventDispatch.registerListener(this);
+
+        //String oldTitle = person.getSelectedTitle();
         RecyclerView titleView = findViewById(R.id.titleRecyclerView);
         cancel = findViewById(R.id.cancel);
         submit = findViewById(R.id.submit);
@@ -32,18 +49,13 @@ public class TitleSelection extends AppCompatActivity {
         titleLevels = res.getIntArray(R.array.TitleLevelArray);
 
         List<Title> titles = new LinkedList<>();
-
-        for (int i = 0; (i < titleStrings.length) && (i < titleLevels.length); i++) {
-            if (person.getLevel()>=titleLevels[i])
-                titles.add(new Title(titleStrings[i],titleLevels[i]));
-        }
-
+/*
         final TitleAdapter titleAdapter = new TitleAdapter(titles,person);
         titleView.setAdapter(titleAdapter);
         cancel.setOnClickListener(v -> {
             person.setSelectedTitle(oldTitle);
             openActivity();
-        });
+        });*/
         submit.setOnClickListener(v -> openActivity());
     }
 
@@ -51,4 +63,10 @@ public class TitleSelection extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
+
+    @ProductiveEventHandler
+    public void titleInit(UserTitleInitialized u){
+        titles = titleManager.getTitleOptions();
+    }
+
 }
