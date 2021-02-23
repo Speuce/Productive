@@ -35,7 +35,7 @@ public interface TaskDao extends ITaskAccess {
 
     /**
      * Gets a list of all complete/incomplete tasks,
-     * sorted by priorit then date created
+     * sorted by priority then date created
      * @param complete indicates whether to look for in/complete tasks.
      * @return the list of tasks.
      */
