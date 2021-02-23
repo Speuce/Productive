@@ -45,6 +45,6 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="13dp"
         android:layout_marginBottom="1dp"
-        android:text="Completed" />
+        android:text="Completed"/>
 
 </RelativeLayout>

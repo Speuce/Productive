@@ -11,6 +11,7 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import com.productive6.productive.logic.rewards.TitleManager;
 import com.productive6.productive.logic.rewards.impl.DefaultTitleManager;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.Title;
+import com.productive6.productive.ui.dashboard.TaskAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

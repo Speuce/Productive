@@ -3,6 +3,7 @@ package com.productive6.productive.ui.dashboard;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -28,10 +29,16 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
      */
     public class ViewHolder extends RecyclerView.ViewHolder{
         private TextView taskName;
+        private CheckBox completedCheckBox;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
             taskName = itemView.findViewById(R.id.taskNameTextView);
+            completedCheckBox = itemView.findViewById(R.id.completionCheckBox);
+        }
+
+        public void iCanHearYou(){
+            System.out.println("hi");
         }
     }
 
@@ -48,6 +55,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.taskName.setText(tasks.get(position).getTaskName());
+        holder.completedCheckBox.setChecked(tasks.get(position).isCompleted());
     }
 
     @Override
