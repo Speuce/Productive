@@ -58,22 +58,22 @@ public class RewardManagerTest {
     @Test
     public void testAddExperience(){
 
-        assertEquals("Did not have 0 XP", rewardManager.getExperience(),0);
+        assertEquals("Did not have 0 XP", 0,rewardManager.getExperience());
 
         EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",4,0, true)));
-        assertEquals("Did not have 0 XP", rewardManager.getExperience(),4*4);
+        assertEquals("Did not have 0 XP", 16,rewardManager.getExperience());
 
     }
 
     @Test
     public void testLevel(){
 
-        assertEquals("Did not have 0 XP", rewardManager.getExperience(),0);
+        assertEquals("Did not have 0 XP", 0,rewardManager.getExperience());
 
         EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",25,0, true)));
 
-        assertEquals("Did not have 0 XP", rewardManager.getExperience(),0);
-        assertEquals("Did not have level as 1", rewardManager.getLevel(),1);
+        assertEquals("Did not have 0 XP", 0,rewardManager.getExperience());
+        assertEquals("Did not have level as 1", 1,rewardManager.getLevel());
 
 
     }
@@ -83,15 +83,15 @@ public class RewardManagerTest {
 
         EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",101,0, true)));
 
-        assertEquals("Did not have 4 XP", rewardManager.getExperience(),4);
-        assertEquals("Did not have level as 4", rewardManager.getLevel(),4);
+        assertEquals("Did not have 4 XP", 4,rewardManager.getExperience());
+        assertEquals("Did not have level as 4", 4,rewardManager.getLevel());
     }
 
     @Test
     public void testAddingCoins(){
 
         EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",101,0, true)));
-        assertEquals("Did not have level as 4", rewardManager.getCoins(),303);
+        assertEquals("Did not have level as 4", 303,rewardManager.getCoins());
 
     }
 
