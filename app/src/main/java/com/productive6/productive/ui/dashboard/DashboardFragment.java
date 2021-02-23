@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.productive6.productive.R;
+import com.productive6.productive.logic.task.TaskManager;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.persistence.TaskPersistenceManager;
 import com.productive6.productive.persistence.daos.TaskDao;
@@ -19,11 +20,19 @@ import com.productive6.productive.persistence.daos.TaskDao_Impl;
 import com.productive6.productive.persistence.datamanage.PersistentDataManager;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.function.Consumer;
 
+import javax.inject.Inject;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class DashboardFragment extends Fragment {
 
+    @Inject
+    TaskManager taskManager;
     private DashboardViewModel dashboardViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -32,36 +41,36 @@ public class DashboardFragment extends Fragment {
                 new ViewModelProvider(this).get(DashboardViewModel.class);
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
-        initializeTaskList(root);
+        attachTaskView(root);
 
         return root;
     }
 
     /**
-     * Populates the task list in the dashboard fragment.
+     * Attaches task data, view, and display. Allowing for dynamically rendered tasks in the task display.
      * @param root
      */
-    private void initializeTaskList(View root){
-
+    private void attachTaskView(View root){
         RecyclerView taskDisplayView = root.findViewById(R.id.taskDisplayView);//Grab display
-
-        List<Task> tasks = fetchTasks(root);//Fetch data from backend
-
         TaskAdapter taskAdapter = new TaskAdapter();
-        taskAdapter.setTasks(tasks);//Give data to view
 
-        taskDisplayView.setAdapter(taskAdapter);//attach display to view + data
+        taskManager.getTasksByPriority(new TaskConsumerStartup(taskAdapter));//DATABASE CALL--Load Tasks
+
+        taskDisplayView.setAdapter(taskAdapter);//attach display to view + tasks
         taskDisplayView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false));//Describe how the data should be laid out
     }
 
     /**
-     * Fetch tasks from backend and return
-     * @return
+     * Holds a callback for the database request made in attachTaskView.
      */
-    private List<Task> fetchTasks(View root){
-        TaskPersistenceManager taskPersistenceManager = new PersistentDataManager(root.getContext()).task();
-        List<Task> tasks = taskPersistenceManager.getAllTasks();//get all tasks from backend
+    public class TaskConsumerStartup implements Consumer<Collection<Task>> {
+        private TaskAdapter taskAdapter;
 
-        return tasks;
-    };
+        TaskConsumerStartup(TaskAdapter taskAdapter){this.taskAdapter = taskAdapter;}
+
+        @Override
+        public void accept(Collection<Task> tasks) {
+            taskAdapter.setTasks((List<Task>) tasks);//Give data to view and automatically re-renders the view
+        }
+    }
 }
