@@ -55,7 +55,7 @@ public class DashboardFragment extends Fragment {
         ArrayList<Task> tasks = new ArrayList<>();//Data
         tasks.add(new Task("String taskName1", 1, 1, 1, new Date(), false));
 
-        TaskAdapter taskAdapter = new TaskAdapter();
+        TaskAdapter taskAdapter = new TaskAdapter(taskManager);
         taskManager.getTasksByPriority(new TaskConsumerStartup(taskAdapter));//Logic CALL--Load Tasks
         taskDisplayView.setAdapter(taskAdapter);//attach display to view + tasks
         taskDisplayView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false));//Describe how the data should be laid out

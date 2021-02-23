@@ -7,15 +7,21 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import androidx.activity.ComponentActivity;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.productive6.productive.R;
+import com.productive6.productive.logic.task.TaskManager;
 import com.productive6.productive.objects.Task;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
 
 
 /**
@@ -23,8 +29,11 @@ import java.util.List;
  * inside the task list on the dashboard fragment. Task Adapter uses a ViewHolder class to keep the
  * fields inside the task list activity all in one easy-to-access place.
  */
+
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
+    @Inject
+    TaskManager taskManager;
     private List<Task> tasks = new ArrayList<>();
 
     /**
@@ -57,16 +66,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
                     for(Task task : tasks){//Find the Task whose associated box has been checked
                         if (task.getId() == Integer.parseInt((String)id.getText())) {
                             task.setCompleted(taskComplete.isChecked());//set completed to same value as checked
+                            taskManager.updateTask(task);
                         }
                     }
                 }
             });
         }
-
-
     }
 
-    public TaskAdapter(){}
+    public TaskAdapter(TaskManager taskManager){ this.taskManager = taskManager;}
 
     @NonNull
     @Override
