@@ -15,9 +15,12 @@ import com.productive6.productive.R;
 import com.productive6.productive.objects.Task;
 
 import java.util.ArrayList;
+import java.util.Date;
 
+import dagger.hilt.android.AndroidEntryPoint;
 
 public class DashboardFragment extends Fragment {
+    
 
     private DashboardViewModel dashboardViewModel;
 
@@ -41,7 +44,7 @@ public class DashboardFragment extends Fragment {
         RecyclerView taskDisplayView = root.findViewById(R.id.taskDisplayView);//Grab display
 
         ArrayList<Task> tasks = new ArrayList<>();//Data
-       tasks.add(new Task("String taskName1", 1, 1, 1, "2020-10-10", false));
+        tasks.add(new Task("String taskName1", 1, 1, 1, new Date(), false));
 //        tasks.add(new Task("String taskName2", 2, 2, false));
 //        tasks.add(new Task("String taskName3", 3, 3, false));
 //        tasks.add(new Task("String taskName4", 4, 4, false));

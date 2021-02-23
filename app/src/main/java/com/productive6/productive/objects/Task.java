@@ -48,7 +48,7 @@ public class Task implements Comparable<Task>{
      * When a given task is due
      */
     @ColumnInfo(name = "due_date")
-    private String dueDate;
+    private Date dueDate;
 
     /**
      * When a given task is due
@@ -66,7 +66,7 @@ public class Task implements Comparable<Task>{
      * @param completed A flag to mark whether or not this task
      *                  has been completed.
      */
-    public Task(String taskName, int priority, int difficulty, long createdTime, String dueDate, boolean completed) {
+    public Task(String taskName, int priority, int difficulty, long createdTime, Date dueDate, boolean completed) {
         this.taskName = taskName;
         this.priority = priority;
         this.createdTime = createdTime;
@@ -89,7 +89,7 @@ public class Task implements Comparable<Task>{
         this.createdTime = createdTime;
         this.difficulty = difficulty;
         this.completed = false;
-        this.dueDate = "";
+//        this.dueDate = "";
     }
 
 
@@ -155,11 +155,11 @@ public class Task implements Comparable<Task>{
         this.createdTime = createdTime;
     }
 
-    public String getDueDate() { return dueDate; }
+    public Date getDueDate() { return dueDate; }
 
     public int getDifficulty() { return difficulty; }
 
-    public void setDueDate(String dueDate) { this.dueDate = dueDate; }
+    public void setDueDate(Date dueDate) { this.dueDate = dueDate; }
 
     public void setDifficulty(int difficulty) { this.difficulty = difficulty; }
 
