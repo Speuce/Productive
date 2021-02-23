@@ -40,17 +40,26 @@ public class RewardManagerTest {
     @Before
     public void init(){ //refresh the data between each test
         EventDispatch.dispatchEvent(new UserLoadedEvent(new User(0,0,0)));
+
     }
 
     @Test
-    public void testManyEvents(){}
+    public void testManyEvents(){
+
+        for(int i = 0; i < 1001; i++){
+            EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",1,0, true)));
+        }
+        assertEquals("Did not have 0 XP", 4,rewardManager.getExperience());
+        assertEquals("Did not have level as 1", 40,rewardManager.getLevel());
+
+    }
 
 
     @Test
     public void testAddExperience(){
 
         assertEquals("Did not have 0 XP", rewardManager.getExperience(),0);
-    
+
         EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",4,0, true)));
         assertEquals("Did not have 0 XP", rewardManager.getExperience(),4*4);
 
