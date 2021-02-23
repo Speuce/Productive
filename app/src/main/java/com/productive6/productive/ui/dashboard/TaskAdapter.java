@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.productive6.productive.R;
 import com.productive6.productive.objects.Task;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,14 +27,27 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     private List<Task> tasks = new ArrayList<>();
 
     /**
+     * For formatting dates in the view
+     */
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+    /**
      * Holds the recyclerView view and it's components
      */
     public class ViewHolder extends RecyclerView.ViewHolder{
         private TextView taskName;
+        private TextView taskPriority;
+        private TextView taskDifficulty;
+        private TextView taskDueDate;
+        private ToggleButton taskComplete;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
             taskName = itemView.findViewById(R.id.taskNameTextView);
+            taskPriority = itemView.findViewById(R.id.taskPriorityTextView);
+            taskDifficulty = itemView.findViewById(R.id.taskDifficultyTextView);
+            taskDueDate = itemView.findViewById(R.id.taskDueDateTextView);
+            taskComplete = itemView.findViewById(R.id.taskCompleteToggleButton);
         }
     }
 
@@ -49,6 +64,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.taskName.setText(tasks.get(position).getTaskName());
+        holder.taskPriority.setText(""+tasks.get(position).getPriority());
+        holder.taskDifficulty.setText(""+tasks.get(position).getDifficulty());
+        holder.taskDueDate.setText(format.format(tasks.get(position).getDueDate()));
+        holder.taskComplete.setChecked(tasks.get(position).isCompleted());
     }
 
     @Override
