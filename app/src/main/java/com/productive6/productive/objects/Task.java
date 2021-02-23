@@ -42,6 +42,11 @@ public class Task implements Comparable<Task>{
     @ColumnInfo(name = "completed")
     private boolean completed;
 
+    /**
+     * Epoch time that the task should be completed by.
+     */
+    @ColumnInfo(name = "due")
+    private long dueTime;
 
     /**
      * Constructor for a new task.
@@ -82,6 +87,7 @@ public class Task implements Comparable<Task>{
     public Task(String taskName, int priority, long dueTime) {
         this.taskName = taskName;
         this.priority = priority;
+        this.dueTime = dueTime;
         this.createdTime = 0;
         this.completed = false;
     }
@@ -100,8 +106,22 @@ public class Task implements Comparable<Task>{
         this.priority = priority;
         this.createdTime = createdTime;
         this.completed = false;
+        this.dueTime = dueTime;
     }
-    
+
+    /**
+     * @return Epoch time that the task should be completed by.
+     */
+    public long getDueTime() {
+        return dueTime;
+    }
+
+    /**
+     * @param dueTime Epoch time that the task should be completed by.
+     */
+    public void setDueTime(long dueTime) {
+        this.dueTime = dueTime;
+    }
 
     /**
      * @return an {@code String} representing
