@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.productive6.productive.R;
 import com.productive6.productive.objects.Task;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -22,7 +25,12 @@ import java.util.ArrayList;
  */
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
-    private ArrayList<Task> tasks = new ArrayList<>();
+    private List<Task> tasks = new ArrayList<>();
+
+    /**
+     * For formatting dates in the view
+     */
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
     /**
      * Holds the recyclerView view and it's components
@@ -30,19 +38,25 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder{
         private TextView id;
         private TextView taskName;
-        private CheckBox completedCheckBox;
+        private TextView taskPriority;
+        private TextView taskDifficulty;
+        private TextView taskDueDate;
+        private ToggleButton taskComplete;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
             taskName = itemView.findViewById(R.id.taskNameTextView);
-            completedCheckBox = itemView.findViewById(R.id.completionCheckBox);
+            taskPriority = itemView.findViewById(R.id.taskPriorityTextView);
+            taskDifficulty = itemView.findViewById(R.id.taskDifficultyTextView);
+            taskDueDate = itemView.findViewById(R.id.taskDueDateTextView);
+            taskComplete = itemView.findViewById(R.id.taskCompleteToggleButton);
             id = itemView.findViewById(R.id.taskId);
 
-            completedCheckBox.setOnClickListener(new View.OnClickListener(){//listener on checkbox
+            taskComplete.setOnClickListener(new View.OnClickListener(){//listener on checkbox
                 public void onClick(View v){
                     for(Task task : tasks){//Find the Task whose associated box has been checked
                         if (task.getId() == Integer.parseInt((String)id.getText())) {
-                            task.setCompleted(completedCheckBox.isChecked());//set completed to same value as checked
+                            task.setCompleted(taskComplete.isChecked());//set completed to same value as checked
                         }
                     }
                 }
@@ -66,14 +80,17 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.id.setText(""+tasks.get(position).getId());
         holder.taskName.setText(tasks.get(position).getTaskName());
-        holder.completedCheckBox.setChecked(tasks.get(position).isCompleted());
+        holder.taskPriority.setText(""+tasks.get(position).getPriority());
+        holder.taskDifficulty.setText(""+tasks.get(position).getDifficulty());
+        holder.taskDueDate.setText(format.format(tasks.get(position).getDueDate()));
+        holder.taskComplete.setChecked(tasks.get(position).isCompleted());
     }
     @Override
     public int getItemCount() {
         return tasks.size();
     }
 
-    public void setTasks(ArrayList<Task> tasks){
+    public void setTasks(List<Task> tasks){
         this.tasks = tasks;
         notifyDataSetChanged();
     }

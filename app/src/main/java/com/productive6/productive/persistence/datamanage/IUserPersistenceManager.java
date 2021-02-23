@@ -1,15 +1,15 @@
-package com.productive6.productive.persistence;
-
-import androidx.room.Insert;
+package com.productive6.productive.persistence.datamanage;
 
 import com.productive6.productive.objects.User;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
- * Interface specifically handling the persistence of users
+ * An interface for interacting with the data layer with regards to tasks
+ * Implementations should be thread safe, and callbacks will be called on the main thread.
  */
-public interface UserPersistenceManager {
+public interface IUserPersistenceManager {
 
 
     /**
@@ -21,9 +21,9 @@ public interface UserPersistenceManager {
     void insertUser(User u);
 
     /**
-     * @return a list of all users. Ordering is inspecific.
+     * @param callback a list of all users. Ordering is inspecific.
      */
-    List<User> getAllUsers();
+    void getAllUsers(Consumer<List<User>> callback);
 
     /**
      * Updates the database information of a user

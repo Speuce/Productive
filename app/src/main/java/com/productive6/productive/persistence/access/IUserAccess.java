@@ -1,17 +1,16 @@
-package com.productive6.productive.persistence.daos;
+package com.productive6.productive.persistence.access;
 
-import androidx.room.Dao;
 import androidx.room.Insert;
-import androidx.room.Query;
-import androidx.room.Update;
 
 import com.productive6.productive.objects.User;
-import com.productive6.productive.persistence.access.IUserAccess;
 
 import java.util.List;
 
-@Dao
-public interface UserDao extends IUserAccess {
+/**
+ * Interface specifically handling the access of Users in the database.
+ */
+public interface IUserAccess {
+
 
     /**
      * Inserts a new (no-id)
@@ -19,13 +18,11 @@ public interface UserDao extends IUserAccess {
      * An id is automatically added to the object.
      * @param u the task to add.
      */
-    @Insert
     void insertUser(User u);
 
     /**
      * @return a list of all users. Ordering is inspecific.
      */
-    @Query("SELECT * FROM users")
     List<User> getAllUsers();
 
     /**
@@ -33,6 +30,5 @@ public interface UserDao extends IUserAccess {
      * which has already been assigned an id
      * @param u the task to update
      */
-    @Update
     void updateUser(User u);
 }

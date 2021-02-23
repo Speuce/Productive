@@ -8,12 +8,12 @@ import java.util.LinkedList;
 import java.util.List;
 import com.productive6.productive.objects.events.user.*;
 import com.productive6.productive.objects.Title;
-import com.productive6.productive.logic.rewards.TitleManager;
+import com.productive6.productive.logic.rewards.ITitleManager;
 import com.productive6.productive.objects.User;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
 
-public class DefaultTitleManager implements TitleManager, ProductiveListener{
+public class DefaultTitleManager implements ITitleManager, ProductiveListener{
 
     private User person;
     private UserManager data;

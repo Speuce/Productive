@@ -3,7 +3,7 @@ package com.productive6.productive.logic.rewards;
 import java.util.List;
 import com.productive6.productive.objects.Title;
 
-public interface TitleManager {
+public interface ITitleManager {
 
     /*
     * Returns a list of all the title options that a user has for their given level
