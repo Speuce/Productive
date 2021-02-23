@@ -1,19 +1,23 @@
 package com.productive6.productive;
 
-import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.widget.ProgressBar;
-import android.widget.TextView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.productive6.productive.objects.User;
+import com.productive6.productive.logic.rewards.TitleManager;
+import com.productive6.productive.logic.rewards.impl.DefaultTitleManager;
+import com.productive6.productive.objects.Title;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -60,8 +64,6 @@ public class MainActivity extends AppCompatActivity {
         levelNumber.setTypeface(null, Typeface.BOLD);
         userTitle.setTypeface(null, Typeface.BOLD);
 
-        userTitle.setOnClickListener(v -> openTitleActivity());
-
 
     }
 
@@ -80,6 +82,5 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, TitleSelection.class);
         startActivity(intent);
     }
-
 
 }

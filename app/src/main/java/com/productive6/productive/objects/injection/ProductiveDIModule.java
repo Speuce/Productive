@@ -2,10 +2,12 @@ package com.productive6.productive.objects.injection;
 
 import android.content.Context;
 
-import com.productive6.productive.executor.AndroidExecutor;
-import com.productive6.productive.executor.RunnableExecutor;
-import com.productive6.productive.logic.rewards.TitleManager;
+
+import com.productive6.productive.logic.executor.IRunnableExecutor;
+import com.productive6.productive.logic.executor.impl.AndroidExecutor;
+import com.productive6.productive.logic.rewards.ITitleManager;
 import com.productive6.productive.logic.rewards.impl.DefaultTitleManager;
+
 import com.productive6.productive.logic.task.TaskManager;
 import com.productive6.productive.logic.task.impl.PersistentTaskManager;
 import com.productive6.productive.logic.user.UserManager;
@@ -30,7 +32,7 @@ public class ProductiveDIModule {
 
     @Singleton
     @Provides
-    public RunnableExecutor provideExecutorService(){
+    public IRunnableExecutor provideExecutorService(){
         return new AndroidExecutor();
     }
 
@@ -44,14 +46,16 @@ public class ProductiveDIModule {
 
     @Singleton
     @Provides
-    public TaskManager provideTaskManager(DataManager d, RunnableExecutor e){
+    public TaskManager provideTaskManager(DataManager d, IRunnableExecutor e){
         return new PersistentTaskManager(d, e);
     }
 
     @Singleton
     @Provides
-    public UserManager provideUserManager(DataManager d, RunnableExecutor e){
-        return new PersistentSingleUserManager(d, e );
+    public UserManager provideUserManager(DataManager d, IRunnableExecutor e){
+        PersistentSingleUserManager ret =  new PersistentSingleUserManager(d, e );
+        ret.load();
+        return ret;
     }
 
 

@@ -1,8 +1,7 @@
 package com.productive6.productive.logic.user.impl;
 
-import android.util.EventLog;
-
-import com.productive6.productive.executor.RunnableExecutor;
+import com.productive6.productive.logic.exceptions.ObjectFormatException;
+import com.productive6.productive.logic.executor.IRunnableExecutor;
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.exceptions.AccessBeforeLoadedException;
 import com.productive6.productive.logic.user.UserManager;
@@ -12,7 +11,6 @@ import com.productive6.productive.objects.events.user.UserUpdateEvent;
 import com.productive6.productive.persistence.datamanage.DataManager;
 
 import java.util.List;
-import java.util.function.Consumer;
 
 /**
  * {@link com.productive6.productive.logic.user.UserManager} implementation that persists a single (main user).
@@ -27,18 +25,28 @@ public class PersistentSingleUserManager implements UserManager {
     private final DataManager data;
 
     /**
-     * The {@link RunnableExecutor} for running functions synchronous/asynchronously
+     * The {@link IRunnableExecutor} for running functions synchronous/asynchronously
      */
-    private final RunnableExecutor executor;
+    private final IRunnableExecutor executor;
 
     /**
      * The current user using the app.
      */
     private User currentUser;
 
-    public PersistentSingleUserManager(DataManager data, RunnableExecutor executor) {
+    public PersistentSingleUserManager(DataManager data, IRunnableExecutor executor) {
         this.data = data;
         this.executor = executor;
+
+    }
+
+    /**
+     * Reads data from the data layer and populates local variables.
+     *
+     * getCurrentUser will throw {@link AccessBeforeLoadedException}
+     * if this is not called before the first getCurrentUser call.
+     */
+    public void load(){
         loadCurrentUser();
     }
 
@@ -50,8 +58,9 @@ public class PersistentSingleUserManager implements UserManager {
             List<User> users = data.user().getAllUsers();
             User u;
             if(users.isEmpty()){
+                //create a default user. Iteration 1 smelly stuff. Iteration 2/3 will have a user creation UI
                 u = new User();
-                u.setCoins(10);
+                u.setCoins(0);
                 data.user().insertUser(u);
             }else{
                 u = users.get(0);
@@ -63,6 +72,8 @@ public class PersistentSingleUserManager implements UserManager {
         });
     }
 
+
+
     @Override
     public User getCurrentUser() {
         if(currentUser == null){
@@ -73,6 +84,9 @@ public class PersistentSingleUserManager implements UserManager {
 
     @Override
     public void updateUser(User u) {
+        if(u.getId() == 0){
+            throw new ObjectFormatException("Attempted to update a user without the user having an associated id first!");
+        }
         executor.runASync(() -> {data.user().updateUser(u);});
         EventDispatch.dispatchEvent(new UserUpdateEvent(u));
     }
