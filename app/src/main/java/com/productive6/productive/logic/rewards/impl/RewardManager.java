@@ -116,10 +116,12 @@ public class RewardManager implements IRewardManager, ProductiveListener{
     /**
      * After the user is updated this object is notified
      * @param e: the event that has this method handles
+     * dispatches event to show that title has been initialized
      */
     @ProductiveEventHandler
     public void initializeValues(UserLoadedEvent e){
         person = e.getUser();
+        EventDispatch.dispatchEvent(new UserTitleInitialized());
     }
 
     /**
