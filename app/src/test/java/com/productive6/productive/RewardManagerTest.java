@@ -34,7 +34,7 @@ public class RewardManagerTest {
 
     @BeforeClass
     public static void initializeManager(){
-        rewardManager = new RewardManager(data);
+        rewardManager = new RewardManager(data,4,3,100);
     }
 
     @Before

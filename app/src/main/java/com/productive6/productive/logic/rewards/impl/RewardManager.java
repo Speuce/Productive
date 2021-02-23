@@ -13,18 +13,20 @@ import com.productive6.productive.objects.User;
 
 public class RewardManager implements IRewardManager, ProductiveListener{
 
-    final int COIN_WEIGHT_CONSTANT = 3; //weight value for how many coins are awarded
-    final int XP_WEIGHT_CONSTANT = 4; //weight value for how much XP is added
-    final int LEVEL_UP_CONSTANT = 100; //the amount of XP needed for a level up to occur
+    private int coinWeight; //weight value for how many coins are awarded
+    private int experienceWeight; //weight value for how much XP is added
+    private int levelUpValue; //the amount of XP needed for a level up to occur
 
     private User person;
     private UserManager data;
-    public int numTaskCompleteRuns; //DEBUGGING VAR
     /**
      * @param data a UserManager object used to update the user information in the database
      */
-    public RewardManager(UserManager data){
-        numTaskCompleteRuns = 0;
+    public RewardManager(UserManager data,int xpWeight, int coinWeight, int levelUpValue){
+        experienceWeight = xpWeight;
+        this.coinWeight = coinWeight;
+        this.levelUpValue = levelUpValue;
+
         EventDispatch.registerListener(this);
         this.data = data;
         person = null;
@@ -43,7 +45,7 @@ public class RewardManager implements IRewardManager, ProductiveListener{
     /**
      * @return an integer representation of the amount of experience required for a level up
      */
-    public int getLevelUpValue(){return LEVEL_UP_CONSTANT;}
+    public int getLevelUpValue(){return levelUpValue;}
 
     /**
      * @return integer representation of current user coin count
@@ -52,7 +54,7 @@ public class RewardManager implements IRewardManager, ProductiveListener{
 
     /**
      * Updates all rewards the TaskManager is responsible, updates level if experience is has exceeded
-     * LEVEL_UP_CONSTANT. Then once all rewards have been updated, a call is made to update the user object
+     * levelUpValue. Then once all rewards have been updated, a call is made to update the user object
      * in the database.
      * @param completedTask the task that was completed that the user should receive rewards for
      */
@@ -71,19 +73,19 @@ public class RewardManager implements IRewardManager, ProductiveListener{
      * @param completedTask the task that was completed that the user is receiving coins for
      */
     private void updateCoins(Task completedTask){
-        person.setCoins(person.getCoins() + completedTask.getPriority()*COIN_WEIGHT_CONSTANT);
+        person.setCoins(person.getCoins() + completedTask.getPriority()*coinWeight);
     }
 
     /**
      * Updates experience using a formula based off the priority of the task
-     * levels the user up if the user has reached the experience threshold give by LEVEL_UP_CONSTANT
+     * levels the user up if the user has reached the experience threshold give by levelUpValue
      * @param completedTask the task that was completed that the user is receiving coins for
      */
     private void updateExperience(Task completedTask){
 
-        person.setExp(person.getExp() + completedTask.getPriority()*XP_WEIGHT_CONSTANT);
+        person.setExp(person.getExp() + completedTask.getPriority()*experienceWeight);
 
-        if(person.getExp() >= LEVEL_UP_CONSTANT){
+        if(person.getExp() >= levelUpValue){
             levelUp();
         }
 
@@ -91,12 +93,12 @@ public class RewardManager implements IRewardManager, ProductiveListener{
 
     /**
      * Uses current experience to calculate and set the user's level and experience
-     * based off of LEVEL_UP_CONSTANT
+     * based off of levelUpValue
      */
     private void levelUp(){
 
-        int addedLevels = person.getExp() / LEVEL_UP_CONSTANT;
-        person.setExp(person.getExp()%LEVEL_UP_CONSTANT); //where they are on next level
+        int addedLevels = person.getExp() / levelUpValue;
+        person.setExp(person.getExp()%levelUpValue); //where they are on next level
         person.setLevel(person.getLevel() + addedLevels); //adding levels
 
     }
