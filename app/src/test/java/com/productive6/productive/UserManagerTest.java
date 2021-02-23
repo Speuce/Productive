@@ -3,6 +3,7 @@ package com.productive6.productive;
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.exceptions.AccessBeforeLoadedException;
 import com.productive6.productive.logic.exceptions.ObjectFormatException;
+import com.productive6.productive.persistence.datamanage.dummy.DummyDataManager;
 import com.productive6.productive.persistence.executor.impl.TestExecutor;
 import com.productive6.productive.logic.task.TaskManager;
 import com.productive6.productive.logic.user.UserManager;
@@ -12,7 +13,6 @@ import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.user.UserLoadedEvent;
 import com.productive6.productive.objects.events.user.UserUpdateEvent;
-import com.productive6.productive.persistence.dummy.DummyDataManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -32,7 +32,7 @@ public class UserManagerTest {
     @Before
     public void init(){
         data = new DummyDataManager();
-        userManager = new PersistentSingleUserManager(data, new TestExecutor());
+        userManager = new PersistentSingleUserManager(data);
     }
 
     @Test

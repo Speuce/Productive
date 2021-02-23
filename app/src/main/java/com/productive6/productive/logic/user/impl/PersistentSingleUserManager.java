@@ -29,7 +29,7 @@ public class PersistentSingleUserManager implements UserManager {
 
     public PersistentSingleUserManager(IDataManager data) {
         this.data = data;
-        loadCurrentUser();
+
     }
 
     @Override
