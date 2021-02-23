@@ -14,6 +14,7 @@ import com.productive6.productive.objects.Task;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -23,7 +24,7 @@ import java.util.ArrayList;
  */
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
-    private ArrayList<Task> tasks = new ArrayList<>();
+    private List<Task> tasks = new ArrayList<>();
 
     /**
      * For formatting dates in the view
@@ -74,7 +75,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         return tasks.size();
     }
 
-    public void setTasks(ArrayList<Task> tasks){
+    public void setTasks(List<Task> tasks){
         this.tasks = tasks;
         notifyDataSetChanged();
     }
