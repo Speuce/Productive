@@ -109,8 +109,6 @@ public class RewardManager implements IRewardManager, ProductiveListener{
     @ProductiveEventHandler
     public void taskCompleted(TaskCompleteEvent event){
         System.out.println("stub");
-        numTaskCompleteRuns++;
-        counter.increment();
         updateRewards(event.getTask());
     }
 
