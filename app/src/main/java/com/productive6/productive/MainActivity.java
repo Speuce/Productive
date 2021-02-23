@@ -3,15 +3,25 @@ package com.productive6.productive;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.productive6.productive.logic.rewards.TitleManager;
+import com.productive6.productive.logic.rewards.impl.DefaultTitleManager;
+import com.productive6.productive.objects.Task;
+import com.productive6.productive.objects.Title;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
 
         //remove before push to master
         initHeaderPlaceholders();
-
     }
 
     /**
@@ -57,8 +66,6 @@ public class MainActivity extends AppCompatActivity {
         //setting level and title as bold text
         levelNumber.setTypeface(null, Typeface.BOLD);
         userTitle.setTypeface(null, Typeface.BOLD);
-
-
     }
 
     /*FAKE PLACEHOLDER VALUES REMOVE BEFORE MERGING WITH MASTER

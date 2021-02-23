@@ -1,9 +1,9 @@
-package com.productive6.productive.executor;
+package com.productive6.productive.logic.executor;
 
 /**
  * Handles running method sync/async
  */
-public interface RunnableExecutor {
+public interface IRunnableExecutor {
 
     /**
      * Runs the given runnable asyncrhonously/
