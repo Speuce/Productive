@@ -49,10 +49,10 @@ public class TaskManagerTest {
      */
     @Test
     public void testGetByCreation() throws InterruptedException {
-        Task t1 = new Task("task", 5, System.currentTimeMillis());
+        Task t1 = new Task("task", 5, System.currentTimeMillis(), 0);
         //make t1 created 10ms before the second task.
         Thread.sleep(10);
-        taskManager.addTask(new Task("task2", 5, System.currentTimeMillis()));
+        taskManager.addTask(new Task("task2", 5, System.currentTimeMillis(), 0));
         taskManager.addTask(t1);
         taskManager.getTasksByCreation(tasks -> {
             assertEquals("Task Manager is improperly getting completed tasks by creation!",
@@ -65,7 +65,7 @@ public class TaskManagerTest {
      */
     @Test
     public void testGetCompletedIncludes(){
-        Task t1 = new Task("task", 5, System.currentTimeMillis());
+        Task t1 = new Task("task", 5);
         taskManager.addTask(t1);
         t1.setCompleted(true);
         taskManager.getCompletedTasks(tasks -> {
@@ -114,6 +114,16 @@ public class TaskManagerTest {
                 PersistentIDAssignmentException.class,
                 () -> taskManager.updateTask(testData)
 
+        );
+    }
+
+    @Test
+    public void testDueTimeValidation() {
+        Task testData = new Task("name", 1, System.currentTimeMillis(), 100);
+        assertThrows(
+                "Task Manager properly validate the due time of a task!",
+                    TaskFormatException.class,
+                () -> taskManager.addTask(testData)
         );
     }
 

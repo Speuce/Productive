@@ -44,6 +44,19 @@ public class PersistentTaskManager implements TaskManager {
     }
 
     /**
+     * Ensures that all the fields of the given task are valid.
+     * Throws exceptions otherwise.
+     * @param t the task to validate.
+     */
+    private void validateTask(Task t){
+        if(t.getPriority() < 0){
+            throw new TaskFormatException("A priority of < 0 is not supported!");
+        }else if(t.getDueTime() != 0  && t.getDueTime() < System.currentTimeMillis()){
+            throw new TaskFormatException("A task cannot have a due time before now");
+        }
+    }
+
+    /**
      * Verifies a passed task, and if successful saves it to the database
      * and assigns it an id.
      * @param t the {@link Task} to add
@@ -54,14 +67,11 @@ public class PersistentTaskManager implements TaskManager {
             throw new PersistentIDAssignmentException();
         }else if(t.isCompleted()){
               throw new TaskFormatException("A new task was passed with completed=true!");
-        }else if(t.getPriority() < 0){
-                throw new TaskFormatException("A priority of < 0 is not supported!");
         }
-
+        validateTask(t);
         if(t.getCreatedTime() == 0){
             t.setCreatedTime(System.currentTimeMillis());
         }
-
         data.task().insertTask(t);
         EventDispatch.dispatchEvent(new TaskCreateEvent(t));
 
@@ -77,6 +87,7 @@ public class PersistentTaskManager implements TaskManager {
         if(t.getId() == 0){
             throw new PersistentIDAssignmentException();
         }
+        validateTask(t);
         data.task().updateTask(t);
         EventDispatch.dispatchEvent(new TaskUpdateEvent(t));
     }
