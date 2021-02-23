@@ -28,6 +28,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
      * Holds the recyclerView view and it's components
      */
     public class ViewHolder extends RecyclerView.ViewHolder{
+        private TextView id;
         private TextView taskName;
         private CheckBox completedCheckBox;
 
@@ -35,11 +36,20 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             super(itemView);
             taskName = itemView.findViewById(R.id.taskNameTextView);
             completedCheckBox = itemView.findViewById(R.id.completionCheckBox);
+            id = itemView.findViewById(R.id.taskId);
+
+            completedCheckBox.setOnClickListener(new View.OnClickListener(){//listener on checkbox
+                public void onClick(View v){
+                    for(Task task : tasks){//Find the Task whose associated box has been checked
+                        if (task.getId() == Integer.parseInt((String)id.getText())) {
+                            task.setCompleted(completedCheckBox.isChecked());//set completed to same value as checked
+                        }
+                    }
+                }
+            });
         }
 
-        public void iCanHearYou(){
-            System.out.println("hi");
-        }
+
     }
 
     public TaskAdapter(){}
@@ -54,10 +64,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.id.setText(""+tasks.get(position).getId());
         holder.taskName.setText(tasks.get(position).getTaskName());
         holder.completedCheckBox.setChecked(tasks.get(position).isCompleted());
     }
-
     @Override
     public int getItemCount() {
         return tasks.size();
