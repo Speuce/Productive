@@ -1,16 +1,18 @@
-package com.productive6.productive.persistence.dummy;
+package com.productive6.productive.persistence.datamanage.dummy;
 
 import com.productive6.productive.objects.User;
-import com.productive6.productive.persistence.UserPersistenceManager;
+import com.productive6.productive.persistence.access.IUserAccess;
+import com.productive6.productive.persistence.datamanage.IUserPersistenceManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
- * A {@link com.productive6.productive.persistence.UserPersistenceManager} implementation for unit testing.
+ * A {@link IUserAccess} implementation for unit testing.
  * No actual SQL/room database operations are performed. Everything is kept in an internal cache.
  */
-public class DummyUserPersistenceManager implements UserPersistenceManager {
+public class DummyUserPersistenceManager implements IUserPersistenceManager {
 
     /**
      * Internal cache of users to simulate an actual database
@@ -28,8 +30,8 @@ public class DummyUserPersistenceManager implements UserPersistenceManager {
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return users;
+    public void getAllUsers(Consumer<List<User>> callback) {
+        callback.accept(users);
     }
 
     @Override

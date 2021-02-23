@@ -79,6 +79,19 @@ public class Task implements Comparable<Task>{
      * Constructor for a new task without completion
      * @param taskName The user-defined name of the task
      * @param priority The user-defined priority of this task
+     */
+    @Ignore
+    public Task(String taskName, int priority) {
+        this.taskName = taskName;
+        this.priority = priority;
+        this.createdTime = 0;
+        this.completed = false;
+    }
+
+    /**
+     * Constructor for a new task without completion
+     * @param taskName The user-defined name of the task
+     * @param priority The user-defined priority of this task
      * @param createdTime The timestamp (milliseconds, epoch time)
      *                    that this task was created.
      */
