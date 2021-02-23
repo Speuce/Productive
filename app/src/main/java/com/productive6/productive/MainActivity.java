@@ -16,10 +16,6 @@ import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import com.productive6.productive.logic.rewards.impl.DefaultTitleManager;
-import com.productive6.productive.objects.Task;
-import com.productive6.productive.objects.Title;
-
 import java.util.ArrayList;
 import java.util.List;
 
