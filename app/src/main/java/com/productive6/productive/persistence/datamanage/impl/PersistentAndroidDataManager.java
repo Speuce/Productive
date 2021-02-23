@@ -29,21 +29,25 @@ public class PersistentAndroidDataManager implements IDataManager {
 
     private ProductiveDB db;
 
-    private final ITaskPersistenceManager taskPersistenceManager;
+    private ITaskPersistenceManager taskPersistenceManager;
 
-    private final IUserPersistenceManager userPersistenceManager;
+    private IUserPersistenceManager userPersistenceManager;
+
+    private final RunnableExecutor executor;
 
     @Inject
     public PersistentAndroidDataManager(Context context, RunnableExecutor executor) {
         this.context = context;
-        this.taskPersistenceManager = new TaskPersistenceManager(executor, db.getTaskDao());
-        this.userPersistenceManager = new UserPersistenceManager(executor, db.getUserDao());
+        this.executor = executor;
+
     }
 
     @Override
     public void init() {
         db = Room.databaseBuilder(context,
                 ProductiveDB.class, "productive.db").build();
+        this.taskPersistenceManager = new TaskPersistenceManager(executor, db.getTaskDao());
+        this.userPersistenceManager = new UserPersistenceManager(executor, db.getUserDao());
     }
 
     @Override
