@@ -17,6 +17,7 @@ import com.productive6.productive.persistence.dummy.DummyDataManager;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Date;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.junit.Assert.*;
@@ -99,7 +100,7 @@ public class TaskManagerTest {
      */
     @Test
     public void testIDFormatInsert() {
-        Task testData = new Task("name", 1, 1, System.currentTimeMillis(), "2020-10-10", false);
+        Task testData = new Task("name", 1, 1, System.currentTimeMillis(), new Date(), false);
         testData.setId(1);
         assertThrows(
                 "Task Manager didn't catch an id exception on insert.",
@@ -115,7 +116,7 @@ public class TaskManagerTest {
      */
     @Test
     public void testIDFormatUpdate() {
-        Task testData = new Task("name", 1, 1, System.currentTimeMillis(), "2020-10-10", false);
+        Task testData = new Task("name", 1, 1, System.currentTimeMillis(), new Date(), false);
         testData.setId(0);
         assertThrows(
                 "Task Manager didn't catch an id exception on update.",
@@ -130,7 +131,7 @@ public class TaskManagerTest {
      */
     @Test
     public void testCompletionChecking(){
-        Task testData = new Task("name", 1, 1, System.currentTimeMillis(), "2020-10-10", true);
+        Task testData = new Task("name", 1, 1, System.currentTimeMillis(), new Date(), true);
         assertThrows("Task Manager missed a 'completed' flag = true",
                 ObjectFormatException.class,
                 () -> taskManager.addTask(testData));
@@ -141,7 +142,7 @@ public class TaskManagerTest {
      */
     @Test
     public void testPriorityChecking(){
-        Task testData = new Task("name", -1, 1, System.currentTimeMillis(), "2020-10-10", false);
+        Task testData = new Task("name", -1, 1, System.currentTimeMillis(), new Date(), false);
         assertThrows("Task Manager missed a negative priority",
                 ObjectFormatException.class,
                 () -> taskManager.addTask(testData));
@@ -152,14 +153,14 @@ public class TaskManagerTest {
      */
     @Test
     public void testTimeAutofill(){
-        Task testData = new Task("name", 1, 1, 0, "2020-10-10", false);
+        Task testData = new Task("name", 1, 1, 0, new Date(), false);
         taskManager.addTask(testData);
         assertTrue("Task Manager didn't autofill time correctly.", Math.abs(System.currentTimeMillis()-testData.getCreatedTime()) < 10000);
     }
 
     @Test
     public void testCompleteTask(){
-        Task testData = new Task("name", 1, 1, 0, "2020-10-10", false);
+        Task testData = new Task("name", 1, 1, 0, new Date(), false);
         taskManager.addTask(testData);
         taskManager.completeTask(testData);
         assertTrue("Task Manager didn't autofill completion correctly.", testData.isCompleted());
@@ -174,7 +175,7 @@ public class TaskManagerTest {
                 success.set(true);
             }
         });
-        Task testData = new Task("name", 1, 1, 0, "2020-10-10", false);
+        Task testData = new Task("name", 1, 1, 0, new Date(), false);
         taskManager.addTask(testData);
         taskManager.updateTask(testData);
         assertTrue("TaskManager failed to trigger a user updated event when necessary.",success.get());
@@ -189,7 +190,7 @@ public class TaskManagerTest {
                 success.set(true);
             }
         });
-        Task testData = new Task("name", 1, 1, 0, "2020-10-10", false);
+        Task testData = new Task("name", 1, 1, 0, new Date(), false);
         taskManager.addTask(testData);
         assertTrue("TaskManager failed to trigger a user create event when necessary.",success.get());
     }
