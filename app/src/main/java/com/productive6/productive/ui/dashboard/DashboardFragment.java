@@ -41,7 +41,7 @@ public class DashboardFragment extends Fragment {
         RecyclerView taskDisplayView = root.findViewById(R.id.taskDisplayView);//Grab display
 
         ArrayList<Task> tasks = new ArrayList<>();//Data
-       tasks.add(new Task("String taskName1", 1, 1, 1, "2020-10-10", false));
+       tasks.add(new Task("String taskName1", 1, 1, 1, "2021/2/23", false));
 //        tasks.add(new Task("String taskName2", 2, 2, false));
 //        tasks.add(new Task("String taskName3", 3, 3, false));
 //        tasks.add(new Task("String taskName4", 4, 4, false));
