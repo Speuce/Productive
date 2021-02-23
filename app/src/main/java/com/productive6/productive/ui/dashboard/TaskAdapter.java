@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,10 +29,18 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
      */
     public class ViewHolder extends RecyclerView.ViewHolder{
         private TextView taskName;
+        private TextView taskPriority;
+        private TextView taskDifficulty;
+        private TextView taskDueDate;
+        private ToggleButton taskComplete;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
             taskName = itemView.findViewById(R.id.taskNameTextView);
+            taskPriority = itemView.findViewById(R.id.taskPriorityTextView);
+            taskDifficulty = itemView.findViewById(R.id.taskDifficultyTextView);
+            taskDueDate = itemView.findViewById(R.id.taskDueDateTextView);
+            taskComplete = itemView.findViewById(R.id.taskCompleteToggleButton);
         }
     }
 
@@ -48,6 +57,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.taskName.setText(tasks.get(position).getTaskName());
+        holder.taskPriority.setText(""+tasks.get(position).getPriority());
+        holder.taskDifficulty.setText(""+tasks.get(position).getDifficulty());
+        holder.taskDueDate.setText(tasks.get(position).getDueDate());
+        holder.taskComplete.setChecked(tasks.get(position).isCompleted());
     }
 
     @Override

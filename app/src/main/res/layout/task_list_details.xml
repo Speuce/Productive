@@ -35,6 +35,7 @@
         android:layout_marginStart="35dp"
         android:layout_marginTop="9dp"
         android:layout_toEndOf="@+id/taskNameTextView"
+        android:background="#FFFFFF"
         android:text="Difficulty" />
 
     <TextView
@@ -43,10 +44,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/taskDifficultyTextView"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="-56dp"
+        android:layout_marginStart="34dp"
         android:layout_marginTop="55dp"
         android:layout_marginBottom="0dp"
-        android:layout_toEndOf="@+id/taskDifficultyTextView"
+        android:layout_toEndOf="@+id/taskNameTextView"
+        android:backgroundTint="#E6E6E6"
         android:text="Due Date" />
 
     <ToggleButton
