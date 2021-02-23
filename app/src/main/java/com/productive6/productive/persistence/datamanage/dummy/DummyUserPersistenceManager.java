@@ -25,8 +25,8 @@ public class DummyUserPersistenceManager implements IUserPersistenceManager {
 
     @Override
     public void insertUser(User u) {
-        u.setId(users.size());
         users.add(u);
+        u.setId(users.size());
     }
 
     @Override

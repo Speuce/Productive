@@ -1,9 +1,9 @@
 package com.productive6.productive.logic.task.impl;
 
-import com.productive6.productive.executor.RunnableExecutor;
+import com.productive6.productive.logic.executor.IRunnableExecutor;
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.exceptions.PersistentIDAssignmentException;
-import com.productive6.productive.logic.exceptions.TaskFormatException;
+import com.productive6.productive.logic.exceptions.ObjectFormatException;
 import com.productive6.productive.logic.task.TaskManager;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.events.task.TaskCompleteEvent;
@@ -66,7 +66,9 @@ public class PersistentTaskManager implements TaskManager {
         if(t.getId() > 0){
             throw new PersistentIDAssignmentException();
         }else if(t.isCompleted()){
-              throw new TaskFormatException("A new task was passed with completed=true!");
+              throw new ObjectFormatException("A new task was passed with completed=true!");
+        }else if(t.getPriority() < 0){
+                throw new ObjectFormatException("A priority of < 0 is not supported!");
         }
         validateTask(t);
         if(t.getCreatedTime() == 0){
@@ -95,7 +97,7 @@ public class PersistentTaskManager implements TaskManager {
     @Override
     public void completeTask(Task t) {
         if(t.isCompleted()){
-            throw new TaskFormatException("Task has already been completed!");
+            throw new ObjectFormatException("Task has already been completed!");
         }
         t.setCompleted(true);
         updateTask(t);

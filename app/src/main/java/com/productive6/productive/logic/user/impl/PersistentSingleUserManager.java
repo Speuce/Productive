@@ -1,6 +1,8 @@
 package com.productive6.productive.logic.user.impl;
 
-import com.productive6.productive.executor.RunnableExecutor;
+import com.productive6.productive.logic.exceptions.ObjectFormatException;
+import com.productive6.productive.logic.executor.IRunnableExecutor;
+
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.exceptions.AccessBeforeLoadedException;
 import com.productive6.productive.logic.user.UserManager;
@@ -40,8 +42,9 @@ public class PersistentSingleUserManager implements UserManager {
         data.user().getAllUsers(users -> {
             User u;
             if(users.isEmpty()){
+                //create a default user. Iteration 1 smelly stuff. Iteration 2/3 will have a user creation UI
                 u = new User();
-                u.setCoins(10);
+                u.setCoins(0);
                 data.user().insertUser(u);
             }else{
                 u = users.get(0);
@@ -50,6 +53,8 @@ public class PersistentSingleUserManager implements UserManager {
             EventDispatch.dispatchEvent(new UserLoadedEvent(currentUser));
         });
     }
+
+
 
     @Override
     public User getCurrentUser() {
@@ -61,7 +66,14 @@ public class PersistentSingleUserManager implements UserManager {
 
     @Override
     public void updateUser(User u) {
+
+        if(u.getId() == 0){
+            throw new ObjectFormatException("Attempted to update a user without the user having an associated id first!");
+        }
         data.user().updateUser(u);
+
+        executor.runASync(() -> {data.user().updateUser(u);});
+
         EventDispatch.dispatchEvent(new UserUpdateEvent(u));
     }
 }

@@ -2,8 +2,12 @@ package com.productive6.productive.objects.injection;
 
 import android.content.Context;
 
-import com.productive6.productive.executor.AndroidExecutor;
-import com.productive6.productive.executor.RunnableExecutor;
+
+import com.productive6.productive.logic.executor.IRunnableExecutor;
+import com.productive6.productive.logic.executor.impl.AndroidExecutor;
+import com.productive6.productive.logic.rewards.ITitleManager;
+import com.productive6.productive.logic.rewards.impl.DefaultTitleManager;
+
 import com.productive6.productive.logic.task.TaskManager;
 import com.productive6.productive.logic.task.impl.PersistentTaskManager;
 import com.productive6.productive.logic.user.UserManager;
@@ -28,7 +32,7 @@ public class ProductiveDIModule {
 
     @Singleton
     @Provides
-    public RunnableExecutor provideExecutorService(){
+    public IRunnableExecutor provideExecutorService(){
         return new AndroidExecutor();
     }
 

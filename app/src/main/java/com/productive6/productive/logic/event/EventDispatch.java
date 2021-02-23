@@ -16,7 +16,9 @@ import java.util.Set;
 
 /**
  * Manages Listeners and Dispatches events to listeners as appropriate
- * All Listener Calls will be done on the UI thread.
+ * All Event Listener Calls will be done on the UI thread.
+ *
+ * @author matt
  */
 public class EventDispatch {
 
