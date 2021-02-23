@@ -19,13 +19,13 @@ public interface TaskManager {
      * @return a list of the users current incomplete tasks,
      * sorted by highest priority first.
      */
-    void getTasksByPriority(Consumer<Collection<Task>> outputparam);
+    void getTasksByPriority(Consumer<List<Task>> outputparam);
 
     /**
      * @return a list of the users current incomplete tasks,
      * sorted by oldest creation first.
      */
-    void getTasksByCreation(Consumer<Collection<Task>> outputparam);
+    void getTasksByCreation(Consumer<List<Task>> outputparam);
 
     /**
      * Adds a new task to the users list of tasks
@@ -37,7 +37,7 @@ public interface TaskManager {
      * @return a list of {@link Task} objects that have been marked as
      * completed
      */
-    void getCompletedTasks(Consumer<Collection<Task>> outputparam);
+    void getCompletedTasks(Consumer<List<Task>> outputparam);
 
     /**
      * Updates an task that is already in the system,

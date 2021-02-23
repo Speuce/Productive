@@ -42,6 +42,7 @@ public class Task implements Comparable<Task>{
     @ColumnInfo(name = "completed")
     private boolean completed;
 
+
     /**
      * Constructor for a new task.
      * @param taskName The user-defined name of the task
@@ -62,17 +63,45 @@ public class Task implements Comparable<Task>{
      * Constructor for a new task without completion
      * @param taskName The user-defined name of the task
      * @param priority The user-defined priority of this task
-     * @param createdTime The timestamp (milliseconds, epoch time)
-     *                    that this task was created.
      */
     @Ignore
-    public Task(String taskName, int priority, long createdTime) {
+    public Task(String taskName, int priority) {
+        this.taskName = taskName;
+        this.priority = priority;
+        this.createdTime = 0;
+        this.completed = false;
+    }
+
+    /**
+     * Constructor for a new task without completion
+     * @param taskName The user-defined name of the task
+     * @param priority The user-defined priority of this task
+     * @param dueTime  The timestamp (epoch time) that the task should be completed by.
+     */
+    @Ignore
+    public Task(String taskName, int priority, long dueTime) {
+        this.taskName = taskName;
+        this.priority = priority;
+        this.createdTime = 0;
+        this.completed = false;
+    }
+
+    /**
+     * Constructor for a new task without completion
+     * @param taskName The user-defined name of the task
+     * @param priority The user-defined priority of this task
+     * @param createdTime The timestamp (milliseconds, epoch time)
+     *                    that this task was created.
+     * @param dueTime  The timestamp (epoch time) that the task should be completed by.
+     */
+    @Ignore
+    public Task(String taskName, int priority, long createdTime,long dueTime) {
         this.taskName = taskName;
         this.priority = priority;
         this.createdTime = createdTime;
         this.completed = false;
     }
-
+    
 
     /**
      * @return an {@code String} representing

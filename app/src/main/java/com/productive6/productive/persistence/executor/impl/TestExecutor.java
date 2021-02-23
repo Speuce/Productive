@@ -1,6 +1,6 @@
-package com.productive6.productive.logic.executor.impl;
+package com.productive6.productive.persistence.executor.impl;
 
-import com.productive6.productive.logic.executor.IRunnableExecutor;
+import com.productive6.productive.persistence.executor.IRunnableExecutor;
 
 /**
  * Implementation of {@link IRunnableExecutor} for unit tests.
