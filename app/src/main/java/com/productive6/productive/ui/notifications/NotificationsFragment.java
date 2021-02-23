@@ -27,6 +27,8 @@ import com.productive6.productive.R;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.ui.dashboard.TaskAdapter;
 
+import org.w3c.dom.Text;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,68 +36,86 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class NotificationsFragment extends Fragment {
+    private static final String TAG = "NotificationsFragment";
 
-    //private NotificationsViewModel notificationsViewModel;
     private TextView clickedDate;
-    //    private CalendarView calendarView;
-    private CompactCalendarView calendarView;
+    private TextView showMonthName;
+
     private String today;
     private String dateInString;
 
-    private static final String TAG = "NotificationsFragment";
+    private CompactCalendarView calendarView;
+    private RecyclerView taskDisplayView;
+
+    private ArrayList<Task> tasks;
+    private ArrayList<Task> filteredByDateTasks;
+
+    private String[] months;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //notificationsViewModel = new ViewModelProvider(this).get(NotificationsViewModel.class);
-        View view = inflater.inflate(R.layout.fragment_notifications, container, false);
-        calendarView = view.findViewById(R.id.calendarView);
-        clickedDate = view.findViewById(R.id.selectedDateTextView);
-        today = new SimpleDateFormat("dd/M/yyyy").format(new Date());
-        clickedDate.setText("Tasks scheduled for " + today);
-//        dateInString = new SimpleDateFormat("yyyy-M-dd").format(new Date());
-        dateInString = new SimpleDateFormat("EEE MMM d").format(new Date()) + "00:00:00 CST 2021";
 
-        /*
-        // used for the default calendarView
-        calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
-            calendarView.setFocusedByDefault(false);
-            dateInString = year + "-" + (month + 1) + "-" + dayOfMonth;
-            clickedDate.setText("Tasks scheduled for " + dayOfMonth + " " + intToMonth(month) + ", " + year);
-            initializeTaskList(view, dateInString);
-        });
-        */
+        View root = inflater.inflate(R.layout.fragment_notifications, container, false);
+
+        months = new String[]{"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+
+        taskDisplayView = root.findViewById(R.id.taskDisplayView); //Grab display
+        calendarView = root.findViewById(R.id.calendarView);
+        clickedDate = root.findViewById(R.id.selectedDateTextView);
+        showMonthName = root.findViewById(R.id.monthNameTextView);
+//        today = new SimpleDateFormat("dd/M/yyyy").format(new Date());
+//        clickedDate.setText("Tasks scheduled for " + today);
+//        dateInString = new SimpleDateFormat("yyyy-M-dd").format(new Date());
+//        dateInString = new SimpleDateFormat("EEE MMM d").format(new Date()) + "00:00:00 CST 2021";
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        showMonthName.setText(months[(calendar.get(Calendar.MONTH))] + " " + (calendar.get(Calendar.YEAR)));
+
+        tasks = new ArrayList<>(); //Data
+        tasks.add(new Task("taskName1000", 1, 1, 1, "2021-2-24", false));
+        tasks.add(new Task("taskName2321", 1, 1, 1, "2021-2-24", false));
+        tasks.add(new Task("taskName9999", 1, 1, 1, "2021-2-24", false));
+        tasks.add(new Task("taskName2879", 1, 1, 1, "2021-2-25", false));
+//        tasks.add(new Task("taskName3", 1, 1, 1, "Wed Feb 15 00:00:00 CST 2021", false));
+
+
+        filteredByDateTasks = new ArrayList<>();
+        calendarView.addEvent(new Event(Color.BLUE, 1614146400000L, tasks.get(2).getTaskName())); //24 Feb 2021
+        calendarView.addEvent(new Event(Color.BLUE, 1614146400000L, tasks.get(2).getTaskName())); //24 Feb 2021
+        calendarView.addEvent(new Event(Color.BLUE, 1614146400000L, tasks.get(2).getTaskName())); //24 Feb 2021
+        calendarView.addEvent(new Event(Color.BLUE, 1614232800000L, tasks.get(2).getTaskName())); //25 Feb 2021
+//        calendarView.addEvent(new Event(Color.BLUE, 1612245600000L, tasks.get(2).getTaskName())); //02 Feb 2021
 
         calendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override
             public void onDayClick(Date dateClicked) {
-//                Toast.makeText(getContext(), dateClicked.toString(), Toast.LENGTH_SHORT).show();
 //                if (dateClicked.toString().compareTo(dateInString) == 0) {
 //                    //dateClicked.toString() == ("Fri Oct 21 00:00:00 AST 2016")
 //                }
-                Calendar calendar = Calendar.getInstance();
+                //Calendar calendar = Calendar.getInstance();
                 calendar.setTime(dateClicked);
 
                 int day = calendar.get(Calendar.DATE);
-                int month = (calendar.get(Calendar.MONTH)+1);
+                int month = (calendar.get(Calendar.MONTH) + 1);
                 int year = calendar.get(Calendar.YEAR);
 
                 dateInString = year + "-" + month + "-" + day;
 //                Toast.makeText(getContext(), dateInString, Toast.LENGTH_SHORT).show();
 //                dateInString = new SimpleDateFormat("EEE MMM d").format(new Date()) + " 00:00:00 CST 2021";
-                initializeTaskList(view, dateInString);
+                initializeTaskList(dateInString);
             }
-
             @Override
             public void onMonthScroll(Date firstDayOfNewMonth) {
-//                Toast.makeText(getContext(), new SimpleDateFormat("MMMM yyyy").format(firstDayOfNewMonth), Toast.LENGTH_SHORT).show();
-                // TODO Show the month when scrolling to a different month
+                calendar.setTime(firstDayOfNewMonth);
+                showMonthName.setText(months[calendar.get(Calendar.MONTH)] + " " + calendar.get(Calendar.YEAR));
             }
         });
 
-        initializeTaskList(view, dateInString);
-        return view;
+        initializeTaskList(dateInString);
+        return root;
     }
 
-    // TODO Fix this buggy function
+//    TODO Fix this buggy function
 //    private String dateToEpoch(String dueDate) {
 //        Date date = null;
 //        long epoch = 0;
@@ -113,33 +133,19 @@ public class NotificationsFragment extends Fragment {
 //        return (epoch + "L");
 //    }
 
-    // Modified version of Luke's code from the dashboard fragment
-    private void initializeTaskList(View root, String selectedDate) {
-
-        RecyclerView taskDisplayView = root.findViewById(R.id.taskDisplayView); //Grab display
-
-        ArrayList<Task> tasks = new ArrayList<>(); //Data
-        tasks.add(new Task("taskName1", 1, 1, 1, "2021-2-24", false));
-        tasks.add(new Task("taskName2", 1, 1, 1, "2021-2-25", false));
-        tasks.add(new Task("taskName3", 1, 1, 1, "Wed Feb 24 00:00:00 CST 2021", false));
-        tasks.add(new Task("taskName4", 1, 1, 1, "Wed Feb 24 00:00:00 CST 2021", false));
-
-        ArrayList<Task> filteredByDateTasks = new ArrayList<>();
-        calendarView.addEvent(new Event(Color.BLUE, 1614146400000L, tasks.get(2).getTaskName()));
-        calendarView.addEvent(new Event(Color.BLUE, 1613368800000L, tasks.get(2).getTaskName()));
-        calendarView.addEvent(new Event(Color.BLUE, 1612245600000L, tasks.get(2).getTaskName()));
-//        calendarView.addEvent(new Event(Color.BLUE, 1613368800000L, tasks.get(2).getTaskName()));
+    // Modified from Luke's code in the dashboard fragment
+    private void initializeTaskList(String selectedDate) {
+        filteredByDateTasks.clear();
         for (Task task : tasks) {
 //            calendarView.addEvent(new Event(Color.RED, Long.parseLong(dateToEpoch(task.getDueDate())), task.getTaskName()));
-
             if (task.getDueDate().equals(selectedDate)) {
                 filteredByDateTasks.add(task);
             }
         }
 
         TaskAdapter taskAdapter = new TaskAdapter();
-        taskAdapter.setTasks(filteredByDateTasks); //Give data to view
-        taskDisplayView.setAdapter(taskAdapter); //attach display to view + data
-        taskDisplayView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false)); //Describe how the data should be laid out
+        taskAdapter.setTasks(filteredByDateTasks);
+        taskDisplayView.setAdapter(taskAdapter);
+        taskDisplayView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
     }
 }
