@@ -33,7 +33,7 @@ public class PersistentDataManager implements DataManager{
     @Override
     public void init() {
         db = Room.databaseBuilder(context,
-                ProductiveDB.class, "productive.db").build();
+                ProductiveDB.class, "productive.db").fallbackToDestructiveMigration().build();
     }
 
     @Override

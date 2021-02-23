@@ -20,6 +20,7 @@ import com.productive6.productive.persistence.daos.TaskDao_Impl;
 import com.productive6.productive.persistence.datamanage.PersistentDataManager;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Consumer;
@@ -33,6 +34,7 @@ public class DashboardFragment extends Fragment {
 
     @Inject
     TaskManager taskManager;
+
     private DashboardViewModel dashboardViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -52,6 +54,20 @@ public class DashboardFragment extends Fragment {
      */
     private void attachTaskView(View root){
         RecyclerView taskDisplayView = root.findViewById(R.id.taskDisplayView);//Grab display
+
+        ArrayList<Task> tasks = new ArrayList<>();//Data
+        tasks.add(new Task("String taskName1", 1, 1, 1, new Date(), false));
+        taskManager.addTask(tasks.get(0));
+//        tasks.add(new Task("String taskName2", 2, 2, false));
+//        tasks.add(new Task("String taskName3", 3, 3, false));
+//        tasks.add(new Task("String taskName4", 4, 4, false));
+//        tasks.add(new Task("String taskName5", 5, 5, false));
+//        tasks.add(new Task("String taskName1", 1, 1, false));
+//        tasks.add(new Task("String taskName2", 2, 2, false));
+//        tasks.add(new Task("String taskName3", 3, 3, false));
+//        tasks.add(new Task("String taskName4", 4, 4, false));
+//        tasks.add(new Task("String taskName5", 5, 5, false));
+
         TaskAdapter taskAdapter = new TaskAdapter();
 
         taskManager.getTasksByPriority(new TaskConsumerStartup(taskAdapter));//DATABASE CALL--Load Tasks
