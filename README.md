@@ -21,7 +21,7 @@ We chose to use the git flow for our branching stratagy. As such we will create 
 
 ### Branch Creation
 
-The name of the branches will be of the form: [dev task id]-[dev task name].
+The name of the branches will be of the form: `[dev task id]-[dev task name]`.
 
 New branches will be created by running `git checkout -b [branch name]` off of the stable develop branch.  
 
