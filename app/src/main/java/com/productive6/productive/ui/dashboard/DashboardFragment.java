@@ -14,10 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.productive6.productive.R;
 import com.productive6.productive.logic.task.TaskManager;
 import com.productive6.productive.objects.Task;
-import com.productive6.productive.persistence.TaskPersistenceManager;
-import com.productive6.productive.persistence.daos.TaskDao;
-import com.productive6.productive.persistence.daos.TaskDao_Impl;
-import com.productive6.productive.persistence.datamanage.PersistentDataManager;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -57,7 +53,7 @@ public class DashboardFragment extends Fragment {
 
         ArrayList<Task> tasks = new ArrayList<>();//Data
         tasks.add(new Task("String taskName1", 1, 1, 1, new Date(), false));
-        taskManager.addTask(tasks.get(0));
+//        taskManager.addTask(tasks.get(0));
 //        tasks.add(new Task("String taskName2", 2, 2, false));
 //        tasks.add(new Task("String taskName3", 3, 3, false));
 //        tasks.add(new Task("String taskName4", 4, 4, false));
@@ -70,7 +66,7 @@ public class DashboardFragment extends Fragment {
 
         TaskAdapter taskAdapter = new TaskAdapter();
 
-        taskManager.getTasksByPriority(new TaskConsumerStartup(taskAdapter));//DATABASE CALL--Load Tasks
+        taskManager.getTasksByPriority(new TaskConsumerStartup(taskAdapter));//Logic CALL--Load Tasks
 
         taskDisplayView.setAdapter(taskAdapter);//attach display to view + tasks
         taskDisplayView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false));//Describe how the data should be laid out
@@ -79,14 +75,14 @@ public class DashboardFragment extends Fragment {
     /**
      * Holds a callback for the database request made in attachTaskView.
      */
-    public class TaskConsumerStartup implements Consumer<Collection<Task>> {
+    public class TaskConsumerStartup implements Consumer<List<Task>> {
         private TaskAdapter taskAdapter;
 
         TaskConsumerStartup(TaskAdapter taskAdapter){this.taskAdapter = taskAdapter;}
 
         @Override
-        public void accept(Collection<Task> tasks) {
-            taskAdapter.setTasks((List<Task>) tasks);//Give data to view and automatically re-renders the view
+        public void accept(List<Task> tasks) {
+            taskAdapter.setTasks(tasks);//Give data to view and automatically re-renders the view
         }
     }
 }

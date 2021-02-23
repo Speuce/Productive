@@ -1,13 +1,11 @@
 package com.productive6.productive;
 
-import android.content.Context;
 import android.os.Looper;
 
-import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.productive6.productive.logic.executor.IRunnableExecutor;
-import com.productive6.productive.logic.executor.impl.AndroidExecutor;
+import com.productive6.productive.persistence.executor.IRunnableExecutor;
+import com.productive6.productive.persistence.executor.impl.AndroidExecutor;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +15,7 @@ import static org.junit.Assert.*;
 
 
 /**
- * Test for the {@link com.productive6.productive.logic.executor.IRunnableExecutor} interface.
+ * Test for the {@link com.productive6.productive.persistence.executor.IRunnableExecutor} interface.
  *
  * Ensures that the used implementation correctly runs tasks on/off the main thread.
  */
