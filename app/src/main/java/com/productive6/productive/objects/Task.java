@@ -43,6 +43,12 @@ public class Task implements Comparable<Task>{
     private boolean completed;
 
     /**
+     * Epoch time that the task should be completed by.
+     */
+    @ColumnInfo(name = "due")
+    private long dueTime;
+
+    /**
      * Constructor for a new task.
      * @param taskName The user-defined name of the task
      * @param priority The user-defined priority of this task
@@ -75,17 +81,47 @@ public class Task implements Comparable<Task>{
      * Constructor for a new task without completion
      * @param taskName The user-defined name of the task
      * @param priority The user-defined priority of this task
-     * @param createdTime The timestamp (milliseconds, epoch time)
-     *                    that this task was created.
+     * @param dueTime  The timestamp (epoch time) that the task should be completed by.
      */
     @Ignore
-    public Task(String taskName, int priority, long createdTime) {
+    public Task(String taskName, int priority, long dueTime) {
+        this.taskName = taskName;
+        this.priority = priority;
+        this.dueTime = dueTime;
+        this.createdTime = 0;
+        this.completed = false;
+    }
+
+    /**
+     * Constructor for a new task without completion
+     * @param taskName The user-defined name of the task
+     * @param priority The user-defined priority of this task
+     * @param createdTime The timestamp (milliseconds, epoch time)
+     *                    that this task was created.
+     * @param dueTime  The timestamp (epoch time) that the task should be completed by.
+     */
+    @Ignore
+    public Task(String taskName, int priority, long createdTime,long dueTime) {
         this.taskName = taskName;
         this.priority = priority;
         this.createdTime = createdTime;
         this.completed = false;
+        this.dueTime = dueTime;
     }
 
+    /**
+     * @return Epoch time that the task should be completed by.
+     */
+    public long getDueTime() {
+        return dueTime;
+    }
+
+    /**
+     * @param dueTime Epoch time that the task should be completed by.
+     */
+    public void setDueTime(long dueTime) {
+        this.dueTime = dueTime;
+    }
 
     /**
      * @return an {@code String} representing
