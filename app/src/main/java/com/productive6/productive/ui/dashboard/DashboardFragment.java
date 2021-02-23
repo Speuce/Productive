@@ -12,15 +12,22 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.productive6.productive.R;
+import com.productive6.productive.logic.task.TaskManager;
 import com.productive6.productive.objects.Task;
 
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.inject.Inject;
+
 import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class DashboardFragment extends Fragment {
-    
+
+    @Inject
+    TaskManager taskManager;
+
 
     private DashboardViewModel dashboardViewModel;
 
@@ -45,6 +52,7 @@ public class DashboardFragment extends Fragment {
 
         ArrayList<Task> tasks = new ArrayList<>();//Data
         tasks.add(new Task("String taskName1", 1, 1, 1, new Date(), false));
+        taskManager.addTask(tasks.get(0));
 //        tasks.add(new Task("String taskName2", 2, 2, false));
 //        tasks.add(new Task("String taskName3", 3, 3, false));
 //        tasks.add(new Task("String taskName4", 4, 4, false));
