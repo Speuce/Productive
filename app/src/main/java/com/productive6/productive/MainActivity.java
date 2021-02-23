@@ -23,6 +23,9 @@ import com.productive6.productive.objects.Title;
 import java.util.ArrayList;
 import java.util.List;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
 
     private ProgressBar experienceBar;
