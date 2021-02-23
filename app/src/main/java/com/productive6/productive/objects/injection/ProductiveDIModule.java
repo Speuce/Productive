@@ -5,7 +5,7 @@ import android.content.Context;
 
 import com.productive6.productive.logic.executor.IRunnableExecutor;
 import com.productive6.productive.logic.executor.impl.AndroidExecutor;
-import com.productive6.productive.logic.rewards.TitleManager;
+import com.productive6.productive.logic.rewards.ITitleManager;
 import com.productive6.productive.logic.rewards.impl.DefaultTitleManager;
 
 import com.productive6.productive.logic.task.TaskManager;
