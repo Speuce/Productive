@@ -12,3 +12,17 @@
 &emsp; A growing issue for students in the modern world is procrastination –– the ‘pushing off’ of their schedule, especially given the multitude of distractions available. Productive will encourage users to stay on track with their designed schedule through the use of schedule reminders and experience rewards for completing their tasks on schedule. Users will add and manage tasks to create a schedule to help the users organize their day. Productive will use this schedule to remind users of the tasks that they still need to complete that day, thereby alleviating procrastination caused by distraction or forgetfulness. Users can rest assured that they will be reminded of their tasks, small and large alike, and won’t need to occupy their memory with every menial item on their to-do list.
 
 &emsp; The goal of the app is to reach as many people as possible. As such, the goal of Productive is to achieve 100,000 regular users. The reason we chose this as our success criteria is because the number of total downloads would include many people who download the app without using it regularly, and thus fails to portray the engagement of the user base. A regular user is a user who adds or completes at least one task, a minimum of three days a week. This way, we can objectively measure the usefulness of Productive, instead of its marketing. 
+
+## Branching Stratagy
+
+&emsp; We chose to use the git flow for our branching stratagy. As such we will create "dev task" branches off of a stable `Develop` branch.
+
+&emsp; The name of the branches will be of the form: [dev task id]-[dev task name].
+
+&emsp; New branches will be created by running `git checkout -b [branch name]` off of the stable develop branch.  
+
+&emsp; Prior to posting merge requests, branches will run `git fetch` and `git pull origin develop`. Resolving all merge conflicts and re-testing the feature branch.
+
+&emsp; When writing merge requests, the requester will include a short summary explaining how the branch solves the issue described in the dev task.
+
+&emsp; When reviewing merge requests, the requestee will check the posted code meets coding standards. Additionally, the requestee will pull the change branch and run all unit tests, and perform a manual system test. If code passes all stages, it is approved and merged with `develop`.
