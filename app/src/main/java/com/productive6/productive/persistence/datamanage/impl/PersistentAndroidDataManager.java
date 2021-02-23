@@ -4,7 +4,7 @@ import android.content.Context;
 
 import androidx.room.Room;
 
-import com.productive6.productive.executor.RunnableExecutor;
+import com.productive6.productive.persistence.executor.IRunnableExecutor;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.persistence.ProductiveDB;
 import com.productive6.productive.persistence.access.ITaskAccess;
@@ -33,10 +33,10 @@ public class PersistentAndroidDataManager implements IDataManager {
 
     private IUserPersistenceManager userPersistenceManager;
 
-    private final RunnableExecutor executor;
+    private final IRunnableExecutor executor;
 
     @Inject
-    public PersistentAndroidDataManager(Context context, RunnableExecutor executor) {
+    public PersistentAndroidDataManager(Context context, IRunnableExecutor executor) {
         this.context = context;
         this.executor = executor;
 

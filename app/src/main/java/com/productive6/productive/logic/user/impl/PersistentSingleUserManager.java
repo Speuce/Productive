@@ -1,7 +1,6 @@
 package com.productive6.productive.logic.user.impl;
 
 import com.productive6.productive.logic.exceptions.ObjectFormatException;
-import com.productive6.productive.logic.executor.IRunnableExecutor;
 
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.exceptions.AccessBeforeLoadedException;
@@ -10,8 +9,6 @@ import com.productive6.productive.objects.User;
 import com.productive6.productive.objects.events.user.UserLoadedEvent;
 import com.productive6.productive.objects.events.user.UserUpdateEvent;
 import com.productive6.productive.persistence.datamanage.IDataManager;
-
-import java.util.List;
 
 /**
  * {@link com.productive6.productive.logic.user.UserManager} implementation that persists a single (main user).
@@ -32,6 +29,11 @@ public class PersistentSingleUserManager implements UserManager {
 
     public PersistentSingleUserManager(IDataManager data) {
         this.data = data;
+        loadCurrentUser();
+    }
+
+    @Override
+    public void load(){
         loadCurrentUser();
     }
 
@@ -71,8 +73,7 @@ public class PersistentSingleUserManager implements UserManager {
             throw new ObjectFormatException("Attempted to update a user without the user having an associated id first!");
         }
         data.user().updateUser(u);
-
-        executor.runASync(() -> {data.user().updateUser(u);});
+        
 
         EventDispatch.dispatchEvent(new UserUpdateEvent(u));
     }

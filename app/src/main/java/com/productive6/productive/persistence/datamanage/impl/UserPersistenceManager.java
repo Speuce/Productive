@@ -1,6 +1,6 @@
 package com.productive6.productive.persistence.datamanage.impl;
 
-import com.productive6.productive.executor.RunnableExecutor;
+import com.productive6.productive.persistence.executor.IRunnableExecutor;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.User;
 import com.productive6.productive.persistence.access.ITaskAccess;
@@ -20,14 +20,14 @@ public class UserPersistenceManager implements IUserPersistenceManager {
     /**
      * For accessing different threads
      */
-    private final RunnableExecutor executor;
+    private final IRunnableExecutor executor;
 
     /**
      * For accessing the actual database.
      */
     private final IUserAccess access;
 
-    public UserPersistenceManager(RunnableExecutor executor, IUserAccess access) {
+    public UserPersistenceManager(IRunnableExecutor executor, IUserAccess access) {
         this.executor = executor;
         this.access = access;
     }

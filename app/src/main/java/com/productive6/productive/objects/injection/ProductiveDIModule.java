@@ -3,8 +3,8 @@ package com.productive6.productive.objects.injection;
 import android.content.Context;
 
 
-import com.productive6.productive.logic.executor.IRunnableExecutor;
-import com.productive6.productive.logic.executor.impl.AndroidExecutor;
+import com.productive6.productive.persistence.executor.IRunnableExecutor;
+import com.productive6.productive.persistence.executor.impl.AndroidExecutor;
 import com.productive6.productive.logic.rewards.ITitleManager;
 import com.productive6.productive.logic.rewards.impl.DefaultTitleManager;
 
@@ -38,7 +38,7 @@ public class ProductiveDIModule {
 
     @Singleton
     @Provides
-    public IDataManager provideDataManager(@ApplicationContext Context context, RunnableExecutor e){
+    public IDataManager provideDataManager(@ApplicationContext Context context, IRunnableExecutor e){
         IDataManager d = new PersistentAndroidDataManager(context, e);
         d.init();
         return d;

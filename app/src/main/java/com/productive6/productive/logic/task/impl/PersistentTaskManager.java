@@ -1,6 +1,5 @@
 package com.productive6.productive.logic.task.impl;
 
-import com.productive6.productive.logic.executor.IRunnableExecutor;
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.exceptions.PersistentIDAssignmentException;
 import com.productive6.productive.logic.exceptions.ObjectFormatException;
@@ -11,7 +10,6 @@ import com.productive6.productive.objects.events.task.TaskCreateEvent;
 import com.productive6.productive.objects.events.task.TaskUpdateEvent;
 import com.productive6.productive.persistence.datamanage.IDataManager;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -50,10 +48,11 @@ public class PersistentTaskManager implements TaskManager {
      */
     private void validateTask(Task t){
         if(t.getPriority() < 0){
-            throw new TaskFormatException("A priority of < 0 is not supported!");
-        }else if(t.getDueTime() != 0  && t.getDueTime() < System.currentTimeMillis()){
-            throw new TaskFormatException("A task cannot have a due time before now");
-        }
+            throw new ObjectFormatException("A priority of < 0 is not supported!");
+        }else {}
+//            if(t.getDueTime() != 0  && t.getDueTime() < System.currentTimeMillis()){
+//            throw new ObjectFormatException("A task cannot have a due time before now");
+//        }
     }
 
     /**

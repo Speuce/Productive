@@ -1,6 +1,6 @@
 package com.productive6.productive.persistence.datamanage.impl;
 
-import com.productive6.productive.executor.RunnableExecutor;
+import com.productive6.productive.persistence.executor.IRunnableExecutor;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.persistence.access.ITaskAccess;
 import com.productive6.productive.persistence.datamanage.ITaskPersistenceManager;
@@ -18,14 +18,14 @@ public class TaskPersistenceManager implements ITaskPersistenceManager {
     /**
      * For accessing different threads
      */
-    private final RunnableExecutor executor;
+    private final IRunnableExecutor executor;
 
     /**
      * For accessing the actual database.
      */
     private final ITaskAccess access;
 
-    public TaskPersistenceManager(RunnableExecutor executor, ITaskAccess access) {
+    public TaskPersistenceManager(IRunnableExecutor executor, ITaskAccess access) {
         this.executor = executor;
         this.access = access;
     }
