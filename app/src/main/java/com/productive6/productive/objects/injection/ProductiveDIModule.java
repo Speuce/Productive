@@ -1,10 +1,11 @@
 package com.productive6.productive.objects.injection;
 
 import android.content.Context;
+import android.content.res.Resources;
+import com.productive6.productive.R;
 
-
-import com.productive6.productive.logic.executor.IRunnableExecutor;
-import com.productive6.productive.logic.executor.impl.AndroidExecutor;
+import com.productive6.productive.persistence.executor.IRunnableExecutor;
+import com.productive6.productive.persistence.executor.impl.AndroidExecutor;
 import com.productive6.productive.logic.rewards.ITitleManager;
 import com.productive6.productive.logic.rewards.impl.DefaultTitleManager;
 
@@ -12,8 +13,8 @@ import com.productive6.productive.logic.task.TaskManager;
 import com.productive6.productive.logic.task.impl.PersistentTaskManager;
 import com.productive6.productive.logic.user.UserManager;
 import com.productive6.productive.logic.user.impl.PersistentSingleUserManager;
-import com.productive6.productive.persistence.datamanage.DataManager;
-import com.productive6.productive.persistence.datamanage.PersistentDataManager;
+import com.productive6.productive.persistence.datamanage.IDataManager;
+import com.productive6.productive.persistence.datamanage.impl.PersistentAndroidDataManager;
 
 import javax.inject.Singleton;
 
@@ -30,6 +31,7 @@ import dagger.hilt.components.SingletonComponent;
 @InstallIn(SingletonComponent.class)
 public class ProductiveDIModule {
 
+
     @Singleton
     @Provides
     public IRunnableExecutor provideExecutorService(){
@@ -38,27 +40,35 @@ public class ProductiveDIModule {
 
     @Singleton
     @Provides
-    public DataManager provideDataManager(@ApplicationContext Context context){
-        DataManager d = new PersistentDataManager(context);
+    public IDataManager provideDataManager(@ApplicationContext Context context, IRunnableExecutor e){
+        IDataManager d = new PersistentAndroidDataManager(context, e);
         d.init();
         return d;
     }
 
     @Singleton
     @Provides
-    public TaskManager provideTaskManager(DataManager d, IRunnableExecutor e){
-        return new PersistentTaskManager(d, e);
+    public TaskManager provideTaskManager(IDataManager d){
+        return new PersistentTaskManager(d);
     }
 
     @Singleton
     @Provides
-    public UserManager provideUserManager(DataManager d, IRunnableExecutor e){
-        PersistentSingleUserManager ret =  new PersistentSingleUserManager(d, e );
-        ret.load();
-        return ret;
+    public UserManager provideUserManager(IDataManager d){
+        UserManager um = new PersistentSingleUserManager(d);
+        um.load();
+        return um;
     }
 
-
+    @Singleton
+    @Provides
+    public ITitleManager provideITitleManager(@ApplicationContext Context context, UserManager userManager){
+        Resources res = context.getResources();
+        String[] titlesStrings = res.getStringArray(R.array.TitleStringArray);
+        int[] levelArr = res.getIntArray(R.array.TitleLevelArray);
+        ITitleManager tm = new DefaultTitleManager(userManager,titlesStrings,levelArr);
+        return tm;
+    }
 
 
 }

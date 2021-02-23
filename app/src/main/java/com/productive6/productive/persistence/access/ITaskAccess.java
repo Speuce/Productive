@@ -1,4 +1,4 @@
-package com.productive6.productive.persistence;
+package com.productive6.productive.persistence.access;
 
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -9,9 +9,9 @@ import com.productive6.productive.objects.Task;
 import java.util.List;
 
 /**
- * An interface specifically handing the persistence of tasks
+ * An interface specifically handing the accessing of Tasks in the database.
  */
-public interface TaskPersistenceManager {
+public interface ITaskAccess {
 
     /**
      * Inserts a new (no-id)

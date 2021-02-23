@@ -34,7 +34,7 @@ public class RewardManagerTest {
 
     @BeforeClass
     public static void initializeManager(){
-        rewardManager = new RewardManager(data);
+        rewardManager = new RewardManager(data,4,3,100);
     }
 
     @Before
@@ -47,7 +47,7 @@ public class RewardManagerTest {
     public void testManyEvents(){
 
         for(int i = 0; i < 1001; i++){
-            EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",1,0, true)));
+            EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",1,0, 0)));
         }
         assertEquals("Did not have 0 XP", 4,rewardManager.getExperience());
         assertEquals("Did not have level as 1", 40,rewardManager.getLevel());
@@ -60,7 +60,7 @@ public class RewardManagerTest {
 
         assertEquals("Did not have 0 XP", 0,rewardManager.getExperience());
 
-        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",4,0, true)));
+        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",4,0, 0)));
         assertEquals("Did not have 0 XP", 16,rewardManager.getExperience());
 
     }
@@ -70,7 +70,7 @@ public class RewardManagerTest {
 
         assertEquals("Did not have 0 XP", 0,rewardManager.getExperience());
 
-        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",25,0, true)));
+        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",25,0, 0)));
 
         assertEquals("Did not have 0 XP", 0,rewardManager.getExperience());
         assertEquals("Did not have level as 1", 1,rewardManager.getLevel());
@@ -81,7 +81,7 @@ public class RewardManagerTest {
     @Test
     public void testMultipleLevels(){
 
-        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",101,0, true)));
+        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",101,0, 0)));
 
         assertEquals("Did not have 4 XP", 4,rewardManager.getExperience());
         assertEquals("Did not have level as 4", 4,rewardManager.getLevel());
@@ -90,7 +90,7 @@ public class RewardManagerTest {
     @Test
     public void testAddingCoins(){
 
-        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",101,0, true)));
+        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",101,0, 0)));
         assertEquals("Did not have level as 4", 303,rewardManager.getCoins());
 
     }
