@@ -100,7 +100,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Shows 'add task' popup on 'add' button press.
+     * @param view
+     * code from: https://stackoverflow.com/questions/5944987/how-to-create-a-popup-window-popupwindow-in-android
+     */
     public void onButtonShowPopupWindowClick(View view) {
 
         // inflate the layout of the popup window
@@ -127,6 +131,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * On pressing the 'submit' button on the 'add task' popup, create new task object and submit it to the database.
+     * @param view
+     */
     public void addTask(View view){
         EditText name = popupView.findViewById(R.id.taskNameForm);
 
