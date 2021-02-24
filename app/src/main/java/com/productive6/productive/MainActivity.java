@@ -115,10 +115,10 @@ public class MainActivity extends AppCompatActivity {
      * As text boxes and progress bars look odd/broken uninitialized
      */
     private void initHeaderPlaceholders(){
-        experienceBar.setProgress(person.getExp());
-        userTitle.setText(person.getSelectedTitle());
-        coinCounter.setText(String.valueOf(person.getCoins()));
-        levelNumber.setText(String.valueOf(person.getLevel()));
+//        experienceBar.setProgress(person.getExp());
+//        userTitle.setText(person.getSelectedTitle());
+//        coinCounter.setText(String.valueOf(person.getCoins()));
+//        levelNumber.setText(String.valueOf(person.getLevel()));
     }
 
     public void openTitleActivity() {
