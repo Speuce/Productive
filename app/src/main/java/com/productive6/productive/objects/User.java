@@ -44,6 +44,7 @@ public class User {
         this.exp = 0;
         this.level = 0;
         this.coins = 0;
+        selectedTitle = "title1";
     }
 
     /**
