@@ -22,7 +22,7 @@ public class RewardManager implements IRewardManager, ProductiveListener{
     /**
      * @param data a UserManager object used to update the user information in the database
      */
-    public RewardManager(UserManager data, int xpWeight, int coinWeight, int levelUpValue){
+    public RewardManager(UserManager data,int xpWeight, int coinWeight, int levelUpValue){
         experienceWeight = xpWeight;
         this.coinWeight = coinWeight;
         this.levelUpValue = levelUpValue;
@@ -34,24 +34,13 @@ public class RewardManager implements IRewardManager, ProductiveListener{
 
     /**
      * @return integer representation of current user level
-     * returns 0 if person has not been initialized by the database
      */
-    public int getLevel() {
-        int level = 0;
-        if (person != null)
-            level = person.getLevel();
-        return level;
-    }
+    public int getLevel(){return person.getLevel();}
+
     /**
      * @return integer representation of current user experience
-     * returns 0 if person has not been initialized by the database
      */
-    public int getExperience(){
-        int xp = 0;
-        if(person != null)
-            xp = person.getExp();
-        return xp;
-    }
+    public int getExperience(){return person.getExp();}
 
     /**
      * @return an integer representation of the amount of experience required for a level up
@@ -60,14 +49,8 @@ public class RewardManager implements IRewardManager, ProductiveListener{
 
     /**
      * @return integer representation of current user coin count
-     * returns 0 if person has not been initialized by the database
      */
-    public int getCoins(){
-        int coins = 0;
-            if(person != null)
-                 coins =  person.getCoins();
-        return coins;
-    }
+    public int getCoins(){return person.getCoins();}
 
     /**
      * Updates all rewards the TaskManager is responsible, updates level if experience is has exceeded
