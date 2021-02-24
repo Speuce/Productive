@@ -13,12 +13,18 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.productive6.productive.logic.user.UserManager;
 import com.productive6.productive.objects.User;
+
+import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
+
+    @Inject
+    UserManager userManager;
 
     private ProgressBar experienceBar;
     private TextView userTitle;
@@ -43,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
         //remove before push to master
         initHeaderPlaceholders();
+
+        userManager.load();
 
     }
 
