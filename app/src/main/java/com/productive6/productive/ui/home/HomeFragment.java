@@ -17,17 +17,36 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.productive6.productive.R;
 import com.productive6.productive.TitleSelection;
+import com.productive6.productive.logic.event.EventDispatch;
+import com.productive6.productive.logic.rewards.IRewardManager;
+import com.productive6.productive.logic.rewards.ITitleManager;
+import com.productive6.productive.objects.events.ProductiveEventHandler;
+import com.productive6.productive.objects.events.ProductiveListener;
+import com.productive6.productive.objects.events.SystemLoadedEvent;
+import com.productive6.productive.objects.events.user.UserUpdateEvent;
+
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
 
 
-public class HomeFragment extends Fragment {
+@AndroidEntryPoint
+public class HomeFragment extends Fragment implements ProductiveListener {
+
+    @Inject
+    ITitleManager titleManager;
+
+    @Inject
+    IRewardManager rewardManager;
 
     private ProgressBar experienceBar;
     private TextView userTitle;
     private TextView coinCounter;
     private TextView levelNumber;
-    private View popupView;
 
     private HomeViewModel homeViewModel;
+
+    private boolean SystemInitialized;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -42,6 +61,9 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        //register listener
+        EventDispatch.registerListener(this);
+
         //connecting header elements to objects
 
         experienceBar = (ProgressBar) root.findViewById(R.id.experience_bar);
@@ -55,12 +77,22 @@ public class HomeFragment extends Fragment {
 
         userTitle.setOnClickListener(v -> openTitleActivity());
 
-        userTitle.setText("TEMP TITLE");
-        experienceBar.setProgress(50);
-        coinCounter.setText("1000");
-        levelNumber.setText("10");
+        updateHeader();
 
         return root;
+    }
+
+
+    @ProductiveEventHandler
+    public void catchSystemLoaded(SystemLoadedEvent event){
+        updateHeader();
+    }
+
+    private void updateHeader(){
+            userTitle.setText(titleManager.getTitleAsString());
+            experienceBar.setProgress(rewardManager.getExperience());
+            coinCounter.setText("" + rewardManager.getCoins());
+            levelNumber.setText("" + rewardManager.getLevel());
     }
 
     public void openTitleActivity() {
