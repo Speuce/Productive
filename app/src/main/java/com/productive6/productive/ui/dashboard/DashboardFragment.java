@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -13,12 +12,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.productive6.productive.R;
-import com.productive6.productive.logic.task.TaskManager;
+import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.objects.Task;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Collection;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -30,7 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class DashboardFragment extends Fragment {
 
     @Inject
-    TaskManager taskManager;
+    ITaskManager taskManager;
 
     private DashboardViewModel dashboardViewModel;
 

@@ -4,12 +4,14 @@ import android.content.Context;
 import android.content.res.Resources;
 import com.productive6.productive.R;
 
+import com.productive6.productive.logic.rewards.IRewardManager;
+import com.productive6.productive.logic.rewards.impl.RewardManager;
+import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.persistence.executor.IRunnableExecutor;
 import com.productive6.productive.persistence.executor.impl.AndroidExecutor;
 import com.productive6.productive.logic.rewards.ITitleManager;
 import com.productive6.productive.logic.rewards.impl.DefaultTitleManager;
 
-import com.productive6.productive.logic.task.TaskManager;
 import com.productive6.productive.logic.task.impl.PersistentTaskManager;
 import com.productive6.productive.logic.user.UserManager;
 import com.productive6.productive.logic.user.impl.PersistentSingleUserManager;
@@ -48,7 +50,7 @@ public class ProductiveDIModule {
 
     @Singleton
     @Provides
-    public TaskManager provideTaskManager(IDataManager d){
+    public ITaskManager provideTaskManager(IDataManager d){
         return new PersistentTaskManager(d);
     }
 
@@ -70,5 +72,16 @@ public class ProductiveDIModule {
         return tm;
     }
 
+    @Singleton
+    @Provides
+    public IRewardManager provideIRewardManager(UserManager data, @ApplicationContext Context context){
+
+        int levelUpValue = context.getResources().getInteger(R.integer.levelupvalue);
+        int coinWeight = context.getResources().getInteger(R.integer.coinsweight);
+        int xpWeight = context.getResources().getInteger(R.integer.experienceweight);
+
+        IRewardManager rm = new RewardManager(data,xpWeight,coinWeight,levelUpValue);
+        return rm;
+    }
 
 }

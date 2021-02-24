@@ -3,7 +3,7 @@ package com.productive6.productive.logic.task.impl;
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.exceptions.PersistentIDAssignmentException;
 import com.productive6.productive.logic.exceptions.ObjectFormatException;
-import com.productive6.productive.logic.task.TaskManager;
+import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.events.task.TaskCompleteEvent;
 import com.productive6.productive.objects.events.task.TaskCreateEvent;
@@ -15,9 +15,9 @@ import java.util.function.Consumer;
 
 /**
  * A production-grade and persistent implementation of the
- * {@link TaskManager} interface
+ * {@link ITaskManager} interface
  */
-public class PersistentTaskManager implements TaskManager {
+public class PersistentTaskManager implements ITaskManager {
 
 
     private IDataManager data;
