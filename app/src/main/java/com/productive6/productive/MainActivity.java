@@ -46,10 +46,6 @@ public class MainActivity extends AppCompatActivity {
     @Inject
     UserManager userManager;
 
-    private ProgressBar experienceBar;
-    private TextView userTitle;
-    private TextView coinCounter;
-    private TextView levelNumber;
     private View popupView;
 
     @Override
@@ -65,45 +61,11 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-        initializeHeader();
-
-        //remove before push to master
-        initHeaderPlaceholders();
 
         userManager.load();
 
     }
 
-    /**
-     * Initializes the UI objects used in the header
-     * so that the progress bar and text boxes can be set
-     */
-    protected void initializeHeader(){
-
-        //connecting header elements to objects
-
-        experienceBar = (ProgressBar) findViewById(R.id.experience_bar);
-        userTitle = (TextView) findViewById(R.id.user_title);
-        coinCounter = (TextView) findViewById(R.id.coin_counter);
-        levelNumber = (TextView) findViewById(R.id.level_number);
-
-        //setting level and title as bold text
-        levelNumber.setTypeface(null, Typeface.BOLD);
-        userTitle.setTypeface(null, Typeface.BOLD);
-
-        userTitle.setOnClickListener(v -> openTitleActivity());
-    }
-
-    /*FAKE PLACEHOLDER VALUES REMOVE BEFORE MERGING WITH MASTER
-     * These are only to show people how this function works and to initialize the UI
-     * As text boxes and progress bars look odd/broken uninitialized
-     */
-    private void initHeaderPlaceholders(){
-//        experienceBar.setProgress(person.getExp());
-//        userTitle.setText(person.getSelectedTitle());
-//        coinCounter.setText(String.valueOf(person.getCoins()));
-//        levelNumber.setText(String.valueOf(person.getLevel()));
-    }
 
     public void openTitleActivity() {
         Intent intent = new Intent(this, TitleSelection.class);
