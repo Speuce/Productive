@@ -1,16 +1,18 @@
-package com.productive6.productive.executor;
+package com.productive6.productive.persistence.executor.impl;
 
 import android.os.Handler;
 import android.os.Looper;
+
+import com.productive6.productive.persistence.executor.IRunnableExecutor;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * Specfic implementation of {@link RunnableExecutor} for
+ * Specfic implementation of {@link IRunnableExecutor} for
  * android applications
  */
-public class AndroidExecutor implements RunnableExecutor {
+public class AndroidExecutor implements IRunnableExecutor {
 
     /**
      * Handles running async processes

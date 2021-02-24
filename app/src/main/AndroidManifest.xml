@@ -20,10 +20,13 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".TitleSelection"
+            android:label="Select Title">
+        </activity>
+        <activity
             android:name=".DeadlinePicker"
             android:label="Add Task">
         </activity>
-
 
     </application>
 

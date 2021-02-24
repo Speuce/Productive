@@ -128,4 +128,20 @@ public class EventDispatchTest {
             }
         }));
     }
+
+    @Test
+    public void testMultipleDispatch(){
+        final AtomicInteger i = new AtomicInteger(0);
+        EventDispatch.registerListener(new ProductiveListener() {
+            @ProductiveEventHandler
+            public void onEvent(SubDummyEvent e){
+                i.incrementAndGet();
+            }
+        });
+        final int tests = 5;
+        for (int x = 0; x < tests; x++) {
+            EventDispatch.dispatchEvent(new SubDummyEvent());
+        }
+        assertEquals("Event Dispatch to properly dispatch multiples of the same event. Expected: " + tests + " Actually dispatched: " + i.get(), tests, i.get());
+    }
 }

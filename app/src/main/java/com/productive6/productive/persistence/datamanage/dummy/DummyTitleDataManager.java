@@ -1,4 +1,4 @@
-package com.productive6.productive.persistence.dummy;
+package com.productive6.productive.persistence.datamanage.dummy;
 
 public class DummyTitleDataManager {
 

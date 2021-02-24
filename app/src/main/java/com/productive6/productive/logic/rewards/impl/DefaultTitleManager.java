@@ -1,19 +1,20 @@
 package com.productive6.productive.logic.rewards.impl;
 
 import com.productive6.productive.logic.event.EventDispatch;
+import com.productive6.productive.logic.rewards.ITitleManager;
 import com.productive6.productive.logic.user.UserManager;
+import com.productive6.productive.objects.Title;
+import com.productive6.productive.objects.User;
+import com.productive6.productive.objects.events.ProductiveEventHandler;
+import com.productive6.productive.objects.events.ProductiveListener;
+import com.productive6.productive.objects.events.user.UserLoadedEvent;
+import com.productive6.productive.objects.events.user.UserUpdateEvent;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import com.productive6.productive.objects.events.user.*;
-import com.productive6.productive.objects.Title;
-import com.productive6.productive.logic.rewards.TitleManager;
-import com.productive6.productive.objects.User;
-import com.productive6.productive.objects.events.ProductiveEventHandler;
-import com.productive6.productive.objects.events.ProductiveListener;
 
-public class DefaultTitleManager implements TitleManager, ProductiveListener{
+public class DefaultTitleManager implements ITitleManager, ProductiveListener{
 
     private User person;
     private UserManager data;
@@ -24,7 +25,8 @@ public class DefaultTitleManager implements TitleManager, ProductiveListener{
         EventDispatch.registerListener(this);
         this.data = data;
         titles = getAllTitles(titleString,titleLevels);
-        person = null;
+        //person = new User(10,6,10);
+        //person.setSelectedTitle("title1");
     }
 
     /**

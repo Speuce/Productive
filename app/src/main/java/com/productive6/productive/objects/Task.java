@@ -6,6 +6,8 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.util.Date;
+
 /**
  * This object represents a single user task that needs to be completed.
  *
@@ -43,6 +45,19 @@ public class Task implements Comparable<Task>{
     private boolean completed;
 
     /**
+     * When a given task is due
+     */
+    @ColumnInfo(name = "due_date")
+    private Date dueDate;
+
+    /**
+     * When a given task is due
+     */
+    @ColumnInfo(name = "difficulty")
+    private int difficulty;
+
+
+    /**
      * Constructor for a new task.
      * @param taskName The user-defined name of the task
      * @param priority The user-defined priority of this task
@@ -51,11 +66,26 @@ public class Task implements Comparable<Task>{
      * @param completed A flag to mark whether or not this task
      *                  has been completed.
      */
-    public Task(String taskName, int priority, long createdTime, boolean completed) {
+    public Task(String taskName, int priority, int difficulty, long createdTime, Date dueDate, boolean completed) {
         this.taskName = taskName;
         this.priority = priority;
         this.createdTime = createdTime;
         this.completed = completed;
+        this.difficulty = difficulty;
+        this.dueDate = dueDate;
+    }
+
+    /**
+     * Constructor for a new task without completion
+     * @param taskName The user-defined name of the task
+     * @param priority The user-defined priority of this task
+     */
+    @Ignore
+    public Task(String taskName, int priority) {
+        this.taskName = taskName;
+        this.priority = priority;
+        this.createdTime = 0;
+        this.completed = false;
     }
 
     /**
@@ -66,11 +96,13 @@ public class Task implements Comparable<Task>{
      *                    that this task was created.
      */
     @Ignore
-    public Task(String taskName, int priority, long createdTime) {
+    public Task(String taskName, int priority, int difficulty, long createdTime) {
         this.taskName = taskName;
         this.priority = priority;
         this.createdTime = createdTime;
+        this.difficulty = difficulty;
         this.completed = false;
+//        this.dueDate = "";
     }
 
 
@@ -135,6 +167,14 @@ public class Task implements Comparable<Task>{
     public void setCreatedTime(long createdTime) {
         this.createdTime = createdTime;
     }
+
+    public Date getDueDate() { return dueDate; }
+
+    public int getDifficulty() { return difficulty; }
+
+    public void setDueDate(Date dueDate) { this.dueDate = dueDate; }
+
+    public void setDifficulty(int difficulty) { this.difficulty = difficulty; }
 
     /**
      * Compares this object with another task,
