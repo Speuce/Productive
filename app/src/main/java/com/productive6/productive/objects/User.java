@@ -113,7 +113,12 @@ public class User {
      * @param selectedTitle The currently-selected title for the user
      */
     public void setSelectedTitle(String selectedTitle) {
-        this.selectedTitle = selectedTitle;
+        if(selectedTitle == null){
+            this.selectedTitle = "";
+        }else{
+            this.selectedTitle = selectedTitle;
+        }
+
     }
 
 
