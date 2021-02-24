@@ -13,7 +13,7 @@ import java.util.function.Consumer;
  *
  * @author Matt Kwiatkowski
  */
-public interface ITaskManager {
+public interface TaskManager {
 
     /**
      * @return a list of the users current incomplete tasks,

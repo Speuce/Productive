@@ -7,10 +7,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -19,18 +22,31 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.productive6.productive.logic.rewards.ITitleManager;
 import com.productive6.productive.logic.user.UserManager;
+import com.productive6.productive.objects.User;
 
+import com.productive6.productive.logic.rewards.impl.DefaultTitleManager;
 import com.productive6.productive.objects.Task;
+import com.productive6.productive.objects.Title;
+import com.productive6.productive.ui.dashboard.TaskAdapter;
 
 
-import com.productive6.productive.logic.task.ITaskManager;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+import com.productive6.productive.logic.rewards.impl.DefaultTitleManager;
+import com.productive6.productive.logic.task.TaskManager;
+import com.productive6.productive.objects.Task;
+import com.productive6.productive.objects.Title;
 
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -40,7 +56,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class MainActivity extends AppCompatActivity {
 
     @Inject
-    ITaskManager taskManager;
+    TaskManager taskManager;
     @Inject
     ITitleManager titleManager;
     @Inject
