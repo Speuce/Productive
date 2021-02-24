@@ -1,7 +1,8 @@
 package com.productive6.productive.objects.injection;
 
 import android.content.Context;
-
+import android.content.res.Resources;
+import com.productive6.productive.R;
 
 import com.productive6.productive.persistence.executor.IRunnableExecutor;
 import com.productive6.productive.persistence.executor.impl.AndroidExecutor;
@@ -29,6 +30,7 @@ import dagger.hilt.components.SingletonComponent;
 @Module
 @InstallIn(SingletonComponent.class)
 public class ProductiveDIModule {
+
 
     @Singleton
     @Provides
@@ -58,7 +60,15 @@ public class ProductiveDIModule {
         return um;
     }
 
-
+    @Singleton
+    @Provides
+    public ITitleManager provideITitleManager(@ApplicationContext Context context, UserManager userManager){
+        Resources res = context.getResources();
+        String[] titlesStrings = res.getStringArray(R.array.TitleStringArray);
+        int[] levelArr = res.getIntArray(R.array.TitleLevelArray);
+        ITitleManager tm = new DefaultTitleManager(userManager,titlesStrings,levelArr);
+        return tm;
+    }
 
 
 }

@@ -53,7 +53,7 @@ public class DashboardFragment extends Fragment {
 
         ArrayList<Task> tasks = new ArrayList<>();//Data
         tasks.add(new Task("String taskName1", 1, 1, 1, new Date(), false));
-        taskManager.addTask(tasks.get(0));
+        //taskManager.addTask(tasks.get(0));
 //        tasks.add(new Task("String taskName2", 2, 2, false));
 //        tasks.add(new Task("String taskName3", 3, 3, false));
 //        tasks.add(new Task("String taskName4", 4, 4, false));

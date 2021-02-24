@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.productive6.productive.logic.rewards.impl.DefaultTitleManager;
@@ -31,7 +32,7 @@ import com.productive6.productive.logic.task.TaskManager;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.Title;
 
-import java.text.DateFormat;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
