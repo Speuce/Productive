@@ -3,14 +3,13 @@ package com.productive6.productive;
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.exceptions.PersistentIDAssignmentException;
 import com.productive6.productive.logic.exceptions.ObjectFormatException;
-import com.productive6.productive.logic.task.TaskManager;
+import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.logic.task.impl.PersistentTaskManager;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.task.TaskCreateEvent;
 import com.productive6.productive.objects.events.task.TaskUpdateEvent;
-import com.productive6.productive.objects.events.user.UserUpdateEvent;
 import com.productive6.productive.persistence.datamanage.dummy.DummyDataManager;
 
 import org.junit.Before;
@@ -26,7 +25,7 @@ import static org.junit.Assert.*;
  */
 public class TaskManagerTest {
 
-    private TaskManager taskManager;
+    private ITaskManager taskManager;
 
     private DummyDataManager data;
 
