@@ -56,7 +56,7 @@ public class ProductiveDIModule {
     @Provides
     public UserManager provideUserManager(IDataManager d){
         UserManager um = new PersistentSingleUserManager(d);
-        um.load();
+//        um.load();
         return um;
     }
 

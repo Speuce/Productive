@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -53,21 +54,9 @@ public class DashboardFragment extends Fragment {
 
         ArrayList<Task> tasks = new ArrayList<>();//Data
         tasks.add(new Task("String taskName1", 1, 1, 1, new Date(), false));
-        //taskManager.addTask(tasks.get(0));
-//        tasks.add(new Task("String taskName2", 2, 2, false));
-//        tasks.add(new Task("String taskName3", 3, 3, false));
-//        tasks.add(new Task("String taskName4", 4, 4, false));
-//        tasks.add(new Task("String taskName5", 5, 5, false));
-//        tasks.add(new Task("String taskName1", 1, 1, false));
-//        tasks.add(new Task("String taskName2", 2, 2, false));
-//        tasks.add(new Task("String taskName3", 3, 3, false));
-//        tasks.add(new Task("String taskName4", 4, 4, false));
-//        tasks.add(new Task("String taskName5", 5, 5, false));
 
-        TaskAdapter taskAdapter = new TaskAdapter();
-
+        TaskAdapter taskAdapter = new TaskAdapter(taskManager);
         taskManager.getTasksByPriority(new TaskConsumerStartup(taskAdapter));//Logic CALL--Load Tasks
-
         taskDisplayView.setAdapter(taskAdapter);//attach display to view + tasks
         taskDisplayView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false));//Describe how the data should be laid out
     }
