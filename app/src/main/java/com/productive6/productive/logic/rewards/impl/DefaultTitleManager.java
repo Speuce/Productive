@@ -25,7 +25,8 @@ public class DefaultTitleManager implements ITitleManager, ProductiveListener{
         EventDispatch.registerListener(this);
         this.data = data;
         titles = getAllTitles(titleString,titleLevels);
-
+        //person = new User(10,6,10);
+        //person.setSelectedTitle("title1");
     }
 
     /**
@@ -36,38 +37,26 @@ public class DefaultTitleManager implements ITitleManager, ProductiveListener{
 
         List<Title> options = new LinkedList<Title>();
 
-        if(person != null) {
-            titles.iterator().forEachRemaining(curr -> {
 
-                if (curr.getLevelRequirement() <= getLevel())
-                    options.add(new Title(curr.getString(), curr.getLevelRequirement()));
+        titles.iterator().forEachRemaining(curr -> {
 
-            });
-        }
+            if(curr.getLevelRequirement() <= getLevel())
+                options.add(new Title(curr.getString(),curr.getLevelRequirement()));
+
+        });
         return options;
     }
 
     /**
-     * Returns a String representation of the currently selected title
-     * @return String representing the current title, returns an empty string
-     * if person has not been initialized by the database
+     * Returns a String repersentation of the currently selected title
+     * @return String representing the current title
      */
-    public String getTitleAsString(){
-
-        String str = "";
-
-        if(person != null)
-            str = person.getSelectedTitle();
-
-        return str;
-    }
+    public String getTitleAsString(){return person.getSelectedTitle();}
 
     /**
      * @return integer representing current level
      */
-    private int getLevel() {
-        return person.getLevel();
-    }
+    private int getLevel(){return person.getLevel();}
 
 
     /**
@@ -77,7 +66,7 @@ public class DefaultTitleManager implements ITitleManager, ProductiveListener{
     @Override
     public void setTitle(String newTitle) {
 
-        if(validateTitle(newTitle) && person != null) {
+        if(validateTitle(newTitle)) {
             person.setSelectedTitle(newTitle);
             data.updateUser(person);
         }
