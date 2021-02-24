@@ -47,12 +47,14 @@ public class PersistentSingleUserManager implements UserManager {
                 //create a default user. Iteration 1 smelly stuff. Iteration 2/3 will have a user creation UI
                 u = new User();
                 u.setCoins(0);
-                data.user().insertUser(u);
+                data.user().insertUser(u, () ->{
+                    EventDispatch.dispatchEvent(new UserLoadedEvent(currentUser));
+                });
             }else{
                 u = users.get(0);
             }
             currentUser = u;
-            EventDispatch.dispatchEvent(new UserLoadedEvent(currentUser));
+
         });
     }
 

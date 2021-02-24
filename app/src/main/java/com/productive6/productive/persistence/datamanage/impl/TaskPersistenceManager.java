@@ -31,8 +31,11 @@ public class TaskPersistenceManager implements ITaskPersistenceManager {
     }
 
     @Override
-    public void insertTask(final Task t) {
-        executor.runASync(() ->t.setId(access.insertTask(t)));
+    public void insertTask(final Task t, final Runnable after) {
+        executor.runASync(() ->{
+            t.setId(access.insertTask(t));
+            executor.runSync(after);
+        });
     }
 
     @Override

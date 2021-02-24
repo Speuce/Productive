@@ -33,8 +33,11 @@ public class UserPersistenceManager implements IUserPersistenceManager {
     }
 
     @Override
-    public void insertUser(final User u) {
-        executor.runASync(() -> u.setId(access.insertUser(u)));
+    public void insertUser(final User u, final Runnable after) {
+        executor.runASync(() -> {
+            u.setId(access.insertUser(u));
+            executor.runSync(after);
+        });
     }
 
     @Override
