@@ -4,6 +4,8 @@ import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.exceptions.AccessBeforeLoadedException;
 import com.productive6.productive.logic.exceptions.ObjectFormatException;
 import com.productive6.productive.persistence.datamanage.dummy.DummyDataManager;
+import com.productive6.productive.persistence.executor.impl.TestExecutor;
+import com.productive6.productive.logic.task.TaskManager;
 import com.productive6.productive.logic.user.UserManager;
 import com.productive6.productive.logic.user.impl.PersistentSingleUserManager;
 import com.productive6.productive.objects.User;

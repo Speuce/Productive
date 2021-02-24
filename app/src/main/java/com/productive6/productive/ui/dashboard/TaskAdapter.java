@@ -3,14 +3,16 @@ package com.productive6.productive.ui.dashboard;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import androidx.activity.ComponentActivity;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.productive6.productive.R;
-import com.productive6.productive.logic.task.ITaskManager;
+import com.productive6.productive.logic.task.TaskManager;
 import com.productive6.productive.objects.Task;
 
 import java.text.SimpleDateFormat;
@@ -18,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
 
 
 /**
@@ -29,7 +33,7 @@ import javax.inject.Inject;
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
     @Inject
-    ITaskManager taskManager;
+    TaskManager taskManager;
     private List<Task> tasks = new ArrayList<>();
 
     /**
@@ -70,7 +74,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         }
     }
 
-    public TaskAdapter(ITaskManager taskManager){ this.taskManager = taskManager;}
+    public TaskAdapter(TaskManager taskManager){ this.taskManager = taskManager;}
 
     @NonNull
     @Override
