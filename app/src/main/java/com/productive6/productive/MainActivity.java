@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView levelNumber;
     private View popupView;
 
+    private PopupWindow popupWindow;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +74,36 @@ public class MainActivity extends AppCompatActivity {
 
         userManager.load();
 
+        initPopupWindow();
+
+    }
+
+    /**
+     * Initializes the 'create task' popup window.
+     * code from: https://stackoverflow.com/questions/5944987/how-to-create-a-popup-window-popupwindow-in-android
+     *
+     */
+    protected void initPopupWindow(){
+
+        // inflate the layout of the popup window
+        LayoutInflater inflater = (LayoutInflater)
+                getSystemService(LAYOUT_INFLATER_SERVICE);
+        popupView = inflater.inflate(R.layout.new_task_popup, null);
+
+        // create the popup window
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        boolean focusable = true; // lets taps outside the popup also dismiss it
+        popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+        // dismiss the popup window when touched
+        popupView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                popupWindow.dismiss();
+                return true;
+            }
+        });
     }
 
     /**
@@ -113,32 +145,14 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Shows 'add task' popup on 'add' button press.
      * @param view
-     * code from: https://stackoverflow.com/questions/5944987/how-to-create-a-popup-window-popupwindow-in-android
+     *
      */
     public void onButtonShowPopupWindowClick(View view) {
-
-        // inflate the layout of the popup window
-        LayoutInflater inflater = (LayoutInflater)
-                getSystemService(LAYOUT_INFLATER_SERVICE);
-        popupView = inflater.inflate(R.layout.new_task_popup, null);
-
-        // create the popup window
-        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-        boolean focusable = true; // lets taps outside the popup also dismiss it
-        PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
 
         // show the popup window
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
-        // dismiss the popup window when touched
-        popupView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                popupWindow.dismiss();
-                return true;
-            }
-        });
+
     }
 
     /**
@@ -146,7 +160,10 @@ public class MainActivity extends AppCompatActivity {
      * @param view
      */
     public void addTask(View view){
+
         EditText name = popupView.findViewById(R.id.taskNameForm);
         taskManager.addTask(new Task(name.getText().toString(),1,1,0, new Date(),false));
+        popupWindow.dismiss();
+        name.setText("");
     }
 }
