@@ -19,7 +19,6 @@ import java.util.List;
 public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.titleViewHolder> {
     private ITitleManager titleManager;
     private List<Title> titles;
-    //private User u;
     private int checkedPosition;
 
     public TitleAdapter(ITitleManager titleManager) {

@@ -28,8 +28,6 @@ public class TitleSelection extends AppCompatActivity implements ProductiveListe
 
 
     private Button submit, cancel;
-    private String[] titleStrings;
-    private int[] titleLevels;
     private List<Title> titles;
     User person;
     @Inject
@@ -50,10 +48,6 @@ public class TitleSelection extends AppCompatActivity implements ProductiveListe
         RecyclerView titleView = findViewById(R.id.titleRecyclerView);
         cancel = findViewById(R.id.cancel);
         submit = findViewById(R.id.submit);
-
-        //Resources res = getResources();
-        //titleStrings = res.getStringArray(R.array.TitleStringArray);
-        //titleLevels = res.getIntArray(R.array.TitleLevelArray);
 
         final TitleAdapter titleAdapter = new TitleAdapter(titleManager);
         titleView.setAdapter(titleAdapter);
