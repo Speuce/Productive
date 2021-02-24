@@ -3,18 +3,25 @@ package com.productive6.productive.ui.dashboard;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import androidx.activity.ComponentActivity;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.productive6.productive.R;
+import com.productive6.productive.logic.task.TaskManager;
 import com.productive6.productive.objects.Task;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
 
 
 /**
@@ -22,8 +29,11 @@ import java.util.List;
  * inside the task list on the dashboard fragment. Task Adapter uses a ViewHolder class to keep the
  * fields inside the task list activity all in one easy-to-access place.
  */
+
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
+    @Inject
+    TaskManager taskManager;
     private List<Task> tasks = new ArrayList<>();
 
     /**
@@ -35,6 +45,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
      * Holds the recyclerView view and it's components
      */
     public class ViewHolder extends RecyclerView.ViewHolder{
+        private TextView id;
         private TextView taskName;
         private TextView taskPriority;
         private TextView taskDifficulty;
@@ -48,10 +59,22 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             taskDifficulty = itemView.findViewById(R.id.taskDifficultyTextView);
             taskDueDate = itemView.findViewById(R.id.taskDueDateTextView);
             taskComplete = itemView.findViewById(R.id.taskCompleteToggleButton);
+            id = itemView.findViewById(R.id.taskId);
+
+            taskComplete.setOnClickListener(new View.OnClickListener(){//listener on checkbox
+                public void onClick(View v){
+                    for(Task task : tasks){//Find the Task whose associated box has been checked
+                        if (task.getId() == Integer.parseInt((String)id.getText())) {
+                            task.setCompleted(taskComplete.isChecked());//set completed to same value as checked
+                            taskManager.updateTask(task);
+                        }
+                    }
+                }
+            });
         }
     }
 
-    public TaskAdapter(){}
+    public TaskAdapter(TaskManager taskManager){ this.taskManager = taskManager;}
 
     @NonNull
     @Override
@@ -63,13 +86,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.id.setText(""+tasks.get(position).getId());
         holder.taskName.setText(tasks.get(position).getTaskName());
         holder.taskPriority.setText(""+tasks.get(position).getPriority());
         holder.taskDifficulty.setText(""+tasks.get(position).getDifficulty());
         holder.taskDueDate.setText(format.format(tasks.get(position).getDueDate()));
         holder.taskComplete.setChecked(tasks.get(position).isCompleted());
     }
-
     @Override
     public int getItemCount() {
         return tasks.size();
