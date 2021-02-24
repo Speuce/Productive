@@ -1,6 +1,7 @@
 package com.productive6.productive.ui.dashboard;
 
 import android.os.Bundle;
+import android.util.EventLog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.productive6.productive.R;
+import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.objects.Task;
 
@@ -54,6 +56,7 @@ public class DashboardFragment extends Fragment {
         tasks.add(new Task("String taskName1", 1, 1, 1, new Date(), false));
 
         TaskAdapter taskAdapter = new TaskAdapter(taskManager);
+        EventDispatch.registerListener(taskAdapter);
         taskManager.getTasksByPriority(new TaskConsumerStartup(taskAdapter));//Logic CALL--Load Tasks
         taskDisplayView.setAdapter(taskAdapter);//attach display to view + tasks
         taskDisplayView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false));//Describe how the data should be laid out

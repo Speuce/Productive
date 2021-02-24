@@ -147,7 +147,6 @@ public class MainActivity extends AppCompatActivity {
      */
     public void addTask(View view){
         EditText name = popupView.findViewById(R.id.taskNameForm);
-
-        taskManager.addTask(new Task(name.getText().toString(),1,1,1, new Date(),false));
+        taskManager.addTask(new Task(name.getText().toString(),1,1,0, new Date(),false));
     }
 }

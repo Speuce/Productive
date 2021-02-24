@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.productive6.productive.R;
 import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.objects.Task;
+import com.productive6.productive.objects.events.ProductiveEventHandler;
+import com.productive6.productive.objects.events.ProductiveListener;
+import com.productive6.productive.objects.events.task.TaskCreateEvent;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -26,10 +29,11 @@ import javax.inject.Inject;
  * fields inside the task list activity all in one easy-to-access place.
  */
 
-public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
+public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> implements ProductiveListener {
 
     @Inject
     ITaskManager taskManager;
+
     private List<Task> tasks = new ArrayList<>();
 
     /**
@@ -96,6 +100,16 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
     public void setTasks(List<Task> tasks){
         this.tasks = tasks;
+        notifyDataSetChanged();
+    }
+
+    /**
+     * Method called when a new task is created.
+     */
+    @ProductiveEventHandler
+    public void onNewTask(TaskCreateEvent e){
+        this.tasks.add(e.getTask());
+        System.out.println("Got new task!");
         notifyDataSetChanged();
     }
 }
