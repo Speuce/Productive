@@ -11,19 +11,20 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.productive6.productive.logic.rewards.ITitleManager;
 import com.productive6.productive.objects.Title;
-import com.productive6.productive.objects.User;
 
 import java.util.List;
 
 public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.titleViewHolder> {
+    private ITitleManager titleManager;
     private List<Title> titles;
-    private User u;
+    //private User u;
     private int checkedPosition;
 
-    public TitleAdapter(List<Title> titles,User u) {
-        this.titles = titles;
-        this.u = u;
+    public TitleAdapter(ITitleManager titleManager) {
+        this.titleManager = titleManager;
+        titles = titleManager.getTitleOptions();
     }
 
     @NonNull
@@ -65,17 +66,17 @@ public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.titleViewHol
         void bindTitle(final Title title) {
             titleText.setText(title.getString());
             levelText.setText("Lv " + title.getLevelRequirement());
-            if (u.getSelectedTitle().equals(title.getString())) {
+            if (titleManager.getTitleAsString().equals(title.getString())) {
                 checkedPosition = getAdapterPosition();
-                u.setSelectedTitle(title.getString());
+                titleManager.setTitle(title.getString());
                 backgroundTitle.setBackgroundColor(Color.BLUE);
             }
             else backgroundTitle.setBackgroundColor(Color.BLACK);
 
             layoutTitle.setOnClickListener(v -> {
-                if (!u.getSelectedTitle().equals(title.getString())) {
+                if (!titleManager.getTitleAsString().equals(title.getString())) {
                     notifyItemChanged(checkedPosition);
-                    u.setSelectedTitle(title.getString());
+                    titleManager.setTitle(title.getString());
                     checkedPosition = getAdapterPosition();
                     backgroundTitle.setBackgroundColor(Color.BLUE);
                 }
