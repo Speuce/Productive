@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.res.Resources;
 import com.productive6.productive.R;
 
+import com.productive6.productive.logic.rewards.IRewardManager;
+import com.productive6.productive.logic.rewards.impl.RewardManager;
 import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.persistence.executor.IRunnableExecutor;
 import com.productive6.productive.persistence.executor.impl.AndroidExecutor;
@@ -70,5 +72,16 @@ public class ProductiveDIModule {
         return tm;
     }
 
+    @Singleton
+    @Provides
+    public IRewardManager provideIRewardManager(UserManager data, @ApplicationContext Context context){
+
+        int levelUpValue = context.getResources().getInteger(R.integer.levelupvalue);
+        int coinWeight = context.getResources().getInteger(R.integer.coinsweight);
+        int xpWeight = context.getResources().getInteger(R.integer.experienceweight);
+
+        IRewardManager rm = new RewardManager(data,xpWeight,coinWeight,levelUpValue);
+        return rm;
+    }
 
 }
