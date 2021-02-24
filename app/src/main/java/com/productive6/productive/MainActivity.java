@@ -1,34 +1,39 @@
 package com.productive6.productive;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.productive6.productive.logic.rewards.ITitleManager;
+import com.productive6.productive.logic.user.UserManager;
+import com.productive6.productive.objects.User;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
 
+    @Inject
+    ITitleManager titleManager;
+    @Inject
+    UserManager userManager;
+
     private ProgressBar experienceBar;
     private TextView userTitle;
     private TextView coinCounter;
     private TextView levelNumber;
-
+    public static final User person = new User(500,6, 1000);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
 
         //remove before push to master
         initHeaderPlaceholders();
+
+        userManager.load();
+
     }
 
     /**
@@ -65,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
         //setting level and title as bold text
         levelNumber.setTypeface(null, Typeface.BOLD);
         userTitle.setTypeface(null, Typeface.BOLD);
+
+        userTitle.setOnClickListener(v -> openTitleActivity());
     }
 
     /*FAKE PLACEHOLDER VALUES REMOVE BEFORE MERGING WITH MASTER
@@ -72,11 +82,15 @@ public class MainActivity extends AppCompatActivity {
      * As text boxes and progress bars look odd/broken uninitialized
      */
     private void initHeaderPlaceholders(){
-        experienceBar.setProgress(60);
-        userTitle.setText("Work Horse");
-        coinCounter.setText("100");
-        levelNumber.setText("23");
+        experienceBar.setProgress(person.getExp());
+        userTitle.setText(person.getSelectedTitle());
+        coinCounter.setText(String.valueOf(person.getCoins()));
+        levelNumber.setText(String.valueOf(person.getLevel()));
+    }
 
+    public void openTitleActivity() {
+        Intent intent = new Intent(this, TitleSelection.class);
+        startActivity(intent);
     }
 
 }
