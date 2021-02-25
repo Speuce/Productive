@@ -49,7 +49,8 @@ Open an issue in their project with the violation,
 clearly explaining the SOLID violation - specifying the type, provide a link to that issue. Be sure
 your links in the issues are to **specific commits** (not to `main`, or `develop` as those will be changed).
 
-Provide a link to the issue you created here.
+Link to issue:
+https://code.cs.umanitoba.ca/3350-winter-2021-a01/umhub-7/-/issues/34
 
 Agile Planning
 --------------
