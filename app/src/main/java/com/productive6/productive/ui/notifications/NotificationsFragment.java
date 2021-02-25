@@ -59,13 +59,13 @@ public class NotificationsFragment extends Fragment {
         filteredByDateTasks = new ArrayList<>();
         tasks = new ArrayList<>();
 
-        tasks.add(new Task("taskName1000", 1, 1, 1, "2021-2-24", false));
-        tasks.add(new Task("taskName2321", 1, 1, 1, "2021-2-24", false));
-        tasks.add(new Task("taskName9999", 1, 1, 1, "2021-2-24", false));
-        tasks.add(new Task("taskName2879", 1, 1, 1, "2021-2-25", false));
+        tasks.add(new Task("Buy groceries", 1, 1, 1, "2021-2-24", false));
+        tasks.add(new Task("Finish assignment", 1, 1, 1, "2021-2-24", false));
+        tasks.add(new Task("Clean the house", 1, 1, 1, "2021-2-24", false));
+        tasks.add(new Task("Submit assignment", 1, 1, 1, "2021-2-25", false));
 
-        calendarView.addEvent(new Event(Color.BLUE, 1614146400000L, tasks.get(2).getTaskName())); //24 Feb 2021
-        calendarView.addEvent(new Event(Color.BLUE, 1614232800000L, tasks.get(2).getTaskName())); //25 Feb 2021
+        calendarView.addEvent(new Event(Color.BLUE, 1614146400000L, null)); //24 Feb 2021
+        calendarView.addEvent(new Event(Color.BLUE, 1614232800000L, null)); //25 Feb 2021
 
         calendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override
@@ -73,7 +73,6 @@ public class NotificationsFragment extends Fragment {
                 calendar.setTime(dateClicked);
                 month = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
                 dateInString = calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-" + calendar.get(Calendar.DATE);
-                clickedDate.setText("Tasks scheduled for " + getDateWithSuffix(calendar.get(Calendar.DATE)) + " " + month);
                 initializeTaskList(dateInString);
             }
 
@@ -118,6 +117,10 @@ public class NotificationsFragment extends Fragment {
 
         if (filteredByDateTasks.size() == 0) {
             clickedDate.setText("No tasks on " + getDateWithSuffix(calendar.get(Calendar.DATE)) + " " + month);
+        } else if (filteredByDateTasks.size() == 1) {
+            clickedDate.setText(filteredByDateTasks.size() + " task scheduled for " + getDateWithSuffix(calendar.get(Calendar.DATE)) + " " + month);
+        } else {
+            clickedDate.setText(filteredByDateTasks.size() + " tasks scheduled for " + getDateWithSuffix(calendar.get(Calendar.DATE)) + " " + month);
         }
 
         TaskAdapter taskAdapter = new TaskAdapter();
