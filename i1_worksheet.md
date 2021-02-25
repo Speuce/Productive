@@ -60,7 +60,7 @@ Write a paragraph about any plans that were changed. Did you
 of any Features or User Stories? Have links to any changed or pushed Features
 or User Stories.
 
-Our group decided to push back [Schedule Due Dates](#19) to iteration 2 because 
-we spent a lot of time on getting the database with UI ready and cleaned up all the bugs.
-Although we have created UI to pick due date but it took more time to integrate the button to the create task popup window than we expected.
-Therefore, [Schedule Due Dates](#19) will be pushed back to iteration 2.
+Our group decided to push back [Schedule Due Dates](#19) to iteration 2. Because we spent a lot of time on getting the database with UI ready
+and also cleaned up all the bugs. Although we have created UI to pick due date but it took longer than we expected to integrate the button to the create task popup window.
+By leaving it to iteration 2, we can spend time on recheck our previous code and get those work correctly before moving on.
+Therefore, [Schedule Due Dates](#19) will be pushed back for us to be more convenient in this iteration.
