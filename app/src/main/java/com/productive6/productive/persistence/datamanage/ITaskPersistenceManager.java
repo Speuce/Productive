@@ -16,8 +16,10 @@ public interface ITaskPersistenceManager {
      * task into the database.
      * An id is automatically added to the object.
      * @param t the task to add.
+     * @param after called after the task has been inserted
+     *              (on main thread)
      */
-    void insertTask(Task t);
+    void insertTask(Task t, Runnable after);
 
     /**
      * Gets a list of all tasks, sorted by

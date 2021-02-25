@@ -27,10 +27,11 @@ public class DummyTaskPersistenceManager implements ITaskPersistenceManager {
     }
 
     @Override
-    public void insertTask(Task t) {
+    public void insertTask(Task t, Runnable r) {
 
         internalList.add(t);
         t.setId(internalList.size());
+        r.run();
     }
 
     @Override
