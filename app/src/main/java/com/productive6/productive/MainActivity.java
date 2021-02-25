@@ -1,11 +1,18 @@
 package com.productive6.productive;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -13,14 +20,15 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import android.widget.Button;
-import android.widget.ProgressBar;
-import android.widget.TextView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.productive6.productive.logic.rewards.ITitleManager;
+import com.productive6.productive.logic.task.ITaskManager;
+import com.productive6.productive.logic.user.UserManager;
+import com.productive6.productive.objects.Task;
 
-import com.productive6.productive.logic.rewards.TitleManager;
-import com.productive6.productive.logic.rewards.impl.DefaultTitleManager;
-import com.productive6.productive.objects.Title;
-import java.util.List;
+import java.util.Date;
+
+import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -56,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
 
         initializeHeader();
-        initializeCreateButton();
         //remove before push to master
         initHeaderPlaceholders();
 
@@ -137,16 +144,14 @@ public class MainActivity extends AppCompatActivity {
      */
     public void addTask(View view){
         EditText name = popupView.findViewById(R.id.taskNameForm);
+        //Deadline
 
         taskManager.addTask(new Task(name.getText().toString(),1,1,1, new Date(),false));
     }
 
-    protected void initializeCreateButton(){
-        openCreateForm = findViewById(R.id.createButton);
-        openCreateForm.setOnClickListener(v -> openActivity());
-    }
     public void openActivity() {
         Intent intent = new Intent(this, DeadlinePicker.class);
         startActivity(intent);
     }
+
 }

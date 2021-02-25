@@ -27,7 +27,7 @@ public class DeadlinePicker extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.date_picker);
+        /*setContentView(R.layout.date_picker);*/
         initDatePicker();
     }
 
