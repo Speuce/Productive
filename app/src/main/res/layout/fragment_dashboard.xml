@@ -13,6 +13,7 @@
         android:layout_marginTop="165dp"
         android:text="@string/tap_add_to_add_a_new_task"
         android:visibility="invisible"
+        android:gravity="center_horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

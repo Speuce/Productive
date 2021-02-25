@@ -5,4 +5,7 @@
     <string name="title_notifications">Notifications</string>
     <string name="tap_add_to_add_a_new_task">Tap \'add\' To add a new Task</string>
     <string name="add">Add</string>
+    <string name="rewards">Rewards</string>
+    <string name="todo">To-do</string>
+    <string name="schedule">Schedule</string>
 </resources>
