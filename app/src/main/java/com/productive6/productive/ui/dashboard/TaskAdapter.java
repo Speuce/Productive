@@ -14,12 +14,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.productive6.productive.R;
+import com.productive6.productive.logic.exceptions.ObjectFormatException;
 import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.task.TaskCompleteEvent;
 import com.productive6.productive.objects.events.task.TaskCreateEvent;
+
+import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,6 +48,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
      * List of tasks to be displayed.
      */
     private List<Task> tasks = new ArrayList<>();
+
+    private View root;
 
     /**
      * For formatting dates in the view
@@ -74,15 +79,22 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
 
             //listener on 'complete'
             taskComplete.setOnClickListener(v ->{
+                try{
                     taskManager.completeTask(tasks.get(getAdapterPosition()));
                     setAnimation(itemView, getAdapterPosition());
+                }catch(ObjectFormatException e){
+                    taskComplete.setTextColor(0xFF00000);
+                    taskComplete.setText("BLAHH");
+                }
+
             });
         }
     }
 
-    public TaskAdapter(ITaskManager taskManager, Context context){
+    public TaskAdapter(ITaskManager taskManager, Context context, View root){
         this.taskManager = taskManager;
         this.context = context;
+        this.root = root;
     }
 
     @NonNull
@@ -109,7 +121,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
 
     public void setTasks(List<Task> tasks){
         this.tasks = tasks;
-        notifyDataSetChanged();
+        updateData();
+
     }
     /**
      * Applies an animation to the given view.
@@ -124,8 +137,22 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
 //                    return;
 //                }
                 tasks.remove(position);
-                notifyDataSetChanged();
+                updateData();
             }, animation.getDuration()+20);
+    }
+
+
+    private void updateData(){
+        RecyclerView taskDisplayView = root.findViewById(R.id.taskDisplayView);
+        TextView emptyView = root.findViewById(R.id.empty_view);
+        if (tasks.isEmpty()) {
+            taskDisplayView.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
+        } else {
+            taskDisplayView.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.INVISIBLE);
+            notifyDataSetChanged();
+        }
     }
 
     /**
@@ -134,7 +161,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
     @ProductiveEventHandler
     public void onNewTask(TaskCreateEvent e){
         this.tasks.add(e.getTask());
-        notifyDataSetChanged();
+        updateData();
     }
 
 }
