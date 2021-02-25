@@ -22,7 +22,7 @@ Occassionally, when running the application in Android Studio, tens to hundreds 
 ## "Failed to choose config with EGL SWAP BEHAVIOR PRESERVED, retrying without"
 Not a result of our code. See: https://stackoverflow.com/a/54917041/6047183.
 
-#Libaries in Use
+# Libaries in Use
 
 ## Room
 &emsp; [Room](https://developer.android.com/jetpack/androidx/releases/room) is an ORM that takes care of our real persistence layer with relative ease. Annotations are used throughout our codebase for integration with room. Although room is android specific, many of the annotations used are _very_ similar to annotations for desktop ORM. Additionally, we added a layer of Interfaces ontop of what is required by room so that we could easily swap out implementations if we so decide to switch libraries.
