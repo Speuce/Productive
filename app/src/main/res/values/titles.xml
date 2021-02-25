@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="TitleStringArray">
-        <item>title1</item>
-        <item>title2</item>
-        <item>title3</item>
-        <item>title4</item>
-        <item>title5</item>
-        <item>title6</item>
-        <item>title7</item>
-        <item>title8</item>
-        <item>title9</item>
+        <item>n00b tasker</item>
+        <item>Rookie Tasker</item>
+        <item>Task Buff</item>
+        <item>Industrious</item>
+        <item>productivity is my middle name!</item>
+        <item>POWERHOUSE</item>
+        <item>Endless Stamina</item>
+        <item>Staying on target</item>
+        <item>What is procrastination?</item>
     </string-array>
 
     <integer-array name="TitleLevelArray">
-        <item>-1</item>
-        <item>-1</item>
-        <item>-1</item>
-        <item>4</item>
+        <item>0</item>
+        <item>1</item>
         <item>5</item>
-        <item>6</item>
-        <item>7</item>
         <item>8</item>
-        <item>9</item>
+        <item>10</item>
+        <item>12</item>
+        <item>14</item>
+        <item>16</item>
+        <item>18</item>
     </integer-array>
 </resources>
