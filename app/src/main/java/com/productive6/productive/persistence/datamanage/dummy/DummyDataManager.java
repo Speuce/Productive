@@ -9,7 +9,7 @@ import com.productive6.productive.persistence.datamanage.IUserPersistenceManager
 
 /**
  * A data manager for unit tests.
- * No database stuff is actually done. Everthing is just kept in internal lists.
+ * No database stuff is actually done. Everything is just kept in internal lists.
  */
 public class DummyDataManager implements IDataManager {
 
