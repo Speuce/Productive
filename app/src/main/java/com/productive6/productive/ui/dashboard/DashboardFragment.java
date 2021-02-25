@@ -12,11 +12,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.productive6.productive.R;
+import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.objects.Task;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -49,14 +49,14 @@ public class DashboardFragment extends Fragment {
      */
     private void attachTaskView(View root){
         RecyclerView taskDisplayView = root.findViewById(R.id.taskDisplayView);//Grab display
-
-        ArrayList<Task> tasks = new ArrayList<>();//Data
-        tasks.add(new Task("String taskName1", 1, 1, 1, new Date(), false));
-
-        TaskAdapter taskAdapter = new TaskAdapter(taskManager);
-        taskManager.getTasksByPriority(new TaskConsumerStartup(taskAdapter));//Logic CALL--Load Tasks
+        TaskAdapter taskAdapter = new TaskAdapter(taskManager, getContext(), root);
+        taskAdapter.setTasks(new ArrayList<>());
         taskDisplayView.setAdapter(taskAdapter);//attach display to view + tasks
         taskDisplayView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false));//Describe how the data should be laid out
+
+        EventDispatch.registerListener(taskAdapter);
+        taskManager.getTasksByPriority(new TaskConsumerStartup(taskAdapter));//Logic CALL--Load Tasks
+
     }
 
     /**
@@ -69,7 +69,8 @@ public class DashboardFragment extends Fragment {
 
         @Override
         public void accept(List<Task> tasks) {
-            taskAdapter.setTasks(tasks);//Give data to view and automatically re-renders the view
+            taskAdapter.setTasks(tasks);
+            //Give data to view and automatically re-renders the view
         }
     }
 }

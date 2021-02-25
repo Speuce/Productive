@@ -17,8 +17,10 @@ public interface IUserPersistenceManager {
      * task into the database.
      * An id is automatically added to the object.
      * @param u the task to add.
+     * @param after called after the user has been created.
+     *              (ran on main thread)
      */
-    void insertUser(User u);
+    void insertUser(User u, Runnable after);
 
     /**
      * @param callback a list of all users. Ordering is inspecific.

@@ -19,11 +19,11 @@ public interface TaskDao extends ITaskAccess {
     /**
      * Inserts a new (no-id)
      * task into the database.
-     * An id is automatically added to the object.
      * @param t the task to add.
+     * @return the id automatically assigned to the object
      */
     @Insert
-    void insertTask(Task t);
+    long insertTask(Task t);
 
     /**
      * Gets a list of all tasks, sorted by priority
