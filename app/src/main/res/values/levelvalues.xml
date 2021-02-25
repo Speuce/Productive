@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="levelupvalue">100</integer>
+    <integer name="experienceweight">4</integer>
+    <integer name="coinsweight">3</integer>
+</resources>
