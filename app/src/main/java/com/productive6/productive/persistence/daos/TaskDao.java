@@ -6,7 +6,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.productive6.productive.objects.Task;
-import com.productive6.productive.persistence.TaskPersistenceManager;
+import com.productive6.productive.persistence.access.ITaskAccess;
 
 import java.util.List;
 
@@ -14,16 +14,16 @@ import java.util.List;
  * Android-specific implementation of a data access object for Tasks
  */
 @Dao
-public interface TaskDao extends TaskPersistenceManager {
+public interface TaskDao extends ITaskAccess {
 
     /**
      * Inserts a new (no-id)
      * task into the database.
-     * An id is automatically added to the object.
      * @param t the task to add.
+     * @return the id automatically assigned to the object
      */
     @Insert
-    void insertTask(Task t);
+    long insertTask(Task t);
 
     /**
      * Gets a list of all tasks, sorted by priority
@@ -35,7 +35,7 @@ public interface TaskDao extends TaskPersistenceManager {
 
     /**
      * Gets a list of all complete/incomplete tasks,
-     * sorted by priorit then date created
+     * sorted by priority then date created
      * @param complete indicates whether to look for in/complete tasks.
      * @return the list of tasks.
      */

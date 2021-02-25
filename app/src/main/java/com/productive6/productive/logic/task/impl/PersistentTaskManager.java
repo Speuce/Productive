@@ -1,52 +1,58 @@
 package com.productive6.productive.logic.task.impl;
 
-import com.productive6.productive.logic.executor.IRunnableExecutor;
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.exceptions.PersistentIDAssignmentException;
 import com.productive6.productive.logic.exceptions.ObjectFormatException;
-import com.productive6.productive.logic.task.TaskManager;
+import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.events.task.TaskCompleteEvent;
 import com.productive6.productive.objects.events.task.TaskCreateEvent;
 import com.productive6.productive.objects.events.task.TaskUpdateEvent;
-import com.productive6.productive.persistence.datamanage.DataManager;
+import com.productive6.productive.persistence.datamanage.IDataManager;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.function.Consumer;
 
 /**
  * A production-grade and persistent implementation of the
- * {@link TaskManager} interface
+ * {@link ITaskManager} interface
  */
-public class PersistentTaskManager implements TaskManager {
+public class PersistentTaskManager implements ITaskManager {
 
 
-    private DataManager data;
-
-    private IRunnableExecutor executor;
+    private IDataManager data;
 
 
-    public PersistentTaskManager(DataManager data, IRunnableExecutor e) {
+
+    public PersistentTaskManager(IDataManager data) {
         this.data = data;
-        this.executor = e;
     }
 
     @Override
-    public void getTasksByPriority(Consumer<Collection<Task>> outputparam) {
-        executor.runASync(() -> {
-            Collection<Task> ret = data.task().getAllTasks(false);
-            executor.runSync(() -> outputparam.accept(ret));
-        });
+    public void getTasksByPriority(Consumer<List<Task>> outputparam) {
+        data.task().getAllTasks(false, outputparam);
     }
 
     @Override
-    public void getTasksByCreation(Consumer<Collection<Task>> outputparam) {
-        executor.runASync(() -> {
-            List<Task> ret = data.task().getAllTasks(false);
+    public void getTasksByCreation(Consumer<List<Task>> outputparam) {
+        data.task().getAllTasks(false, ret ->{
             ret.sort((a, b) -> (int) (((Task) a).getCreatedTime() - ((Task) b).getCreatedTime()));
-            executor.runSync(() -> outputparam.accept(ret));
+            outputparam.accept(ret);
         });
+    }
+
+    /**
+     * Ensures that all the fields of the given task are valid.
+     * Throws exceptions otherwise.
+     * @param t the task to validate.
+     */
+    private void validateTask(Task t){
+        if(t.getPriority() < 0){
+            throw new ObjectFormatException("A priority of < 0 is not supported!");
+        }else {}
+//            if(t.getDueTime() != 0  && t.getDueTime() < System.currentTimeMillis()){
+//            throw new ObjectFormatException("A task cannot have a due time before now");
+//        }
     }
 
     /**
@@ -63,23 +69,18 @@ public class PersistentTaskManager implements TaskManager {
         }else if(t.getPriority() < 0){
                 throw new ObjectFormatException("A priority of < 0 is not supported!");
         }
-
+        validateTask(t);
         if(t.getCreatedTime() == 0){
             t.setCreatedTime(System.currentTimeMillis());
         }
-
-        executor.runASync(() -> data.task().insertTask(t));
-
-        EventDispatch.dispatchEvent(new TaskCreateEvent(t));
-
+        data.task().insertTask(t, () ->{
+            EventDispatch.dispatchEvent(new TaskCreateEvent(t));
+        });
     }
 
     @Override
-    public void getCompletedTasks(Consumer<Collection<Task>> outputparam) {
-        executor.runASync(() ->{
-            Collection<Task> ret = data.task().getAllTasks(true);
-            executor.runSync(() -> outputparam.accept(ret));
-        });
+    public void getCompletedTasks(Consumer<List<Task>> outputparam) {
+        data.task().getAllTasks(true, outputparam);
     }
 
     @Override
@@ -87,7 +88,8 @@ public class PersistentTaskManager implements TaskManager {
         if(t.getId() == 0){
             throw new PersistentIDAssignmentException();
         }
-        executor.runASync(() -> data.task().updateTask(t));
+        validateTask(t);
+        data.task().updateTask(t);
         EventDispatch.dispatchEvent(new TaskUpdateEvent(t));
     }
 

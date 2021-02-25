@@ -13,3 +13,19 @@
 &emsp; A growing issue for students in the modern world is procrastination –– the ‘pushing off’ of their schedule, especially given the multitude of distractions available. Productive will encourage users to stay on track with their designed schedule through the use of schedule reminders and experience rewards for completing their tasks on schedule. Users will add and manage tasks to create a schedule to help the users organize their day. Productive will use this schedule to remind users of the tasks that they still need to complete that day, thereby alleviating procrastination caused by distraction or forgetfulness. Users can rest assured that they will be reminded of their tasks, small and large alike, and won’t need to occupy their memory with every menial item on their to-do list.
 
 &emsp; The goal of the app is to reach as many people as possible. As such, the goal of Productive is to achieve 100,000 regular users. The reason we chose this as our success criteria is because the number of total downloads would include many people who download the app without using it regularly, and thus fails to portray the engagement of the user base. A regular user is a user who adds or completes at least one task, a minimum of three days a week. This way, we can objectively measure the usefulness of Productive, instead of its marketing. 
+
+# Known Warnings/Errors
+
+## Warning: 'Accessing Hidden Field', Error 'Access denied finding property "ro.serialno"'
+Occassionally, when running the application in Android Studio, tens to hundreds of lines of 'Accessing hidden field ...'. This seems to be a result of utilizing Android Studio's built in 'database inspector', rather than the direct result of our code. See here for more info: https://stackoverflow.com/a/66201148/6047183
+
+## "Failed to choose config with EGL SWAP BEHAVIOR PRESERVED, retrying without"
+Not a result of our code. See: https://stackoverflow.com/a/54917041/6047183.
+
+# Libaries in Use
+
+## Room
+&emsp; [Room](https://developer.android.com/jetpack/androidx/releases/room) is an ORM that takes care of our real persistence layer with relative ease. Annotations are used throughout our codebase for integration with room. Although room is android specific, many of the annotations used are _very_ similar to annotations for desktop ORM. Additionally, we added a layer of Interfaces ontop of what is required by room so that we could easily swap out implementations if we so decide to switch libraries.
+
+## Hilt
+&emsp; We use [Hilt](https://dagger.dev/hilt/) to take care of some of our dependency injection of single-instance classes. Hilt can be used for both android and desktop applications. The annotations @AndroidEntryPoint is specific to the android hilt, but other with all other fields marked with @Inject are platform-inspecific.

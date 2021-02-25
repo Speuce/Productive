@@ -1,5 +1,8 @@
 package com.productive6.productive.ui.dashboard;
 
+import android.view.View;
+import android.widget.CheckBox;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -7,7 +10,6 @@ import androidx.lifecycle.ViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-import kotlinx.coroutines.scheduling.Task;
 
 public class DashboardViewModel extends ViewModel {
 

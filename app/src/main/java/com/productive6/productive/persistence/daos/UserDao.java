@@ -6,21 +6,21 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.productive6.productive.objects.User;
-import com.productive6.productive.persistence.UserPersistenceManager;
+import com.productive6.productive.persistence.access.IUserAccess;
 
 import java.util.List;
 
 @Dao
-public interface UserDao extends UserPersistenceManager {
+public interface UserDao extends IUserAccess {
 
     /**
      * Inserts a new (no-id)
      * task into the database.
-     * An id is automatically added to the object.
      * @param u the task to add.
+     * @return the id generated for the user
      */
     @Insert
-    void insertUser(User u);
+    long insertUser(User u);
 
     /**
      * @return a list of all users. Ordering is inspecific.
