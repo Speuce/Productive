@@ -157,6 +157,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Dims the background behind a given popup window
+     * @param popupWindow the popupwindow to dim around
+     * Code from: https://stackoverflow.com/a/46711174/6047183
+     */
     public void dimBehind(PopupWindow popupWindow) {
         View container = popupWindow.getContentView().getRootView();
         Context context = popupWindow.getContentView().getContext();
