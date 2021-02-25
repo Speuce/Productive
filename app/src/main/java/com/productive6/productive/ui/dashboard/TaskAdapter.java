@@ -1,10 +1,14 @@
 package com.productive6.productive.ui.dashboard;
 
+import android.content.Context;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +18,7 @@ import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
+import com.productive6.productive.objects.events.task.TaskCompleteEvent;
 import com.productive6.productive.objects.events.task.TaskCreateEvent;
 
 import java.text.SimpleDateFormat;
@@ -34,6 +39,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
     @Inject
     ITaskManager taskManager;
 
+    private Context context;
+
+    /**
+     * List of tasks to be displayed.
+     */
     private List<Task> tasks = new ArrayList<>();
 
     /**
@@ -50,7 +60,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         private TextView taskPriority;
         private TextView taskDifficulty;
         private TextView taskDueDate;
-        private ToggleButton taskComplete;
+        private Button taskComplete;
+        private Task task;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
@@ -61,20 +72,18 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
             taskComplete = itemView.findViewById(R.id.taskCompleteToggleButton);
             id = itemView.findViewById(R.id.taskId);
 
-            taskComplete.setOnClickListener(new View.OnClickListener(){//listener on checkbox
-                public void onClick(View v){
-                    for(Task task : tasks){//Find the Task whose associated box has been checked
-                        if (task.getId() == Integer.parseInt((String)id.getText())) {
-                            task.setCompleted(taskComplete.isChecked());//set completed to same value as checked
-                            taskManager.updateTask(task);
-                        }
-                    }
-                }
+            //listener on 'complete'
+            taskComplete.setOnClickListener(v ->{
+                    taskManager.completeTask(tasks.get(getAdapterPosition()));
+                    setAnimation(itemView, getAdapterPosition());
             });
         }
     }
 
-    public TaskAdapter(ITaskManager taskManager){ this.taskManager = taskManager;}
+    public TaskAdapter(ITaskManager taskManager, Context context){
+        this.taskManager = taskManager;
+        this.context = context;
+    }
 
     @NonNull
     @Override
@@ -91,7 +100,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         holder.taskPriority.setText(""+tasks.get(position).getPriority());
         holder.taskDifficulty.setText(""+tasks.get(position).getDifficulty());
         holder.taskDueDate.setText(format.format(tasks.get(position).getDueDate()));
-        holder.taskComplete.setChecked(tasks.get(position).isCompleted());
+//        holder.taskComplete.setChecked(tasks.get(position).isCompleted());
     }
     @Override
     public int getItemCount() {
@@ -102,6 +111,22 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         this.tasks = tasks;
         notifyDataSetChanged();
     }
+    /**
+     * Applies an animation to the given view.
+     */
+    private void setAnimation(View viewToAnimate, int position) {
+            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.fade_out);
+            animation.setDuration(300);
+            viewToAnimate.startAnimation(animation);
+            new Handler().postDelayed(() -> {
+//                if (myDataSource.size() == 0) {
+//                    addEmptyView(); // adding empty view instead of the RecyclerView
+//                    return;
+//                }
+                tasks.remove(position);
+                notifyDataSetChanged();
+            }, animation.getDuration()+20);
+    }
 
     /**
      * Method called when a new task is created.
@@ -109,7 +134,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
     @ProductiveEventHandler
     public void onNewTask(TaskCreateEvent e){
         this.tasks.add(e.getTask());
-        System.out.println("Got new task!");
         notifyDataSetChanged();
     }
+
 }

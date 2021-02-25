@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -97,14 +98,14 @@ public class MainActivity extends AppCompatActivity {
         int height = LinearLayout.LayoutParams.WRAP_CONTENT;
         boolean focusable = true; // lets taps outside the popup also dismiss it
         popupWindow = new PopupWindow(popupView, width, height, focusable);
+        popupWindow.setFocusable(true);
 
-        // dismiss the popup window when touched
-        popupView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                popupWindow.dismiss();
-                return true;
-            }
+        popupView.setOnTouchListener((v, event) -> {
+                InputMethodManager imm =  (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                popupView.requestFocus();
+                v.performClick();
+                return false;
         });
     }
 
@@ -177,7 +178,6 @@ public class MainActivity extends AppCompatActivity {
      * @param view
      */
     public void addTask(View view){
-
         EditText name = popupView.findViewById(R.id.taskNameForm);
         taskManager.addTask(new Task(name.getText().toString(),1,1,0, new Date(),false));
         popupWindow.dismiss();
