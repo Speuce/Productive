@@ -50,7 +50,7 @@ clearly explaining the SOLID violation - specifying the type, provide a link to 
 your links in the issues are to **specific commits** (not to `main`, or `develop` as those will be changed).
 
 Link to issue:
-https://code.cs.umanitoba.ca/3350-winter-2021-a01/umhub-7/-/issues/34
+https://code.cs.umanitoba.ca/3350-winter-2021-a01/umhub-7/-/issues/35
 
 Agile Planning
 --------------
