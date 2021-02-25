@@ -24,15 +24,19 @@ import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 import com.productive6.productive.MainActivity;
 import com.productive6.productive.R;
+import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.ui.dashboard.TaskAdapter;
 
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import javax.inject.Inject;
 
 public class NotificationsFragment extends Fragment {
     private TextView showMonthName;
@@ -42,8 +46,9 @@ public class NotificationsFragment extends Fragment {
     private RecyclerView taskDisplayView;
     private ArrayList<Task> tasks;
     private ArrayList<Task> filteredByDateTasks;
-
     private Calendar calendar;
+    @Inject
+    ITaskManager taskManager;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_notifications, container, false);
@@ -59,11 +64,13 @@ public class NotificationsFragment extends Fragment {
         clickedDate.setText("Tasks scheduled for " + getDateWithSuffix(calendar.get(Calendar.DATE)) + " " + month);
         filteredByDateTasks = new ArrayList<>();
         tasks = new ArrayList<>();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-M-d");
+//        System.out.println(dateFormat.format(new Date()));
 
-        tasks.add(new Task("Buy groceries", 1, 1, 1, "2021-2-24", false));
-        tasks.add(new Task("Finish assignment", 1, 1, 1, "2021-2-24", false));
-        tasks.add(new Task("Clean the house", 1, 1, 1, "2021-2-24", false));
-        tasks.add(new Task("Submit assignment", 1, 1, 1, "2021-2-25", false));
+        tasks.add(new Task("Buy groceries", 1, 1, 1, new Date("2021-2-24"), false));
+        tasks.add(new Task("Finish assignment", 1, 1, 1, new Date("2021-2-24"), false));
+        tasks.add(new Task("Clean the house", 1, 1, 1, new Date("2021-2-24"), false));
+        tasks.add(new Task("Submit assignment", 1, 1, 1, new Date("2021-2-25"), false));
 
         calendarView.addEvent(new Event(Color.BLUE, 1614146400000L, null)); //24 Feb 2021
         calendarView.addEvent(new Event(Color.BLUE, 1614232800000L, null)); //25 Feb 2021
@@ -74,7 +81,7 @@ public class NotificationsFragment extends Fragment {
                 calendar.setTime(dateClicked);
                 month = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
                 dateInString = calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-" + calendar.get(Calendar.DATE);
-                initializeTaskList(dateInString);
+                initializeTaskList(dateInString, root);
             }
 
             @Override
@@ -85,7 +92,7 @@ public class NotificationsFragment extends Fragment {
             }
         });
 
-        initializeTaskList(dateInString);
+        initializeTaskList(dateInString, root);
         return root;
     }
 
@@ -107,7 +114,7 @@ public class NotificationsFragment extends Fragment {
     }
 
     // Modified from Luke's code in the dashboard fragment
-    private void initializeTaskList(String selectedDate) {
+    private void initializeTaskList(String selectedDate, View root) {
         filteredByDateTasks.clear();
 
         for (Task task : tasks) {
@@ -124,7 +131,7 @@ public class NotificationsFragment extends Fragment {
             clickedDate.setText(filteredByDateTasks.size() + " tasks scheduled for " + getDateWithSuffix(calendar.get(Calendar.DATE)) + " " + month);
         }
 
-        TaskAdapter taskAdapter = new TaskAdapter();
+        TaskAdapter taskAdapter = new TaskAdapter(taskManager, getContext(), root);
         taskAdapter.setTasks(filteredByDateTasks);
         taskDisplayView.setAdapter(taskAdapter);
         taskDisplayView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
