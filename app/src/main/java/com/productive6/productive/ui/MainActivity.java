@@ -1,4 +1,4 @@
-package com.productive6.productive;
+package com.productive6.productive.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,8 +6,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -23,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.productive6.productive.R;
 import com.productive6.productive.logic.rewards.ITitleManager;
 import com.productive6.productive.logic.user.UserManager;
 
@@ -30,6 +29,7 @@ import com.productive6.productive.objects.Task;
 
 
 import com.productive6.productive.logic.task.ITaskManager;
+import com.productive6.productive.ui.title.TitleSelection;
 
 
 import java.util.Date;
