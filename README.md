@@ -2,8 +2,6 @@
 
 # Productive Vision Statement 
 
-<hr/>
-
 &emsp; Productive is an app that allows the user to track and monitor their productivity using a task system and a difficulty scale. The app will encourage and reward the user by gamifying the tasks that they define for themselves.  These mechanics will create the incentive necessary to encourage the user to keep on schedule, entirely for free. Most importantly, Productive makes both difficult and mundane tasks fun!  
 
 &emsp; Productive is an app designed for those who may struggle with scheduling and self-motivation, especially students. In these uncertain times, it is more arduous than ever for students to find a way to motivate themselves and stay on task. Productive will provide a satisfying anchor for those busy, forgetful, and easily-distracted students. Students are the largest consumer of games –– among other distractions –– which will expedite their indoctrination into the world of gamified tasks!  
@@ -13,6 +11,7 @@
 &emsp; A growing issue for students in the modern world is procrastination –– the ‘pushing off’ of their schedule, especially given the multitude of distractions available. Productive will encourage users to stay on track with their designed schedule through the use of schedule reminders and experience rewards for completing their tasks on schedule. Users will add and manage tasks to create a schedule to help the users organize their day. Productive will use this schedule to remind users of the tasks that they still need to complete that day, thereby alleviating procrastination caused by distraction or forgetfulness. Users can rest assured that they will be reminded of their tasks, small and large alike, and won’t need to occupy their memory with every menial item on their to-do list.
 
 &emsp; The goal of the app is to reach as many people as possible. As such, the goal of Productive is to achieve 100,000 regular users. The reason we chose this as our success criteria is because the number of total downloads would include many people who download the app without using it regularly, and thus fails to portray the engagement of the user base. A regular user is a user who adds or completes at least one task, a minimum of three days a week. This way, we can objectively measure the usefulness of Productive, instead of its marketing. 
+
 
 # Known Warnings/Errors
 
@@ -24,6 +23,7 @@ Not a result of our code. See: https://stackoverflow.com/a/54917041/6047183.
 
 ### Use of @SupressWarning annotation
 Although we do not directly use this annotation in our project, some of the libraries that we use (Hilt and Room) autogenerate class implementations which DO use these annotations. This isn't a direct result of our code.
+
 
 # Libaries in Use
 All of these libaries are added using gradle. You (the person trying to run this app in Android Studio) may need to open this gradle file at first and Click 'Sync Now' to have gradle download the required libraries for the project.
