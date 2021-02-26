@@ -16,7 +16,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.productive6.productive.R;
-import com.productive6.productive.TitleSelection;
+import com.productive6.productive.ui.title.TitleSelection;
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.rewards.IRewardManager;
 import com.productive6.productive.logic.rewards.ITitleManager;
