@@ -16,18 +16,16 @@ to get their tasks done quick and on-time. Firstly, we divided the feature into 
 We created a User Object to handle each user's rewards variable and made it as persistance data. We also created RewardManager to handle coins
 and level ups. TitleManager is used for handling users' titles. After that, UI for displaying level, experience, title was created and is made as
 header in home fragment. For selecting another title option, we created TitleSelection Activity which is opened by clicking on title of header UI.
-We use EventListener to link data between classes. Afterwards, multiple tests were created to test on this feature. After all tests passed, we commited
-and made a merge request for other member to check on it and accept if there is no problem.
+We use EventListener to link data between classes. Multiple tests were created to test on each Manager class. For each task, after all tests passed,
+we commited and made a merge request for other member to check on it and accept if there is no problem.
 
 Feature: [Incentive System](#7)
 
 User Stories: [Level Up](#17), [Receive Rewards](#16), [Earn Titles](#18)
 
-Merge Requests:
-
-Associated Tests:
-
-Merge Commit:
+Associated Tests: [RewardManagerTest](https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/blob/develop/app/src/test/java/com/productive6/productive/RewardManagerTest.java),
+[TitleManagerTest](https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/blob/develop/app/src/test/java/com/productive6/productive/TitleManagerTest.java),
+[UserManagerTest](https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/blob/develop/app/src/test/java/com/productive6/productive/UserManagerTest.java)
 
 Exceptional code
 ----------------
