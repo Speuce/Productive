@@ -22,6 +22,9 @@ Occassionally, when running the application in Android Studio, tens to hundreds 
 ## "Failed to choose config with EGL SWAP BEHAVIOR PRESERVED, retrying without"
 Not a result of our code. See: https://stackoverflow.com/a/54917041/6047183.
 
+## Use of @SupressWarning annotation
+Although we do not directly use this annotation in our project, some of the libraries that we use (Hilt and Room) autogenerate class implementations which DO use these annotations. This isn't a direct result of our code.
+
 # Libaries in Use
 
 ## Room
