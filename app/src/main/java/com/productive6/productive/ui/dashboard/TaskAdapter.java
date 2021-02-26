@@ -88,11 +88,22 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         }
     }
 
+    /**
+     * Get Android injection from calling method.
+     * @param taskManager
+     * @param root
+     */
     public TaskAdapter(ITaskManager taskManager, View root){
         this.taskManager = taskManager;
         this.root = root;
     }
 
+    /**
+     * Builds Recycler view that holds a list of tasks upon creation of ViewHolder.
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -101,6 +112,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         return holder;
     }
 
+    /**
+     * Fills the Recycler view built in onCreateViewHolder with task views using data from the task list.
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.id.setText(""+tasks.get(position).getId());
@@ -108,13 +124,21 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         holder.taskPriority.setText(""+tasks.get(position).getPriority());
         holder.taskDifficulty.setText(""+tasks.get(position).getDifficulty());
         holder.taskDueDate.setText(format.format(tasks.get(position).getDueDate()));
-//        holder.taskComplete.setChecked(tasks.get(position).isCompleted());
     }
+
+    /**
+     * How many items are in the task list.
+     * @return
+     */
     @Override
     public int getItemCount() {
         return tasks.size();
     }
 
+    /**
+     * Sets the items being displayed in the task list.
+     * @param tasks
+     */
     public void setTasks(List<Task> tasks){
         this.tasks = tasks;
         updateData();
@@ -134,7 +158,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
             }, animation.getDuration()+20);
     }
 
-
+    /**
+     * Refreshes the tasks being shown on the task list.
+     */
     private void updateData(){
         RecyclerView taskDisplayView = root.findViewById(R.id.taskDisplayView);
         TextView emptyView = root.findViewById(R.id.empty_view);
@@ -150,6 +176,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
 
     /**
      * Method called when a new task is created.
+     * Adds new tasks to current display.
      */
     @ProductiveEventHandler
     public void onNewTask(TaskCreateEvent e){
