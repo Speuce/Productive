@@ -11,9 +11,9 @@ that was used complete the feature.
 
 Use one or two paragraphs which can have point-form within them.
 
-Our project has a feature named Incentive Systems including 'experience', 'level', 'coin' and 'title' which are used for incentivizing users
-to get their tasks done quick and on-time. Firstly, we divided the feature into user stories for receive rewards, level up and earn titles.
-We created a User Object to handle each user's rewards variable and made it as persistance data. We also created RewardManager to handle coins
+Our project has a feature named Incentive Systems including: 'experience', 'level', 'coin' and 'title'; which are used for incentivizing users
+to get their tasks done quick and on-time. First, we divided the feature into user stories for receive rewards, level up and earn titles. Then,
+we created a User Object to handle each user's rewards variable and made it as persistance data. We also created RewardManager to handle coins
 and level ups. TitleManager is used for handling users' titles. After that, UI for displaying level, experience, title was created and is made as
 header in home fragment. For selecting another title option, we created TitleSelection Activity which is opened by clicking on title of header UI.
 We use EventListener to link data between classes. Multiple tests were created to test on each Manager class. For each task, after all tests passed,
@@ -76,10 +76,9 @@ Write a paragraph about any plans that were changed. Did you
 of any Features or User Stories? Have links to any changed or pushed Features
 or User Stories.
 
-Our group decided to push back [Schedule Due Dates](#19) to iteration 2. Because we spent a lot of time on getting the database with UI ready
-and also cleaned up all the bugs. Although we have created UI to pick due date but it took longer than we expected to integrate the button
-to the create task popup window and work around with the due date variable. By leaving it to iteration 2, we can spend time on recheck our previous code
-and get those work correctly before moving on. Therefore, [Schedule Due Dates](#19) will be pushed back for us to be more convenient in this iteration.
-Our group also decided to change the title/description of ['Calendar' UI](#27). Because at first, our group want to display all the to-do tasks week by week,
-but then we found out that display tasks by day by choosing a date in calendar is much better and easier to keep track of. Therefore, we changed it from
-'Week A Glance' UI to 'Calendar' UI.
+Our group decided to push back [Schedule Due Dates](#19) to iteration 2. This is because we spent a lot of time getting the database and UI while throughly checking our code
+for bugs before merging. Even though we had created UI to pick a due date, it took longer than we expected to integrate the button
+to the create task popup window and work around with the due date variable. By leaving it to iteration 2, we can spend time on error checking and perfecting
+our existing code.
+Our group also decided to change the title/description of ['Calendar' UI](#27). At first, our group wanted to display all to-do tasks week by week,
+but we found that display tasks by choosing a date in calendar is much easier to implement while performing the same function.
