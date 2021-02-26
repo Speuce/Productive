@@ -20,9 +20,13 @@ We use EventListener to link data between classes. Afterwards, multiple tests we
 and made a merge request for other member to check on it and accept if there is no problem.
 
 Feature: [Incentive System](#7)
+
 User Stories: [Level Up](#17), [Receive Rewards](#16), [Earn Titles](#18)
+
 Merge Requests:
+
 Associated Tests:
+
 Merge Commit:
 
 Exceptional code
