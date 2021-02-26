@@ -66,8 +66,8 @@ public class DashboardFragment extends Fragment {
     /**
      * Holds a callback for the database request made in attachTaskView.
      */
-    public class TaskConsumerStartup implements Consumer<List<Task>> {
-        private TaskAdapter taskAdapter;
+    public static class TaskConsumerStartup implements Consumer<List<Task>> {
+        private final TaskAdapter taskAdapter;
 
         TaskConsumerStartup(TaskAdapter taskAdapter){this.taskAdapter = taskAdapter;}
 

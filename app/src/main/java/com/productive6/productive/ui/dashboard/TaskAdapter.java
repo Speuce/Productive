@@ -24,6 +24,7 @@ import com.productive6.productive.objects.events.task.TaskCreateEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -49,18 +50,18 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
     /**
      * For formatting dates in the view
      */
-    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.CANADA);
 
     /**
      * Holds the recyclerView view and it's components
      */
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView id;
-        private TextView taskName;
-        private TextView taskPriority;
-        private TextView taskDifficulty;
-        private TextView taskDueDate;
-        private Button taskComplete;
+        private final TextView id;
+        private final TextView taskName;
+        private final TextView taskPriority;
+        private final TextView taskDifficulty;
+        private final TextView taskDueDate;
+        private final Button taskComplete;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
