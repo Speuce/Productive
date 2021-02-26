@@ -1,6 +1,7 @@
 package com.productive6.productive.ui.dashboard;
 
 import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
      */
     private List<Task> tasks = new ArrayList<>();
 
-    private final View root;
+    private final View rootView;
 
     /**
      * For formatting dates in the view
@@ -91,7 +92,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
      */
     public TaskAdapter(ITaskManager taskManager, View root){
         this.taskManager = taskManager;
-        this.root = root;
+        this.rootView = root;
     }
 
     /**
@@ -104,8 +105,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_list_details, parent, false);
-        ViewHolder holder = new ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     /**
@@ -148,7 +148,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
             Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), android.R.anim.fade_out);
             animation.setDuration(300);
             viewToAnimate.startAnimation(animation);
-            new Handler().postDelayed(() -> {
+            new Handler(Looper.getMainLooper()).postDelayed(() -> {
                 tasks.remove(position);
                 updateData();
             }, animation.getDuration()+20);
@@ -158,8 +158,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
      * Refreshes the tasks being shown on the task list.
      */
     private void updateData(){
-        RecyclerView taskDisplayView = root.findViewById(R.id.taskDisplayView);
-        TextView emptyView = root.findViewById(R.id.empty_view);
+        RecyclerView taskDisplayView = rootView.findViewById(R.id.taskDisplayView);
+        TextView emptyView = rootView.findViewById(R.id.empty_view);
         if (tasks.isEmpty()) {
             taskDisplayView.setVisibility(View.GONE);
             emptyView.setVisibility(View.VISIBLE);
