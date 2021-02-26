@@ -14,7 +14,7 @@
 
 # Device
 
-We are using the Nexus 7 API: 30, with target: Android 11.0(Google APIs).
+We are using the **Nexus 7 API 30**, with target: **Android 11.0(Google APIs)**.
 
 # Known Warnings/Errors
 
