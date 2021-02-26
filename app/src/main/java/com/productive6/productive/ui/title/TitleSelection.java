@@ -41,9 +41,7 @@ public class TitleSelection extends AppCompatActivity implements ProductiveListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.title_selection);
-
-        User person = new User();
-        person.setSelectedTitle("title1");
+        
         EventDispatch.registerListener(this);
 
         String oldTitle = person.getSelectedTitle();

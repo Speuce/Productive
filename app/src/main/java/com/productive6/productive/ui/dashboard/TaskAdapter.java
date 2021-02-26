@@ -1,6 +1,5 @@
 package com.productive6.productive.ui.dashboard;
 
-import android.content.Context;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,10 +18,7 @@ import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
-import com.productive6.productive.objects.events.task.TaskCompleteEvent;
 import com.productive6.productive.objects.events.task.TaskCreateEvent;
-
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
