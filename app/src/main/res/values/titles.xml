@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="TitleStringArray">
+        <item>n00b tasker</item>
+        <item>Rookie Tasker</item>
+        <item>Task Buff</item>
+        <item>Industrious</item>
+        <item>Productive</item>
+        <item>POWERHOUSE</item>
+        <item>Endless Stamina</item>
+        <item>Staying on target</item>
+        <item>Procrastination?</item>
+    </string-array>
+
+    <integer-array name="TitleLevelArray">
+        <item>0</item>
+        <item>1</item>
+        <item>5</item>
+        <item>8</item>
+        <item>10</item>
+        <item>12</item>
+        <item>14</item>
+        <item>16</item>
+        <item>18</item>
+    </integer-array>
+</resources>
