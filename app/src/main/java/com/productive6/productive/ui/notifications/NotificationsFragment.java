@@ -41,6 +41,9 @@ import java.util.function.Consumer;
 
 import javax.inject.Inject;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class NotificationsFragment extends Fragment {
     private static final String TAG = "NotificationsFragment";
 
