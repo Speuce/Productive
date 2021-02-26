@@ -11,6 +11,20 @@ that was used complete the feature.
 
 Use one or two paragraphs which can have point-form within them.
 
+Our project has a feature named Incentive Systems including 'experience', 'level', 'coin' and 'title' which are used for incentivizing users
+to get their tasks done quick and on-time. Firstly, we divided the feature into user stories for receive rewards, level up and earn titles.
+We created a User Object to handle each user's rewards variable and made it as persistance data. We also created RewardManager to handle coins
+and level ups. TitleManager is used for handling users' titles. After that, UI for displaying level, experience, title was created and is made as
+header in home fragment. For selecting another title option, we created TitleSelection Activity which is opened by clicking on title of header UI.
+We use EventListener to link data between classes. Afterwards, multiple tests were created to test on this feature. After all tests passed, we commited
+and made a merge request for other member to check on it and accept if there is no problem.
+
+Feature: [Incentive System](#7)
+User Stories: [Level Up](#17), [Receive Rewards](#16), [Earn Titles](#18)
+Merge Requests:
+Associated Tests:
+Merge Commit:
+
 Exceptional code
 ----------------
 
