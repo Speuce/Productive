@@ -27,6 +27,7 @@ import com.productive6.productive.R;
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.objects.Task;
+import com.productive6.productive.ui.dashboard.DashboardFragment;
 import com.productive6.productive.ui.dashboard.TaskAdapter;
 
 
@@ -89,12 +90,8 @@ public class NotificationsFragment extends Fragment {
         initializeTaskList(dateInString, root);
     }
 
-    private void initTasksArrayList() {
-        tasks = new ArrayList<>();
-        tasks.add(new Task("Buy groceries", 1, 1, 1, new Date(2021 - yearOffset, 1, 24), false));
-        tasks.add(new Task("Finish assignment", 1, 1, 1, new Date(2021 - yearOffset, 1, 25), false));
-        tasks.add(new Task("Clean the house", 1, 1, 1, new Date(2021 - yearOffset, 1, 25), false));
-        tasks.add(new Task("Submit assignment", 1, 1, 1, new Date(2021 - yearOffset, 1, 25), false));
+    private void initTasksArrayList() {//---------
+
     }
 
     private void initCompactCalendarView(View root) {
@@ -141,24 +138,43 @@ public class NotificationsFragment extends Fragment {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-d");
         filteredByDateTasks.clear();
 
-        for (Task task : tasks) {
-            dateInString = sdf.format(task.getDueDate());
-            if (dateInString.equals(selectedDate)) {
-                filteredByDateTasks.add(task);
-            }
-        }
 
-        if (filteredByDateTasks.size() == 0) {
-            clickedDate.setText("No tasks on " + getDateWithSuffix(calendar.get(Calendar.DATE)) + " " + month);
-        } else if (filteredByDateTasks.size() == 1) {
-            clickedDate.setText(filteredByDateTasks.size() + " task scheduled for " + getDateWithSuffix(calendar.get(Calendar.DATE)) + " " + month);
-        } else {
-            clickedDate.setText(filteredByDateTasks.size() + " tasks scheduled for " + getDateWithSuffix(calendar.get(Calendar.DATE)) + " " + month);
-        }
+
+//        if (filteredByDateTasks.size() == 0) {
+//            clickedDate.setText("No tasks on " + getDateWithSuffix(calendar.get(Calendar.DATE)) + " " + month);
+//        } else if (filteredByDateTasks.size() == 1) {
+//            clickedDate.setText(filteredByDateTasks.size() + " task scheduled for " + getDateWithSuffix(calendar.get(Calendar.DATE)) + " " + month);
+//        } else {
+//            clickedDate.setText(filteredByDateTasks.size() + " tasks scheduled for " + getDateWithSuffix(calendar.get(Calendar.DATE)) + " " + month);
+//        }
 
         TaskAdapter taskAdapter = new TaskAdapter(taskManager, getContext(), root);
-        taskAdapter.setTasks(filteredByDateTasks);
         taskDisplayView.setAdapter(taskAdapter);
         taskDisplayView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        taskManager.getTasksByPriority(new NotificationsFragment.TaskConsumerStartup(taskAdapter, sdf, selectedDate));//Logic CALL--Load Tasks
+    }
+
+    /**
+     * Holds a callback for the database request made in attachTaskView.
+     */
+    public class TaskConsumerStartup implements Consumer<List<Task>> {
+        private TaskAdapter taskAdapter;
+        private SimpleDateFormat sdf;
+        private String selectedDate;
+
+        TaskConsumerStartup(TaskAdapter taskAdapter, SimpleDateFormat sdf, String selectedDate){this.taskAdapter = taskAdapter; this.sdf = sdf; this.selectedDate = selectedDate;}
+
+        @Override
+        public void accept(List<Task> tasks) {
+            //Give data to view and automatically re-renders the view
+            filteredByDateTasks.clear();
+            for (Task task : tasks) {
+                dateInString = sdf.format(task.getDueDate());
+                if (dateInString.equals(selectedDate)) {
+                    filteredByDateTasks.add(task);
+                }
+            }
+            taskAdapter.setTasks(filteredByDateTasks);
+        }
     }
 }
