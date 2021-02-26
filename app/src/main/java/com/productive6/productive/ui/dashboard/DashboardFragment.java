@@ -30,10 +30,15 @@ public class DashboardFragment extends Fragment {
     @Inject
     ITaskManager taskManager;
 
-    private DashboardViewModel dashboardViewModel;
 
+    /**
+     * Creates parent view for the tasks
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
         attachTaskView(root);
@@ -69,7 +74,7 @@ public class DashboardFragment extends Fragment {
         @Override
         public void accept(List<Task> tasks) {
             taskAdapter.setTasks(tasks);
-            //Give data to view and automatically re-renders the view
+            //Give data to Task list and automatically re-renders the Task list view
         }
     }
 }
