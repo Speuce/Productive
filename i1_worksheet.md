@@ -79,6 +79,6 @@ or User Stories.
 Our group decided to push back [Schedule Due Dates](#19) to iteration 2. This is because we spent a lot of time getting the database and UI while throughly checking our code
 for bugs before merging. Even though we had created UI to pick a due date, it took longer than we expected to integrate the button
 to the create task popup window and work around with the due date variable. By leaving it to iteration 2, we can spend time on error checking and perfecting
-our existing code.
+our existing code.  
 Our group also decided to change the title/description of ['Calendar' UI](#27). At first, our group wanted to display all to-do tasks week by week,
 but we found that display tasks by choosing a date in calendar is much easier to implement while performing the same function.
