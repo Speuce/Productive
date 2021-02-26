@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.productive6.productive.R;
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.rewards.ITitleManager;
-import com.productive6.productive.logic.user.UserManager;
+import com.productive6.productive.logic.user.IUserManager;
 import com.productive6.productive.objects.Title;
 import com.productive6.productive.objects.User;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
@@ -35,7 +35,7 @@ public class TitleSelection extends AppCompatActivity implements ProductiveListe
     @Inject
     ITitleManager titleManager;
     @Inject
-    UserManager userManager;
+    IUserManager userManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

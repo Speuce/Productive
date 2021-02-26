@@ -2,7 +2,6 @@ package com.productive6.productive.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -23,7 +22,7 @@ import android.widget.PopupWindow;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.productive6.productive.R;
 import com.productive6.productive.logic.rewards.ITitleManager;
-import com.productive6.productive.logic.user.UserManager;
+import com.productive6.productive.logic.user.IUserManager;
 
 import com.productive6.productive.objects.Task;
 
@@ -46,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     @Inject
     ITitleManager titleManager;
     @Inject
-    UserManager userManager;
+    IUserManager userManager;
 
     private View popupView;
 

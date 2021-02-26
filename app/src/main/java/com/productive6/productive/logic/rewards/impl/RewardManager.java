@@ -2,7 +2,7 @@ package com.productive6.productive.logic.rewards.impl;
 
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.rewards.IRewardManager;
-import com.productive6.productive.logic.user.UserManager;
+import com.productive6.productive.logic.user.IUserManager;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
@@ -18,11 +18,11 @@ public class RewardManager implements IRewardManager, ProductiveListener{
     private int levelUpValue; //the amount of XP needed for a level up to occur
 
     private User person;
-    private UserManager data;
+    private IUserManager data;
     /**
      * @param data a UserManager object used to update the user information in the database
      */
-    public RewardManager(UserManager data, int xpWeight, int coinWeight, int levelUpValue){
+    public RewardManager(IUserManager data, int xpWeight, int coinWeight, int levelUpValue){
         experienceWeight = xpWeight;
         this.coinWeight = coinWeight;
         this.levelUpValue = levelUpValue;

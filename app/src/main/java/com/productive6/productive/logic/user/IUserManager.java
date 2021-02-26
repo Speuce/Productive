@@ -11,7 +11,7 @@ import java.util.function.Consumer;
  *
  *
  */
-public interface UserManager {
+public interface IUserManager {
 
     /**
      * Get the current (iteration 1: ONLY) user using this application.
