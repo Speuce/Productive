@@ -26,13 +26,17 @@ Not a result of our code. See: https://stackoverflow.com/a/54917041/6047183.
 Although we do not directly use this annotation in our project, some of the libraries that we use (Hilt and Room) autogenerate class implementations which DO use these annotations. This isn't a direct result of our code.
 
 # Libaries in Use
+All of these libaries are added using gradle. You (the person trying to run this app in Android Studio) may need to open this gradle file at first and Click 'Sync Now' to have gradle download the required libraries for the project.
+Additionally, some of these libaries generate class implemenations at compile-time, so until you first build the project, there MAY be some apparent red compiler issues. Have no fear, a build shall fix all of this!
 
 ## Room
 &emsp; [Room](https://developer.android.com/jetpack/androidx/releases/room) is an ORM that takes care of our real persistence layer with relative ease. Annotations are used throughout our codebase for integration with room. Although room is android specific, many of the annotations used are _very_ similar to annotations for desktop ORM. Additionally, we added a layer of Interfaces ontop of what is required by room so that we could easily swap out implementations if we so decide to switch libraries.
 
 ## Hilt
 &emsp; We use [Hilt](https://dagger.dev/hilt/) to take care of some of our dependency injection of single-instance classes. Hilt can be used for both android and desktop applications. The annotations @AndroidEntryPoint is specific to the android hilt, but other with all other fields marked with @Inject are platform-inspecific.  
+
 ## Mockito  
 &emsp; We use [Mockito](https://mvnrepository.com/artifact/org.mockito/mockito-core) to create mocks of classes (mostly databases) to allow for easy unit testing of logic layer classes. Mokito is an industry standerd and cross-platform testing framework for java. mock(myClass.class) creates an object that mocks or dummies myClass. Which can be used with .when(method parameters) and .returns() to simulate dependant classes for testing purposes.
+
 ## CompactCalendarView
 &emsp; We use [CompactCalendarView](https://github.com/SundeepK/CompactCalendarView), a library specific to android applications, which offers a wide range of features in addition to the default CalendarView. The library allows theming, animations, and adding dots underneath dates as an indication to the user about the presence of tasks on that day.
