@@ -1,0 +1,14 @@
+*.iml
+.gradle/
+/local.properties
+/.idea/*
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+.idea/.name
+app/build
+app/build/generated/source/buildConfig/debug/com/productive6/productive/BuildConfig.java
+app/build/generated/source/buildConfig/debug/com/productive6/productive/BuildConfig.java
