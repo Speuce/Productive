@@ -10,21 +10,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.productive6.productive.R;
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.rewards.ITitleManager;
-import com.productive6.productive.logic.user.IUserManager;
-import com.productive6.productive.objects.Title;
-import com.productive6.productive.objects.User;
-import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
-import com.productive6.productive.objects.events.user.UserLoadedEvent;
-import com.productive6.productive.objects.events.user.UserTitleInitialized;
 import com.productive6.productive.ui.MainActivity;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
+/**
+ * Activity for selecting title for user
+ */
 @AndroidEntryPoint
 public class TitleSelection extends AppCompatActivity implements ProductiveListener {
 
@@ -34,11 +29,14 @@ public class TitleSelection extends AppCompatActivity implements ProductiveListe
     @Inject
     ITitleManager titleManager;
 
+    /**
+     * Creates view for the title options and selected title
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.title_selection);
-        
+
         EventDispatch.registerListener(this);
 
 
@@ -52,6 +50,9 @@ public class TitleSelection extends AppCompatActivity implements ProductiveListe
         submit.setOnClickListener(v -> openActivity());
     }
 
+    /**
+     * Returns to the Main Activity
+     */
     public void openActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
