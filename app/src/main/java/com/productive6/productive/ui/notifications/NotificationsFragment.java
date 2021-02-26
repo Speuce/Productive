@@ -154,11 +154,7 @@ public class NotificationsFragment extends Fragment {
             taskAdapter.setTasks(tasksByDate);
 
             /** Set text above the RecyclerView based on the number of task on the clicked date */
-            switch (tasksByDate.size()) {
-                case 0:  userClickedDate.setText("No tasks on " + getDateWithSuffix(calendar.get(Calendar.DATE)) + " " + month);
-                case 1:  userClickedDate.setText(tasksByDate.size() + " task scheduled for " + getDateWithSuffix(calendar.get(Calendar.DATE)) + " " + month);
-                default: userClickedDate.setText(tasksByDate.size() + " tasks scheduled for " + getDateWithSuffix(calendar.get(Calendar.DATE)) + " " + month);
-            }
+            userClickedDate.setText(tasksByDate.size() + " task(s) scheduled for " + getDateWithSuffix(calendar.get(Calendar.DATE)) + " " + month);
         }
     }
 }
