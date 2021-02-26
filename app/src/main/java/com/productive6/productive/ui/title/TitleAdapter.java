@@ -1,4 +1,4 @@
-package com.productive6.productive;
+package com.productive6.productive.ui.title;
 
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.productive6.productive.R;
 import com.productive6.productive.logic.rewards.ITitleManager;
 import com.productive6.productive.objects.Title;
 
