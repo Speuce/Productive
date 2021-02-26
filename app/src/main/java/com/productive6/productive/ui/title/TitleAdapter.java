@@ -86,7 +86,7 @@ public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.TitleViewHol
     /**
      * Set up display for one title field to bind into RecyclerView
      */
-    class TitleViewHolder extends RecyclerView.ViewHolder{
+    public class TitleViewHolder extends RecyclerView.ViewHolder{
         ConstraintLayout layoutTitle;
         LinearLayout backgroundTitle;
         TextView levelText, titleText;
