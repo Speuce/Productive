@@ -29,13 +29,10 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class TitleSelection extends AppCompatActivity implements ProductiveListener {
 
 
-    private Button submit, cancel;
-    private List<Title> titles;
-    User person;
+    private Button submit;
+
     @Inject
     ITitleManager titleManager;
-    @Inject
-    IUserManager userManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,33 +41,20 @@ public class TitleSelection extends AppCompatActivity implements ProductiveListe
         
         EventDispatch.registerListener(this);
 
-        String oldTitle = person.getSelectedTitle();
+
         RecyclerView titleView = findViewById(R.id.titleRecyclerView);
-        cancel = findViewById(R.id.cancel);
+
         submit = findViewById(R.id.submit);
 
         final TitleAdapter titleAdapter = new TitleAdapter(titleManager);
         titleView.setAdapter(titleAdapter);
-        cancel.setOnClickListener(v -> {
-            person.setSelectedTitle(oldTitle);
-            openActivity();
-        });
+
         submit.setOnClickListener(v -> openActivity());
     }
 
     public void openActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-    }
-
-    @ProductiveEventHandler
-    public void titleInit(UserTitleInitialized u){
-        titles = titleManager.getTitleOptions();
-    }
-
-    @ProductiveEventHandler
-    public void userInit(UserLoadedEvent u){
-        person = userManager.getCurrentUser();
     }
 
 
