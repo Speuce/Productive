@@ -46,8 +46,11 @@ public class HomeFragment extends Fragment implements ProductiveListener {
 
     private HomeViewModel homeViewModel;
 
-    private boolean SystemInitialized;
-
+    /**
+     * Creates the view by inflating the layout
+     * Initializes all the header elements with objects to allow for updating
+     * updates the values of the header elements
+     */
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
@@ -83,11 +86,18 @@ public class HomeFragment extends Fragment implements ProductiveListener {
     }
 
 
+    /**
+     * When the system has been fully loaded, this method updates the header
+     * @param event symbolizes the system having loaded
+     */
     @ProductiveEventHandler
     public void catchSystemLoaded(SystemLoadedEvent event){
         updateHeader();
     }
 
+    /**
+     * Updates the header to all the current values
+     */
     private void updateHeader(){
             userTitle.setText(titleManager.getTitleAsString());
             experienceBar.setProgress(rewardManager.getExperience());
@@ -95,6 +105,10 @@ public class HomeFragment extends Fragment implements ProductiveListener {
             levelNumber.setText("" + rewardManager.getLevel());
     }
 
+    /**
+     * Opens the title selection activity
+     * when the user's title is clicked
+     */
     public void openTitleActivity() {
         Intent intent = new Intent(getContext(), TitleSelection.class);
         startActivity(intent);
