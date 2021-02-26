@@ -47,7 +47,7 @@ public class DashboardFragment extends Fragment {
      */
     private void attachTaskView(View root){
         RecyclerView taskDisplayView = root.findViewById(R.id.taskDisplayView);//Grab display
-        TaskAdapter taskAdapter = new TaskAdapter(taskManager, getContext(), root);
+        TaskAdapter taskAdapter = new TaskAdapter(taskManager, root);
         taskAdapter.setTasks(new ArrayList<>());
         taskDisplayView.setAdapter(taskAdapter);//attach display to view + tasks
 

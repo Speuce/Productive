@@ -21,8 +21,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
-import com.github.sundeepk.compactcalendarview.domain.Event;
-import com.productive6.productive.MainActivity;
 import com.productive6.productive.R;
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.task.ITaskManager;
@@ -122,7 +120,7 @@ public class NotificationsFragment extends Fragment {
     }
 
     private void initTaskList(String selectedDate, View root, SimpleDateFormat sdf) {
-        TaskAdapter taskAdapter = new TaskAdapter(taskManager, getContext(), root);
+        TaskAdapter taskAdapter = new TaskAdapter(taskManager, root);
         taskDisplayView.setAdapter(taskAdapter);
         taskDisplayView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         taskManager.getTasksByPriority(new NotificationsFragment.TaskConsumerStartup(taskAdapter, sdf, selectedDate));//Logic CALL--Load Tasks

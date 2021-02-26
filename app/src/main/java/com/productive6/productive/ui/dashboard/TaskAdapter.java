@@ -42,14 +42,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
     @Inject
     ITaskManager taskManager;
 
-    private Context context;
-
     /**
      * List of tasks to be displayed.
      */
     private List<Task> tasks = new ArrayList<>();
 
-    private View root;
+    private final View root;
 
     /**
      * For formatting dates in the view
@@ -66,7 +64,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         private TextView taskDifficulty;
         private TextView taskDueDate;
         private Button taskComplete;
-        private Task task;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
@@ -91,9 +88,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         }
     }
 
-    public TaskAdapter(ITaskManager taskManager, Context context, View root){
+    public TaskAdapter(ITaskManager taskManager, View root){
         this.taskManager = taskManager;
-        this.context = context;
         this.root = root;
     }
 
@@ -126,16 +122,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
     }
     /**
      * Applies an animation to the given view.
+     * Code from: https://stackoverflow.com/a/26748274/6047183
      */
     private void setAnimation(View viewToAnimate, int position) {
-            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.fade_out);
+            Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), android.R.anim.fade_out);
             animation.setDuration(300);
             viewToAnimate.startAnimation(animation);
             new Handler().postDelayed(() -> {
-//                if (myDataSource.size() == 0) {
-//                    addEmptyView(); // adding empty view instead of the RecyclerView
-//                    return;
-//                }
                 tasks.remove(position);
                 updateData();
             }, animation.getDuration()+20);
