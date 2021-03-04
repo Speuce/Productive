@@ -73,9 +73,9 @@ public class PersistentTaskManager implements ITaskManager {
         if(t.getCreatedTime() == 0){
             t.setCreatedTime(System.currentTimeMillis());
         }
-        data.task().insertTask(t);
-        EventDispatch.dispatchEvent(new TaskCreateEvent(t));
-
+        data.task().insertTask(t, () ->{
+            EventDispatch.dispatchEvent(new TaskCreateEvent(t));
+        });
     }
 
     @Override

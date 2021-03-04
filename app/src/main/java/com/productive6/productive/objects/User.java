@@ -44,7 +44,7 @@ public class User {
         this.exp = 0;
         this.level = 0;
         this.coins = 0;
-        selectedTitle = "title1";
+        selectedTitle = "n00b tasker";
     }
 
     /**
@@ -57,7 +57,22 @@ public class User {
         this.exp = exp;
         this.level = level;
         this.coins = coins;
-        selectedTitle = "title1";
+        selectedTitle = "n00b tasker";
+    }
+
+    /**
+     * Construct a new user object
+     * @param exp The amount of experience
+     * @param level The current level of the user
+     * @param coins The amount of coins that the user has
+     * @param selectedTitle The current title of the user
+     */
+    @Ignore
+    public User(int exp, int level, int coins, String selectedTitle) {
+        this.exp = exp;
+        this.level = level;
+        this.coins = coins;
+        this.selectedTitle = selectedTitle;
     }
 
     /**

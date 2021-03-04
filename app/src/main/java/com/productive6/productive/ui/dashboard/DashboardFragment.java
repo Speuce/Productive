@@ -12,11 +12,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.productive6.productive.R;
+import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.objects.Task;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -30,12 +30,15 @@ public class DashboardFragment extends Fragment {
     @Inject
     ITaskManager taskManager;
 
-    private DashboardViewModel dashboardViewModel;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
+    /**
+     * Creates parent view for the tasks
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
         attachTaskView(root);
@@ -49,27 +52,29 @@ public class DashboardFragment extends Fragment {
      */
     private void attachTaskView(View root){
         RecyclerView taskDisplayView = root.findViewById(R.id.taskDisplayView);//Grab display
-
-        ArrayList<Task> tasks = new ArrayList<>();//Data
-        tasks.add(new Task("String taskName1", 1, 1, 1, new Date(), false));
-
-        TaskAdapter taskAdapter = new TaskAdapter(taskManager);
-        taskManager.getTasksByPriority(new TaskConsumerStartup(taskAdapter));//Logic CALL--Load Tasks
+        TaskAdapter taskAdapter = new TaskAdapter(taskManager, root);
+        taskAdapter.setTasks(new ArrayList<>());
         taskDisplayView.setAdapter(taskAdapter);//attach display to view + tasks
+
         taskDisplayView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false));//Describe how the data should be laid out
+
+        EventDispatch.registerListener(taskAdapter);
+        taskManager.getTasksByPriority(new TaskConsumerStartup(taskAdapter));//Logic CALL--Load Tasks
+
     }
 
     /**
      * Holds a callback for the database request made in attachTaskView.
      */
-    public class TaskConsumerStartup implements Consumer<List<Task>> {
-        private TaskAdapter taskAdapter;
+    public static class TaskConsumerStartup implements Consumer<List<Task>> {
+        private final TaskAdapter taskAdapter;
 
         TaskConsumerStartup(TaskAdapter taskAdapter){this.taskAdapter = taskAdapter;}
 
         @Override
         public void accept(List<Task> tasks) {
-            taskAdapter.setTasks(tasks);//Give data to view and automatically re-renders the view
+            taskAdapter.setTasks(tasks);
+            //Give data to Task list and automatically re-renders the Task list view
         }
     }
 }

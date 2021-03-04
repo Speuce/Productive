@@ -3,7 +3,7 @@ package com.productive6.productive;
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.rewards.ITitleManager;
 import com.productive6.productive.logic.rewards.impl.DefaultTitleManager;
-import com.productive6.productive.logic.user.UserManager;
+import com.productive6.productive.logic.user.IUserManager;
 import com.productive6.productive.objects.Title;
 import com.productive6.productive.objects.User;
 import com.productive6.productive.objects.events.user.UserLoadedEvent;
@@ -25,7 +25,7 @@ public class TitleManagerTest {
 
 
     @Mock
-    UserManager data;
+    IUserManager data;
 
     @Rule public MockitoRule rule = MockitoJUnit.rule();
 

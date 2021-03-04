@@ -4,18 +4,19 @@ import com.productive6.productive.logic.exceptions.ObjectFormatException;
 
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.exceptions.AccessBeforeLoadedException;
-import com.productive6.productive.logic.user.UserManager;
+import com.productive6.productive.logic.user.IUserManager;
 import com.productive6.productive.objects.User;
+import com.productive6.productive.objects.events.SystemLoadedEvent;
 import com.productive6.productive.objects.events.user.UserLoadedEvent;
 import com.productive6.productive.objects.events.user.UserUpdateEvent;
 import com.productive6.productive.persistence.datamanage.IDataManager;
 
 /**
- * {@link com.productive6.productive.logic.user.UserManager} implementation that persists a single (main user).
+ * {@link IUserManager} implementation that persists a single (main user).
  *
  * TODO: add multi user support
  */
-public class PersistentSingleUserManager implements UserManager {
+public class PersistentSingleUserManager implements IUserManager {
 
     /**
      * The Datamanaer to interface with the data layer
@@ -47,12 +48,15 @@ public class PersistentSingleUserManager implements UserManager {
                 //create a default user. Iteration 1 smelly stuff. Iteration 2/3 will have a user creation UI
                 u = new User();
                 u.setCoins(0);
-                data.user().insertUser(u);
+                data.user().insertUser(u, () ->{
+                    EventDispatch.dispatchEvent(new UserLoadedEvent(currentUser));
+                });
             }else{
                 u = users.get(0);
             }
             currentUser = u;
             EventDispatch.dispatchEvent(new UserLoadedEvent(currentUser));
+            EventDispatch.dispatchEvent(new SystemLoadedEvent());
         });
     }
 

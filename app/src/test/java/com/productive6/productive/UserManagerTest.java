@@ -3,8 +3,8 @@ package com.productive6.productive;
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.exceptions.AccessBeforeLoadedException;
 import com.productive6.productive.logic.exceptions.ObjectFormatException;
+import com.productive6.productive.logic.user.IUserManager;
 import com.productive6.productive.persistence.datamanage.dummy.DummyDataManager;
-import com.productive6.productive.logic.user.UserManager;
 import com.productive6.productive.logic.user.impl.PersistentSingleUserManager;
 import com.productive6.productive.objects.User;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
@@ -23,7 +23,7 @@ import static org.junit.Assert.*;
  */
 public class UserManagerTest {
 
-    private UserManager userManager;
+    private IUserManager userManager;
 
     private DummyDataManager data;
 

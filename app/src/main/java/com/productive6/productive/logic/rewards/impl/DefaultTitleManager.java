@@ -2,7 +2,7 @@ package com.productive6.productive.logic.rewards.impl;
 
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.rewards.ITitleManager;
-import com.productive6.productive.logic.user.UserManager;
+import com.productive6.productive.logic.user.IUserManager;
 import com.productive6.productive.objects.Title;
 import com.productive6.productive.objects.User;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
@@ -17,16 +17,15 @@ import java.util.List;
 public class DefaultTitleManager implements ITitleManager, ProductiveListener{
 
     private User person;
-    private UserManager data;
+    private IUserManager data;
     private List<Title> titles;
 
-    public DefaultTitleManager(UserManager data, String[] titleString, int[] titleLevels){
+    public DefaultTitleManager(IUserManager data, String[] titleString, int[] titleLevels){
 
         EventDispatch.registerListener(this);
         this.data = data;
         titles = getAllTitles(titleString,titleLevels);
-        //person = new User(10,6,10);
-        //person.setSelectedTitle("title1");
+
     }
 
     /**
@@ -37,26 +36,38 @@ public class DefaultTitleManager implements ITitleManager, ProductiveListener{
 
         List<Title> options = new LinkedList<Title>();
 
+        if(person != null) {
+            titles.iterator().forEachRemaining(curr -> {
 
-        titles.iterator().forEachRemaining(curr -> {
+                if (curr.getLevelRequirement() <= getLevel())
+                    options.add(new Title(curr.getString(), curr.getLevelRequirement()));
 
-            if(curr.getLevelRequirement() <= getLevel())
-                options.add(new Title(curr.getString(),curr.getLevelRequirement()));
-
-        });
+            });
+        }
         return options;
     }
 
     /**
-     * Returns a String repersentation of the currently selected title
-     * @return String representing the current title
+     * Returns a String representation of the currently selected title
+     * @return String representing the current title, returns an empty string
+     * if person has not been initialized by the database
      */
-    public String getTitleAsString(){return person.getSelectedTitle();}
+    public String getTitleAsString(){
+
+        String str = "";
+
+        if(person != null)
+            str = person.getSelectedTitle();
+
+        return str;
+    }
 
     /**
      * @return integer representing current level
      */
-    private int getLevel(){return person.getLevel();}
+    private int getLevel() {
+        return person.getLevel();
+    }
 
 
     /**
@@ -66,7 +77,7 @@ public class DefaultTitleManager implements ITitleManager, ProductiveListener{
     @Override
     public void setTitle(String newTitle) {
 
-        if(validateTitle(newTitle)) {
+        if(validateTitle(newTitle) && person != null) {
             person.setSelectedTitle(newTitle);
             data.updateUser(person);
         }

@@ -19,7 +19,7 @@ public interface ITaskAccess {
      * An id is automatically added to the object.
      * @param t the task to add.
      */
-    void insertTask(Task t);
+    long insertTask(Task t);
 
     /**
      * Gets a list of all tasks, sorted by

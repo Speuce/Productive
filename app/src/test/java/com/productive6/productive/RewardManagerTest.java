@@ -4,7 +4,7 @@ package com.productive6.productive;
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.rewards.IRewardManager;
 import com.productive6.productive.logic.rewards.impl.RewardManager;
-import com.productive6.productive.logic.user.UserManager;
+import com.productive6.productive.logic.user.IUserManager;
 import com.productive6.productive.objects.User;
 import com.productive6.productive.objects.events.task.TaskCompleteEvent;
 import com.productive6.productive.objects.events.user.UserLoadedEvent;
@@ -30,7 +30,7 @@ public class RewardManagerTest {
     @Rule public MockitoRule rule = MockitoJUnit.rule();
 
     @Mock
-    static UserManager data = mock(UserManager.class);
+    static IUserManager data = mock(IUserManager.class);
 
     @BeforeClass
     public static void initializeManager(){
