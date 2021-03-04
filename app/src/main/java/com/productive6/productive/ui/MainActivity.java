@@ -208,11 +208,9 @@ public class MainActivity extends AppCompatActivity {
         int month = cal.get(Calendar.MONTH);
         int day = cal.get(Calendar.DAY_OF_MONTH);
 
-        int style = R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Picker_Date_Spinner;
-
-        datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
+        //Initialize date picker dialog
+        datePickerDialog = new DatePickerDialog(this, dateSetListener, year, month, day);
         datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
-        datePickerDialog.getDatePicker().setCalendarViewShown(false);
     }
 
     /**
