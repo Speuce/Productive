@@ -23,10 +23,6 @@
             android:name=".ui.title.TitleSelection"
             android:label="Select Title">
         </activity>
-        <activity
-            android:name=".DeadlinePicker"
-            android:label="Add Task">
-        </activity>
 
     </application>
 
