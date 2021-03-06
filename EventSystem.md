@@ -14,6 +14,10 @@ A new task is added to the task list. The task list data is ready for the UI. Yo
 
 ## ‘Okay… uh why don’t we just do things the normal way?’
 
+Well, we first have to know what 'normal' means to you. But i'm going to take it that you mean [the observer pattern](https://refactoring.guru/design-patterns/observer).
+
+So why not the observer pattern?
+
 Really this is about abstraction and information hiding. 
 
 Lets say you wanted the UI to be told when a new task is added to the user list.
