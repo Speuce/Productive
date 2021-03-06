@@ -6,6 +6,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.InputType;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -118,7 +119,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
             // inflate the layout of the popup window
             LayoutInflater inflater = (LayoutInflater)
                     itemView.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            popupView = inflater.inflate(R.layout.edit_task_popup, null);
+            popupView = inflater.inflate(R.layout.new_task_popup, null);
             // create the popup window
             int width = LinearLayout.LayoutParams.WRAP_CONTENT;
             int height = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -142,11 +143,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
             initPriority();
             initDifficulty();
             dimBehind(popupWindow);
+            EditText name = popupView.findViewById(R.id.taskNameForm);
+            name.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
 
             Button submit = popupView.findViewById(R.id.submit);
             submit.setOnClickListener(v -> {
-                EditText name = popupView.findViewById(R.id.taskNameForm);
-
+                
                 SwitchCompat hasDeadline = popupView.findViewById(R.id.switchDeadline);
 
                 RadioGroup radioGroup = popupView.findViewById(R.id.priorityGroup);
