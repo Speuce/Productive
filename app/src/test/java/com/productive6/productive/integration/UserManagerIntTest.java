@@ -1,35 +1,50 @@
-package com.productive6.productive;
+package com.productive6.productive.integration;
+
+import android.content.Context;
 
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.exceptions.AccessBeforeLoadedException;
 import com.productive6.productive.logic.exceptions.ObjectFormatException;
 import com.productive6.productive.logic.user.IUserManager;
-import com.productive6.productive.persistence.datamanage.dummy.DummyDataManager;
 import com.productive6.productive.logic.user.impl.PersistentSingleUserManager;
 import com.productive6.productive.objects.User;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.user.UserLoadedEvent;
 import com.productive6.productive.objects.events.user.UserUpdateEvent;
+import com.productive6.productive.persistence.datamanage.dummy.DummyDataManager;
+import com.productive6.productive.persistence.datamanage.impl.InMemoryAndroidDataManager;
+import com.productive6.productive.persistence.executor.IRunnableExecutor;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+
 /**
  * Tests the logic-layer user manager with dummy database implementations.
  */
-public class UserManagerTest {
+public class UserManagerIntTest {
+
+    @Mock
+    private Context mContext = mock(Context.class);
+    @Mock
+    private IRunnableExecutor mRunnableExecutor = mock(IRunnableExecutor.class);
 
     private IUserManager userManager;
 
-    private DummyDataManager data;
+    private InMemoryAndroidDataManager data;
 
     @Before
     public void init(){
-        data = new DummyDataManager();
+        data = new InMemoryAndroidDataManager(mContext,mRunnableExecutor);
+        data.init();
         userManager = new PersistentSingleUserManager(data);
     }
 

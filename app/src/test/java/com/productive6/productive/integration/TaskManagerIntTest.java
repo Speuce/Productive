@@ -1,8 +1,10 @@
-package com.productive6.productive;
+package com.productive6.productive.integration;
+
+import android.content.Context;
 
 import com.productive6.productive.logic.event.EventDispatch;
-import com.productive6.productive.logic.exceptions.PersistentIDAssignmentException;
 import com.productive6.productive.logic.exceptions.ObjectFormatException;
+import com.productive6.productive.logic.exceptions.PersistentIDAssignmentException;
 import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.logic.task.impl.PersistentTaskManager;
 import com.productive6.productive.objects.Task;
@@ -11,27 +13,40 @@ import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.task.TaskCreateEvent;
 import com.productive6.productive.objects.events.task.TaskUpdateEvent;
 import com.productive6.productive.persistence.datamanage.dummy.DummyDataManager;
+import com.productive6.productive.persistence.datamanage.impl.InMemoryAndroidDataManager;
+import com.productive6.productive.persistence.executor.IRunnableExecutor;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 
 /**
  * Tests logic-layer task manager verification and computation
  */
-public class TaskManagerTest {
+public class TaskManagerIntTest {
+
+    @Mock
+    private Context mContext = mock(Context.class);
+    @Mock
+    private IRunnableExecutor mRunnableExecutor = mock(IRunnableExecutor.class);
 
     private ITaskManager taskManager;
 
-    private DummyDataManager data;
+    private InMemoryAndroidDataManager data;
 
     @Before
     public void init(){
-        data = new DummyDataManager();
+        data = new InMemoryAndroidDataManager(mContext,mRunnableExecutor);
+        data.init();
         taskManager = new PersistentTaskManager(data);
     }
 
