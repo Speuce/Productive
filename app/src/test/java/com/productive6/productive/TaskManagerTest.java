@@ -15,6 +15,7 @@ import com.productive6.productive.persistence.datamanage.dummy.DummyDataManager;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -68,6 +69,32 @@ public class TaskManagerTest {
     }
 
     /**
+     * Tests that the get by date function works, getting tasks by due date
+     */
+    @Test
+    public void testDateFilterPositive(){
+        Task t1 = new Task("task", 5, 5, System.currentTimeMillis(), LocalDate.now(), false);
+        //make t1 created 10ms before the second task.
+        taskManager.addTask(t1);
+        taskManager.getTasksOnDate(LocalDate.now(),tasks -> {
+            assertFalse("Task Manager filter by date accidently filtered an actual result :(", tasks.isEmpty());
+        });
+    }
+
+    /**
+     * Tests that the get by date function works, filtering out tasks not on the requested due date
+     */
+    @Test
+    public void testDateFilterNegative(){
+        Task t1 = new Task("task", 5, 5, System.currentTimeMillis(), LocalDate.now().plusDays(1), false);
+        //make t1 created 10ms before the second task.
+        taskManager.addTask(t1);
+        taskManager.getTasksOnDate(LocalDate.now(),tasks -> {
+            assertTrue("Task Manager filter by date accidently included a result that should've been filtered.", tasks.isEmpty());
+        });
+    }
+
+    /**
      * Tests that TaskManager.getCompletedTasks includes completed tasks
      */
     @Test
@@ -99,7 +126,7 @@ public class TaskManagerTest {
      */
     @Test
     public void testIDFormatInsert() {
-        Task testData = new Task("name", 1, 1, System.currentTimeMillis(), new Date(), false);
+        Task testData = new Task("name", 1, 1, System.currentTimeMillis(), LocalDate.now(), false);
         testData.setId(1);
         assertThrows(
                 "Task Manager didn't catch an id exception on insert.",
@@ -115,7 +142,7 @@ public class TaskManagerTest {
      */
     @Test
     public void testIDFormatUpdate() {
-        Task testData = new Task("name", 1, 1, System.currentTimeMillis(), new Date(), false);
+        Task testData = new Task("name", 1, 1, System.currentTimeMillis(), LocalDate.now(), false);
         testData.setId(0);
         assertThrows(
                 "Task Manager didn't catch an id exception on update.",
@@ -140,7 +167,7 @@ public class TaskManagerTest {
      */
     @Test
     public void testCompletionChecking(){
-        Task testData = new Task("name", 1, 1, System.currentTimeMillis(), new Date(), true);
+        Task testData = new Task("name", 1, 1, System.currentTimeMillis(), LocalDate.now(), true);
         assertThrows("Task Manager missed a 'completed' flag = true",
                 ObjectFormatException.class,
                 () -> taskManager.addTask(testData));
@@ -151,7 +178,7 @@ public class TaskManagerTest {
      */
     @Test
     public void testPriorityChecking(){
-        Task testData = new Task("name", -1, 1, System.currentTimeMillis(), new Date(), false);
+        Task testData = new Task("name", -1, 1, System.currentTimeMillis(), LocalDate.now(), false);
         assertThrows("Task Manager missed a negative priority",
                 ObjectFormatException.class,
                 () -> taskManager.addTask(testData));
@@ -162,14 +189,14 @@ public class TaskManagerTest {
      */
     @Test
     public void testTimeAutofill(){
-        Task testData = new Task("name", 1, 1, 0, new Date(), false);
+        Task testData = new Task("name", 1, 1, 0, LocalDate.now(), false);
         taskManager.addTask(testData);
         assertTrue("Task Manager didn't autofill time correctly.", Math.abs(System.currentTimeMillis()-testData.getCreatedTime()) < 10000);
     }
 
     @Test
     public void testCompleteTask(){
-        Task testData = new Task("name", 1, 1, 0, new Date(), false);
+        Task testData = new Task("name", 1, 1, 0, LocalDate.now(), false);
         taskManager.addTask(testData);
         taskManager.completeTask(testData);
         assertTrue("Task Manager didn't autofill completion correctly.", testData.isCompleted());
@@ -184,7 +211,7 @@ public class TaskManagerTest {
                 success.set(true);
             }
         });
-        Task testData = new Task("name", 1, 1, 0, new Date(), false);
+        Task testData = new Task("name", 1, 1, 0, LocalDate.now(), false);
         taskManager.addTask(testData);
         taskManager.updateTask(testData);
         assertTrue("TaskManager failed to trigger a user updated event when necessary.",success.get());
@@ -199,7 +226,7 @@ public class TaskManagerTest {
                 success.set(true);
             }
         });
-        Task testData = new Task("name", 1, 1, 0, new Date(), false);
+        Task testData = new Task("name", 1, 1, 0, LocalDate.now(), false);
         taskManager.addTask(testData);
         assertTrue("TaskManager failed to trigger a user create event when necessary.",success.get());
     }

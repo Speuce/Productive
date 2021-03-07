@@ -10,8 +10,11 @@ import com.productive6.productive.objects.events.task.TaskCreateEvent;
 import com.productive6.productive.objects.events.task.TaskUpdateEvent;
 import com.productive6.productive.persistence.datamanage.IDataManager;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 /**
  * A production-grade and persistent implementation of the
@@ -36,8 +39,17 @@ public class PersistentTaskManager implements ITaskManager {
     @Override
     public void getTasksByCreation(Consumer<List<Task>> outputparam) {
         data.task().getAllTasks(false, ret ->{
-            ret.sort((a, b) -> (int) (((Task) a).getCreatedTime() - ((Task) b).getCreatedTime()));
+            ret.sort((a, b) -> (int) (a.getCreatedTime() - b.getCreatedTime()));
             outputparam.accept(ret);
+        });
+    }
+
+    @Override
+    public void getTasksOnDate(LocalDate d, Consumer<List<Task>> outputparam) {
+        data.task().getAllTasks(false, ret ->{
+            outputparam.accept(ret.stream().filter(
+                    task ->task.getDueDate().equals(d)
+            ).collect(Collectors.toList()));
         });
     }
 

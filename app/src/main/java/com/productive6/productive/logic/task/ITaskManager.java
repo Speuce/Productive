@@ -2,7 +2,9 @@ package com.productive6.productive.logic.task;
 
 import com.productive6.productive.objects.Task;
 
+import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -26,6 +28,12 @@ public interface ITaskManager {
      * sorted by oldest creation first.
      */
     void getTasksByCreation(Consumer<List<Task>> outputparam);
+
+    /**
+     * Get all tasks with a due date on the specific given day
+     * @param d the {@link java.util.Date} to search on.
+     */
+    void getTasksOnDate(LocalDate d, Consumer<List<Task>> outputparam);
 
     /**
      * Adds a new task to the users list of tasks

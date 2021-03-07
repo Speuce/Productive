@@ -19,6 +19,6 @@ public class Converters {
 
     @TypeConverter
     public static Long dateToTimestamp(LocalDate date) {
-        return date == null ? null : date.atStartOfDay(ZoneId.systemDefault()).toEpochSecond();
+        return date == null ? null : date.atStartOfDay(ZoneId.systemDefault()).toEpochSecond()*1000;
     }
 }
