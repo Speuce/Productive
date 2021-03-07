@@ -64,7 +64,13 @@ public class UserManagerIntTest {
     public void testLoadCreatesUser(){
         //database is initially empty (dummy db)
         userManager.load();
-        assertEquals("UserManager failed to create a new user on load with a blank db!",userManager.getCurrentUser().getId(), 1);
+        EventDispatch.registerListener(new ProductiveListener() {
+            @ProductiveEventHandler
+            public void handleEvent(UserLoadedEvent e){
+                assertEquals("UserManager failed to create a new user on load with a blank db!",userManager.getCurrentUser().getId(), 1);
+            }
+        });
+
     }
 
     @Test
@@ -74,10 +80,11 @@ public class UserManagerIntTest {
             @ProductiveEventHandler
             public void handleEvent(UserLoadedEvent e){
                 success.set(true);
+                assertTrue("UserManager failed to trigger a user loaded event when necessary.",success.get());
             }
         });
         userManager.load();
-        assertTrue("UserManager failed to trigger a user loaded event when necessary.",success.get());
+
     }
 
     @Test
@@ -85,13 +92,18 @@ public class UserManagerIntTest {
         AtomicBoolean success = new AtomicBoolean(false);
         EventDispatch.registerListener(new ProductiveListener() {
             @ProductiveEventHandler
+            public void handleEvent(UserLoadedEvent e){
+                userManager.updateUser(userManager.getCurrentUser());
+            }
+        });
+        EventDispatch.registerListener(new ProductiveListener() {
+            @ProductiveEventHandler
             public void handleEvent(UserUpdateEvent e){
                 success.set(true);
+                assertTrue("UserManager failed to trigger a user updated event when necessary.",success.get());
             }
         });
         userManager.load();
-        userManager.updateUser(userManager.getCurrentUser());
-        assertTrue("UserManager failed to trigger a user updated event when necessary.",success.get());
     }
 
 

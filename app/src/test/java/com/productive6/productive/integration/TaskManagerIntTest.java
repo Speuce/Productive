@@ -140,16 +140,6 @@ public class TaskManagerIntTest {
         );
     }
 
-//    @Test
-//    public void testDueTimeValidation() {
-//        Task testData = new Task("name", 1, System.currentTimeMillis(), 100);
-//        assertThrows(
-//                "Task Manager properly validate the due time of a task!",
-//                    ObjectFormatException.class,
-//                () -> taskManager.addTask(testData)
-//        );
-//    }
-
     /**
      * Tests that insertion completion checking is functional
      */
@@ -186,23 +176,35 @@ public class TaskManagerIntTest {
     public void testCompleteTask(){
         Task testData = new Task("name", 1, 1, 0, new Date(), false);
         taskManager.addTask(testData);
-        taskManager.completeTask(testData);
-        assertTrue("Task Manager didn't autofill completion correctly.", testData.isCompleted());
+
+        EventDispatch.registerListener(new ProductiveListener() {
+            @ProductiveEventHandler
+            public void handleEvent(TaskCreateEvent e){
+                taskManager.completeTask(testData);
+                assertTrue("Task Manager didn't autofill completion correctly.", testData.isCompleted());
+            }
+        });
     }
 
     @Test
     public void testUpdateEvent(){
         AtomicBoolean success = new AtomicBoolean(false);
+        Task testData = new Task("name", 1, 1, 0, new Date(), false);
+        taskManager.addTask(testData);
+
+        EventDispatch.registerListener(new ProductiveListener() {
+            @ProductiveEventHandler
+            public void handleEvent(TaskCreateEvent e){
+                taskManager.updateTask(testData);
+            }
+        });
         EventDispatch.registerListener(new ProductiveListener() {
             @ProductiveEventHandler
             public void handleEvent(TaskUpdateEvent e){
                 success.set(true);
+                assertTrue("TaskManager failed to trigger a user updated event when necessary.",success.get());
             }
         });
-        Task testData = new Task("name", 1, 1, 0, new Date(), false);
-        taskManager.addTask(testData);
-        taskManager.updateTask(testData);
-        assertTrue("TaskManager failed to trigger a user updated event when necessary.",success.get());
     }
 
     @Test
@@ -212,11 +214,11 @@ public class TaskManagerIntTest {
             @ProductiveEventHandler
             public void handleEvent(TaskCreateEvent e){
                 success.set(true);
+                assertTrue("TaskManager failed to trigger a user create event when necessary.",success.get());
             }
         });
         Task testData = new Task("name", 1, 1, 0, new Date(), false);
         taskManager.addTask(testData);
-        assertTrue("TaskManager failed to trigger a user create event when necessary.",success.get());
     }
 
 
