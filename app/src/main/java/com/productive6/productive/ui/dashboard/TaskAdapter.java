@@ -120,7 +120,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         holder.taskName.setText(tasks.get(position).getTaskName());
         holder.taskPriority.setText(""+tasks.get(position).getPriority());
         holder.taskDifficulty.setText(""+tasks.get(position).getDifficulty());
-        holder.taskDueDate.setText(format.format(tasks.get(position).getDueDate()));
+        if (tasks.get(position).getDueDate() != null)
+            holder.taskDueDate.setText(format.format(tasks.get(position).getDueDate()));
+        else holder.taskDueDate.setText("");
     }
 
     /**
