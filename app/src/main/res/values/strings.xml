@@ -10,4 +10,12 @@
     <string name="rewards">Rewards</string>
     <string name="todo">To-do</string>
     <string name="schedule">Schedule</string>
+
+
+    <string-array name="sortFunctionArray">
+        <item>Priority</item>
+        <item>Created Date</item>
+        <item>Due Date</item>
+    </string-array>
+
 </resources>
