@@ -17,7 +17,7 @@ import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.ui.dashboard.TaskAdapter;
 
-import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -43,7 +43,7 @@ public class NotificationsFragment extends Fragment {
     private String dateInSDF;
     private String month;
     private List<Task> tasksByDate;
-    private SimpleDateFormat sdf;
+    private DateTimeFormatter sdf;
 
     @Inject
     ITaskManager taskManager;
@@ -63,7 +63,7 @@ public class NotificationsFragment extends Fragment {
 
         /** Initialize variables */
         calendar    = (Calendar.getInstance());
-        sdf         = new SimpleDateFormat("yyyy-M-d");
+        sdf         = DateTimeFormatter.ofPattern("yyyy-M-d");
         dateInSDF   = calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-" + calendar.get(Calendar.DATE);
         month       = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
         tasksByDate = new ArrayList<>();
@@ -105,7 +105,7 @@ public class NotificationsFragment extends Fragment {
         }
     }
 
-    private void initTaskList(String selectedDate, View root, SimpleDateFormat sdf) {
+    private void initTaskList(String selectedDate, View root, DateTimeFormatter sdf) {
         TaskAdapter taskAdapter = new TaskAdapter(taskManager, root);
         taskDisplayView.setAdapter(taskAdapter);
         taskDisplayView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -115,10 +115,10 @@ public class NotificationsFragment extends Fragment {
     /** Holds a callback for the database request made in attachTaskView */
     public class TaskConsumerStartup implements Consumer<List<Task>> {
         private final TaskAdapter taskAdapter;
-        private final SimpleDateFormat sdf;
+        private final DateTimeFormatter sdf;
         private String selectedDate;
 
-        TaskConsumerStartup(TaskAdapter taskAdapter, SimpleDateFormat sdf, String selectedDate) {
+        TaskConsumerStartup(TaskAdapter taskAdapter, DateTimeFormatter sdf, String selectedDate) {
             this.taskAdapter = taskAdapter;
             this.sdf = sdf;
             this.selectedDate = selectedDate;

@@ -32,6 +32,8 @@ import com.productive6.productive.logic.user.IUserManager;
 import com.productive6.productive.objects.Task;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -56,12 +58,12 @@ public class MainActivity extends AppCompatActivity {
 
     private DatePickerDialog datePickerDialog;
 
-    private Calendar calendar;
+    private LocalDate selectedDate;
 
     /**
      * For formatting dates in the view
      */
-    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.CANADA);
+    DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
         int difficulty = radioDiffGroup.indexOfChild(radioDiffButton);
 
         if (hasDeadline.isChecked()) {
-            taskManager.addTask(new Task(name.getText().toString(),priority+1,difficulty+1,0, calendar.getTime(),false));
+            taskManager.addTask(new Task(name.getText().toString(),priority+1,difficulty+1,0, selectedDate,false));
         } else {
             taskManager.addTask(new Task(name.getText().toString(),priority+1,difficulty+1,0, null,false));
         }
@@ -173,8 +175,12 @@ public class MainActivity extends AppCompatActivity {
      * Initializes the date picker window
      */
     private void initDatePicker() {
+
+        //Initialize date to today when opening the date picker
+        selectedDate = LocalDate.now();
+
         Button dateButton = popupView.findViewById(R.id.datePickerButton);
-        dateButton.setText(format.format(Calendar.getInstance().getTime()));
+        dateButton.setText(format.format(selectedDate));
         SwitchCompat hasDeadline = popupView.findViewById(R.id.switchDeadline);
         hasDeadline.setChecked(false);
         dateButton.setTextColor(Color.GRAY);
@@ -196,20 +202,15 @@ public class MainActivity extends AppCompatActivity {
             hasDeadline.setChecked(true);
             dateButton.setTextColor(Color.BLACK);
             dateButton.setBackgroundTintList(ColorStateList.valueOf(Color.BLACK));
-            calendar = Calendar.getInstance();
-            calendar.set(year, month, dayOfMonth);
-            Date date = calendar.getTime();
-            dateButton.setText(format.format(date));
+            selectedDate = LocalDate.of(year, month+1, dayOfMonth);
+            dateButton.setText(format.format(selectedDate));
         };
 
-        //Initialize date to today when opening the date picker
-        Calendar cal = Calendar.getInstance();
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        int day = cal.get(Calendar.DAY_OF_MONTH);
+
 
         //Initialize date picker dialog
-        datePickerDialog = new DatePickerDialog(this, dateSetListener, year, month, day);
+        datePickerDialog = new DatePickerDialog(this, dateSetListener, selectedDate.getYear(),
+                selectedDate.getMonthValue()-1, selectedDate.getDayOfMonth());
         datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
     }
 
