@@ -59,7 +59,6 @@ public class RewardManagerIntTest {
         userManager = new PersistentSingleUserManager(data);
         rewardManager = new RewardManager(userManager,4,3,100);
         userManager.load();
-        //EventDispatch.dispatchEvent(new UserLoadedEvent(new User(0,0,0)));
     }
 
     @Test
