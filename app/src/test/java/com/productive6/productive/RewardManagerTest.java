@@ -95,8 +95,23 @@ public class RewardManagerTest {
 
     }
 
+    @Test
+    public void testDifferentPriority(){
+        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",1,101, 0)));
+        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",2,101, 0)));
+        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",3,101, 0)));
+
+        assertEquals("XP did not equal expected value", 24, rewardManager.getExperience());
+    }
 
 
+    @Test
+    public void testDifferentDifficulty(){
+        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",1,1, 0)));
+        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",2,2, 0)));
+        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",3,3, 0)));
 
+        assertEquals("XP did not equal expected value", 18, rewardManager.getCoins());
+    }
 
 }
