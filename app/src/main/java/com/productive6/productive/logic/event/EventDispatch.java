@@ -83,4 +83,12 @@ public class EventDispatch {
             }
         }
      }
+
+    /**
+     * Clears the map of all registered listeners
+     * *** USE WITH CAUTION *****
+     */
+    public static void clear(){
+        listenerMap.clear();
+     }
 }

@@ -48,6 +48,7 @@ public class TitleManagerIntTest {
     private InMemoryAndroidDataManager data;
     @Before
     public void init(){
+        EventDispatch.clear();
         String[] tempTitles = {"TEST1", "TEST2", "TEST3"};
         int[] tempVals = {1, 2, 3};
         data = new InMemoryAndroidDataManager(mContext,mRunnableExecutor);
