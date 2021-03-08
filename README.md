@@ -43,3 +43,6 @@ Additionally, some of these libaries generate class implemenations at compile-ti
 
 ### CompactCalendarView
 &emsp; We use [CompactCalendarView](https://github.com/SundeepK/CompactCalendarView), a library specific to android applications, which offers a wide range of features in addition to the default CalendarView. The library allows theming, animations, and adding dots underneath dates as an indication to the user about the presence of tasks on that day.
+
+# Asset Sources
+&emsp; [Kyrise's Free 16x16 RPG Icon Pack](https://dagger.dev/hilt/) from OpenGameArt.org
