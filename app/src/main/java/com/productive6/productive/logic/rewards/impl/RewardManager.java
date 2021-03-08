@@ -90,7 +90,10 @@ public class RewardManager implements IRewardManager, ProductiveListener{
      * @param completedTask the task that was completed that the user is receiving coins for
      */
     private void updateCoins(Task completedTask){
-        person.setCoins(person.getCoins() + completedTask.getPriority()*coinWeight);
+
+        int newVal = calculateNewCoins(completedTask);
+
+        person.setCoins(newVal);
     }
 
     /**
@@ -112,6 +115,10 @@ public class RewardManager implements IRewardManager, ProductiveListener{
 
     protected int calculateNewXP(Task completedTask){
         return person.getExp() + completedTask.getPriority() * experienceWeight;
+    }
+
+    protected int calculateNewCoins(Task completedTask){
+        return person.getCoins() + completedTask.getDifficulty() * coinWeight;
     }
 
     /**
@@ -145,15 +152,6 @@ public class RewardManager implements IRewardManager, ProductiveListener{
     public void initializeValues(UserLoadedEvent e){
         person = e.getUser();
         EventDispatch.dispatchEvent(new UserTitleInitialized());
-    }
-
-    /**
-     * After the user is updated this object is notified
-     * @param e: the event that has this method handles
-     */
-    @ProductiveEventHandler
-    public void updateUser(UserUpdateEvent e){
-        person = e.getUser();
     }
 
 }
