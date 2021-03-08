@@ -4,7 +4,9 @@ import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.exceptions.PersistentIDAssignmentException;
 import com.productive6.productive.logic.exceptions.ObjectFormatException;
 import com.productive6.productive.logic.task.ITaskManager;
+import com.productive6.productive.logic.task.ITaskSorter;
 import com.productive6.productive.logic.task.impl.PersistentTaskManager;
+import com.productive6.productive.logic.task.impl.PersistentTaskSorter;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
@@ -28,12 +30,15 @@ public class TaskManagerTest {
 
     private ITaskManager taskManager;
 
+    private ITaskSorter taskSorter;
+
     private DummyDataManager data;
 
     @Before
     public void init(){
         data = new DummyDataManager();
         taskManager = new PersistentTaskManager(data);
+        taskSorter = new PersistentTaskSorter(data);
     }
 
 
@@ -46,8 +51,8 @@ public class TaskManagerTest {
 
         Task t2 = new Task("task", 6,1, System.currentTimeMillis());
         taskManager.addTask(t2);
-        taskManager.getTasksByPriority(tasks -> {
-            assertEquals("Task Manager is improperly getting completed tasks by priority!",
+        taskSorter.getTasksByPriority(tasks -> {
+            assertEquals("Task Sorter is improperly getting completed tasks by priority!",
                     tasks.iterator().next(), t2);
         });
     }
@@ -62,8 +67,8 @@ public class TaskManagerTest {
         Thread.sleep(10);
         taskManager.addTask(new Task("task2", 5, 5,System.currentTimeMillis()));
         taskManager.addTask(t1);
-        taskManager.getTasksByCreation(tasks -> {
-            assertEquals("Task Manager is improperly getting completed tasks by creation!",
+        taskSorter.getTasksByCreation(tasks -> {
+            assertEquals("Task sorter is improperly getting completed tasks by creation!",
                     tasks.iterator().next(), t1);
         });
     }
@@ -76,8 +81,8 @@ public class TaskManagerTest {
         Task t1 = new Task("task", 5, 5, System.currentTimeMillis(), LocalDate.now(), false);
         //make t1 created 10ms before the second task.
         taskManager.addTask(t1);
-        taskManager.getTasksOnDate(LocalDate.now(),tasks -> {
-            assertFalse("Task Manager filter by date accidently filtered an actual result :(", tasks.isEmpty());
+        taskSorter.getTasksOnDate(LocalDate.now(),tasks -> {
+            assertFalse("Task Sorter filter by date accidently filtered an actual result :(", tasks.isEmpty());
         });
     }
 
@@ -89,8 +94,8 @@ public class TaskManagerTest {
         Task t1 = new Task("task", 5, 5, System.currentTimeMillis(), LocalDate.now().plusDays(1), false);
         //make t1 created 10ms before the second task.
         taskManager.addTask(t1);
-        taskManager.getTasksOnDate(LocalDate.now(),tasks -> {
-            assertTrue("Task Manager filter by date accidently included a result that should've been filtered.", tasks.isEmpty());
+        taskSorter.getTasksOnDate(LocalDate.now(),tasks -> {
+            assertTrue("Task Sorter filter by date accidently included a result that should've been filtered.", tasks.isEmpty());
         });
     }
 
@@ -103,7 +108,7 @@ public class TaskManagerTest {
 
         taskManager.addTask(t1);
         t1.setCompleted(true);
-        taskManager.getCompletedTasks(tasks -> {
+        taskSorter.getCompletedTasks(tasks -> {
             assertTrue("TaskManager Get Completed tasks missed a completed task.", tasks.contains(t1));
         });
     }
@@ -115,7 +120,7 @@ public class TaskManagerTest {
     public void testGetCompletedExcludes(){
         Task t2 = new Task("task2", 5, 1, System.currentTimeMillis());
         taskManager.addTask(t2);
-        taskManager.getCompletedTasks(tasks -> {
+        taskSorter.getCompletedTasks(tasks -> {
             assertFalse("TaskManager Get Completed tasks didn't included an incomplete task.", tasks.contains(t2));
         });
     }

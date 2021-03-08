@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.productive6.productive.R;
 import com.productive6.productive.logic.task.ITaskManager;
+import com.productive6.productive.logic.task.ITaskSorter;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.ui.dashboard.TaskAdapter;
 
@@ -49,6 +50,9 @@ public class NotificationsFragment extends Fragment {
 
     @Inject
     ITaskManager taskManager;
+
+    @Inject
+    ITaskSorter taskSorter;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_notifications, container, false);
@@ -111,7 +115,7 @@ public class NotificationsFragment extends Fragment {
         TaskAdapter taskAdapter = new TaskAdapter(taskManager, root);
         taskDisplayView.setAdapter(taskAdapter);
         taskDisplayView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        taskManager.getTasksOnDate(date, new NotificationsFragment.TaskConsumerStartup(taskAdapter, date));//Logic CALL--Load Tasks
+        taskSorter.getTasksOnDate(date, new NotificationsFragment.TaskConsumerStartup(taskAdapter, date));//Logic CALL--Load Tasks
     }
 
     /** Holds a callback for the database request made in attachTaskView */
