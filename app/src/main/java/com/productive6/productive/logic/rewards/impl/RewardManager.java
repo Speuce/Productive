@@ -13,12 +13,12 @@ import com.productive6.productive.objects.User;
 
 public class RewardManager implements IRewardManager, ProductiveListener{
 
-    private int coinWeight; //weight value for how many coins are awarded
-    private int experienceWeight; //weight value for how much XP is added
-    private int levelUpValue; //the amount of XP needed for a level up to occur
+    protected int coinWeight; //weight value for how many coins are awarded
+    protected int experienceWeight; //weight value for how much XP is added
+    protected int levelUpValue; //the amount of XP needed for a level up to occur
 
-    private User person;
-    private IUserManager data;
+    protected User person;
+    protected IUserManager data;
     /**
      * @param data a UserManager object used to update the user information in the database
      */
@@ -100,12 +100,18 @@ public class RewardManager implements IRewardManager, ProductiveListener{
      */
     private void updateExperience(Task completedTask){
 
-        person.setExp(person.getExp() + completedTask.getPriority()*experienceWeight);
+        int newXP = calculateNewXP(completedTask);
+
+        person.setExp(newXP);
 
         if(person.getExp() >= levelUpValue){
             levelUp();
         }
 
+    }
+
+    protected int calculateNewXP(Task completedTask){
+        return person.getExp() + completedTask.getPriority() * experienceWeight;
     }
 
     /**
