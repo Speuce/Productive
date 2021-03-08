@@ -49,31 +49,13 @@ Additionally, some of these libaries generate class implemenations at compile-ti
 Kyrise's Free 16x16 RPG Icon Pack includes:
 
 ### Weapons:
-Swords
-Staffs
-Bows
-Shields
-Spellbooks
+Swords, Staffs, Bows, Shields, Spellbooks, 
 
 ### Armors:
 Helmets
 
 ### Consumables:
-Potions
-Fishes
-Candies
+Potions, Fishes, Candies
 
 ### Misc:
-Coins
-Arrows
-Rings
-Necklaces / Amulets
-Gems
-Pearls
-Crystals
-Keys
-Books
-Scrolls 
-Ingots
-Boxes / Gift Boxes
-etc.
+Coins, Arrows, Rings, Necklaces/Amulets, Gems, Pearls, Crystals, Keys, Books, Scrolls, Ingots, Boxes/Gift Boxes, etc.
