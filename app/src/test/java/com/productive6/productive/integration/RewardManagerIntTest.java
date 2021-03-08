@@ -47,10 +47,6 @@ public class RewardManagerIntTest {
 
      InMemoryAndroidDataManager data;
 
-    @BeforeClass
-    public static void initializeManager(){
-
-    }
 
     @Before
     public void init(){ //refresh the data between each test
