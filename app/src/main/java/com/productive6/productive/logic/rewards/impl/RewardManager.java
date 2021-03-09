@@ -23,11 +23,11 @@ public class RewardManager implements IRewardManager, ProductiveListener{
      * @param data a UserManager object used to update the user information in the database
      */
     public RewardManager(IUserManager data, int xpWeight, int coinWeight, int levelUpValue){
+        EventDispatch.registerListener(this);
+
         experienceWeight = xpWeight;
         this.coinWeight = coinWeight;
         this.levelUpValue = levelUpValue;
-
-        EventDispatch.registerListener(this);
         this.data = data;
         person = null;
     }
