@@ -14,6 +14,7 @@ A new task is added to the task list. The task list data is ready for the UI. Yo
 
 ## ‘Okay… uh why don’t we just do things the normal way?’
 
+
 Really this is about abstraction and information hiding. 
 
 Lets say you wanted the UI to be told when a new task is added to the user list.
