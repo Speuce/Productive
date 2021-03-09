@@ -107,7 +107,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
                     setAnimation(itemView, getAdapterPosition());
                 }catch(ObjectFormatException e){
                     taskComplete.setTextColor(0xFF00000);
-                    taskComplete.setText("BLAHH");
+                    taskComplete.setText("There was an issue with this task..");
                 }
             });
 
