@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.productive6.productive.R;
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.task.ITaskManager;
+import com.productive6.productive.logic.task.ITaskSorter;
 import com.productive6.productive.objects.Task;
 
 import java.text.SimpleDateFormat;
@@ -91,7 +92,7 @@ public class DashboardFragment extends Fragment {
         taskDisplayView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false));//Describe how the data should be laid out
 
         EventDispatch.registerListener(taskAdapter);
-        taskManager.getTasksByPriority(new TaskConsumerStartup(taskAdapter));//Logic CALL--Load Tasks
+        taskSorter.getTasksByPriority(new TaskConsumerStartup(taskAdapter));//Logic CALL--Load Tasks
 
         initPopupWindow();
 
