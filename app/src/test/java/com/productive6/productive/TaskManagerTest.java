@@ -30,100 +30,14 @@ public class TaskManagerTest {
 
     private ITaskManager taskManager;
 
-    private ITaskSorter taskSorter;
-
     private DummyDataManager data;
 
     @Before
     public void init(){
         data = new DummyDataManager();
         taskManager = new PersistentTaskManager(data);
-        taskSorter = new PersistentTaskSorter(data);
     }
 
-
-    /**
-     * Tests that sorting tasks by priority functions as expected (higher priority first)
-     */
-    @Test
-    public void testGetByPriority(){
-        taskManager.addTask(new Task("task", 5, 1, System.currentTimeMillis()));
-
-        Task t2 = new Task("task", 6,1, System.currentTimeMillis());
-        taskManager.addTask(t2);
-        taskSorter.getTasksByPriority(tasks -> {
-            assertEquals("Task Sorter is improperly getting completed tasks by priority!",
-                    tasks.iterator().next(), t2);
-        });
-    }
-
-    /**
-     * Tests that sorting tasks by completion functions as expected (higher priority first)
-     */
-    @Test
-    public void testGetByCreation() throws InterruptedException {
-        Task t1 = new Task("task", 5, 5, System.currentTimeMillis());
-        //make t1 created 10ms before the second task.
-        Thread.sleep(10);
-        taskManager.addTask(new Task("task2", 5, 5,System.currentTimeMillis()));
-        taskManager.addTask(t1);
-        taskSorter.getTasksByCreation(tasks -> {
-            assertEquals("Task sorter is improperly getting completed tasks by creation!",
-                    tasks.iterator().next(), t1);
-        });
-    }
-
-    /**
-     * Tests that the get by date function works, getting tasks by due date
-     */
-    @Test
-    public void testDateFilterPositive(){
-        Task t1 = new Task("task", 5, 5, System.currentTimeMillis(), LocalDate.now(), false);
-        //make t1 created 10ms before the second task.
-        taskManager.addTask(t1);
-        taskSorter.getTasksOnDate(LocalDate.now(),tasks -> {
-            assertFalse("Task Sorter filter by date accidently filtered an actual result :(", tasks.isEmpty());
-        });
-    }
-
-    /**
-     * Tests that the get by date function works, filtering out tasks not on the requested due date
-     */
-    @Test
-    public void testDateFilterNegative(){
-        Task t1 = new Task("task", 5, 5, System.currentTimeMillis(), LocalDate.now().plusDays(1), false);
-        //make t1 created 10ms before the second task.
-        taskManager.addTask(t1);
-        taskSorter.getTasksOnDate(LocalDate.now(),tasks -> {
-            assertTrue("Task Sorter filter by date accidently included a result that should've been filtered.", tasks.isEmpty());
-        });
-    }
-
-    /**
-     * Tests that TaskManager.getCompletedTasks includes completed tasks
-     */
-    @Test
-    public void testGetCompletedIncludes(){
-        Task t1 = new Task("task", 5);
-
-        taskManager.addTask(t1);
-        t1.setCompleted(true);
-        taskSorter.getCompletedTasks(tasks -> {
-            assertTrue("TaskManager Get Completed tasks missed a completed task.", tasks.contains(t1));
-        });
-    }
-
-    /**
-     * Tests that TaskManager.getCompletedTasks excludes incompleted tasks
-     */
-    @Test
-    public void testGetCompletedExcludes(){
-        Task t2 = new Task("task2", 5, 1, System.currentTimeMillis());
-        taskManager.addTask(t2);
-        taskSorter.getCompletedTasks(tasks -> {
-            assertFalse("TaskManager Get Completed tasks didn't included an incomplete task.", tasks.contains(t2));
-        });
-    }
 
     /**
      * Tests that insertion id checking is functional
@@ -157,15 +71,6 @@ public class TaskManagerTest {
         );
     }
 
-//    @Test
-//    public void testDueTimeValidation() {
-//        Task testData = new Task("name", 1, System.currentTimeMillis(), 100);
-//        assertThrows(
-//                "Task Manager properly validate the due time of a task!",
-//                    ObjectFormatException.class,
-//                () -> taskManager.addTask(testData)
-//        );
-//    }
 
     /**
      * Tests that insertion completion checking is functional
