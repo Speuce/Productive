@@ -87,9 +87,7 @@ public class DashboardFragment extends Fragment {
 
         Button createButton = root.findViewById(R.id.newTaskButton);
         createButton.setOnClickListener(v -> {
-            new TaskPopup(getContext(), null, (task) ->{
-              taskManager.addTask(task);
-            }).open(v);
+            new TaskPopup(getContext(), null, taskManager::addTask).open(v);
         });
 
     }
