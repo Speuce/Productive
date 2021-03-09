@@ -37,6 +37,14 @@ public class PersistentTaskSorter implements ITaskSorter {
     }
 
     @Override
+    public void getTasksByDueDate(Consumer<List<Task>> outputparam) {
+        data.task().getAllTasks(false, ret ->{
+            ret.sort((a, b) -> a.getDueDate().compareTo(b.getDueDate()));
+            outputparam.accept(ret);
+        });
+    }
+
+    @Override
     public void getTasksOnDate(LocalDate d, Consumer<List<Task>> outputparam) {
         data.task().getAllTasks(false, ret ->{
             outputparam.accept(ret.stream().filter(

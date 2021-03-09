@@ -26,7 +26,7 @@ public interface ITaskSorter {
     /**
      * @return a list of the  user's incomplete tasks, with the closest-due first.
      */
-    void getTaskByDueDate(Consumer<List<Task>> outputparam);
+    void getTasksByDueDate(Consumer<List<Task>> outputparam);
 
     /**
      * Get all tasks with a due date on the specific given day
