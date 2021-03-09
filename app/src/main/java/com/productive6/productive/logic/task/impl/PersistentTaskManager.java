@@ -40,10 +40,7 @@ public class PersistentTaskManager implements ITaskManager{
     private void validateTask(Task t){
         if(t.getPriority() < 0){
             throw new ObjectFormatException("A priority of < 0 is not supported!");
-        }else {}
-//            if(t.getDueTime() != 0  && t.getDueTime() < System.currentTimeMillis()){
-//            throw new ObjectFormatException("A task cannot have a due time before now");
-//        }
+        }
     }
 
     /**
