@@ -139,18 +139,32 @@ public class RewardManager implements IRewardManager, ProductiveListener{
      * @param event
      */
     @ProductiveEventHandler
-    public void taskCompleted(TaskCompleteEvent event){
+    public void taskCompletedEventHandler(TaskCompleteEvent event){
+        taskCompleted(event);
+    }
+
+    /**
+    * Helper method for taskCompletedEventHandler
+     */
+    protected void taskCompleted(TaskCompleteEvent event){
         updateRewards(event.getTask());
     }
 
     /**
      * After the user is updated this object is notified
-     * @param e: the event that has this method handles
+     * @param event: the event that has this method handles
      * dispatches event to show that title has been initialized
      */
     @ProductiveEventHandler
-    public void initializeValues(UserLoadedEvent e){
-        person = e.getUser();
+    public void initializeValuesEventHandler(UserLoadedEvent event){
+        initializeValues(event);
+    }
+
+    /**
+     * Helper method for initializeValuesEventHandler
+     */
+    protected void initializeValues(UserLoadedEvent event){
+        person = event.getUser();
         EventDispatch.dispatchEvent(new UserTitleInitialized());
     }
 
