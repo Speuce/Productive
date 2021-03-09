@@ -57,6 +57,14 @@ public class Task implements Comparable<Task>{
     @ColumnInfo(name = "difficulty")
     private int difficulty;
 
+    /**
+     * Default Constructor
+     */
+    @Ignore
+    public Task() {
+        this.priority = 1;
+        this.difficulty = 1;
+    }
 
     /**
      * Constructor for a new task.
