@@ -7,6 +7,7 @@ import com.productive6.productive.persistence.datamanage.IDataManager;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -48,7 +49,7 @@ public class PersistentTaskSorter implements ITaskSorter {
     public void getTasksOnDate(LocalDate d, Consumer<List<Task>> outputparam) {
         data.task().getAllTasks(false, ret ->{
             outputparam.accept(ret.stream().filter(
-                    task ->task.getDueDate().equals(d)
+                    task ->task.getDueDate() != null && task.getDueDate().equals(d)
             ).collect(Collectors.toList()));
         });
     }
