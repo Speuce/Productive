@@ -111,9 +111,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
                 }
             });
 
+            //show edit popup window by clicking 'edit'
             editTask.setOnClickListener(this::editPopupWindow);
         }
 
+        /**
+         * Initializes the 'edit task' popup window.
+         * code from: https://stackoverflow.com/questions/5944987/how-to-create-a-popup-window-popupwindow-in-android
+         *
+         */
         protected void initPopupWindow(){
 
             // inflate the layout of the popup window
@@ -136,32 +142,43 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
             });
         }
 
+        /**
+         * Open popup window of "edit task"
+         * @param view View of edit popup window
+         */
         public void editPopupWindow(View view) {
             task = tasks.get(getAdapterPosition());
             popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+            dimBehind(popupWindow);
+
+            //Display info of selected task on popup window
             initDatePicker();
             initPriority();
             initDifficulty();
-            dimBehind(popupWindow);
+
             EditText name = popupView.findViewById(R.id.taskNameForm);
             name.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
 
+            //Submit button to update info
             Button submit = popupView.findViewById(R.id.submit);
             submit.setOnClickListener(v -> {
-                
-                SwitchCompat hasDeadline = popupView.findViewById(R.id.switchDeadline);
+                //update task name
+                task.setTaskName(name.getText().toString());
 
+                //update priority choice
                 RadioGroup radioGroup = popupView.findViewById(R.id.priorityGroup);
                 RadioButton radioButton = radioGroup.findViewById(radioGroup.getCheckedRadioButtonId());
                 int priority = radioGroup.indexOfChild(radioButton);
+                task.setPriority(priority+1);
 
+                //update difficulty choice
                 RadioGroup radioDiffGroup = popupView.findViewById(R.id.difficultyGroup);
                 RadioButton radioDiffButton = radioDiffGroup.findViewById(radioDiffGroup.getCheckedRadioButtonId());
                 int difficulty = radioDiffGroup.indexOfChild(radioDiffButton);
-
                 task.setDifficulty(difficulty+1);
-                task.setPriority(priority+1);
-                task.setTaskName(name.getText().toString());
+
+                //update due date choice
+                SwitchCompat hasDeadline = popupView.findViewById(R.id.switchDeadline);
                 if (hasDeadline.isChecked()) {
                     task.setDueDate(calendar.getTime());
                 } else {
@@ -195,9 +212,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
             Button dateButton = popupView.findViewById(R.id.datePickerButton);
             SwitchCompat hasDeadline = popupView.findViewById(R.id.switchDeadline);
             EditText name = popupView.findViewById(R.id.taskNameForm);
-
             calendar = Calendar.getInstance();
 
+            //Display info of the task to popup window
             name.setText(taskName.getText());
             if (taskDueDate.getText() == "") {
                 hasDeadline.setChecked(false);
@@ -246,7 +263,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         }
 
         /**
-         * Initializes the priority default choice
+         * Get priority of task
          */
         private void initPriority() {
             RadioGroup radioGroup = popupView.findViewById(R.id.priorityGroup);
@@ -256,7 +273,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         }
 
         /**
-         * Initializes the difficulty default choice
+         * Get difficulty of task
          */
         private void initDifficulty() {
             RadioGroup radioGroup = popupView.findViewById(R.id.difficultyGroup);

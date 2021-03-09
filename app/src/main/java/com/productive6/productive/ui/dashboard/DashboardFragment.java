@@ -150,18 +150,19 @@ public class DashboardFragment extends Fragment {
             //On pressing the 'submit' button on the 'add task' popup, create new task object and submit it to the database.
             Button submitButton = popupView.findViewById(R.id.submit);
             submitButton.setOnClickListener(view->{
-                EditText name = popupView.findViewById(R.id.taskNameForm);
-
-                SwitchCompat hasDeadline = popupView.findViewById(R.id.switchDeadline);
-
+                //get priority choice
                 RadioGroup radioGroup = popupView.findViewById(R.id.priorityGroup);
                 RadioButton radioButton = radioGroup.findViewById(radioGroup.getCheckedRadioButtonId());
                 int priority = radioGroup.indexOfChild(radioButton);
 
+                //get difficulty choice
                 RadioGroup radioDiffGroup = popupView.findViewById(R.id.difficultyGroup);
                 RadioButton radioDiffButton = radioDiffGroup.findViewById(radioDiffGroup.getCheckedRadioButtonId());
                 int difficulty = radioDiffGroup.indexOfChild(radioDiffButton);
 
+                EditText name = popupView.findViewById(R.id.taskNameForm);
+                SwitchCompat hasDeadline = popupView.findViewById(R.id.switchDeadline);
+                //add task
                 if (hasDeadline.isChecked()) {
                     taskManager.addTask(new Task(name.getText().toString(),priority+1,difficulty+1,0, calendar.getTime(),false));
                 } else {
