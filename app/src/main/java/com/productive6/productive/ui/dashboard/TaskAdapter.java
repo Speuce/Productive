@@ -1,16 +1,30 @@
 package com.productive6.productive.ui.dashboard;
 
+import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.InputType;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.productive6.productive.R;
@@ -22,7 +36,10 @@ import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.task.TaskCreateEvent;
 
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -50,7 +67,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
     /**
      * For formatting dates in the view
      */
-    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.CANADA);
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     /**
      * Holds the recyclerView view and it's components
@@ -63,6 +80,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         private final TextView taskDueDate;
         private final Button taskComplete;
 
+
         public ViewHolder(@NonNull View itemView){
             super(itemView);
             taskName = itemView.findViewById(R.id.taskNameTextView);
@@ -70,7 +88,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
             taskDifficulty = itemView.findViewById(R.id.taskDifficultyTextView);
             taskDueDate = itemView.findViewById(R.id.taskDueDateTextView);
             taskComplete = itemView.findViewById(R.id.taskCompleteToggleButton);
+            Button editTask = itemView.findViewById(R.id.editButton);
             id = itemView.findViewById(R.id.taskId);
+//            initPopupWindow();
 
             //listener on 'complete'
             taskComplete.setOnClickListener(v ->{
@@ -79,9 +99,16 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
                     setAnimation(itemView, getAdapterPosition());
                 }catch(ObjectFormatException e){
                     taskComplete.setTextColor(0xFF00000);
-                    taskComplete.setText("BLAHH");
+                    taskComplete.setText("There was an issue with this task..");
                 }
+            });
 
+            //show edit popup window by clicking 'edit'
+            editTask.setOnClickListener((v) -> {
+                new TaskPopup(itemView.getContext(), tasks.get(getAdapterPosition()), (task) ->{
+                    taskManager.updateTask(task);
+                    updateData();
+                }).open(v);
             });
         }
     }
@@ -121,7 +148,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         holder.taskPriority.setText(""+tasks.get(position).getPriority());
         holder.taskDifficulty.setText(""+tasks.get(position).getDifficulty());
         if (tasks.get(position).getDueDate() != null)
-            holder.taskDueDate.setText(format.format(tasks.get(position).getDueDate()));
+            holder.taskDueDate.setText(formatter.format(tasks.get(position).getDueDate()));
         else holder.taskDueDate.setText("");
     }
 

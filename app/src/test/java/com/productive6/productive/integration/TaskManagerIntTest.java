@@ -6,7 +6,9 @@ import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.exceptions.ObjectFormatException;
 import com.productive6.productive.logic.exceptions.PersistentIDAssignmentException;
 import com.productive6.productive.logic.task.ITaskManager;
+import com.productive6.productive.logic.task.ITaskSorter;
 import com.productive6.productive.logic.task.impl.PersistentTaskManager;
+import com.productive6.productive.logic.task.impl.PersistentTaskSorter;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
@@ -20,6 +22,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -39,6 +42,7 @@ public class TaskManagerIntTest {
     @Mock
     private IRunnableExecutor mRunnableExecutor = mock(IRunnableExecutor.class);
 
+    private ITaskSorter taskSorter;
     private ITaskManager taskManager;
 
     private InMemoryAndroidDataManager data;
@@ -47,6 +51,7 @@ public class TaskManagerIntTest {
     public void init(){
         data = new InMemoryAndroidDataManager(mContext,mRunnableExecutor);
         data.init();
+        taskSorter = new PersistentTaskSorter(data);
         taskManager = new PersistentTaskManager(data);
     }
 
@@ -60,7 +65,7 @@ public class TaskManagerIntTest {
 
         Task t2 = new Task("task", 6,1, System.currentTimeMillis());
         taskManager.addTask(t2);
-        taskManager.getTasksByPriority(tasks -> {
+        taskSorter.getTasksByPriority(tasks -> {
             assertEquals("Task Manager is improperly getting completed tasks by priority!",
                     tasks.iterator().next(), t2);
         });
@@ -76,7 +81,7 @@ public class TaskManagerIntTest {
         Thread.sleep(10);
         taskManager.addTask(new Task("task2", 5, 5,System.currentTimeMillis()));
         taskManager.addTask(t1);
-        taskManager.getTasksByCreation(tasks -> {
+        taskSorter.getTasksByCreation(tasks -> {
             assertEquals("Task Manager is improperly getting completed tasks by creation!",
                     tasks.iterator().next(), t1);
         });
@@ -91,7 +96,7 @@ public class TaskManagerIntTest {
 
         taskManager.addTask(t1);
         t1.setCompleted(true);
-        taskManager.getCompletedTasks(tasks -> {
+        taskSorter.getCompletedTasks(tasks -> {
             assertTrue("TaskManager Get Completed tasks missed a completed task.", tasks.contains(t1));
         });
     }
@@ -103,7 +108,7 @@ public class TaskManagerIntTest {
     public void testGetCompletedExcludes(){
         Task t2 = new Task("task2", 5, 1, System.currentTimeMillis());
         taskManager.addTask(t2);
-        taskManager.getCompletedTasks(tasks -> {
+        taskSorter.getCompletedTasks(tasks -> {
             assertFalse("TaskManager Get Completed tasks didn't included an incomplete task.", tasks.contains(t2));
         });
     }
@@ -114,7 +119,7 @@ public class TaskManagerIntTest {
      */
     @Test
     public void testIDFormatInsert() {
-        Task testData = new Task("name", 1, 1, System.currentTimeMillis(), new Date(), false);
+        Task testData = new Task("name", 1, 1, System.currentTimeMillis(), LocalDate.now(), false);
         testData.setId(1);
         assertThrows(
                 "Task Manager didn't catch an id exception on insert.",
@@ -130,7 +135,7 @@ public class TaskManagerIntTest {
      */
     @Test
     public void testIDFormatUpdate() {
-        Task testData = new Task("name", 1, 1, System.currentTimeMillis(), new Date(), false);
+        Task testData = new Task("name", 1, 1, System.currentTimeMillis(), LocalDate.now(), false);
         testData.setId(0);
         assertThrows(
                 "Task Manager didn't catch an id exception on update.",
@@ -145,7 +150,7 @@ public class TaskManagerIntTest {
      */
     @Test
     public void testCompletionChecking(){
-        Task testData = new Task("name", 1, 1, System.currentTimeMillis(), new Date(), true);
+        Task testData = new Task("name", 1, 1, System.currentTimeMillis(), LocalDate.now(), true);
         assertThrows("Task Manager missed a 'completed' flag = true",
                 ObjectFormatException.class,
                 () -> taskManager.addTask(testData));
@@ -156,7 +161,7 @@ public class TaskManagerIntTest {
      */
     @Test
     public void testPriorityChecking(){
-        Task testData = new Task("name", -1, 1, System.currentTimeMillis(), new Date(), false);
+        Task testData = new Task("name", -1, 1, System.currentTimeMillis(), LocalDate.now(), false);
         assertThrows("Task Manager missed a negative priority",
                 ObjectFormatException.class,
                 () -> taskManager.addTask(testData));
@@ -167,14 +172,14 @@ public class TaskManagerIntTest {
      */
     @Test
     public void testTimeAutofill(){
-        Task testData = new Task("name", 1, 1, 0, new Date(), false);
+        Task testData = new Task("name", 1, 1, 0, LocalDate.now(), false);
         taskManager.addTask(testData);
         assertTrue("Task Manager didn't autofill time correctly.", Math.abs(System.currentTimeMillis()-testData.getCreatedTime()) < 10000);
     }
 
     @Test
     public void testCompleteTask(){
-        Task testData = new Task("name", 1, 1, 0, new Date(), false);
+        Task testData = new Task("name", 1, 1, 0, LocalDate.now(), false);
         taskManager.addTask(testData);
 
         EventDispatch.registerListener(new ProductiveListener() {
@@ -189,7 +194,7 @@ public class TaskManagerIntTest {
     @Test
     public void testUpdateEvent(){
         AtomicBoolean success = new AtomicBoolean(false);
-        Task testData = new Task("name", 1, 1, 0, new Date(), false);
+        Task testData = new Task("name", 1, 1, 0, LocalDate.now(), false);
         taskManager.addTask(testData);
 
         EventDispatch.registerListener(new ProductiveListener() {
@@ -217,7 +222,7 @@ public class TaskManagerIntTest {
                 assertTrue("TaskManager failed to trigger a user create event when necessary.",success.get());
             }
         });
-        Task testData = new Task("name", 1, 1, 0, new Date(), false);
+        Task testData = new Task("name", 1, 1, 0, LocalDate.now(), false);
         taskManager.addTask(testData);
     }
 
