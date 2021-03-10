@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -25,11 +27,11 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class DashboardFragment extends Fragment {
+public class DashboardFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
     @Inject
     ITaskManager taskManager;
-
+    private TaskAdapter taskAdapter;
 
     /**
      * Creates parent view for the tasks
@@ -40,9 +42,10 @@ public class DashboardFragment extends Fragment {
      */
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        Spinner sort_by = (Spinner) root.findViewById(R.id.sortTasksDropdown);
 
         attachTaskView(root);
-
+        sort_by.setOnItemSelectedListener(this);
         return root;
     }
 
@@ -52,7 +55,7 @@ public class DashboardFragment extends Fragment {
      */
     private void attachTaskView(View root){
         RecyclerView taskDisplayView = root.findViewById(R.id.taskDisplayView);//Grab display
-        TaskAdapter taskAdapter = new TaskAdapter(taskManager, root);
+        taskAdapter = new TaskAdapter(taskManager, root);
         taskAdapter.setTasks(new ArrayList<>());
         taskDisplayView.setAdapter(taskAdapter);//attach display to view + tasks
 
@@ -61,6 +64,35 @@ public class DashboardFragment extends Fragment {
         EventDispatch.registerListener(taskAdapter);
         taskManager.getTasksByPriority(new TaskConsumerStartup(taskAdapter));//Logic CALL--Load Tasks
 
+    }
+
+    /**
+     * Reacts to changes made to the sort-by dropdown.
+     * Uses a switch statement to perform different actions based on what the dropdown was changed to.
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String selection = parent.getItemAtPosition(position).toString();
+        switch(selection){
+            case "Priority":
+                System.out.println("1");
+                break;
+            case "Due Date":
+                System.out.println("2");
+                break;
+            case "Created Date":
+                System.out.println("3");
+                break;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        return;//Do nothing when nothing is selected
     }
 
     /**
