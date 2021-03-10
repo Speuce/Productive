@@ -34,27 +34,36 @@ public class EventDispatch {
      * @param l the listener to register
      */
     public static void registerListener(ProductiveListener l){
-        for(Method m: l.getClass().getDeclaredMethods()){
-            if(m.isAnnotationPresent(ProductiveEventHandler.class)){
-                if(m.getParameterCount() == 1){
-                    Class<?> clazz = m.getParameterTypes()[0];
-                    if(ProductiveEvent.class.isAssignableFrom(clazz)){
-                        if(!listenerMap.containsKey(clazz)){
-                            listenerMap.put(clazz, new LinkedHashMap<>());
+        Class<?> clazz1 = l.getClass();
+        while(clazz1 != null){
+            for(Method m: clazz1.getDeclaredMethods()){
+                if(m.isAnnotationPresent(ProductiveEventHandler.class)){
+                    if(m.getParameterCount() == 1){
+                        Class<?> clazz = m.getParameterTypes()[0];
+                        if(ProductiveEvent.class.isAssignableFrom(clazz)){
+                            if(!listenerMap.containsKey(clazz)){
+                                listenerMap.put(clazz, new LinkedHashMap<>());
+                            }
+                            if(!listenerMap.get(clazz).containsKey(l)){
+                                List<Method> methodList = new LinkedList<>();
+                                listenerMap.get(clazz).put(l, methodList);
+                            }
+                            listenerMap.get(clazz).get(l).add(m);
+                        }else{
+                            throw new IllegalArgumentException("A method annotated with ProductiveEventHandler should have a parameter type that extends ProductiveEvent!");
                         }
-                        if(!listenerMap.get(clazz).containsKey(l)){
-                            List<Method> methodList = new LinkedList<>();
-                            listenerMap.get(clazz).put(l, methodList);
-                        }
-                        listenerMap.get(clazz).get(l).add(m);
                     }else{
-                        throw new IllegalArgumentException("A method annotated with ProductiveEventHandler should have a parameter type that extends ProductiveEvent!");
+                        throw new IllegalArgumentException("A method annotated with ProductiveEventHandler should have exactly 1 parameter!");
                     }
-                }else{
-                    throw new IllegalArgumentException("A method annotated with ProductiveEventHandler should have exactly 1 parameter!");
                 }
             }
+            if(clazz1.getGenericSuperclass() != Object.class){
+                clazz1 = clazz1.getSuperclass();
+            }else{
+                clazz1 = null;
+            }
         }
+
     }
 
     /**

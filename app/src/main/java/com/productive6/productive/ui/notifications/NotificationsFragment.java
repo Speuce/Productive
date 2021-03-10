@@ -1,42 +1,31 @@
 package com.productive6.productive.ui.notifications;
 
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CalendarView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.productive6.productive.R;
-import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.task.ITaskManager;
+import com.productive6.productive.logic.task.ITaskSorter;
 import com.productive6.productive.objects.Task;
-import com.productive6.productive.ui.dashboard.DashboardFragment;
 import com.productive6.productive.ui.dashboard.TaskAdapter;
 
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.SortedMap;
 import java.util.function.Consumer;
 
 import javax.inject.Inject;
@@ -54,13 +43,16 @@ public class NotificationsFragment extends Fragment {
     private CompactCalendarView calendarView;
 
     /** Variables */
-    private String dateInSDF;
+    private LocalDate dateInSDF;
     private String month;
     private List<Task> tasksByDate;
-    private SimpleDateFormat sdf;
+    private DateTimeFormatter sdf;
 
     @Inject
     ITaskManager taskManager;
+
+    @Inject
+    ITaskSorter taskSorter;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_notifications, container, false);
@@ -77,8 +69,8 @@ public class NotificationsFragment extends Fragment {
 
         /** Initialize variables */
         calendar    = (Calendar.getInstance());
-        sdf         = new SimpleDateFormat("yyyy-M-d");
-        dateInSDF   = calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-" + calendar.get(Calendar.DATE);
+        sdf         = DateTimeFormatter.ofPattern("yyyy-M-d");
+        dateInSDF   = LocalDate.now();
         month       = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
         tasksByDate = new ArrayList<>();
 
@@ -88,7 +80,7 @@ public class NotificationsFragment extends Fragment {
         userClickedDate.setText("Tasks scheduled for " + getDateWithSuffix(calendar.get(Calendar.DATE)) + " " + month);
 
         /** Initialize tasks for the RecyclerView */
-        initTaskList(dateInSDF, root, sdf);
+        initTaskList(dateInSDF, root);
 
         /** Set a listener to CompactCalendarView */
         calendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
@@ -97,8 +89,8 @@ public class NotificationsFragment extends Fragment {
             public void onDayClick(Date dateClicked) {
                 calendar.setTime(dateClicked);
                 month = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
-                dateInSDF = calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-" + calendar.get(Calendar.DATE);
-                initTaskList(dateInSDF, root, sdf); // refresh task list upon click
+                dateInSDF = dateClicked.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                initTaskList(dateInSDF, root); // refresh task list upon click
             }
 
             @Override
@@ -119,22 +111,20 @@ public class NotificationsFragment extends Fragment {
         }
     }
 
-    private void initTaskList(String selectedDate, View root, SimpleDateFormat sdf) {
+    private void initTaskList(LocalDate date, View root) {
         TaskAdapter taskAdapter = new TaskAdapter(taskManager, root);
         taskDisplayView.setAdapter(taskAdapter);
         taskDisplayView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        taskManager.getTasksByPriority(new NotificationsFragment.TaskConsumerStartup(taskAdapter, sdf, selectedDate));//Logic CALL--Load Tasks
+        taskSorter.getTasksOnDate(date, new NotificationsFragment.TaskConsumerStartup(taskAdapter, date));//Logic CALL--Load Tasks
     }
 
     /** Holds a callback for the database request made in attachTaskView */
-    public class TaskConsumerStartup implements Consumer<List<Task>> {
+    private class TaskConsumerStartup implements Consumer<List<Task>> {
         private final TaskAdapter taskAdapter;
-        private final SimpleDateFormat sdf;
-        private String selectedDate;
+        private final LocalDate selectedDate;
 
-        TaskConsumerStartup(TaskAdapter taskAdapter, SimpleDateFormat sdf, String selectedDate) {
+        TaskConsumerStartup(TaskAdapter taskAdapter, LocalDate selectedDate) {
             this.taskAdapter = taskAdapter;
-            this.sdf = sdf;
             this.selectedDate = selectedDate;
         }
 
@@ -145,10 +135,13 @@ public class NotificationsFragment extends Fragment {
             tasksByDate.clear();
 
             for (Task task : tasks) {
-                dateInSDF = sdf.format(task.getDueDate());
-                if (dateInSDF.equals(selectedDate)) {
-                    tasksByDate.add(task);
+                if (task.getDueDate() != null) {
+                    dateInSDF = task.getDueDate();
+                    if (dateInSDF.equals(selectedDate)) {
+                        tasksByDate.add(task);
+                    }
                 }
+                else tasksByDate.add(task);
             }
 
             taskAdapter.setTasks(tasksByDate);

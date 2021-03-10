@@ -1,25 +1,45 @@
 package com.productive6.productive.ui.dashboard;
 
+import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.productive6.productive.R;
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.task.ITaskManager;
+import com.productive6.productive.logic.task.ITaskSorter;
 import com.productive6.productive.objects.Task;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.function.Consumer;
 
 import javax.inject.Inject;
@@ -31,6 +51,8 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
 
     @Inject
     ITaskManager taskManager;
+    @Inject
+    ITaskSorter taskSorter;
     private TaskAdapter taskAdapter;
 
     /**
@@ -53,7 +75,7 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
      * Attaches task data, view, and display. Allowing for dynamically rendered tasks in the task display.
      * @param root
      */
-    private void attachTaskView(View root){
+    private void attachTaskView(View root) {
         RecyclerView taskDisplayView = root.findViewById(R.id.taskDisplayView);//Grab display
         taskAdapter = new TaskAdapter(taskManager, root);
         taskAdapter.setTasks(new ArrayList<>());
@@ -62,8 +84,12 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
         taskDisplayView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false));//Describe how the data should be laid out
 
         EventDispatch.registerListener(taskAdapter);
-        taskManager.getTasksByPriority(new TaskConsumerStartup(taskAdapter));//Logic CALL--Load Tasks
 
+        taskSorter.getTasksByPriority((taskAdapter::setTasks));//logic call:: get tasks, provide it to task adapter
+        Button createButton = root.findViewById(R.id.newTaskButton);
+        createButton.setOnClickListener(v -> {
+            new TaskPopup(getContext(), null, taskManager::addTask).open(v);
+        });
     }
 
     /**
@@ -109,4 +135,5 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
             //Give data to Task list and automatically re-renders the Task list view
         }
     }
+
 }

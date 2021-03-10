@@ -6,6 +6,7 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -48,7 +49,7 @@ public class Task implements Comparable<Task>{
      * When a given task is due
      */
     @ColumnInfo(name = "due_date")
-    private Date dueDate;
+    private LocalDate dueDate;
 
     /**
      * When a given task is due
@@ -56,6 +57,14 @@ public class Task implements Comparable<Task>{
     @ColumnInfo(name = "difficulty")
     private int difficulty;
 
+    /**
+     * Default Constructor
+     */
+    @Ignore
+    public Task() {
+        this.priority = 1;
+        this.difficulty = 1;
+    }
 
     /**
      * Constructor for a new task.
@@ -66,7 +75,7 @@ public class Task implements Comparable<Task>{
      * @param completed A flag to mark whether or not this task
      *                  has been completed.
      */
-    public Task(String taskName, int priority, int difficulty, long createdTime, Date dueDate, boolean completed) {
+    public Task(String taskName, int priority, int difficulty, long createdTime, LocalDate dueDate, boolean completed) {
         this.taskName = taskName;
         this.priority = priority;
         this.createdTime = createdTime;
@@ -168,11 +177,11 @@ public class Task implements Comparable<Task>{
         this.createdTime = createdTime;
     }
 
-    public Date getDueDate() { return dueDate; }
+    public LocalDate getDueDate() { return dueDate; }
 
     public int getDifficulty() { return difficulty; }
 
-    public void setDueDate(Date dueDate) { this.dueDate = dueDate; }
+    public void setDueDate(LocalDate dueDate) { this.dueDate = dueDate; }
 
     public void setDifficulty(int difficulty) { this.difficulty = difficulty; }
 
