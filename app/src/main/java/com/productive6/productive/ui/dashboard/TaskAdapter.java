@@ -65,7 +65,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
-            taskName = itemView.findViewById(R.id.taskNameTextView);
+            taskName = itemView.findViewById(R.id.stat_name);
             taskPriority = itemView.findViewById(R.id.taskPriorityTextView);
             taskDifficulty = itemView.findViewById(R.id.taskDifficultyTextView);
             taskDueDate = itemView.findViewById(R.id.taskDueDateTextView);

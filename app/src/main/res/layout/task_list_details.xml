@@ -10,7 +10,7 @@
 
 
     <TextView
-        android:id="@+id/taskNameTextView"
+        android:id="@+id/stat_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -24,7 +24,7 @@
         android:id="@+id/taskPriorityTextView"
         android:layout_width="wrap_content"
         android:layout_height="29dp"
-        android:layout_below="@+id/taskNameTextView"
+        android:layout_below="@+id/stat_name"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="12dp"
@@ -39,7 +39,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="35dp"
         android:layout_marginTop="9dp"
-        android:layout_toEndOf="@+id/taskNameTextView"
+        android:layout_toEndOf="@+id/stat_name"
         android:background="#FFFFFF"
         android:text="Difficulty" />
 
@@ -52,7 +52,7 @@
         android:layout_marginStart="34dp"
         android:layout_marginTop="55dp"
         android:layout_marginBottom="0dp"
-        android:layout_toEndOf="@+id/taskNameTextView"
+        android:layout_toEndOf="@+id/stat_name"
         android:backgroundTint="#E6E6E6"
         android:text="Due Date" />
 
