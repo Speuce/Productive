@@ -21,6 +21,6 @@ import org.junit.runners.Suite;
  * Runs all associated unit tests in this project.
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({TaskManagerTest.class, TitleManagerTest.class, EventDispatchTest.class, UserManagerTest.class, RewardManagerTest.class, UserManagerIntTest.class, TaskManagerIntTest.class, RewardManagerIntTest.class, TitleManagerIntTest.class})
+@Suite.SuiteClasses({TaskManagerTest.class, TitleManagerTest.class, EventDispatchTest.class, UserManagerTest.class, RewardManagerTest.class, UserManagerIntTest.class, TaskManagerIntTest.class, RewardManagerIntTest.class, TitleManagerIntTest.class, TaskSorterTest.class})
 public class TestAll {
 }
