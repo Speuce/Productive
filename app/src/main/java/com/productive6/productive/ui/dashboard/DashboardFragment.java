@@ -105,13 +105,13 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
         String selection = parent.getItemAtPosition(position).toString();
         switch(selection){
             case "Priority":
-                System.out.println("1");
+                taskSorter.getTasksByPriority(new TaskConsumerStartup(taskAdapter));
                 break;
             case "Due Date":
-                System.out.println("2");
+                taskSorter.getTasksByDueDate(new TaskConsumerStartup(taskAdapter));
                 break;
             case "Created Date":
-                System.out.println("3");
+                taskSorter.getTasksByCreation(new TaskConsumerStartup(taskAdapter));
                 break;
         }
     }
