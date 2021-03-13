@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -123,7 +124,7 @@ public class TaskSorterIntTest {
         Task t1 = new Task("task", 5);
 
         data.task().insertTask(t1, () ->{});
-        t1.setCompleted(true);
+        t1.setCompleted(LocalDateTime.now());
         taskSorter.getCompletedTasks(tasks -> {
             assertTrue("TaskManager Get Completed tasks missed a completed task.", tasks.contains(t1));
         });

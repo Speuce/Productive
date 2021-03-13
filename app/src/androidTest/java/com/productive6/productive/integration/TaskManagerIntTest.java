@@ -17,9 +17,11 @@ import com.productive6.productive.objects.events.task.TaskUpdateEvent;
 import com.productive6.productive.persistence.datamanage.dummy.DummyDataManager;
 import com.productive6.productive.persistence.datamanage.impl.InMemoryAndroidDataManager;
 import com.productive6.productive.persistence.executor.IRunnableExecutor;
+import com.productive6.productive.persistence.executor.impl.TestExecutor;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 
 import java.time.LocalDate;
@@ -28,9 +30,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.mockito.ArgumentMatchers.*;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Tests logic-layer task manager verification and computation
@@ -38,84 +42,26 @@ import static org.mockito.Mockito.mock;
 public class TaskManagerIntTest {
 
     @Mock
-    private Context mContext = mock(Context.class);
+    private final Context mContext = mock(Context.class);
     @Mock
-    private IRunnableExecutor mRunnableExecutor = mock(IRunnableExecutor.class);
+    private final IRunnableExecutor mRunnableExecutor = new TestExecutor();
 
-    private ITaskSorter taskSorter;
     private ITaskManager taskManager;
 
-    private InMemoryAndroidDataManager data;
+    //for accessing tasks in the one task date test
+    private ITaskSorter taskSorter;
 
     @Before
     public void init(){
-        data = new InMemoryAndroidDataManager(mContext,mRunnableExecutor);
+        InMemoryAndroidDataManager data = new InMemoryAndroidDataManager(mContext, mRunnableExecutor);
         data.init();
-        taskSorter = new PersistentTaskSorter(data);
         taskManager = new PersistentTaskManager(data);
-    }
-
-
-    /**
-     * Tests that sorting tasks by priority functions as expected (higher priority first)
-     */
-    @Test
-    public void testGetByPriority(){
-        taskManager.addTask(new Task("task", 5, 1, System.currentTimeMillis()));
-
-        Task t2 = new Task("task", 6,1, System.currentTimeMillis());
-        taskManager.addTask(t2);
-        taskSorter.getTasksByPriority(tasks -> {
-            assertEquals("Task Manager is improperly getting completed tasks by priority!",
-                    tasks.iterator().next(), t2);
-        });
-    }
-
-    /**
-     * Tests that sorting tasks by completion functions as expected (higher priority first)
-     */
-    @Test
-    public void testGetByCreation() throws InterruptedException {
-        Task t1 = new Task("task", 5, 5, System.currentTimeMillis());
-        //make t1 created 10ms before the second task.
-        Thread.sleep(10);
-        taskManager.addTask(new Task("task2", 5, 5,System.currentTimeMillis()));
-        taskManager.addTask(t1);
-        taskSorter.getTasksByCreation(tasks -> {
-            assertEquals("Task Manager is improperly getting completed tasks by creation!",
-                    tasks.iterator().next(), t1);
-        });
-    }
-
-    /**
-     * Tests that TaskManager.getCompletedTasks includes completed tasks
-     */
-    @Test
-    public void testGetCompletedIncludes(){
-        Task t1 = new Task("task", 5);
-
-        taskManager.addTask(t1);
-        t1.setCompleted(true);
-        taskSorter.getCompletedTasks(tasks -> {
-            assertTrue("TaskManager Get Completed tasks missed a completed task.", tasks.contains(t1));
-        });
-    }
-
-    /**
-     * Tests that TaskManager.getCompletedTasks excludes incompleted tasks
-     */
-    @Test
-    public void testGetCompletedExcludes(){
-        Task t2 = new Task("task2", 5, 1, System.currentTimeMillis());
-        taskManager.addTask(t2);
-        taskSorter.getCompletedTasks(tasks -> {
-            assertFalse("TaskManager Get Completed tasks didn't included an incomplete task.", tasks.contains(t2));
-        });
+        taskSorter = new PersistentTaskSorter(data);
     }
 
     /**
      * Tests that insertion id checking is functional
-     * when it needs tobe
+     * when it needs to be
      */
     @Test
     public void testIDFormatInsert() {
@@ -127,6 +73,21 @@ public class TaskManagerIntTest {
                 () -> taskManager.addTask(testData)
 
         );
+    }
+
+    /**
+     * Tests that insertion/retrieval of dates within tasks works as expected.
+     * (White box test)
+     */
+    @Test
+    public void testDateConversion() {
+        LocalDate day = LocalDate.now().minusDays(25);
+        Task testData = new Task("name", 1, 1, System.currentTimeMillis(), day, false);
+        taskManager.addTask(testData);
+
+        taskSorter.getTasksByPriority(tasks -> {
+            assertEquals(tasks.get(0).getDueDate(), LocalDate.now());
+        });
     }
 
     /**
