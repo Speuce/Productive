@@ -39,7 +39,7 @@ public interface TaskDao extends ITaskAccess {
      * @param complete indicates whether to look for in/complete tasks.
      * @return the list of tasks.
      */
-    @Query("SELECT * FROM tasks WHERE (:complete = 1 AND completedDay is not null) OR (:complete = 0 AND completedDay is null) ORDER BY priority, created;")
+    @Query("SELECT * FROM tasks WHERE (:complete = 1 AND completedDay is not null) OR (:complete = 0 AND completedDay is null) ORDER BY priority DESC, created;")
     List<Task> getAllTasks(boolean complete);
 
     /**

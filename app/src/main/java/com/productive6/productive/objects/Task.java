@@ -207,4 +207,28 @@ public class Task implements Comparable<Task>{
         }
         return prioritydiff;
     }
+
+    @Override
+    public boolean equals(Object other){
+        if(other instanceof Task){
+            Task t2 = (Task) other;
+            boolean result = t2.getId() == this.getId() &&
+                    t2.getPriority() == this.getPriority() &&
+                    t2.getCreatedTime() == this.getCreatedTime() &&
+                    t2.getTaskName().equals(this.getTaskName()) &&
+                    t2.getDifficulty() == this.getDifficulty();
+            if(t2.getDueDate() != null){
+                result = result && t2.getDueDate().equals(this.getDueDate());
+            }else{
+                result = result && this.getDueDate()==null;
+            }
+            if(t2.getCompleted() != null){
+                result = result && t2.getCompleted().equals(this.getCompleted());
+            }else{
+                result = result && this.getCompleted()==null;
+            }
+            return result;
+        }
+        return false;
+    }
 }

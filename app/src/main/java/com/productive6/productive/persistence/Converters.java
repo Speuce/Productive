@@ -15,12 +15,12 @@ public class Converters {
 
     @TypeConverter
     public static LocalDate fromTimestamp(Long value) {
-        return value == null ? null : Instant.ofEpochMilli(value).atZone(ZoneId.systemDefault()).toLocalDate();
+        return value == null ? null : Instant.ofEpochSecond(value).atZone(ZoneId.systemDefault()).toLocalDate();
     }
 
     @TypeConverter
     public static Long dateToTimestamp(LocalDate date) {
-        return date == null ? null : date.atStartOfDay(ZoneId.systemDefault()).toEpochSecond()*1000;
+        return date == null ? null : date.atStartOfDay(ZoneId.systemDefault()).toEpochSecond();
     }
 
     @TypeConverter
@@ -30,6 +30,6 @@ public class Converters {
 
     @TypeConverter
     public static Long dateTimeToTimestamp(LocalDateTime date) {
-        return date == null ? null : date.atZone(ZoneId.systemDefault()).toEpochSecond();
+        return date == null ? null : date.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
     }
 }
