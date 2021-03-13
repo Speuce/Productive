@@ -58,7 +58,7 @@ public class UserManagerIntTest {
     /**
      * Check if User Manager failed to catch an update with a un-indentified user
      */
-    @Test
+    @Test(expected = ObjectFormatException.class)
     public void testInvalidUpdate(){
         userManager.updateUser(new User());
     }

@@ -127,9 +127,10 @@ public class TaskSorterIntTest {
     @Test
     public void testGetCompletedIncludes(){
         Task t1 = new Task("task", 5);
-
-        data.task().insertTask(t1, () ->{});
         t1.setCompleted(LocalDateTime.now());
+        data.task().insertTask(t1, () ->{});
+
+
         taskSorter.getCompletedTasks(tasks -> {
             assertTrue("TaskManager Get Completed tasks missed a completed task.", tasks.contains(t1));
         });

@@ -26,6 +26,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.junit.Assert.assertEquals;
@@ -73,12 +74,12 @@ public class TaskManagerIntTest {
      */
     @Test
     public void testDateConversion() {
-        LocalDate day = LocalDate.now().minusDays(25);
+        LocalDate day = LocalDate.now();
         Task testData = new Task("name", 1, 1, System.currentTimeMillis(), day, null);
         taskManager.addTask(testData);
 
         taskSorter.getTasksByPriority(tasks -> {
-            assertEquals(tasks.get(0).getDueDate(), LocalDate.now());
+            assertEquals(tasks.get(0).getDueDate(), day);
         });
     }
 
@@ -98,7 +99,7 @@ public class TaskManagerIntTest {
      */
     @Test(expected = ObjectFormatException.class)
     public void testCompletionChecking(){
-        Task testData = new Task("name", 1, 1, System.currentTimeMillis(), LocalDate.now(), null);
+        Task testData = new Task("name", 1, 1, System.currentTimeMillis(), LocalDate.now(), LocalDateTime.now());
         taskManager.addTask(testData);
     }
 
