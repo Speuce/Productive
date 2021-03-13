@@ -3,6 +3,9 @@ package com.productive6.productive.integration;
 
 import android.content.Context;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
+
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.rewards.IRewardManager;
 import com.productive6.productive.logic.rewards.impl.RewardManager;
@@ -18,30 +21,25 @@ import com.productive6.productive.objects.events.user.UserLoadedEvent;
 import com.productive6.productive.objects.events.user.UserUpdateEvent;
 import com.productive6.productive.persistence.datamanage.impl.InMemoryAndroidDataManager;
 import com.productive6.productive.persistence.executor.IRunnableExecutor;
+import com.productive6.productive.persistence.executor.impl.TestExecutor;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.junit.runner.RunWith;
+
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
 
-
+@RunWith(AndroidJUnit4.class)
 public class RewardManagerIntTest {
 
      IRewardManager rewardManager;
 
-    @Rule public MockitoRule rule = MockitoJUnit.rule();
+     Context mContext;
 
-    @Mock
-     Context mContext = mock(Context.class);
-    @Mock
-     IRunnableExecutor mRunnableExecutor = mock(IRunnableExecutor.class);
+     IRunnableExecutor mRunnableExecutor;
 
      IUserManager userManager;
 
@@ -50,6 +48,9 @@ public class RewardManagerIntTest {
 
     @Before
     public void init(){ //refresh the data between each test
+        EventDispatch.clear();
+        mContext = InstrumentationRegistry.getInstrumentation().getContext();
+        mRunnableExecutor = new TestExecutor();
         data = new InMemoryAndroidDataManager(mContext,mRunnableExecutor);
         data.init();
         userManager = new PersistentSingleUserManager(data);

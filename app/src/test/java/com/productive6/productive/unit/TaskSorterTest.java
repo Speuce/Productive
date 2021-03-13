@@ -66,10 +66,10 @@ public class TaskSorterTest {
      */
     @Test
     public void testGetByDueDate() throws InterruptedException {
-        Task t1 = new Task("task", 5, 5, System.currentTimeMillis(), LocalDate.now(), false);
-        data.task().insertTask(new Task("task2", 5, 5,System.currentTimeMillis(), LocalDate.now().plusDays(1), false), () -> {});
+        Task t1 = new Task("task", 5, 5, System.currentTimeMillis(), LocalDate.now(), null);
+        data.task().insertTask(new Task("task2", 5, 5,System.currentTimeMillis(), LocalDate.now().plusDays(1), null), () -> {});
         data.task().insertTask(t1, () -> {});
-        data.task().insertTask(new Task("task3", 5, 5,System.currentTimeMillis(), LocalDate.now().plusDays(2), false), () -> {});
+        data.task().insertTask(new Task("task3", 5, 5,System.currentTimeMillis(), LocalDate.now().plusDays(2), null), () -> {});
         taskSorter.getTasksByDueDate(tasks -> {
             assertEquals("Task sorter is improperly getting completed tasks by due date!",
                     tasks.iterator().next(), t1);
@@ -81,7 +81,7 @@ public class TaskSorterTest {
      */
     @Test
     public void testDateFilterPositive(){
-        Task t1 = new Task("task", 5, 5, System.currentTimeMillis(), LocalDate.now(), false);
+        Task t1 = new Task("task", 5, 5, System.currentTimeMillis(), LocalDate.now(), null);
         //make t1 created 10ms before the second task.
         data.task().insertTask(t1, () ->{});
         taskSorter.getTasksOnDate(LocalDate.now(),tasks -> {
@@ -94,7 +94,7 @@ public class TaskSorterTest {
      */
     @Test
     public void testDateFilterNegative(){
-        Task t1 = new Task("task", 5, 5, System.currentTimeMillis(), LocalDate.now().plusDays(1), false);
+        Task t1 = new Task("task", 5, 5, System.currentTimeMillis(), LocalDate.now().plusDays(1), null);
         //make t1 created 10ms before the second task.
         data.task().insertTask(t1, () ->{});
         taskSorter.getTasksOnDate(LocalDate.now(),tasks -> {

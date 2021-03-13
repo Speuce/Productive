@@ -40,10 +40,10 @@ public class Task implements Comparable<Task>{
     private long createdTime;
 
     /**
-     * A flag to mark whether or not this task
-     * has been completed.
+     * The day/time that this task was completed.
+     * Null if not completed.
      */
-    @ColumnInfo(name = "completed")
+    @ColumnInfo(name = "completedDay")
     private LocalDateTime completed;
 
     /**
@@ -186,6 +186,14 @@ public class Task implements Comparable<Task>{
     public void setDueDate(LocalDate dueDate) { this.dueDate = dueDate; }
 
     public void setDifficulty(int difficulty) { this.difficulty = difficulty; }
+
+    /**
+     * @return The day/time that this task was completed.
+     *         Null if not completed.
+     */
+    public LocalDateTime getCompleted() {
+        return completed;
+    }
 
     /**
      * Compares this object with another task,

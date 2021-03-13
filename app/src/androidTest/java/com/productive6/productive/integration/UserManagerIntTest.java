@@ -2,6 +2,9 @@ package com.productive6.productive.integration;
 
 import android.content.Context;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
+
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.exceptions.AccessBeforeLoadedException;
 import com.productive6.productive.logic.exceptions.ObjectFormatException;
@@ -12,52 +15,52 @@ import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.user.UserLoadedEvent;
 import com.productive6.productive.objects.events.user.UserUpdateEvent;
-import com.productive6.productive.persistence.datamanage.dummy.DummyDataManager;
 import com.productive6.productive.persistence.datamanage.impl.InMemoryAndroidDataManager;
 import com.productive6.productive.persistence.executor.IRunnableExecutor;
+import com.productive6.productive.persistence.executor.impl.TestExecutor;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
+import org.junit.runner.RunWith;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
 
 /**
  * Tests the logic-layer user manager with dummy database implementations.
  */
+
+@RunWith(AndroidJUnit4.class)
 public class UserManagerIntTest {
 
-    @Mock
-    private Context mContext = mock(Context.class);
-    @Mock
-    private IRunnableExecutor mRunnableExecutor = mock(IRunnableExecutor.class);
 
     private IUserManager userManager;
 
-    private InMemoryAndroidDataManager data;
-
     @Before
     public void init(){
-        data = new InMemoryAndroidDataManager(mContext,mRunnableExecutor);
+        Context mContext = InstrumentationRegistry.getInstrumentation().getContext();
+        IRunnableExecutor mRunnableExecutor = new TestExecutor();
+        InMemoryAndroidDataManager data = new InMemoryAndroidDataManager(mContext, mRunnableExecutor);
         data.init();
         userManager = new PersistentSingleUserManager(data);
     }
 
-    @Test
+    /**
+     * Check if User Manager failed to throw an access before loaded on getting current user before load is called
+     */
+    @Test(expected = AccessBeforeLoadedException.class)
     public void testAccessBeforeLoaded(){
-        assertThrows("User Manager failed to throw an access before loaded on getting current user before load is called!",
-                AccessBeforeLoadedException.class, () -> userManager.getCurrentUser());
+        userManager.getCurrentUser();
     }
 
+    /**
+     * Check if User Manager failed to catch an update with a un-indentified user
+     */
     @Test
     public void testInvalidUpdate(){
-        assertThrows("User Manager failed to catch an update with a un-indentified user!",
-                ObjectFormatException.class, ()-> userManager.updateUser(new User()));
+        userManager.updateUser(new User());
     }
 
     @Test

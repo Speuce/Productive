@@ -2,17 +2,19 @@ package com.productive6.productive.integration;
 
 import android.content.Context;
 
-import com.productive6.productive.logic.task.ITaskManager;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
+
 import com.productive6.productive.logic.task.ITaskSorter;
 import com.productive6.productive.logic.task.impl.PersistentTaskSorter;
 import com.productive6.productive.objects.Task;
-import com.productive6.productive.persistence.datamanage.dummy.DummyDataManager;
 import com.productive6.productive.persistence.datamanage.impl.InMemoryAndroidDataManager;
 import com.productive6.productive.persistence.executor.IRunnableExecutor;
+import com.productive6.productive.persistence.executor.impl.TestExecutor;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
+import org.junit.runner.RunWith;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -20,23 +22,24 @@ import java.time.LocalDateTime;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
 
 /**
  * Tests logic-layer task sorting by the task Manager
  */
+@RunWith(AndroidJUnit4.class)
 public class TaskSorterIntTest {
 
-    @Mock
-    Context mContext = mock(Context.class);
-    @Mock
-    IRunnableExecutor mRunnableExecutor = mock(IRunnableExecutor.class);
+    Context mContext;
+
+    IRunnableExecutor mRunnableExecutor;
     private ITaskSorter taskSorter;
 
     private InMemoryAndroidDataManager data;
 
     @Before
     public void init(){
+        mContext = InstrumentationRegistry.getInstrumentation().getContext();
+        mRunnableExecutor = new TestExecutor();
         data = new InMemoryAndroidDataManager(mContext, mRunnableExecutor);
         data.init();
         taskSorter = new PersistentTaskSorter(data);
@@ -80,10 +83,12 @@ public class TaskSorterIntTest {
      */
     @Test
     public void testGetByDueDate() throws InterruptedException {
-        Task t1 = new Task("task", 5, 5, System.currentTimeMillis(), LocalDate.now(), false);
-        data.task().insertTask(new Task("task2", 5, 5,System.currentTimeMillis(), LocalDate.now().plusDays(1), false), () -> {});
+        Task t1 = new Task("task", 5, 5, System.currentTimeMillis(), LocalDate.now(), null);
+        data.task().insertTask(new Task("task2", 5, 5,System.currentTimeMillis(), LocalDate.now().plusDays(1),
+                null), () -> {});
         data.task().insertTask(t1, () -> {});
-        data.task().insertTask(new Task("task3", 5, 5,System.currentTimeMillis(), LocalDate.now().plusDays(2), false), () -> {});
+        data.task().insertTask(new Task("task3", 5, 5,System.currentTimeMillis(), LocalDate.now().plusDays(2),
+                null), () -> {});
         taskSorter.getTasksByDueDate(tasks -> {
             assertEquals("Task sorter is improperly getting completed tasks by due date!",
                     tasks.iterator().next(), t1);
@@ -95,7 +100,7 @@ public class TaskSorterIntTest {
      */
     @Test
     public void testDateFilterPositive(){
-        Task t1 = new Task("task", 5, 5, System.currentTimeMillis(), LocalDate.now(), false);
+        Task t1 = new Task("task", 5, 5, System.currentTimeMillis(), LocalDate.now(), null);
         //make t1 created 10ms before the second task.
         data.task().insertTask(t1, () ->{});
         taskSorter.getTasksOnDate(LocalDate.now(),tasks -> {
@@ -108,7 +113,7 @@ public class TaskSorterIntTest {
      */
     @Test
     public void testDateFilterNegative(){
-        Task t1 = new Task("task", 5, 5, System.currentTimeMillis(), LocalDate.now().plusDays(1), false);
+        Task t1 = new Task("task", 5, 5, System.currentTimeMillis(), LocalDate.now().plusDays(1), null);
         //make t1 created 10ms before the second task.
         data.task().insertTask(t1, () ->{});
         taskSorter.getTasksOnDate(LocalDate.now(),tasks -> {

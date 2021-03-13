@@ -2,58 +2,48 @@ package com.productive6.productive.integration;
 
 import android.content.Context;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
+
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.rewards.ITitleManager;
 import com.productive6.productive.logic.rewards.impl.DefaultTitleManager;
 import com.productive6.productive.logic.user.IUserManager;
 import com.productive6.productive.logic.user.impl.PersistentSingleUserManager;
-import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.Title;
 import com.productive6.productive.objects.User;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
-import com.productive6.productive.objects.events.task.TaskCompleteEvent;
 import com.productive6.productive.objects.events.user.UserLoadedEvent;
 import com.productive6.productive.objects.events.user.UserUpdateEvent;
 import com.productive6.productive.persistence.datamanage.impl.InMemoryAndroidDataManager;
 import com.productive6.productive.persistence.executor.IRunnableExecutor;
+import com.productive6.productive.persistence.executor.impl.TestExecutor;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
 
-
+@RunWith(AndroidJUnit4.class)
 public class TitleManagerIntTest {
 
 
-    @Rule public MockitoRule rule = MockitoJUnit.rule();
-
     ITitleManager TitleManager;
-    @Mock
-    private Context mContext = mock(Context.class);
-    @Mock
-    private IRunnableExecutor mRunnableExecutor = mock(IRunnableExecutor.class);
 
-    private IUserManager userManager;
-
-    private InMemoryAndroidDataManager data;
     @Before
     public void init(){
+        Context mContext = InstrumentationRegistry.getInstrumentation().getContext();
+        IRunnableExecutor mRunnableExecutor = new TestExecutor();
         EventDispatch.clear();
         String[] tempTitles = {"TEST1", "TEST2", "TEST3"};
         int[] tempVals = {1, 2, 3};
-        data = new InMemoryAndroidDataManager(mContext,mRunnableExecutor);
+        InMemoryAndroidDataManager data = new InMemoryAndroidDataManager(mContext, mRunnableExecutor);
         data.init();
-        userManager = new PersistentSingleUserManager(data);
+        IUserManager userManager = new PersistentSingleUserManager(data);
         TitleManager = new DefaultTitleManager(userManager,tempTitles,tempVals);
 
     }
