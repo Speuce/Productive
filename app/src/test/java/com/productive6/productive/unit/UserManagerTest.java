@@ -1,4 +1,4 @@
-package com.productive6.productive;
+package com.productive6.productive.unit;
 
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.exceptions.AccessBeforeLoadedException;

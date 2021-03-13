@@ -1,4 +1,4 @@
-package com.productive6.productive;
+package com.productive6.productive.unit;
 
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.objects.events.DummyEvent;
@@ -7,7 +7,6 @@ import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.SubDummyEvent;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.concurrent.atomic.AtomicBoolean;
