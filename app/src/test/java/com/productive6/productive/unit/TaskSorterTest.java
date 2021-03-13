@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static org.junit.Assert.*;
 
@@ -109,7 +110,7 @@ public class TaskSorterTest {
         Task t1 = new Task("task", 5);
 
         data.task().insertTask(t1, () ->{});
-        t1.setCompleted(true);
+        t1.setCompleted(LocalDateTime.now());
         taskSorter.getCompletedTasks(tasks -> {
             assertTrue("TaskManager Get Completed tasks missed a completed task.", tasks.contains(t1));
         });

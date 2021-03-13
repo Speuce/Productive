@@ -7,6 +7,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -43,13 +44,14 @@ public class Task implements Comparable<Task>{
      * has been completed.
      */
     @ColumnInfo(name = "completed")
-    private boolean completed;
+    private LocalDateTime completed;
 
     /**
      * When a given task is due
      */
     @ColumnInfo(name = "due_date")
     private LocalDate dueDate;
+
 
     /**
      * When a given task is due
@@ -75,7 +77,7 @@ public class Task implements Comparable<Task>{
      * @param completed A flag to mark whether or not this task
      *                  has been completed.
      */
-    public Task(String taskName, int priority, int difficulty, long createdTime, LocalDate dueDate, boolean completed) {
+    public Task(String taskName, int priority, int difficulty, long createdTime, LocalDate dueDate, LocalDateTime completed) {
         this.taskName = taskName;
         this.priority = priority;
         this.createdTime = createdTime;
@@ -94,7 +96,7 @@ public class Task implements Comparable<Task>{
         this.taskName = taskName;
         this.priority = priority;
         this.createdTime = 0;
-        this.completed = false;
+        this.completed = null;
     }
 
     /**
@@ -110,7 +112,7 @@ public class Task implements Comparable<Task>{
         this.priority = priority;
         this.createdTime = createdTime;
         this.difficulty = difficulty;
-        this.completed = false;
+        this.completed = null;
 //        this.dueDate = "";
     }
 
@@ -150,14 +152,14 @@ public class Task implements Comparable<Task>{
      * false otherwise.
      */
     public boolean isCompleted() {
-        return completed;
+        return completed != null;
     }
 
     /**
      * @param completed A flag to mark whether or not this task
      * has been completed.
      */
-    public void setCompleted(boolean completed) {
+    public void setCompleted(LocalDateTime completed) {
         this.completed = completed;
     }
 
