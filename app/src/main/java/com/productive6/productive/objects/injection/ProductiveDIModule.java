@@ -6,6 +6,10 @@ import com.productive6.productive.R;
 
 import com.productive6.productive.logic.rewards.IRewardManager;
 import com.productive6.productive.logic.rewards.impl.RewardManager;
+import com.productive6.productive.logic.statstics.ICoinsStatsManager;
+import com.productive6.productive.logic.statstics.ITaskStatsManager;
+import com.productive6.productive.logic.statstics.IXPStatsManager;
+import com.productive6.productive.logic.statstics.impl.StatsManager;
 import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.logic.task.ITaskSorter;
 import com.productive6.productive.logic.task.impl.PersistentTaskSorter;
@@ -91,8 +95,31 @@ public class ProductiveDIModule {
         int coinWeight = context.getResources().getInteger(R.integer.coinsweight);
         int xpWeight = context.getResources().getInteger(R.integer.experienceweight);
 
-        IRewardManager rm = new RewardManager(data,task,xpWeight,coinWeight,levelUpValue);
-        return rm;
+        return new RewardManager(data,task,xpWeight,coinWeight,levelUpValue);
+    }
+
+    @Singleton
+    @Provides
+    public StatsManager provideStatsManager(IDataManager data){
+        return new StatsManager(data);
+    }
+
+    @Singleton
+    @Provides
+    public ITaskStatsManager provideTaskStats(StatsManager stats){
+        return (ITaskStatsManager)stats;
+    }
+
+    @Singleton
+    @Provides
+    public ICoinsStatsManager provideCoinStats(StatsManager stats){
+        return (ICoinsStatsManager) stats;
+    }
+
+    @Singleton
+    @Provides
+    public IXPStatsManager provideXPStats(StatsManager stats){
+        return (IXPStatsManager) stats;
     }
 
 }
