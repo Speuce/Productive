@@ -16,46 +16,19 @@ import javax.inject.Inject;
  * A production-grade {@link IDataManager} implementation that persists data using a database
  * saved locally on the device memory. The data should not persist between re-runs of the app.
  */
-public class InMemoryAndroidDataManager implements IDataManager {
+public class InMemoryAndroidDataManager extends LiveDataManager {
 
-    /**
-     * A reference to the actual app object
-     * provided by android
-     */
-    private final Context context;
-
-    private ProductiveDB db;
-
-    private ITaskPersistenceManager taskPersistenceManager;
-
-    private IUserPersistenceManager userPersistenceManager;
-
-    private final IRunnableExecutor executor;
-
-    @Inject
     public InMemoryAndroidDataManager(Context context, IRunnableExecutor executor) {
-        this.context = context;
-        this.executor = executor;
-
+        super(context, executor);
     }
 
     @Override
     public void init() {
         db = Room.inMemoryDatabaseBuilder(context,
                 ProductiveDB.class).allowMainThreadQueries().build();
-        this.taskPersistenceManager = new TaskPersistenceManager(executor, db.getTaskDao());
-        this.userPersistenceManager = new UserPersistenceManager(executor, db.getUserDao());
+        super.init();
     }
 
-    @Override
-    public ITaskPersistenceManager task() {
-        return taskPersistenceManager;
-    }
-
-    @Override
-    public IUserPersistenceManager user() {
-        return userPersistenceManager;
-    }
 
 
 }
