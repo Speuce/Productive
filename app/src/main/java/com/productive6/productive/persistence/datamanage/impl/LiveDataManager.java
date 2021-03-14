@@ -39,7 +39,6 @@ public abstract class LiveDataManager implements IDataManager {
 
     private final IRunnableExecutor executor;
 
-    @Inject
     public LiveDataManager(Context context, IRunnableExecutor executor) {
         this.context = context;
         this.executor = executor;
