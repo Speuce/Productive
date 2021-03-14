@@ -40,6 +40,7 @@ public class UserManagerIntTest {
 
     @Before
     public void init(){
+        EventDispatch.clear();
         Context mContext = InstrumentationRegistry.getInstrumentation().getContext();
         IRunnableExecutor mRunnableExecutor = new TestExecutor();
         InMemoryAndroidDataManager data = new InMemoryAndroidDataManager(mContext, mRunnableExecutor);
