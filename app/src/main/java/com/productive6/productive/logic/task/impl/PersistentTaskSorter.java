@@ -6,6 +6,7 @@ import com.productive6.productive.objects.Task;
 import com.productive6.productive.persistence.datamanage.IDataManager;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -52,6 +53,19 @@ public class PersistentTaskSorter implements ITaskSorter {
                     task ->task.getDueDate() != null && task.getDueDate().equals(d)
             ).collect(Collectors.toList()));
         });
+    }
+
+    @Override
+    public void getDaysWithTaskInMonth(LocalDate startofMonth, Consumer<LocalDate> outputparam) {
+        YearMonth month = YearMonth.from(startofMonth);
+        for(int i = 0; i < month.lengthOfMonth(); i++){
+            LocalDate curr = startofMonth.plusDays(i);
+            getTasksOnDate(curr, list ->{
+                if(!list.isEmpty()){
+                    outputparam.accept(curr);
+                }
+            });
+        }
     }
 
     @Override
