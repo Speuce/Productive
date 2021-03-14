@@ -64,28 +64,13 @@ public class TaskSorterTest {
      * Tests that sorting tasks by due date functions as expected (closest due first)
      */
     @Test
-    public void testGetByDueDate() {
+    public void testGetByDueDate() throws InterruptedException {
         Task t1 = new Task("task", 5, 5, System.currentTimeMillis(), LocalDate.now(), false);
         data.task().insertTask(new Task("task2", 5, 5,System.currentTimeMillis(), LocalDate.now().plusDays(1), false), () -> {});
         data.task().insertTask(t1, () -> {});
         data.task().insertTask(new Task("task3", 5, 5,System.currentTimeMillis(), LocalDate.now().plusDays(2), false), () -> {});
         taskSorter.getTasksByDueDate(tasks -> {
             assertEquals("Task sorter is improperly getting completed tasks by due date!",
-                    tasks.iterator().next(), t1);
-        });
-    }
-
-    /**
-     * Tests that sorting tasks by due date puts tasks without due dates at the end
-     */
-    @Test
-    public void testGetByDueDateNulls()  {
-        Task t1 = new Task("task", 5, 5, System.currentTimeMillis(), LocalDate.now().plusDays(1), false);
-        data.task().insertTask(new Task("task2", 5, 5,System.currentTimeMillis(),null , false), () -> {});
-        data.task().insertTask(t1, () -> {});
-        data.task().insertTask(new Task("task3", 5, 5,System.currentTimeMillis(), null, false), () -> {});
-        taskSorter.getTasksByDueDate(tasks -> {
-            assertEquals("Task sorter is improperly putting nulls at anything but the end!",
                     tasks.iterator().next(), t1);
         });
     }
