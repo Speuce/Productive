@@ -43,3 +43,19 @@ Additionally, some of these libaries generate class implemenations at compile-ti
 
 ### CompactCalendarView
 &emsp; We use [CompactCalendarView](https://github.com/SundeepK/CompactCalendarView), a library specific to android applications, which offers a wide range of features in addition to the default CalendarView. The library allows theming, animations, and adding dots underneath dates as an indication to the user about the presence of tasks on that day.
+
+# Asset Sources
+&emsp; [Kyrise's Free 16x16 RPG Icon Pack](https://dagger.dev/hilt/) from OpenGameArt.org
+Kyrise's Free 16x16 RPG Icon Pack includes:
+
+### Weapons:
+Swords, Staffs, Bows, Shields, Spellbooks, 
+
+### Armors:
+Helmets
+
+### Consumables:
+Potions, Fishes, Candies
+
+### Misc:
+Coins, Arrows, Rings, Necklaces/Amulets, Gems, Pearls, Crystals, Keys, Books, Scrolls, Ingots, Boxes/Gift Boxes, etc.
