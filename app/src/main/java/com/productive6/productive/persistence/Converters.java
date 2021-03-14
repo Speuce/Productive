@@ -32,4 +32,14 @@ public class Converters {
     public static Long dateTimeToTimestamp(LocalDateTime date) {
         return date == null ? null : date.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
     }
+
+    @TypeConverter
+    public static LocalDateTime toDate(String dateString) {
+        if (dateString == null) {
+            return null;
+        } else {
+            return LocalDateTime.parse(dateString);
+        }
+    }
+
 }
