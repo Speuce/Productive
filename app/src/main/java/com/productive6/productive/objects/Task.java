@@ -6,6 +6,8 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -38,17 +40,18 @@ public class Task implements Comparable<Task>{
     private long createdTime;
 
     /**
-     * A flag to mark whether or not this task
-     * has been completed.
+     * The day/time that this task was completed.
+     * Null if not completed.
      */
-    @ColumnInfo(name = "completed")
-    private boolean completed;
+    @ColumnInfo(name = "completedDay")
+    private LocalDateTime completed;
 
     /**
      * When a given task is due
      */
     @ColumnInfo(name = "due_date")
-    private Date dueDate;
+    private LocalDate dueDate;
+
 
     /**
      * When a given task is due
@@ -56,6 +59,14 @@ public class Task implements Comparable<Task>{
     @ColumnInfo(name = "difficulty")
     private int difficulty;
 
+    /**
+     * Default Constructor
+     */
+    @Ignore
+    public Task() {
+        this.priority = 1;
+        this.difficulty = 1;
+    }
 
     /**
      * Constructor for a new task.
@@ -66,7 +77,7 @@ public class Task implements Comparable<Task>{
      * @param completed A flag to mark whether or not this task
      *                  has been completed.
      */
-    public Task(String taskName, int priority, int difficulty, long createdTime, Date dueDate, boolean completed) {
+    public Task(String taskName, int priority, int difficulty, long createdTime, LocalDate dueDate, LocalDateTime completed) {
         this.taskName = taskName;
         this.priority = priority;
         this.createdTime = createdTime;
@@ -85,7 +96,7 @@ public class Task implements Comparable<Task>{
         this.taskName = taskName;
         this.priority = priority;
         this.createdTime = 0;
-        this.completed = false;
+        this.completed = null;
     }
 
     /**
@@ -101,7 +112,7 @@ public class Task implements Comparable<Task>{
         this.priority = priority;
         this.createdTime = createdTime;
         this.difficulty = difficulty;
-        this.completed = false;
+        this.completed = null;
 //        this.dueDate = "";
     }
 
@@ -141,14 +152,14 @@ public class Task implements Comparable<Task>{
      * false otherwise.
      */
     public boolean isCompleted() {
-        return completed;
+        return completed != null;
     }
 
     /**
      * @param completed A flag to mark whether or not this task
      * has been completed.
      */
-    public void setCompleted(boolean completed) {
+    public void setCompleted(LocalDateTime completed) {
         this.completed = completed;
     }
 
@@ -168,13 +179,21 @@ public class Task implements Comparable<Task>{
         this.createdTime = createdTime;
     }
 
-    public Date getDueDate() { return dueDate; }
+    public LocalDate getDueDate() { return dueDate; }
 
     public int getDifficulty() { return difficulty; }
 
-    public void setDueDate(Date dueDate) { this.dueDate = dueDate; }
+    public void setDueDate(LocalDate dueDate) { this.dueDate = dueDate; }
 
     public void setDifficulty(int difficulty) { this.difficulty = difficulty; }
+
+    /**
+     * @return The day/time that this task was completed.
+     *         Null if not completed.
+     */
+    public LocalDateTime getCompleted() {
+        return completed;
+    }
 
     /**
      * Compares this object with another task,
@@ -187,5 +206,29 @@ public class Task implements Comparable<Task>{
             return (int) (this.getCreatedTime()-o.getCreatedTime());
         }
         return prioritydiff;
+    }
+
+    @Override
+    public boolean equals(Object other){
+        if(other instanceof Task){
+            Task t2 = (Task) other;
+            boolean result = t2.getId() == this.getId() &&
+                    t2.getPriority() == this.getPriority() &&
+                    t2.getCreatedTime() == this.getCreatedTime() &&
+                    t2.getTaskName().equals(this.getTaskName()) &&
+                    t2.getDifficulty() == this.getDifficulty();
+            if(t2.getDueDate() != null){
+                result = result && t2.getDueDate().equals(this.getDueDate());
+            }else{
+                result = result && this.getDueDate()==null;
+            }
+            if(t2.getCompleted() != null){
+                result = result && t2.getCompleted().equals(this.getCompleted());
+            }else{
+                result = result && this.getCompleted()==null;
+            }
+            return result;
+        }
+        return false;
     }
 }
