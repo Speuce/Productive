@@ -1,4 +1,4 @@
-package com.productive6.productive;
+package com.productive6.productive.integration;
 
 import android.os.Looper;
 

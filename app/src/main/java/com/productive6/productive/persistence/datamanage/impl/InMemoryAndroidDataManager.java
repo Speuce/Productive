@@ -42,7 +42,7 @@ public class InMemoryAndroidDataManager implements IDataManager {
     @Override
     public void init() {
         db = Room.inMemoryDatabaseBuilder(context,
-                ProductiveDB.class).build();
+                ProductiveDB.class).allowMainThreadQueries().build();
         this.taskPersistenceManager = new TaskPersistenceManager(executor, db.getTaskDao());
         this.userPersistenceManager = new UserPersistenceManager(executor, db.getUserDao());
     }
