@@ -8,8 +8,13 @@ import com.productive6.productive.persistence.datamanage.IDataManager;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -39,18 +44,28 @@ public class StatsManager implements ITaskStatsManager, ICoinsStatsManager, IXPS
     @Override
     public void getTasksCompletedPastDays(int history, Consumer<DayIntTuple> callback) {
         dataManager.stats().getCompletedTasksByDay(history, (list) ->{
-            list.forEach(callback);
+            //we need to give a value for ALL the days, even ones missed by the data layer
+            LocalDate start = LocalDate.now();
+            List<LocalDate> dates = Stream.iterate(start, date -> date.minusDays(1))
+                    .limit(history+1)
+                    .collect(Collectors.toList());
+            dates.forEach(day ->{
+                boolean found = false;
+                for (Iterator<DayIntTuple> iterator = list.iterator(); iterator.hasNext(); ) {
+                    DayIntTuple tuple = iterator.next();
+                    if (tuple.getDate().equals(day)) {
+                        found = true;
+                        callback.accept(tuple);
+                        iterator.remove();
+                        break;
+                    }
+                }
+                if(!found){
+                    callback.accept(new DayIntTuple(day, 0));
+                }
+            });
+            //list.forEach(callback);
         });
-    }
-
-    @Override
-    public void getTasksCompletedByDayOfWeek(Consumer<Map<DayOfWeek, Integer>> callback) {
-
-    }
-
-    @Override
-    public void getTasksCompletedByHourOfDay(Consumer<Map<Byte, Integer>> callback) {
-
     }
 
     @Override
@@ -58,16 +73,6 @@ public class StatsManager implements ITaskStatsManager, ICoinsStatsManager, IXPS
         dataManager.stats().getFirstTaskDay(callback);
     }
 
-
-    @Override
-    public void getCoinsEarnedPastDays(int history, Consumer<DayIntTuple> callback) {
-
-    }
-
-    @Override
-    public void getXPEarnedPastDays(int history, Consumer<DayIntTuple> callback) {
-
-    }
 
     @Override
     public void getXPEarnedAllTime(Consumer<Integer> callback) {
