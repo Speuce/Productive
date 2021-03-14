@@ -31,11 +31,9 @@ public class TaskManagerTest {
 
     private ITaskManager taskManager;
 
-    private DummyDataManager data;
-
     @Before
     public void init(){
-        data = new DummyDataManager();
+        DummyDataManager data = new DummyDataManager();
         taskManager = new PersistentTaskManager(data);
     }
 
