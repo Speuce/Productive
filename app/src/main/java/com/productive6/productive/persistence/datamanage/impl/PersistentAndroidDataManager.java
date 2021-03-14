@@ -23,7 +23,7 @@ public class PersistentAndroidDataManager extends LiveDataManager {
     @Override
     public void init() {
         db = Room.databaseBuilder(context,
-                ProductiveDB.class, "productive.db").fallbackToDestructiveMigration().build();
+                ProductiveDB.class, "productive2.db").fallbackToDestructiveMigration().build();
         super.init();
     }
 
