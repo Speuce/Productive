@@ -6,6 +6,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.Date;
 
 /**
@@ -15,30 +16,39 @@ public class Converters {
 
     @TypeConverter
     public static LocalDate fromTimestamp(Long value) {
-        return value == null ? null : Instant.ofEpochSecond(value).atZone(ZoneId.systemDefault()).toLocalDate();
+        return value == null ? null : Instant.ofEpochSecond(value).atZone(ZoneOffset.UTC).toLocalDate();
     }
 
     @TypeConverter
     public static Long dateToTimestamp(LocalDate date) {
-        return date == null ? null : date.atStartOfDay(ZoneId.systemDefault()).toEpochSecond();
+        return date == null ? null : date.atStartOfDay(ZoneOffset.UTC).toEpochSecond();
     }
 
     @TypeConverter
     public static LocalDateTime dateTimefromTimestamp(Long value) {
-        return value == null ? null : Instant.ofEpochMilli(value).atZone(ZoneId.systemDefault()).toLocalDateTime();
+        return value == null ? null : Instant.ofEpochMilli(value).atZone(ZoneOffset.UTC).toLocalDateTime();
     }
 
     @TypeConverter
     public static Long dateTimeToTimestamp(LocalDateTime date) {
-        return date == null ? null : date.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        return date == null ? null : date.atZone(ZoneOffset.UTC).toInstant().toEpochMilli();
     }
 
     @TypeConverter
-    public static LocalDateTime toDate(String dateString) {
+    public static LocalDateTime toDateTime(String dateString) {
         if (dateString == null) {
             return null;
         } else {
             return LocalDateTime.parse(dateString);
+        }
+    }
+
+    @TypeConverter
+    public static LocalDate toDate(String dateString) {
+        if (dateString == null) {
+            return null;
+        } else {
+            return LocalDateTime.parse(dateString).toLocalDate();
         }
     }
 
