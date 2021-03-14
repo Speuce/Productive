@@ -11,14 +11,6 @@ import java.util.function.Consumer;
  */
 public interface ICoinsStatsManager {
 
-
-    /**
-     * Gets a mapping day-by-day of day to coins earned on said day
-     * @param history how far back, from today, to go
-     * @param callback called FOR EACH DAY requested
-     */
-    void getCoinsEarnedPastDays(int history, Consumer<DayIntTuple> callback);
-
     /**
      * Gets the number of coins earned all time
      * @param callback called ONCE with the total number of tasks.

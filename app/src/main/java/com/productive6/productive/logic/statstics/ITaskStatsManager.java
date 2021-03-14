@@ -31,17 +31,6 @@ public interface ITaskStatsManager {
      */
     void getTasksCompletedPastDays(int history, Consumer<DayIntTuple> callback);
 
-    /**
-     * Gets a mapping of dayOfWeek:tasks completed on said day, going ALL the way back
-     * @param callback called ONCE, providing a mapping of DayOFweek:integer
-     */
-    void getTasksCompletedByDayOfWeek(Consumer<Map<DayOfWeek, Integer>> callback);
-
-    /**
-     * Gets a mapping of hour of day (0-23):total tasks completed, going ALL the way back
-     * @param callback called ONCE providing a mapping of HourOfDay (byte):Integer
-     */
-    void getTasksCompletedByHourOfDay(Consumer<Map<Byte, Integer>> callback);
 
     /**
      * Get the date of the first task created by the user
