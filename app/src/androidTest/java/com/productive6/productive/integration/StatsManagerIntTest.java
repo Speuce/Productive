@@ -10,10 +10,9 @@ import com.productive6.productive.logic.statstics.IXPStatsManager;
 import com.productive6.productive.logic.statstics.impl.StatsManager;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.persistence.datamanage.IDataManager;
-import com.productive6.productive.persistence.datamanage.dummy.DummyDataManager;
 import com.productive6.productive.persistence.datamanage.impl.InMemoryAndroidDataManager;
-import com.productive6.productive.persistence.executor.IRunnableExecutor;
-import com.productive6.productive.persistence.executor.impl.TestExecutor;
+import com.productive6.productive.services.executor.IRunnableExecutor;
+import com.productive6.productive.services.executor.impl.TestExecutor;
 
 import org.junit.Before;
 import org.junit.Test;

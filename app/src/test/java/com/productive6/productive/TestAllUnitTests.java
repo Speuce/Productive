@@ -26,5 +26,5 @@ import org.junit.runners.Suite;
         TaskSorterTest.class,
         StatsManagerTest.class
 })
-public class TestAll {
+public class TestAllUnitTests {
 }
