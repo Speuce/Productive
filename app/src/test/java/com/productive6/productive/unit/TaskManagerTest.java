@@ -18,6 +18,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -77,7 +78,7 @@ public class TaskManagerTest {
      */
     @Test
     public void testCompletionChecking(){
-        Task testData = new Task("name", 1, 1, System.currentTimeMillis(), LocalDate.now(),  null);
+        Task testData = new Task("name", 1, 1, System.currentTimeMillis(), LocalDate.now(), LocalDateTime.now());
         assertThrows("Task Manager missed a 'completed' flag = true",
                 ObjectFormatException.class,
                 () -> taskManager.addTask(testData));
