@@ -3,7 +3,7 @@ package com.productive6.productive.persistence.datamanage.impl;
 import com.productive6.productive.objects.tuples.DayIntTuple;
 import com.productive6.productive.persistence.access.ITaskStatsticsAccess;
 import com.productive6.productive.persistence.datamanage.IStatisticsDataManager;
-import com.productive6.productive.persistence.executor.IRunnableExecutor;
+import com.productive6.productive.services.executor.IRunnableExecutor;
 
 import java.time.LocalDate;
 import java.util.List;

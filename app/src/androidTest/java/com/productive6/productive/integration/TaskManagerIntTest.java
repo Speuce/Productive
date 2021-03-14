@@ -18,8 +18,8 @@ import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.task.TaskCreateEvent;
 import com.productive6.productive.objects.events.task.TaskUpdateEvent;
 import com.productive6.productive.persistence.datamanage.impl.InMemoryAndroidDataManager;
-import com.productive6.productive.persistence.executor.IRunnableExecutor;
-import com.productive6.productive.persistence.executor.impl.TestExecutor;
+import com.productive6.productive.services.executor.IRunnableExecutor;
+import com.productive6.productive.services.executor.impl.TestExecutor;
 
 import org.junit.Before;
 import org.junit.Test;

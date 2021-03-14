@@ -6,11 +6,7 @@ import androidx.room.Room;
 
 import com.productive6.productive.persistence.ProductiveDB;
 import com.productive6.productive.persistence.datamanage.IDataManager;
-import com.productive6.productive.persistence.datamanage.ITaskPersistenceManager;
-import com.productive6.productive.persistence.datamanage.IUserPersistenceManager;
-import com.productive6.productive.persistence.executor.IRunnableExecutor;
-
-import javax.inject.Inject;
+import com.productive6.productive.services.executor.IRunnableExecutor;
 
 /**
  * A production-grade {@link IDataManager} implementation that persists data using a database
