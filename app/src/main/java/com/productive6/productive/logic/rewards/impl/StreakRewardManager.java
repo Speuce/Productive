@@ -1,5 +1,6 @@
 package com.productive6.productive.logic.rewards.impl;
 
+import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.logic.task.ITaskSorter;
 import com.productive6.productive.logic.user.IUserManager;
 import com.productive6.productive.objects.Task;
@@ -18,16 +19,14 @@ public class StreakRewardManager extends RewardManager {
     private int streakValueWeight;
     private int streakLength;
 
-    public StreakRewardManager(IUserManager data, ITaskSorter taskSorter, int[] rewardWeights, int[] streakWeights){
-        super(data,rewardWeights[0],rewardWeights[1],rewardWeights[2]);
-        this.streakValueWeight = streakWeights[0];
-        this.streakLength = streakWeights[1];
+    public StreakRewardManager(IUserManager data, ITaskSorter taskSorter, ITaskManager taskManager, int[] configValues){
+        super(data,taskManager,configValues[0],configValues[1],configValues[2]);
+        this.streakValueWeight = configValues[3];
+        this.streakLength = configValues[4];
         this.taskSorter = taskSorter;
-
     }
 
     protected void taskCompleted(TaskCompleteEvent event){
-
 
         super.taskCompleted(event);
         taskSorter.getCompletedTasks(new StreakConsumer(data,event.getTask(),streakValueWeight,streakLength));

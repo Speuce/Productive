@@ -4,6 +4,7 @@ package com.productive6.productive.unit;
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.rewards.IRewardManager;
 import com.productive6.productive.logic.rewards.impl.RewardManager;
+import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.logic.user.IUserManager;
 import com.productive6.productive.objects.User;
 import com.productive6.productive.objects.events.task.TaskCompleteEvent;
@@ -32,9 +33,14 @@ public class RewardManagerTest {
     @Mock
     static IUserManager data = mock(IUserManager.class);
 
+    @Mock
+    static ITaskManager taskManager = mock(ITaskManager.class);
+
     @BeforeClass
     public static void initializeManager(){
-        rewardManager = new RewardManager(data,4,3,100);
+        int[] config = {4,3,100};
+
+        rewardManager = new RewardManager(data, taskManager,config[0],config[1],config[2]);
     }
 
     @Before

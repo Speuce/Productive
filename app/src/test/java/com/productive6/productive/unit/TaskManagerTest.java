@@ -36,7 +36,8 @@ public class TaskManagerTest {
     @Before
     public void init(){
         data = new DummyDataManager();
-        taskManager = new PersistentTaskManager(data);
+        int config[] = {3,3};
+        taskManager = new PersistentTaskManager(data,config);
     }
 
 

@@ -6,6 +6,7 @@ import com.productive6.productive.R;
 
 import com.productive6.productive.logic.rewards.IRewardManager;
 import com.productive6.productive.logic.rewards.impl.RewardManager;
+import com.productive6.productive.logic.rewards.impl.StreakRewardManager;
 import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.logic.task.ITaskSorter;
 import com.productive6.productive.logic.task.impl.PersistentTaskSorter;
@@ -54,8 +55,12 @@ public class ProductiveDIModule {
 
     @Singleton
     @Provides
-    public ITaskManager provideTaskManager(IDataManager d){
-        return new PersistentTaskManager(d);
+    public ITaskManager provideTaskManager(IDataManager d, @ApplicationContext Context context){
+        int configValues[] = new int[2];
+        configValues[0] = context.getResources().getInteger(R.integer.minimumpriority);
+        configValues[1] = context.getResources().getInteger(R.integer.minimumdifficulty);
+
+        return new PersistentTaskManager(d,configValues);
     }
 
 
@@ -82,7 +87,7 @@ public class ProductiveDIModule {
         ITitleManager tm = new DefaultTitleManager(userManager,titlesStrings,levelArr);
         return tm;
     }
-
+/*
     @Singleton
     @Provides
     public IRewardManager provideIRewardManager(IUserManager data, @ApplicationContext Context context){
@@ -92,6 +97,22 @@ public class ProductiveDIModule {
         int xpWeight = context.getResources().getInteger(R.integer.experienceweight);
 
         IRewardManager rm = new RewardManager(data,xpWeight,coinWeight,levelUpValue);
+        return rm;
+    }
+*/
+  @Singleton
+    @Provides
+    public IRewardManager provideIRewardManager(IUserManager data,ITaskSorter sort,ITaskManager taskManager, @ApplicationContext Context context){
+
+        int[] configValues = new int[5];
+
+        configValues[0] = context.getResources().getInteger(R.integer.experienceweight);
+        configValues[1] = context.getResources().getInteger(R.integer.coinsweight);
+        configValues[2] = context.getResources().getInteger(R.integer.levelupvalue);
+        configValues[3] = context.getResources().getInteger(R.integer.streakbonus);
+        configValues[4] = context.getResources().getInteger(R.integer.streakhours);
+
+        IRewardManager rm = new StreakRewardManager(data,sort, taskManager ,configValues);
         return rm;
     }
 

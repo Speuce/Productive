@@ -39,15 +39,16 @@ public class TestStreakRewardManager {
         EventDispatch.clear();
         dummy = new DummyDataManager();
         userManager = new PersistentSingleUserManager(dummy);
-        taskManager = new PersistentTaskManager(dummy);
+        int[] config = {3,3};
+        taskManager = new PersistentTaskManager(dummy,config);
         taskSorter = new PersistentTaskSorter(dummy);
 
         userManager.load();
 
-        int[] rewardArr = {1,1,100};
-        int[] streakArr = {1,24};
+        int[] rewardArr = {1,1,100,1,24};
 
-        streak = new StreakRewardManager(userManager,taskSorter,rewardArr,streakArr);
+
+        streak = new StreakRewardManager(userManager,taskSorter,taskManager,rewardArr);
         EventDispatch.dispatchEvent(new UserLoadedEvent(userManager.getCurrentUser()));
     }
 
@@ -66,15 +67,15 @@ public class TestStreakRewardManager {
     @Test
     public void testOnStreak(){
 
-        Task tempTask1 = new Task("x",10,10,0);
-        Task tempTask2 = new Task("y",10,10,0);
+        Task tempTask1 = new Task("x",3,3,0);
+        Task tempTask2 = new Task("y",3,3,0);
 
         taskManager.addTask(tempTask1);
         taskManager.addTask(tempTask2);
         taskManager.completeTask(tempTask1);
         taskManager.completeTask(tempTask2);
 
-        assertEquals("Value is not 1", 21, streak.getCoins());
+        assertEquals("Value is not 1", 3, streak.getCoins());
 
     }
 }

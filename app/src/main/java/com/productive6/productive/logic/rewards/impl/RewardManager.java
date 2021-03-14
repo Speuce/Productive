@@ -2,6 +2,7 @@ package com.productive6.productive.logic.rewards.impl;
 
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.rewards.IRewardManager;
+import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.logic.user.IUserManager;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
@@ -16,19 +17,21 @@ public class RewardManager implements IRewardManager, ProductiveListener{
     protected int coinWeight; //weight value for how many coins are awarded
     protected int experienceWeight; //weight value for how much XP is added
     protected int levelUpValue; //the amount of XP needed for a level up to occur
+    protected ITaskManager taskManager;
 
     protected User person;
     protected IUserManager data;
     /**
      * @param data a UserManager object used to update the user information in the database
      */
-    public RewardManager(IUserManager data, int xpWeight, int coinWeight, int levelUpValue){
+    public RewardManager(IUserManager data,ITaskManager taskManager, int xpWeight, int coinWeight, int levelUpValue){
         EventDispatch.registerListener(this);
 
         experienceWeight = xpWeight;
         this.coinWeight = coinWeight;
         this.levelUpValue = levelUpValue;
         this.data = data;
+        this.taskManager = taskManager;
         person = null;
     }
 
@@ -114,11 +117,11 @@ public class RewardManager implements IRewardManager, ProductiveListener{
     }
 
     protected int calculateNewXP(Task completedTask){
-        return person.getExp() + completedTask.getPriority() * experienceWeight;
+        return person.getExp() + ((taskManager.minPriority() - completedTask.getPriority()) + 1) * experienceWeight;
     }
 
     protected int calculateNewCoins(Task completedTask){
-        return person.getCoins() + completedTask.getDifficulty() * coinWeight;
+        return person.getCoins() + ((taskManager.minDifficulty()- completedTask.getDifficulty()) + 1) * coinWeight;
     }
 
     /**
