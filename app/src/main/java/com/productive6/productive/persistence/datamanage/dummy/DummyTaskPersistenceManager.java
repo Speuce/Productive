@@ -22,9 +22,11 @@ import java.util.stream.Collectors;
 /**
  * A {@link ITaskAccess} for unit testing.
  * No database stuff is actually done. Everything is just kept in internal lists.
+ *
+ * Used streams for most things. Java Streams behave alot like SQL queries, so they make a good
+ * candidate for dummy-ing
  */
 public class DummyTaskPersistenceManager implements ITaskPersistenceManager, IStatisticsDataManager {
-
 
 
     /**
@@ -61,7 +63,12 @@ public class DummyTaskPersistenceManager implements ITaskPersistenceManager, ISt
 
     @Override
     public void getCompletedTasksByDay(int history, Consumer<List<DayIntTuple>> callback) {
-        callback.accept(Collections.singletonList(new DayIntTuple(LocalDate.now(), (int) internalList.stream().filter(Task::isCompleted).count())));
+        LocalDate before = LocalDate.now().minusDays(history);
+        callback.accept(internalList.stream().filter(Task::isCompleted).filter(task -> task.getCompleted().isAfter(before.atStartOfDay())).collect(
+                Collectors.groupingBy(task -> task.getCompleted().toLocalDate(), Collectors.counting()))
+                .entrySet().stream()
+                .map(e ->new DayIntTuple(e.getKey(), e.getValue().intValue()))
+                .collect(Collectors.toList()));
     }
 
     @Override
@@ -83,7 +90,7 @@ public class DummyTaskPersistenceManager implements ITaskPersistenceManager, ISt
     public void getFirstTaskDay(Consumer<LocalDate> callback) {
         OptionalLong opt = internalList.stream().mapToLong(Task::getCreatedTime).min();
         if(opt.isPresent()){
-            callback.accept(Converters.fromTimestamp(opt.getAsLong()));
+            callback.accept(Converters.dateTimefromTimestamp(opt.getAsLong()).toLocalDate());
         }else{
             callback.accept(LocalDate.now());
         }
