@@ -35,4 +35,14 @@ public class DayIntTuple {
     public void setNumber(Integer number) {
         this.number = number;
     }
+
+    @Override
+    public boolean equals(Object other){
+        if(other instanceof DayIntTuple && ((DayIntTuple)other).getDate() != null){
+            return ((DayIntTuple)other).getDate().equals(this.date);
+        }else if(other instanceof LocalDate){
+            return ((LocalDate)other).equals(this.date);
+        }
+        return false;
+    }
 }
