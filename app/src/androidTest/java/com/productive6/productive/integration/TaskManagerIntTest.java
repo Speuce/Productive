@@ -53,7 +53,8 @@ public class TaskManagerIntTest {
         mRunnableExecutor = new TestExecutor();
         InMemoryAndroidDataManager data = new InMemoryAndroidDataManager(mContext, mRunnableExecutor);
         data.init();
-        taskManager = new PersistentTaskManager(data);
+        int config[] = {3,3};
+        taskManager = new PersistentTaskManager(data,config);
         taskSorter = new PersistentTaskSorter(data);
     }
 

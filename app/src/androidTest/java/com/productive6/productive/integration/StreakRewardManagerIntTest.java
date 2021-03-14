@@ -1,4 +1,4 @@
-package com.productive6.productive;
+package com.productive6.productive.integration;
 
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.rewards.IRewardManager;
@@ -15,18 +15,13 @@ import com.productive6.productive.objects.events.task.TaskCompleteEvent;
 import com.productive6.productive.objects.events.user.UserLoadedEvent;
 import com.productive6.productive.persistence.datamanage.IDataManager;
 import com.productive6.productive.persistence.datamanage.dummy.DummyDataManager;
-import com.productive6.productive.persistence.datamanage.dummy.DummyUserPersistenceManager;
-import com.productive6.productive.persistence.datamanage.impl.InMemoryAndroidDataManager;
-import com.productive6.productive.persistence.datamanage.impl.TaskPersistenceManager;
-import com.productive6.productive.persistence.datamanage.impl.UserPersistenceManager;
-
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
+
 
 import static org.junit.Assert.assertEquals;
 
-public class TestStreakRewardManager {
+public class StreakRewardManagerIntTest {
 
     IUserManager userManager;
     ITaskSorter taskSorter;
@@ -55,10 +50,9 @@ public class TestStreakRewardManager {
     @Test
     public void testNotOnStreak(){
 
-        Task tempTask = new Task("",1,1,0);
+        Task tempTask = new Task("",3,3,0);
         taskManager.addTask(tempTask);
         taskManager.completeTask(tempTask);
-        EventDispatch.dispatchEvent(new TaskCompleteEvent(tempTask));
 
         assertEquals("Value is not 1",1, streak.getCoins());
 
@@ -75,7 +69,7 @@ public class TestStreakRewardManager {
         taskManager.completeTask(tempTask1);
         taskManager.completeTask(tempTask2);
 
-        assertEquals("Value is not 1", 3, streak.getCoins());
+        assertEquals("Value is not 3", 3, streak.getCoins());
 
     }
 }
