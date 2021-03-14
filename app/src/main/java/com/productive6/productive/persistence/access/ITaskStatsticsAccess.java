@@ -28,6 +28,20 @@ public interface ITaskStatsticsAccess extends ITaskAccess{
     List<DayIntTuple> getCompletedTasksByDay(int history);
 
     /**
+     * Gets a mapping of day:coins earned
+     * @param history how far back to search
+     * @return a list of {@link DayIntTuple}
+     */
+    @Query("SELECT STRFTIME('%s',dat) as day, number FROM " +
+            "(SELECT JULIANDAY(DATE(ROUND(completedDay/1000) , 'unixepoch')) as dat, SUM(coins) as number" +
+            " FROM tasks " +
+            "WHERE dat>=(julianday(date('now'))-:history)" +
+            "AND dat NOT NULL " +
+            "GROUP BY dat " +
+            "ORDER BY dat);")
+    List<DayIntTuple> getTotalCoinsByDay(int history);
+
+    /**
      * Get the total # of tasks completed by the user
      */
     @Query("SELECT COUNT(id) FROM tasks WHERE completedDay NOT NULL ")

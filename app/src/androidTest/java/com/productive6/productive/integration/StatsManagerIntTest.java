@@ -77,7 +77,7 @@ public class StatsManagerIntTest {
         data.task().insertTask(testData3, () ->{});
 
         AtomicInteger daysCounted = new AtomicInteger(0);
-        taskManager.getTasksCompletedPastDays(2, dayIntTuple -> {
+        taskManager.getTasksCompletedPastDays(1, dayIntTuple -> {
             if(dayIntTuple.getDate().equals(yesterday.toLocalDate())){
                 daysCounted.incrementAndGet();
                 assertEquals("Couldn't count tasks completed previous day!", 1, (int)dayIntTuple.getNumber());
@@ -119,6 +119,7 @@ public class StatsManagerIntTest {
         });
         assertEquals("Searching past days completions filtered out the wrong day!!",daysCounted.get(), 1);
     }
+
 
     @Test
     public void testFirstDay(){
