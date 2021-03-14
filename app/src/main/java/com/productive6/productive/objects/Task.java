@@ -52,12 +52,23 @@ public class Task implements Comparable<Task>{
     @ColumnInfo(name = "due_date")
     private LocalDate dueDate;
 
-
     /**
      * When a given task is due
      */
     @ColumnInfo(name = "difficulty")
     private int difficulty;
+
+    /**
+     * Coins earned from the completion of the task (if applicable)
+     */
+    @ColumnInfo(name = "coins")
+    private int coinsEarned;
+
+    /**
+     * XP earned from the completion of the task (if applicable)
+     */
+    @ColumnInfo(name = "xp")
+    private int xpEarned;
 
     /**
      * Default Constructor
@@ -186,6 +197,22 @@ public class Task implements Comparable<Task>{
     public void setDueDate(LocalDate dueDate) { this.dueDate = dueDate; }
 
     public void setDifficulty(int difficulty) { this.difficulty = difficulty; }
+
+    public int getCoinsEarned() {
+        return coinsEarned;
+    }
+
+    public void setCoinsEarned(int coinsEarned) {
+        this.coinsEarned = coinsEarned;
+    }
+
+    public int getXpEarned() {
+        return xpEarned;
+    }
+
+    public void setXpEarned(int xpEarned) {
+        this.xpEarned = xpEarned;
+    }
 
     /**
      * @return The day/time that this task was completed.

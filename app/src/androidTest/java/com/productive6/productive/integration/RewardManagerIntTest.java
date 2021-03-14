@@ -9,6 +9,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.rewards.IRewardManager;
 import com.productive6.productive.logic.rewards.impl.RewardManager;
+import com.productive6.productive.logic.task.impl.PersistentTaskManager;
 import com.productive6.productive.logic.user.IUserManager;
 import com.productive6.productive.logic.user.impl.PersistentSingleUserManager;
 import com.productive6.productive.objects.Task;
@@ -54,7 +55,8 @@ public class RewardManagerIntTest {
         data = new InMemoryAndroidDataManager(mContext,mRunnableExecutor);
         data.init();
         userManager = new PersistentSingleUserManager(data);
-        rewardManager = new RewardManager(userManager,4,3,100);
+
+        rewardManager = new RewardManager(userManager, new PersistentTaskManager(data), 4,3,100);
         userManager.load();
     }
 

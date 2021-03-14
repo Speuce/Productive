@@ -85,13 +85,13 @@ public class ProductiveDIModule {
 
     @Singleton
     @Provides
-    public IRewardManager provideIRewardManager(IUserManager data, @ApplicationContext Context context){
+    public IRewardManager provideIRewardManager(IUserManager data, ITaskManager task, @ApplicationContext Context context){
 
         int levelUpValue = context.getResources().getInteger(R.integer.levelupvalue);
         int coinWeight = context.getResources().getInteger(R.integer.coinsweight);
         int xpWeight = context.getResources().getInteger(R.integer.experienceweight);
 
-        IRewardManager rm = new RewardManager(data,xpWeight,coinWeight,levelUpValue);
+        IRewardManager rm = new RewardManager(data,task,xpWeight,coinWeight,levelUpValue);
         return rm;
     }
 
