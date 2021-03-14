@@ -34,22 +34,4 @@ public class Converters {
         return date == null ? null : date.atZone(ZoneOffset.UTC).toInstant().toEpochMilli();
     }
 
-    @TypeConverter
-    public static LocalDateTime toDateTime(String dateString) {
-        if (dateString == null) {
-            return null;
-        } else {
-            return LocalDateTime.parse(dateString);
-        }
-    }
-
-    @TypeConverter
-    public static LocalDate toDate(String dateString) {
-        if (dateString == null) {
-            return null;
-        } else {
-            return LocalDateTime.parse(dateString).toLocalDate();
-        }
-    }
-
 }
