@@ -22,9 +22,8 @@ public class StreakRewardManager extends RewardManager {
 
     protected void taskCompleted(TaskCompleteEvent event){
 
-        taskManager.getCompletedTasks(new StreakConsumer(data,event.getTask()));
-
         super.taskCompleted(event);
+        taskManager.getCompletedTasks(new StreakConsumer(data,event.getTask()));
 
     }
 

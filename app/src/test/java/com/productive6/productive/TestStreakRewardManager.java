@@ -1,6 +1,7 @@
 package com.productive6.productive;
 
 import com.productive6.productive.logic.event.EventDispatch;
+import com.productive6.productive.logic.rewards.IRewardManager;
 import com.productive6.productive.logic.rewards.impl.StreakRewardManager;
 import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.logic.task.impl.PersistentTaskManager;
@@ -27,7 +28,7 @@ public class TestStreakRewardManager {
 
     ITaskManager taskManager;
 
-    StreakRewardManager streak;
+    IRewardManager streak;
 
     DummyDataManager dummy;
 
@@ -46,12 +47,20 @@ public class TestStreakRewardManager {
     }
 
     @Test
-    public void test1(){
+    public void testStreakAdds(){
 
         EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("",0,0,0)));
 
-        assertEquals("VALUE IS 5", 1, streak.getCoins());
+        assertEquals("Value is not 1", 1, streak.getCoins());
 
     }
 
+    @Test
+    public void testStreakCombines(){
+
+        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("",1,1,0)));
+
+        assertEquals("Value is not 2", 2, streak.getCoins());
+
+    }
 }
