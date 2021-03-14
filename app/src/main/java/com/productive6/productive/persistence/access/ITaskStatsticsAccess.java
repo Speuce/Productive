@@ -5,6 +5,7 @@ import androidx.room.Query;
 import com.productive6.productive.objects.tuples.DayIntTuple;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -17,12 +18,13 @@ public interface ITaskStatsticsAccess extends ITaskAccess{
      * @param history how far back to search
      * @return a list of {@link DayIntTuple}
      */
-    @Query("SELECT DATE(ROUND(completedDay/1000) , 'unixepoch') as day, COUNT(id) as number" +
+    @Query("SELECT STRFTIME('%s',dat) as day, number FROM " +
+            "(SELECT JULIANDAY(DATE(ROUND(completedDay/1000) , 'unixepoch')) as dat, COUNT(id) as number" +
             " FROM tasks " +
-            "WHERE day>=julianday(date('now')-:history)" +
-            "AND day NOT NULL " +
-            "GROUP BY day " +
-            "ORDER BY day;")
+            "WHERE dat>=(julianday(date('now'))-:history)" +
+            "AND dat NOT NULL " +
+            "GROUP BY dat " +
+            "ORDER BY dat);")
     List<DayIntTuple> getCompletedTasksByDay(int history);
 
     /**
@@ -47,6 +49,6 @@ public interface ITaskStatsticsAccess extends ITaskAccess{
      * Get the first day that the user created a task.
      */
     @Query("SELECT MIN(created) FROM tasks")
-    LocalDate getFirstTaskDay();
+    LocalDateTime getFirstTaskDay();
 
 }

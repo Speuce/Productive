@@ -58,7 +58,7 @@ public class StatisticsDataManager implements IStatisticsDataManager {
     @Override
     public void getFirstTaskDay(Consumer<LocalDate> callback) {
         executor.runASync(() ->{
-            LocalDate ret = stats.getFirstTaskDay();
+            LocalDate ret = stats.getFirstTaskDay().toLocalDate();
             executor.runSync(() ->callback.accept(ret));
         });
     }
