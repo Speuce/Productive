@@ -71,16 +71,13 @@ public class HomeFragment extends Fragment implements ProductiveListener {
                 R.drawable.prop_sword_1, R.drawable.prop_sword_2, R.drawable.prop_sword_3, R.drawable.prop_sword_4,
                 R.drawable.prop_armor_1, R.drawable.prop_armor_2, R.drawable.prop_armor_3, R.drawable.prop_armor_4,
                 R.drawable.prop_arrow_1, R.drawable.prop_arrow_2, R.drawable.prop_arrow_3, R.drawable.prop_arrow_4,
-                R.drawable.prop_book_1, R.drawable.prop_book_2, R.drawable.prop_book_3, R.drawable.prop_book_4,
                 R.drawable.prop_bow_1, R.drawable.prop_bow_2, R.drawable.prop_bow_3, R.drawable.prop_bow_4,
                 R.drawable.prop_coin_1, R.drawable.prop_coin_2, R.drawable.prop_coin_3, R.drawable.prop_coin_4,
                 R.drawable.prop_crystal_1, R.drawable.prop_crystal_2, R.drawable.prop_crystal_3, R.drawable.prop_crystal_4,
                 R.drawable.prop_hat_1, R.drawable.prop_hat_2, R.drawable.prop_hat_3, R.drawable.prop_hat_4,
                 R.drawable.prop_helmet_1, R.drawable.prop_helmet_2, R.drawable.prop_helmet_3, R.drawable.prop_helmet_4,
                 R.drawable.prop_necklace_1, R.drawable.prop_necklace_2, R.drawable.prop_necklace_3, R.drawable.prop_necklace_4,
-                R.drawable.prop_pearl_1, R.drawable.prop_pearl_2, R.drawable.prop_pearl_3, R.drawable.prop_pearl_4,
                 R.drawable.prop_ring_1, R.drawable.prop_ring_2, R.drawable.prop_ring_3, R.drawable.prop_ring_4,
-                R.drawable.prop_scroll_1, R.drawable.prop_scroll_2, R.drawable.prop_scroll_3, R.drawable.prop_scroll_4,
                 R.drawable.prop_shield_1, R.drawable.prop_shield_2, R.drawable.prop_shield_3, R.drawable.prop_shield_4,
                 R.drawable.prop_staff_1, R.drawable.prop_staff_2, R.drawable.prop_staff_3, R.drawable.prop_staff_4,
         };
@@ -149,6 +146,6 @@ public class HomeFragment extends Fragment implements ProductiveListener {
             slideModels.add(new SlideModel(propIDs[i]));
         }
 
-    imageSlider.setImageList(slideModels, true);
+        imageSlider.setImageList(slideModels, true);
     }
 }
