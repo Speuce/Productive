@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Productive</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_home">Rewards</string>
+    <string name="title_dashboard">To-do</string>
     <string name="title_notifications">Calendar</string>
     <string name="task_scheduled">TASK_SCHEDULED</string>
     <string name="month_name">MONTH_NAME</string>
@@ -9,5 +9,5 @@
     <string name="add">Add Task</string>
     <string name="rewards">Rewards</string>
     <string name="todo">To-do</string>
-    <string name="schedule">Schedule</string>
+    <string name="schedule">Calendar</string>
 </resources>
