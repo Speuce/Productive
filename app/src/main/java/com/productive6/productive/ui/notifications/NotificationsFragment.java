@@ -1,42 +1,28 @@
 package com.productive6.productive.ui.notifications;
 
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CalendarView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.productive6.productive.R;
-import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.objects.Task;
-import com.productive6.productive.ui.dashboard.DashboardFragment;
 import com.productive6.productive.ui.dashboard.TaskAdapter;
 
-
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.SortedMap;
 import java.util.function.Consumer;
 
 import javax.inject.Inject;
