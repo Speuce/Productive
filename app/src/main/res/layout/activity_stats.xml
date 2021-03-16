@@ -6,25 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".ui.statistics.StatsActivity">
 
-    <TextView
-        android:id="@+id/empty_view"
-        android:layout_width="411dp"
-        android:layout_height="564dp"
-        android:layout_marginTop="165dp"
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/chart"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_marginBottom="28dp"
         android:gravity="center_horizontal"
-        android:text="@string/tap_add_to_add_a_new_task"
-        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/stats_view"
-        android:layout_width="414dp"
-        android:layout_height="122dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="225dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
