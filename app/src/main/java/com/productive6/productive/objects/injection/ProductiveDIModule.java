@@ -7,12 +7,16 @@ import com.productive6.productive.R;
 import com.productive6.productive.logic.rewards.IRewardManager;
 import com.productive6.productive.logic.rewards.impl.RewardManager;
 import com.productive6.productive.logic.rewards.impl.StreakRewardManager;
+import com.productive6.productive.logic.statstics.ICoinsStatsManager;
+import com.productive6.productive.logic.statstics.ITaskStatsManager;
+import com.productive6.productive.logic.statstics.IXPStatsManager;
+import com.productive6.productive.logic.statstics.impl.StatsManager;
 import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.logic.task.ITaskSorter;
 import com.productive6.productive.logic.task.impl.PersistentTaskSorter;
 import com.productive6.productive.logic.user.IUserManager;
-import com.productive6.productive.persistence.executor.IRunnableExecutor;
-import com.productive6.productive.persistence.executor.impl.AndroidExecutor;
+import com.productive6.productive.services.executor.IRunnableExecutor;
+import com.productive6.productive.services.executor.impl.AndroidExecutor;
 import com.productive6.productive.logic.rewards.ITitleManager;
 import com.productive6.productive.logic.rewards.impl.DefaultTitleManager;
 
@@ -20,8 +24,6 @@ import com.productive6.productive.logic.task.impl.PersistentTaskManager;
 import com.productive6.productive.logic.user.impl.PersistentSingleUserManager;
 import com.productive6.productive.persistence.datamanage.IDataManager;
 import com.productive6.productive.persistence.datamanage.impl.PersistentAndroidDataManager;
-
-import java.time.format.DateTimeFormatter;
 
 import javax.inject.Singleton;
 
@@ -73,9 +75,7 @@ public class ProductiveDIModule {
     @Singleton
     @Provides
     public IUserManager provideUserManager(IDataManager d){
-        IUserManager um = new PersistentSingleUserManager(d);
-//        um.load();
-        return um;
+        return new PersistentSingleUserManager(d);
     }
 
     @Singleton
@@ -87,19 +87,31 @@ public class ProductiveDIModule {
         ITitleManager tm = new DefaultTitleManager(userManager,titlesStrings,levelArr);
         return tm;
     }
-/*
+
     @Singleton
     @Provides
-    public IRewardManager provideIRewardManager(IUserManager data, @ApplicationContext Context context){
-
-        int levelUpValue = context.getResources().getInteger(R.integer.levelupvalue);
-        int coinWeight = context.getResources().getInteger(R.integer.coinsweight);
-        int xpWeight = context.getResources().getInteger(R.integer.experienceweight);
-
-        IRewardManager rm = new RewardManager(data,xpWeight,coinWeight,levelUpValue);
-        return rm;
+    public StatsManager provideStatsManager(IDataManager data){
+        return new StatsManager(data);
     }
-*/
+
+    @Singleton
+    @Provides
+    public ITaskStatsManager provideTaskStats(StatsManager stats){
+        return (ITaskStatsManager)stats;
+    }
+
+    @Singleton
+    @Provides
+    public ICoinsStatsManager provideCoinStats(StatsManager stats){
+        return (ICoinsStatsManager) stats;
+    }
+
+    @Singleton
+    @Provides
+    public IXPStatsManager provideXPStats(StatsManager stats){
+        return (IXPStatsManager) stats;
+    }
+
   @Singleton
     @Provides
     public IRewardManager provideIRewardManager(IUserManager data,ITaskSorter sort,ITaskManager taskManager, @ApplicationContext Context context){

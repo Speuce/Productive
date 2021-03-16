@@ -6,6 +6,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.Date;
 
 /**
@@ -32,4 +33,5 @@ public class Converters {
     public static Long dateTimeToTimestamp(LocalDateTime date) {
         return date == null ? null : date.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
     }
+
 }

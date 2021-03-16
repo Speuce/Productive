@@ -5,6 +5,7 @@ import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.rewards.IRewardManager;
 import com.productive6.productive.logic.rewards.impl.RewardManager;
 import com.productive6.productive.logic.task.ITaskManager;
+import com.productive6.productive.logic.task.impl.PersistentTaskManager;
 import com.productive6.productive.logic.user.IUserManager;
 import com.productive6.productive.objects.User;
 import com.productive6.productive.objects.events.task.TaskCompleteEvent;
@@ -56,7 +57,7 @@ public class RewardManagerTest {
     public void testManyEvents(){
 
         for(int i = 0; i < 1001; i++){
-            EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",3,3, 0)));
+            EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",3,3)));
         }
         assertEquals("Did not have 0 XP", 4,rewardManager.getExperience());
         assertEquals("Did not have level as 1", 40,rewardManager.getLevel());
@@ -69,7 +70,7 @@ public class RewardManagerTest {
 
         assertEquals("Did not have 0 XP", 0,rewardManager.getExperience());
 
-        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",1,1, 0)));
+        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",1,1)));
         assertEquals("Did not have 12 XP", 12,rewardManager.getExperience());
 
     }
@@ -79,7 +80,7 @@ public class RewardManagerTest {
 
         assertEquals("Did not have 0 XP", 0,rewardManager.getExperience());
         for(int i = 0; i < 25; i++)
-            EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",3,1, 0)));
+            EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",3,1)));
 
         assertEquals("Did not have 0 XP", 0,rewardManager.getExperience());
         assertEquals("Did not have level as 1", 1,rewardManager.getLevel());
@@ -90,7 +91,7 @@ public class RewardManagerTest {
     @Test
     public void testMultipleLevels(){
         for(int i = 0; i< 10; i++)
-            EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",1,1, 0)));
+            EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",1,1)));
 
         assertEquals("Did not have 20 XP", 20,rewardManager.getExperience());
         assertEquals("Did not have level as 1", 1,rewardManager.getLevel());
@@ -98,17 +99,16 @@ public class RewardManagerTest {
 
     @Test
     public void testAddingCoins(){
-
-        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",1,2, 0)));
+        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",1,2)));
         assertEquals("Did not have 6 coins", 2*3,rewardManager.getCoins());
 
     }
 
     @Test
     public void testDifferentPriority(){
-        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",1,101, 0)));
-        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",2,101, 0)));
-        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",3,101, 0)));
+        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",1,101)));
+        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",2,101)));
+        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",3,101)));
 
         assertEquals("XP did not equal expected value", 24, rewardManager.getExperience());
     }
@@ -116,9 +116,9 @@ public class RewardManagerTest {
 
     @Test
     public void testDifferentDifficulty(){
-        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",1,1, 0)));
-        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",2,2, 0)));
-        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",3,3, 0)));
+        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",1,1)));
+        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",2,2)));
+        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",3,3)));
 
         assertEquals("XP did not equal expected value", 18, rewardManager.getCoins());
     }

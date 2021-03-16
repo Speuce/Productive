@@ -43,3 +43,23 @@ Additionally, some of these libaries generate class implemenations at compile-ti
 
 ### CompactCalendarView
 &emsp; We use [CompactCalendarView](https://github.com/SundeepK/CompactCalendarView), a library specific to android applications, which offers a wide range of features in addition to the default CalendarView. The library allows theming, animations, and adding dots underneath dates as an indication to the user about the presence of tasks on that day.
+
+# Unit/Integration Tests
+We have our unit tests under the com.productive6.productive (test) foler.
+Our integration tests are instrumented tests, so they are under the com.productive6.productive (androidTest) folder
+
+Code coverage cannot be obtained normally with instrumented tests in Android Studio, so you will need to go through some extra steps to get coverage of our integration tests:
+
+## Coverage of integration tests
+
+First, make sure you have a device emulator running.
+
+Click 'gradle' in the top right (its written sideways).
+
+Then under productive > tasks > other, find 'createDebugAndroidTestCoverageReport' and right click it and run it.
+
+Let it do its thing. Then once it's done, you will have to go into file explorer and find where the project directory is located.
+
+Once you do, go to app > build > reports > coverage > debug, and open 'index.html' in your favourite web browser.
+
+There ya go!

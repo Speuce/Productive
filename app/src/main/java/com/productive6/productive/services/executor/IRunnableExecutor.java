@@ -1,4 +1,4 @@
-package com.productive6.productive.persistence.executor;
+package com.productive6.productive.services.executor;
 
 /**
  * Handles running method sync/async

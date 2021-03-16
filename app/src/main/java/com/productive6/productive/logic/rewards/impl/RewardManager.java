@@ -21,14 +21,15 @@ public class RewardManager implements IRewardManager, ProductiveListener{
 
     protected User person;
     protected IUserManager data;
+    protected ITaskManager taskManager;
     /**
      * @param data a UserManager object used to update the user information in the database
      */
     public RewardManager(IUserManager data,ITaskManager taskManager, int xpWeight, int coinWeight, int levelUpValue){
         EventDispatch.registerListener(this);
-
         experienceWeight = xpWeight;
         this.coinWeight = coinWeight;
+        this.taskManager = taskManager;
         this.levelUpValue = levelUpValue;
         this.data = data;
         this.taskManager = taskManager;
@@ -86,6 +87,7 @@ public class RewardManager implements IRewardManager, ProductiveListener{
 
         //once all the reward updates are complete, do one user update to the database
         data.updateUser(person);
+        taskManager.updateTask(completedTask);
     }
 
     /**
@@ -94,9 +96,11 @@ public class RewardManager implements IRewardManager, ProductiveListener{
      */
     private void updateCoins(Task completedTask){
 
-        int newVal = calculateNewCoins(completedTask);
+        int coins = calculateCoins(completedTask);
+        completedTask.setCoinsEarned(coins);
 
-        person.setCoins(newVal);
+
+        person.setCoins(person.getCoins()+coins);
     }
 
     /**
@@ -106,9 +110,10 @@ public class RewardManager implements IRewardManager, ProductiveListener{
      */
     private void updateExperience(Task completedTask){
 
-        int newXP = calculateNewXP(completedTask);
+        int XP = calculateXP(completedTask);
+        completedTask.setXpEarned(XP);
 
-        person.setExp(newXP);
+        person.setExp(person.getExp() + XP);
 
         if(person.getExp() >= levelUpValue){
             levelUp();
@@ -117,11 +122,11 @@ public class RewardManager implements IRewardManager, ProductiveListener{
     }
 
     protected int calculateNewXP(Task completedTask){
-        return person.getExp() + ((taskManager.minPriority() - completedTask.getPriority()) + 1) * experienceWeight;
+        return ((taskManager.minPriority() - completedTask.getPriority()) + 1) * experienceWeight;
     }
 
     protected int calculateNewCoins(Task completedTask){
-        return person.getCoins() + ((taskManager.minDifficulty()- completedTask.getDifficulty()) + 1) * coinWeight;
+        return ((taskManager.minDifficulty()- completedTask.getDifficulty()) + 1) * coinWeight;
     }
 
     /**

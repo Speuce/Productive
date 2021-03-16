@@ -18,8 +18,8 @@ import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.task.TaskCreateEvent;
 import com.productive6.productive.objects.events.task.TaskUpdateEvent;
 import com.productive6.productive.persistence.datamanage.impl.InMemoryAndroidDataManager;
-import com.productive6.productive.persistence.executor.IRunnableExecutor;
-import com.productive6.productive.persistence.executor.impl.TestExecutor;
+import com.productive6.productive.services.executor.IRunnableExecutor;
+import com.productive6.productive.services.executor.impl.TestExecutor;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -64,7 +64,7 @@ public class TaskManagerIntTest {
      */
     @Test(expected = PersistentIDAssignmentException.class )
     public void testIDFormatInsert() {
-        Task testData = new Task("name", 1, 1, System.currentTimeMillis(), LocalDate.now(), null);
+        Task testData = new Task("name", 1, 1, LocalDateTime.now(), LocalDate.now(), null);
         testData.setId(1);
         taskManager.addTask(testData);
     }
@@ -76,7 +76,7 @@ public class TaskManagerIntTest {
     @Test
     public void testDateConversion() {
         LocalDate day = LocalDate.now();
-        Task testData = new Task("name", 1, 1, System.currentTimeMillis(), day, null);
+        Task testData = new Task("name", 1, 1, LocalDateTime.now(), day, null);
         taskManager.addTask(testData);
 
         taskSorter.getTasksByPriority(tasks -> {
@@ -90,7 +90,7 @@ public class TaskManagerIntTest {
      */
     @Test(expected = PersistentIDAssignmentException.class)
     public void testIDFormatUpdate() {
-        Task testData = new Task("name", 1, 1, System.currentTimeMillis(), LocalDate.now(), null);
+        Task testData = new Task("name", 1, 1, LocalDateTime.now(), LocalDate.now(), null);
         testData.setId(0);
         taskManager.updateTask(testData);
     }
@@ -100,7 +100,7 @@ public class TaskManagerIntTest {
      */
     @Test(expected = ObjectFormatException.class)
     public void testCompletionChecking(){
-        Task testData = new Task("name", 1, 1, System.currentTimeMillis(), LocalDate.now(), LocalDateTime.now());
+        Task testData = new Task("name", 1, 1, LocalDateTime.now(), LocalDate.now(), LocalDateTime.now());
         taskManager.addTask(testData);
     }
 
@@ -109,23 +109,13 @@ public class TaskManagerIntTest {
      */
     @Test(expected = ObjectFormatException.class)
     public void testPriorityChecking(){
-        Task testData = new Task("name", -1, 1, System.currentTimeMillis(), LocalDate.now(), null);
+        Task testData = new Task("name", -1, 1, LocalDateTime.now(), LocalDate.now(), null);
         taskManager.addTask(testData);
-    }
-
-    /**
-     * Tests that the task manager has the ability to autofill times
-     */
-    @Test
-    public void testTimeAutofill(){
-        Task testData = new Task("name", 1, 1, 0, LocalDate.now(), null);
-        taskManager.addTask(testData);
-        assertTrue("Task Manager didn't autofill time correctly.", Math.abs(System.currentTimeMillis()-testData.getCreatedTime()) < 10000);
     }
 
     @Test
     public void testCompleteTask(){
-        Task testData = new Task("name", 1, 1, 0, LocalDate.now(), null);
+        Task testData = new Task("name", 1, 1, LocalDateTime.now(), LocalDate.now(), null);
         taskManager.addTask(testData);
 
         EventDispatch.registerListener(new ProductiveListener() {
@@ -140,7 +130,7 @@ public class TaskManagerIntTest {
     @Test
     public void testUpdateEvent(){
         AtomicBoolean success = new AtomicBoolean(false);
-        Task testData = new Task("name", 1, 1, 0, LocalDate.now(), null);
+        Task testData = new Task("name", 1, 1, LocalDateTime.now(), LocalDate.now(), null);
         taskManager.addTask(testData);
 
         EventDispatch.registerListener(new ProductiveListener() {
@@ -168,7 +158,7 @@ public class TaskManagerIntTest {
                 assertTrue("TaskManager failed to trigger a user create event when necessary.",success.get());
             }
         });
-        Task testData = new Task("name", 1, 1, 0, LocalDate.now(), null);
+        Task testData = new Task("name", 1, 1, LocalDateTime.now(), LocalDate.now(), null);
         taskManager.addTask(testData);
     }
 

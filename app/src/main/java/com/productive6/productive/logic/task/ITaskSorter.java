@@ -35,6 +35,13 @@ public interface ITaskSorter {
     void getTasksOnDate(LocalDate d, Consumer<List<Task>> outputparam);
 
     /**
+     * Get the days of a month that have a task associated with it
+     * @param startofMonth the starting day of said month
+     * @param outputparam called ONCE for EACH day with a task
+     */
+    void getDaysWithTaskInMonth(LocalDate startofMonth, Consumer<LocalDate> outputparam);
+
+    /**
      * @return a list of {@link Task} objects that have been marked as
      * completed
      */
