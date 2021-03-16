@@ -46,10 +46,6 @@ public class DashboardFragment extends Fragment {
         return root;
     }
 
-    public void openStats(View v){
-
-    }
-
     /**
      * Attaches task data, view, and display. Allowing for dynamically rendered tasks in the task display.
      * @param root
@@ -61,14 +57,28 @@ public class DashboardFragment extends Fragment {
         taskDisplayView.setAdapter(taskAdapter);//attach display to view + tasks
         taskDisplayView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false));//Describe how the data should be laid out
 
-//        RecyclerView statsDisplayView = root.findViewById(R.id.stats_view);//Grab display
-//        StatsAdapter statsAdapter = new StatsAdapter(root);
-//        statsDisplayView.setAdapter(statsAdapter);//attach display to view
-//        statsDisplayView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false));//Describe how the data should be laid out
+        RecyclerView statsDisplayView = root.findViewById(R.id.stats_view);//Grab display
+        StatsAdapter statsAdapter = new StatsAdapter(root);
+        statsDisplayView.setAdapter(statsAdapter);//attach display to view
+        statsDisplayView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false));//Describe how the data should be laid out
 
         EventDispatch.registerListener(taskAdapter);
-        taskManager.getTasksByPriority(taskAdapter::setTasks);//Logic CALL--Load Tasks
+        taskManager.getTasksByPriority(new TaskConsumerStartup(taskAdapter));//Logic CALL--Load Tasks
 
     }
 
+    /**
+     * Holds a callback for the database request made in attachTaskView.
+     */
+    public static class TaskConsumerStartup implements Consumer<List<Task>> {
+        private final TaskAdapter taskAdapter;
+
+        TaskConsumerStartup(TaskAdapter taskAdapter){this.taskAdapter = taskAdapter;}
+
+        @Override
+        public void accept(List<Task> tasks) {
+            taskAdapter.setTasks(tasks);
+            //Give data to Task list and automatically re-renders the Task list view
+        }
+    }
 }

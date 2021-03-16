@@ -21,7 +21,6 @@ import android.widget.PopupWindow;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.productive6.productive.R;
-import com.productive6.productive.ui.statistics.StatsActivity;
 import com.productive6.productive.logic.rewards.ITitleManager;
 import com.productive6.productive.logic.user.IUserManager;
 
@@ -118,11 +117,6 @@ public class MainActivity extends AppCompatActivity {
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
         dimBehind(popupWindow);
 
-    }
-
-    public void onButtonOpenStats(View v){
-        Intent intent = new Intent(this, StatsActivity.class);
-        startActivity(intent);
     }
 
     /**
