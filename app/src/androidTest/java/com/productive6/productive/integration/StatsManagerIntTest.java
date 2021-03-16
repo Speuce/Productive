@@ -48,11 +48,11 @@ public class StatsManagerIntTest {
 
     @Test
     public void testAverageTasks(){
-        Task testData = new Task("name", 1, 1, System.currentTimeMillis());
+        Task testData = new Task("name", 1, 1, LocalDateTime.now());
         testData.setCompleted(LocalDateTime.now());
-        Task testData2 = new Task("name", 1, 1, System.currentTimeMillis());
+        Task testData2 = new Task("name", 1, 1, LocalDateTime.now());
         testData2.setCompleted(LocalDateTime.now());
-        Task testData3 = new Task("name", 1, 1, LocalDateTime.now().minusDays(1).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
+        Task testData3 = new Task("name", 1, 1, LocalDateTime.now().minusDays(1));
         testData3.setCompleted(LocalDateTime.now());
         data.task().insertTask(testData, () ->{});
         data.task().insertTask(testData2, () ->{});
@@ -65,11 +65,11 @@ public class StatsManagerIntTest {
     @Test
     public void testGetCompletedTasksByDay(){
         LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
-        Task testData = new Task("name", 1, 1, System.currentTimeMillis());
+        Task testData = new Task("name", 1, 1, LocalDateTime.now());
         testData.setCompleted(LocalDateTime.now());
-        Task testData2 = new Task("name", 1, 1, System.currentTimeMillis());
+        Task testData2 = new Task("name", 1, 1, LocalDateTime.now());
         testData2.setCompleted(LocalDateTime.now());
-        Task testData3 = new Task("name", 1, 1, yesterday.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
+        Task testData3 = new Task("name", 1, 1, yesterday);
         testData3.setCompleted(yesterday);
         data.task().insertTask(testData, () ->{});
         data.task().insertTask(testData2, () ->{});
@@ -96,11 +96,11 @@ public class StatsManagerIntTest {
     @Test
     public void testGetCompletedTasksByDayFilter(){
         LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
-        Task testData = new Task("name", 1, 1, System.currentTimeMillis());
+        Task testData = new Task("name", 1, 1, LocalDateTime.now());
         testData.setCompleted(LocalDateTime.now());
-        Task testData2 = new Task("name", 1, 1, System.currentTimeMillis());
+        Task testData2 = new Task("name", 1, 1, LocalDateTime.now());
         testData2.setCompleted(LocalDateTime.now());
-        Task testData3 = new Task("name", 1, 1, yesterday.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
+        Task testData3 = new Task("name", 1, 1, yesterday);
         testData3.setCompleted(yesterday);
         data.task().insertTask(testData, () ->{});
         data.task().insertTask(testData2, () ->{});
@@ -123,8 +123,8 @@ public class StatsManagerIntTest {
     @Test
     public void testFirstDay(){
         LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
-        Task testData = new Task("name", 1, 1, System.currentTimeMillis());
-        Task testData3 = new Task("name", 1, 1, yesterday.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
+        Task testData = new Task("name", 1, 1, LocalDateTime.now());
+        Task testData3 = new Task("name", 1, 1, yesterday);
         data.task().insertTask(testData, () ->{});
         data.task().insertTask(testData3, () ->{});
 
@@ -135,13 +135,13 @@ public class StatsManagerIntTest {
 
     @Test
     public void testCoinsAllTime(){
-        Task testData = new Task("name", 1, 1, System.currentTimeMillis());
+        Task testData = new Task("name", 1, 1, LocalDateTime.now());
         testData.setCompleted(LocalDateTime.now());
         testData.setCoinsEarned(5);
-        Task testData2 = new Task("name", 1, 1, System.currentTimeMillis());
+        Task testData2 = new Task("name", 1, 1, LocalDateTime.now());
         testData2.setCompleted(LocalDateTime.now().minusDays(1));
         testData2.setCoinsEarned(10);
-        Task testData3 = new Task("name", 1, 1, System.currentTimeMillis());
+        Task testData3 = new Task("name", 1, 1, LocalDateTime.now());
         testData3.setCoinsEarned(69);
         data.task().insertTask(testData, () ->{});
         data.task().insertTask(testData2, () ->{});
@@ -154,13 +154,13 @@ public class StatsManagerIntTest {
 
     @Test
     public void testXpAllTime(){
-        Task testData = new Task("name", 1, 1, System.currentTimeMillis());
+        Task testData = new Task("name", 1, 1, LocalDateTime.now());
         testData.setCompleted(LocalDateTime.now());
         testData.setXpEarned(5);
-        Task testData2 = new Task("name", 1, 1, System.currentTimeMillis());
+        Task testData2 = new Task("name", 1, 1, LocalDateTime.now());
         testData2.setCompleted(LocalDateTime.now().minusDays(1));
         testData2.setXpEarned(20);
-        Task testData3 = new Task("name", 1, 1, System.currentTimeMillis());
+        Task testData3 = new Task("name", 1, 1, LocalDateTime.now());
         testData3.setXpEarned(69);
         data.task().insertTask(testData, () ->{});
         data.task().insertTask(testData2, () ->{});

@@ -61,7 +61,7 @@ public class RewardManagerIntTest {
             @ProductiveEventHandler
             public void handleEvent(UserLoadedEvent e){
                 for(int i = 0; i < 1001; i++){
-                    EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",1,0, 0)));
+                    EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",1,0)));
                 }
                 assertEquals("Did not have 0 XP", 4,rewardManager.getExperience());
                 assertEquals("Did not have level as 1", 40,rewardManager.getLevel());
@@ -77,7 +77,7 @@ public class RewardManagerIntTest {
             public void handleEvent(UserLoadedEvent e){
                 assertEquals("Did not have 0 XP", 0,rewardManager.getExperience());
 
-                EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",4,0, 0)));
+                EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",4,0)));
 
                 assertEquals("Did not have 0 XP", 16,rewardManager.getExperience());
             }
@@ -91,7 +91,7 @@ public class RewardManagerIntTest {
             public void handleEvent(UserLoadedEvent e){
                 assertEquals("Did not have 0 XP", 0,rewardManager.getExperience());
 
-                EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",25,0, 0)));
+                EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",25,0)));
 
                 assertEquals("Did not have 0 XP", 0,rewardManager.getExperience());
                 assertEquals("Did not have level as 1", 1,rewardManager.getLevel());
@@ -105,7 +105,7 @@ public class RewardManagerIntTest {
         EventDispatch.registerListener(new ProductiveListener() {
             @ProductiveEventHandler
             public void handleEvent(UserLoadedEvent e){
-                EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",101,0, 0)));
+                EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",101,0)));
 
                 assertEquals("Did not have 4 XP", 4,rewardManager.getExperience());
                 assertEquals("Did not have level as 4", 4,rewardManager.getLevel());
@@ -119,7 +119,7 @@ public class RewardManagerIntTest {
         EventDispatch.registerListener(new ProductiveListener() {
             @ProductiveEventHandler
             public void handleEvent(UserLoadedEvent e){
-                EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",101,0, 0)));
+                EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",101,0)));
                 assertEquals("Did not have level as 4", 303,rewardManager.getCoins());
             }
         });

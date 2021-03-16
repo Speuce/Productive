@@ -91,7 +91,7 @@ public class DummyTaskPersistenceManager implements ITaskPersistenceManager, ISt
 
     @Override
     public void getFirstTaskDay(Consumer<LocalDate> callback) {
-        OptionalLong opt = internalList.stream().mapToLong(Task::getCreatedTime).min();
+        OptionalLong opt = internalList.stream().mapToLong(task -> task.getCreatedTime().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()).min();
         if(opt.isPresent()){
             callback.accept(Instant.ofEpochMilli(opt.getAsLong()).atZone(ZoneId.systemDefault()).toLocalDate());
         }else{

@@ -52,7 +52,7 @@ public class RewardManagerTest {
     public void testManyEvents(){
 
         for(int i = 0; i < 1001; i++){
-            EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",1,1, 0)));
+            EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",1,1)));
         }
         assertEquals("Did not have 0 XP", 4,rewardManager.getExperience());
         assertEquals("Did not have level as 1", 40,rewardManager.getLevel());
@@ -65,7 +65,7 @@ public class RewardManagerTest {
 
         assertEquals("Did not have 0 XP", 0,rewardManager.getExperience());
 
-        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",4,1, 0)));
+        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",4,1)));
         assertEquals("Did not have 16 XP", 16,rewardManager.getExperience());
 
     }
@@ -75,7 +75,7 @@ public class RewardManagerTest {
 
         assertEquals("Did not have 0 XP", 0,rewardManager.getExperience());
 
-        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",25,1, 0)));
+        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",25,1)));
 
         assertEquals("Did not have 0 XP", 0,rewardManager.getExperience());
         assertEquals("Did not have level as 1", 1,rewardManager.getLevel());
@@ -86,7 +86,7 @@ public class RewardManagerTest {
     @Test
     public void testMultipleLevels(){
 
-        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",101,1, 0)));
+        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",101,1)));
 
         assertEquals("Did not have 4 XP", 4,rewardManager.getExperience());
         assertEquals("Did not have level as 4", 4,rewardManager.getLevel());
@@ -95,16 +95,16 @@ public class RewardManagerTest {
     @Test
     public void testAddingCoins(){
 
-        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",1,101, 0)));
+        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",1,101)));
         assertEquals("Did not have 303 coins", 303,rewardManager.getCoins());
 
     }
 
     @Test
     public void testDifferentPriority(){
-        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",1,101, 0)));
-        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",2,101, 0)));
-        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",3,101, 0)));
+        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",1,101)));
+        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",2,101)));
+        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",3,101)));
 
         assertEquals("XP did not equal expected value", 24, rewardManager.getExperience());
     }
@@ -112,9 +112,9 @@ public class RewardManagerTest {
 
     @Test
     public void testDifferentDifficulty(){
-        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",1,1, 0)));
-        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",2,2, 0)));
-        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",3,3, 0)));
+        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",1,1)));
+        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",2,2)));
+        EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",3,3)));
 
         assertEquals("XP did not equal expected value", 18, rewardManager.getCoins());
     }
