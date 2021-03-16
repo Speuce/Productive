@@ -14,16 +14,5 @@
         android:layout_height="wrap_content"
         android:text="bar_chart"
     />
-    <Button
-        android:id="@+id/buttonPieChart"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="pi_chart"
-        />
-    <Button
-        android:id="@+id/buttonRadarChart"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="radar_chart"
-        />
+
 </LinearLayout>

@@ -2,6 +2,7 @@ package com.productive6.productive.ui.dashboard;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.logic.task.ITaskSorter;
 import com.productive6.productive.objects.Task;
+import com.productive6.productive.ui.stats.StatsActivity;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -88,7 +90,12 @@ public class DashboardFragment extends Fragment {
         EventDispatch.registerListener(taskAdapter);
 
         taskSorter.getTasksByPriority((taskAdapter::setTasks));//logic call:: get tasks, provide it to task adapter
-
+        root.findViewById(R.id.buttonBarChart).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                startActivity(new Intent(getContext(), StatsActivity.class));
+            }
+        });
         Button createButton = root.findViewById(R.id.newTaskButton);
         createButton.setOnClickListener(v -> {
             new TaskPopup(getContext(), null, taskManager::addTask).open(v);
