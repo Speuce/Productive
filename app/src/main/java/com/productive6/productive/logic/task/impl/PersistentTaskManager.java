@@ -59,9 +59,6 @@ public class PersistentTaskManager implements ITaskManager{
                 throw new ObjectFormatException("A priority of < 0 is not supported!");
         }
         validateTask(t);
-        if(t.getCreatedTime() == 0){
-            t.setCreatedTime(System.currentTimeMillis());
-        }
         data.task().insertTask(t, () ->{
             EventDispatch.dispatchEvent(new TaskCreateEvent(t));
         });

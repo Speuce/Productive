@@ -27,5 +27,11 @@ public interface IDataManager {
      */
     IUserPersistenceManager user();
 
+    /**
+     * @return an instance of {@link IStatisticsDataManager}
+     * to perform statistics operations
+     */
+    IStatisticsDataManager stats();
+
 
 }
