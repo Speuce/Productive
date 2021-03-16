@@ -20,6 +20,8 @@ import com.productive6.productive.logic.task.ITaskSorter;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.ui.dashboard.TaskAdapter;
 
+import com.productive6.productive.logic.util.CalenderUtilities;
+
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -117,14 +119,6 @@ public class NotificationsFragment extends Fragment {
         });
     }
 
-    private String getDateWithSuffix(int day) {
-        switch (day % 10) {
-            case 1:  return day + "st";
-            case 2:  return day + "nd";
-            case 3:  return day + "rd";
-            default: return day + "th";
-        }
-    }
 
     private void initTaskList(LocalDate date, View root) {
         TaskAdapter taskAdapter = new TaskAdapter(taskManager, root);
@@ -139,7 +133,7 @@ public class NotificationsFragment extends Fragment {
             taskAdapter.setTasks(tasksByDate);
 
             /** Set text above the RecyclerView based on the number of task on the clicked date */
-            userClickedDate.setText(tasksByDate.size() + " task(s) scheduled for " + getDateWithSuffix(calendar.get(Calendar.DATE)) + " " + month);
+            userClickedDate.setText(tasksByDate.size() + " task(s) scheduled for " + CalenderUtilities.getDateWithSuffix(calendar.get(Calendar.DATE)) + " " + month);
         }));
     }
 
