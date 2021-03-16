@@ -1,9 +1,9 @@
-package com.productive6.productive.persistence.executor.impl;
+package com.productive6.productive.services.executor.impl;
 
 import android.os.Handler;
 import android.os.Looper;
 
-import com.productive6.productive.persistence.executor.IRunnableExecutor;
+import com.productive6.productive.services.executor.IRunnableExecutor;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
