@@ -18,10 +18,12 @@ import org.junit.runner.RunWith;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests logic-layer task sorting by the task Manager
@@ -146,6 +148,22 @@ public class TaskSorterIntTest {
         taskSorter.getCompletedTasks(tasks -> {
             assertFalse("TaskManager Get Completed tasks didn't included an incomplete task.", tasks.contains(t2));
         });
+    }
+
+    @Test
+    public void testGetDaysWithTaskInMonth(){
+        Task t2 = new Task("task2", 5, 1, System.currentTimeMillis());
+        t2.setDueDate(LocalDate.now());
+        data.task().insertTask(t2, () ->{});
+        AtomicBoolean pass = new AtomicBoolean(false);
+        taskSorter.getDaysWithTaskInMonth(LocalDate.now().withDayOfMonth(1), localDate -> {
+            if(localDate.equals(LocalDate.now())){
+                pass.set(true);
+            }else{
+                fail("Get Days with Task in month gave a day without an actual task: " + localDate.toString());
+            }
+        });
+        assertTrue("Get Days with Task in month did not give the day expected!:", pass.get());
     }
 
 
