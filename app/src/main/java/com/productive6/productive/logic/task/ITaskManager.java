@@ -35,4 +35,16 @@ public interface ITaskManager {
      * @param t the task that was completed.
      */
     void completeTask(Task t);
+
+    /**
+     * @return integer representing the minimum priority value of a task
+
+     */
+     int minPriority();
+
+    /**
+     * @return integer representing the minimum priority values of a task
+     */
+    int minDifficulty();
+
 }

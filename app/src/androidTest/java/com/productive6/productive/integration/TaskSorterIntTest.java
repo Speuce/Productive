@@ -152,7 +152,7 @@ public class TaskSorterIntTest {
 
     @Test
     public void testGetDaysWithTaskInMonth(){
-        Task t2 = new Task("task2", 5, 1, System.currentTimeMillis());
+        Task t2 = new Task("task2", 5, 1);
         t2.setDueDate(LocalDate.now());
         data.task().insertTask(t2, () ->{});
         AtomicBoolean pass = new AtomicBoolean(false);
