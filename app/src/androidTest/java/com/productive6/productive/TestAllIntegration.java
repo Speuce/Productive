@@ -25,7 +25,7 @@ import org.junit.runners.Suite;
         TaskSorterIntTest.class,
         TitleManagerIntTest.class,
         UserManagerIntTest.class,
-        StreakRewardManagerIntTest.class
+        StreakRewardManagerIntTest.class,
         StatsManagerIntTest.class
 })
 public class TestAllIntegration {

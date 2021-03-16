@@ -1,6 +1,7 @@
 package com.productive6.productive.persistence.datamanage.impl;
 
 import com.productive6.productive.objects.tuples.DayIntTuple;
+import com.productive6.productive.objects.tuples.EpochIntTuple;
 import com.productive6.productive.persistence.access.ITaskStatsticsAccess;
 import com.productive6.productive.persistence.datamanage.IStatisticsDataManager;
 import com.productive6.productive.services.executor.IRunnableExecutor;
@@ -24,9 +25,9 @@ public class StatisticsDataManager implements IStatisticsDataManager {
     }
 
     @Override
-    public void getCompletedTasksByDay(int history, Consumer<List<DayIntTuple>> callback) {
+    public void getCompletedTasksByDay(int history, Consumer<List<EpochIntTuple>> callback) {
         executor.runASync(() ->{
-            List<DayIntTuple> ret = stats.getCompletedTasksByDay(history);
+            List<EpochIntTuple> ret = stats.getCompletedTasksByDay(history);
             executor.runSync(() -> callback.accept(ret));
         });
     }

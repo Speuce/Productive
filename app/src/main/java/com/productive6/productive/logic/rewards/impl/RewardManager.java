@@ -21,7 +21,6 @@ public class RewardManager implements IRewardManager, ProductiveListener{
 
     protected User person;
     protected IUserManager data;
-    protected ITaskManager taskManager;
     /**
      * @param data a UserManager object used to update the user information in the database
      */
@@ -96,7 +95,7 @@ public class RewardManager implements IRewardManager, ProductiveListener{
      */
     private void updateCoins(Task completedTask){
 
-        int coins = calculateCoins(completedTask);
+        int coins = calculateNewCoins(completedTask);
         completedTask.setCoinsEarned(coins);
 
 
@@ -110,7 +109,7 @@ public class RewardManager implements IRewardManager, ProductiveListener{
      */
     private void updateExperience(Task completedTask){
 
-        int XP = calculateXP(completedTask);
+        int XP = calculateNewXP(completedTask);
         completedTask.setXpEarned(XP);
 
         person.setExp(person.getExp() + XP);

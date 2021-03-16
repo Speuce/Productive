@@ -80,7 +80,7 @@ public class TaskManagerIntTest {
         taskManager.addTask(testData);
 
         taskSorter.getTasksByPriority(tasks -> {
-            assertEquals(tasks.get(0).getDueDate(), day);
+            assertEquals(day,tasks.get(0).getDueDate());
         });
     }
 

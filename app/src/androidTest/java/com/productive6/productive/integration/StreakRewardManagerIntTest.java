@@ -50,7 +50,7 @@ public class StreakRewardManagerIntTest {
     @Test
     public void testNotOnStreak(){
 
-        Task tempTask = new Task("",3,3,0);
+        Task tempTask = new Task("",3,3);
         taskManager.addTask(tempTask);
         taskManager.completeTask(tempTask);
 
@@ -61,8 +61,8 @@ public class StreakRewardManagerIntTest {
     @Test
     public void testOnStreak(){
 
-        Task tempTask1 = new Task("x",3,3,0);
-        Task tempTask2 = new Task("y",3,3,0);
+        Task tempTask1 = new Task("x",3,3);
+        Task tempTask2 = new Task("y",3,3);
 
         taskManager.addTask(tempTask1);
         taskManager.addTask(tempTask2);

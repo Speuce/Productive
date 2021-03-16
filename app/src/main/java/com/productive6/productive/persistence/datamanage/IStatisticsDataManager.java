@@ -1,8 +1,7 @@
 package com.productive6.productive.persistence.datamanage;
 
-import androidx.room.Query;
-
 import com.productive6.productive.objects.tuples.DayIntTuple;
+import com.productive6.productive.objects.tuples.EpochIntTuple;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -17,9 +16,10 @@ public interface IStatisticsDataManager {
     /**
      * Gets a mapping of day:taskscompleted
      * @param history how far back to search
+     * @param callback
      * @return a list of {@link DayIntTuple}
      */
-    void getCompletedTasksByDay(int history, Consumer<List<DayIntTuple>> callback);
+    void getCompletedTasksByDay(int history, Consumer<List<EpochIntTuple>> callback);
 
     /**
      * Get the total # of tasks completed by the user

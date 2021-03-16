@@ -12,6 +12,7 @@ import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.task.TaskCreateEvent;
 import com.productive6.productive.objects.events.task.TaskUpdateEvent;
+import com.productive6.productive.persistence.datamanage.IDataManager;
 import com.productive6.productive.persistence.datamanage.dummy.DummyDataManager;
 
 import org.junit.Before;
@@ -33,7 +34,7 @@ public class TaskManagerTest {
 
     @Before
     public void init(){
-        data = new DummyDataManager();
+        IDataManager data = new DummyDataManager();
         int config[] = {3,3};
         taskManager = new PersistentTaskManager(data,config);
     }
