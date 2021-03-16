@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
@@ -26,12 +27,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.productive6.productive.R;
 import com.productive6.productive.logic.event.EventDispatch;
+import com.productive6.productive.logic.rewards.IStreakRewardManager;
 import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.logic.task.ITaskSorter;
+import com.productive6.productive.logic.util.DateUtilities;
 import com.productive6.productive.objects.Task;
+import com.productive6.productive.objects.events.ProductiveEventHandler;
+import com.productive6.productive.objects.events.ProductiveListener;
+import com.productive6.productive.objects.events.task.TaskCompleteEvent;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -45,7 +52,7 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class DashboardFragment extends Fragment {
+public class DashboardFragment extends Fragment implements ProductiveListener {
 
     @Inject
     ITaskManager taskManager;
@@ -53,6 +60,10 @@ public class DashboardFragment extends Fragment {
     @Inject
     ITaskSorter taskSorter;
 
+    @Inject
+    IStreakRewardManager streakRewardManager;
+
+    ImageView streakIcon;
 
     /**
      * Creates parent view for the tasks
@@ -81,7 +92,11 @@ public class DashboardFragment extends Fragment {
 
         taskDisplayView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false));//Describe how the data should be laid out
 
+        EventDispatch.registerListener(this);
         EventDispatch.registerListener(taskAdapter);
+
+        streakIcon = root.findViewById(R.id.fireIcon);
+        setStreakVisibility();
 
         taskSorter.getTasksByPriority((taskAdapter::setTasks));//logic call:: get tasks, provide it to task adapter
 
@@ -90,6 +105,29 @@ public class DashboardFragment extends Fragment {
             new TaskPopup(getContext(), null, taskManager::addTask).open(v);
         });
 
+    }
+
+    public void setStreakVisibility(){
+
+        streakRewardManager.onStreak(tasks -> {
+            //ask logic layer whether on streak in not
+            Task temp = new Task();
+            temp.setCompleted(LocalDateTime.now());
+            boolean onStreak = DateUtilities.inStreakTime(tasks, temp, streakRewardManager.getStreakLength());
+
+            //once the logic has given use a boolean telling us whether we are on a streak or not
+            //use the boolean to display the view as visible or invisible
+            if(onStreak)
+                streakIcon.setVisibility(View.VISIBLE);
+            else
+                streakIcon.setVisibility(View.GONE);
+
+        });
+    }
+
+    @ProductiveEventHandler
+    public void checkStreak(TaskCompleteEvent event){
+        setStreakVisibility();
     }
 
 }
