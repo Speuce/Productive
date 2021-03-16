@@ -5,9 +5,10 @@
             android:shape="ring"
             android:thicknessRatio="16"
             android:useLevel = "false">
-            <solid android:color="#DDD" />
+            <solid android:color="@color/white" />
         </shape>
     </item> //outer circle done
+
     <item>
         <rotate
             android:fromDegrees="270"
@@ -16,7 +17,12 @@
                 android:shape="ring"
                 android:thicknessRatio="16"
                 android:useLevel = "true">
-                <solid android:color="#8E6"/>
+<!--                <solid android:color="@color/light_accent"/>-->
+                <gradient android:type="sweep" android:useLevel="false"
+                    android:startColor="@color/white"
+                    android:endColor="@color/accent"
+                    android:angle="0"
+                    />
             </shape>
         </rotate>
     </item> //inner colour
