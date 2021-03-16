@@ -4,6 +4,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.productive6.productive.integration.RewardManagerIntTest;
 import com.productive6.productive.integration.RunnableExecutorInstrumentedTest;
+import com.productive6.productive.integration.StreakRewardManagerIntTest;
 import com.productive6.productive.integration.StatsManagerIntTest;
 import com.productive6.productive.integration.TaskManagerIntTest;
 import com.productive6.productive.integration.TaskSorterIntTest;
@@ -24,6 +25,7 @@ import org.junit.runners.Suite;
         TaskSorterIntTest.class,
         TitleManagerIntTest.class,
         UserManagerIntTest.class,
+        StreakRewardManagerIntTest.class,
         StatsManagerIntTest.class
 })
 public class TestAllIntegration {

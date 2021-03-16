@@ -4,10 +4,14 @@ import com.productive6.productive.logic.statstics.ICoinsStatsManager;
 import com.productive6.productive.logic.statstics.ITaskStatsManager;
 import com.productive6.productive.logic.statstics.IXPStatsManager;
 import com.productive6.productive.objects.tuples.DayIntTuple;
+import com.productive6.productive.objects.tuples.EpochIntTuple;
+import com.productive6.productive.persistence.Converters;
 import com.productive6.productive.persistence.datamanage.IDataManager;
 
 import java.time.DayOfWeek;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.Iterator;
 import java.util.List;
@@ -51,11 +55,13 @@ public class StatsManager implements ITaskStatsManager, ICoinsStatsManager, IXPS
                     .collect(Collectors.toList());
             dates.forEach(day ->{
                 boolean found = false;
-                for (Iterator<DayIntTuple> iterator = list.iterator(); iterator.hasNext(); ) {
-                    DayIntTuple tuple = iterator.next();
-                    if (tuple.getDate().equals(day)) {
+                for (Iterator<EpochIntTuple> iterator = list.iterator(); iterator.hasNext(); ) {
+                    EpochIntTuple tuple = iterator.next();
+                    //long dt = Converters.dateToTimestamp(tuple.getDate());
+                    LocalDate dateStoredUTC = Instant.ofEpochSecond(tuple.getDate()).atZone(ZoneOffset.UTC).toLocalDate();
+                    if (dateStoredUTC.equals(day)) {
                         found = true;
-                        callback.accept(tuple);
+                        callback.accept(new DayIntTuple(day, tuple.getNumber()));
                         iterator.remove();
                         break;
                     }

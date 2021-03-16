@@ -2,22 +2,17 @@ package com.productive6.productive.persistence.datamanage.dummy;
 
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.tuples.DayIntTuple;
-import com.productive6.productive.persistence.Converters;
+import com.productive6.productive.objects.tuples.EpochIntTuple;
 import com.productive6.productive.persistence.access.ITaskAccess;
-import com.productive6.productive.persistence.access.ITaskStatsticsAccess;
 import com.productive6.productive.persistence.datamanage.IStatisticsDataManager;
 import com.productive6.productive.persistence.datamanage.ITaskPersistenceManager;
 
-import java.lang.reflect.Array;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.OptionalLong;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -65,12 +60,12 @@ public class DummyTaskPersistenceManager implements ITaskPersistenceManager, ISt
     }
 
     @Override
-    public void getCompletedTasksByDay(int history, Consumer<List<DayIntTuple>> callback) {
+    public void getCompletedTasksByDay(int history, Consumer<List<EpochIntTuple>> callback) {
         LocalDate before = LocalDate.now().minusDays(history);
         callback.accept(internalList.stream().filter(Task::isCompleted).filter(task -> task.getCompleted().isAfter(before.atStartOfDay())).collect(
                 Collectors.groupingBy(task -> task.getCompleted().toLocalDate(), Collectors.counting()))
                 .entrySet().stream()
-                .map(e ->new DayIntTuple(e.getKey(), e.getValue().intValue()))
+                .map(e ->new EpochIntTuple(e.getKey().atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli(), e.getValue().intValue()))
                 .collect(Collectors.toList()));
     }
 

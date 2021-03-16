@@ -26,10 +26,13 @@ public class PersistentTaskManager implements ITaskManager{
 
 
     private IDataManager data;
+    private int minDifficulty;
+    private int minPriority;
 
-
-    public PersistentTaskManager(IDataManager data) {
+    public PersistentTaskManager(IDataManager data, int[] configValues) {
         this.data = data;
+        minPriority = configValues[0];
+        minDifficulty = configValues[1];
     }
 
 
@@ -65,7 +68,6 @@ public class PersistentTaskManager implements ITaskManager{
     }
 
 
-
     @Override
     public void updateTask(Task t) {
         if(t.getId() == 0){
@@ -84,5 +86,15 @@ public class PersistentTaskManager implements ITaskManager{
         t.setCompleted(LocalDateTime.now());
         updateTask(t);
         EventDispatch.dispatchEvent(new TaskCompleteEvent(t));
+    }
+
+    @Override
+    public int minPriority() {
+        return minPriority;
+    }
+
+    @Override
+    public int minDifficulty() {
+        return minDifficulty;
     }
 }
