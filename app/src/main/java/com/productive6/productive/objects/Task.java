@@ -6,8 +6,10 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * This object represents a single user task that needs to be completed.
@@ -36,14 +38,15 @@ public class Task implements Comparable<Task>{
      * that this task was created.
      */
     @ColumnInfo(name = "created")
-    private long createdTime;
+    @NotNull
+    private LocalDateTime createdTime;
 
     /**
-     * A flag to mark whether or not this task
-     * has been completed.
+     * The day/time that this task was completed.
+     * Null if not completed.
      */
-    @ColumnInfo(name = "completed")
-    private boolean completed;
+    @ColumnInfo(name = "completedDay")
+    private LocalDateTime completed;
 
     /**
      * When a given task is due
@@ -58,12 +61,25 @@ public class Task implements Comparable<Task>{
     private int difficulty;
 
     /**
+     * Coins earned from the completion of the task (if applicable)
+     */
+    @ColumnInfo(name = "coins")
+    private int coinsEarned;
+
+    /**
+     * XP earned from the completion of the task (if applicable)
+     */
+    @ColumnInfo(name = "xp")
+    private int xpEarned;
+
+    /**
      * Default Constructor
      */
     @Ignore
     public Task() {
         this.priority = 1;
         this.difficulty = 1;
+        createdTime = LocalDateTime.now();
     }
 
     /**
@@ -75,7 +91,7 @@ public class Task implements Comparable<Task>{
      * @param completed A flag to mark whether or not this task
      *                  has been completed.
      */
-    public Task(String taskName, int priority, int difficulty, long createdTime, LocalDate dueDate, boolean completed) {
+    public Task(String taskName, int priority, int difficulty, LocalDateTime createdTime, LocalDate dueDate, LocalDateTime completed) {
         this.taskName = taskName;
         this.priority = priority;
         this.createdTime = createdTime;
@@ -90,11 +106,12 @@ public class Task implements Comparable<Task>{
      * @param priority The user-defined priority of this task
      */
     @Ignore
-    public Task(String taskName, int priority) {
+    public Task(String taskName, int priority, int difficulty) {
         this.taskName = taskName;
+        this.difficulty = difficulty;
         this.priority = priority;
-        this.createdTime = 0;
-        this.completed = false;
+        this.createdTime = LocalDateTime.now();
+        this.completed = null;
     }
 
     /**
@@ -105,12 +122,12 @@ public class Task implements Comparable<Task>{
      *                    that this task was created.
      */
     @Ignore
-    public Task(String taskName, int priority, int difficulty, long createdTime) {
+    public Task(String taskName, int priority, int difficulty,@NotNull LocalDateTime createdTime) {
         this.taskName = taskName;
         this.priority = priority;
         this.createdTime = createdTime;
         this.difficulty = difficulty;
-        this.completed = false;
+        this.completed = null;
 //        this.dueDate = "";
     }
 
@@ -150,14 +167,14 @@ public class Task implements Comparable<Task>{
      * false otherwise.
      */
     public boolean isCompleted() {
-        return completed;
+        return completed != null;
     }
 
     /**
      * @param completed A flag to mark whether or not this task
      * has been completed.
      */
-    public void setCompleted(boolean completed) {
+    public void setCompleted(LocalDateTime completed) {
         this.completed = completed;
     }
 
@@ -169,11 +186,13 @@ public class Task implements Comparable<Task>{
         this.id = id;
     }
 
-    public long getCreatedTime() {
+    @NotNull
+    public LocalDateTime getCreatedTime() {
         return this.createdTime;
     }
 
-    public void setCreatedTime(long createdTime) {
+
+    public void setCreatedTime(@NotNull  LocalDateTime createdTime) {
         this.createdTime = createdTime;
     }
 
@@ -185,6 +204,30 @@ public class Task implements Comparable<Task>{
 
     public void setDifficulty(int difficulty) { this.difficulty = difficulty; }
 
+    public int getCoinsEarned() {
+        return coinsEarned;
+    }
+
+    public void setCoinsEarned(int coinsEarned) {
+        this.coinsEarned = coinsEarned;
+    }
+
+    public int getXpEarned() {
+        return xpEarned;
+    }
+
+    public void setXpEarned(int xpEarned) {
+        this.xpEarned = xpEarned;
+    }
+
+    /**
+     * @return The day/time that this task was completed.
+     *         Null if not completed.
+     */
+    public LocalDateTime getCompleted() {
+        return completed;
+    }
+
     /**
      * Compares this object with another task,
      * for comparable sorting.
@@ -193,8 +236,32 @@ public class Task implements Comparable<Task>{
     public int compareTo(Task o) {
         int prioritydiff = o.getPriority()-this.getPriority();
         if(prioritydiff==0){
-            return (int) (this.getCreatedTime()-o.getCreatedTime());
+            return this.getCreatedTime().compareTo(o.getCreatedTime());
         }
         return prioritydiff;
+    }
+
+    @Override
+    public boolean equals(Object other){
+        if(other instanceof Task){
+            Task t2 = (Task) other;
+            boolean result = t2.getId() == this.getId() &&
+                    t2.getPriority() == this.getPriority() &&
+                    t2.getCreatedTime().equals(this.getCreatedTime()) &&
+                    t2.getTaskName().equals(this.getTaskName()) &&
+                    t2.getDifficulty() == this.getDifficulty();
+            if(t2.getDueDate() != null){
+                result = result && t2.getDueDate().equals(this.getDueDate());
+            }else{
+                result = result && this.getDueDate()==null;
+            }
+            if(t2.getCompleted() != null){
+                result = result && t2.getCompleted().equals(this.getCompleted());
+            }else{
+                result = result && this.getCompleted()==null;
+            }
+            return result;
+        }
+        return false;
     }
 }

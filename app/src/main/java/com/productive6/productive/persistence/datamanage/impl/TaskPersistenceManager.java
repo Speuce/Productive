@@ -1,11 +1,10 @@
 package com.productive6.productive.persistence.datamanage.impl;
 
-import com.productive6.productive.persistence.executor.IRunnableExecutor;
+import com.productive6.productive.services.executor.IRunnableExecutor;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.persistence.access.ITaskAccess;
 import com.productive6.productive.persistence.datamanage.ITaskPersistenceManager;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.function.Consumer;
 

@@ -1,5 +1,6 @@
 package com.productive6.productive.ui.notifications;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
+import com.github.sundeepk.compactcalendarview.domain.Event;
 import com.productive6.productive.R;
 import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.logic.task.ITaskSorter;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.ui.dashboard.TaskAdapter;
+
+import com.productive6.productive.logic.util.CalenderUtilities;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -76,8 +80,8 @@ public class NotificationsFragment extends Fragment {
 
         /** Set date and time */
         calendar.setTime(new Date());
+        fillMonth(LocalDate.now().withDayOfMonth(1));
         monthTextView.setText(month + " " + (calendar.get(Calendar.YEAR)));
-        userClickedDate.setText("Tasks scheduled for " + getDateWithSuffix(calendar.get(Calendar.DATE)) + " " + month);
 
         /** Initialize tasks for the RecyclerView */
         initTaskList(dateInSDF, root);
@@ -95,59 +99,42 @@ public class NotificationsFragment extends Fragment {
 
             @Override
             public void onMonthScroll(Date firstDayOfNewMonth) {
+                fillMonth(firstDayOfNewMonth.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
                 calendar.setTime(firstDayOfNewMonth);
                 month = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
                 monthTextView.setText(month + " " + calendar.get(Calendar.YEAR));
+
             }
         });
     }
 
-    private String getDateWithSuffix(int day) {
-        switch (day % 10) {
-            case 1:  return day + "st";
-            case 2:  return day + "nd";
-            case 3:  return day + "rd";
-            default: return day + "th";
-        }
+    /**
+     * Calls the logic layer and asks it which days on the given month have a task assigned.
+     * Our job is to add the little dot things.
+     */
+    private void fillMonth(LocalDate first){
+        calendarView.removeAllEvents();
+        taskSorter.getDaysWithTaskInMonth(first, (day) ->{
+            calendarView.addEvent(new Event(Color.RED, day.atStartOfDay(ZoneId.systemDefault()).toEpochSecond()*1000L));
+        });
     }
+
 
     private void initTaskList(LocalDate date, View root) {
         TaskAdapter taskAdapter = new TaskAdapter(taskManager, root);
         taskDisplayView.setAdapter(taskAdapter);
         taskDisplayView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        taskSorter.getTasksOnDate(date, new NotificationsFragment.TaskConsumerStartup(taskAdapter, date));//Logic CALL--Load Tasks
-    }
-
-    /** Holds a callback for the database request made in attachTaskView */
-    private class TaskConsumerStartup implements Consumer<List<Task>> {
-        private final TaskAdapter taskAdapter;
-        private final LocalDate selectedDate;
-
-        TaskConsumerStartup(TaskAdapter taskAdapter, LocalDate selectedDate) {
-            this.taskAdapter = taskAdapter;
-            this.selectedDate = selectedDate;
-        }
-
-        @Override
-        public void accept(List<Task> tasks) {
-            /** Clear the List, repopulate only with the tasks on the clicked date */
+        taskSorter.getTasksOnDate(date, (tasks -> {
 
             tasksByDate.clear();
-
-            for (Task task : tasks) {
-                if (task.getDueDate() != null) {
-                    dateInSDF = task.getDueDate();
-                    if (dateInSDF.equals(selectedDate)) {
-                        tasksByDate.add(task);
-                    }
-                }
-                else tasksByDate.add(task);
-            }
+            dateInSDF = date;
+            tasksByDate.addAll(tasks);
 
             taskAdapter.setTasks(tasksByDate);
 
             /** Set text above the RecyclerView based on the number of task on the clicked date */
-            userClickedDate.setText(tasksByDate.size() + " task(s) scheduled for " + getDateWithSuffix(calendar.get(Calendar.DATE)) + " " + month);
-        }
+            userClickedDate.setText(tasksByDate.size() + " task(s) scheduled for " + CalenderUtilities.getDateWithSuffix(calendar.get(Calendar.DATE)) + " " + month);
+        }));
     }
+
 }

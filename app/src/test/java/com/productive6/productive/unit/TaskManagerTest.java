@@ -1,4 +1,4 @@
-package com.productive6.productive;
+package com.productive6.productive.unit;
 
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.exceptions.PersistentIDAssignmentException;
@@ -18,6 +18,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -30,11 +31,9 @@ public class TaskManagerTest {
 
     private ITaskManager taskManager;
 
-    private DummyDataManager data;
-
     @Before
     public void init(){
-        data = new DummyDataManager();
+        DummyDataManager data = new DummyDataManager();
         taskManager = new PersistentTaskManager(data);
     }
 
@@ -45,7 +44,7 @@ public class TaskManagerTest {
      */
     @Test
     public void testIDFormatInsert() {
-        Task testData = new Task("name", 1, 1, System.currentTimeMillis(), LocalDate.now(), false);
+        Task testData = new Task("name", 1, 1, LocalDateTime.now(), LocalDate.now(), null);
         testData.setId(1);
         assertThrows(
                 "Task Manager didn't catch an id exception on insert.",
@@ -61,7 +60,7 @@ public class TaskManagerTest {
      */
     @Test
     public void testIDFormatUpdate() {
-        Task testData = new Task("name", 1, 1, System.currentTimeMillis(), LocalDate.now(), false);
+        Task testData = new Task("name", 1, 1, LocalDateTime.now(), LocalDate.now(), null);
         testData.setId(0);
         assertThrows(
                 "Task Manager didn't catch an id exception on update.",
@@ -77,7 +76,7 @@ public class TaskManagerTest {
      */
     @Test
     public void testCompletionChecking(){
-        Task testData = new Task("name", 1, 1, System.currentTimeMillis(), LocalDate.now(), true);
+        Task testData = new Task("name", 1, 1, LocalDateTime.now(), LocalDate.now(), LocalDateTime.now());
         assertThrows("Task Manager missed a 'completed' flag = true",
                 ObjectFormatException.class,
                 () -> taskManager.addTask(testData));
@@ -88,25 +87,16 @@ public class TaskManagerTest {
      */
     @Test
     public void testPriorityChecking(){
-        Task testData = new Task("name", -1, 1, System.currentTimeMillis(), LocalDate.now(), false);
+        Task testData = new Task("name", -1, 1, LocalDateTime.now(), LocalDate.now(), null);
         assertThrows("Task Manager missed a negative priority",
                 ObjectFormatException.class,
                 () -> taskManager.addTask(testData));
     }
 
-    /**
-     * Tests that the task manager has the ability to autofill times
-     */
-    @Test
-    public void testTimeAutofill(){
-        Task testData = new Task("name", 1, 1, 0, LocalDate.now(), false);
-        taskManager.addTask(testData);
-        assertTrue("Task Manager didn't autofill time correctly.", Math.abs(System.currentTimeMillis()-testData.getCreatedTime()) < 10000);
-    }
 
     @Test
     public void testCompleteTask(){
-        Task testData = new Task("name", 1, 1, 0, LocalDate.now(), false);
+        Task testData = new Task("name", 1, 1, LocalDateTime.now(), LocalDate.now(), null);
         taskManager.addTask(testData);
         taskManager.completeTask(testData);
         assertTrue("Task Manager didn't autofill completion correctly.", testData.isCompleted());
@@ -121,7 +111,7 @@ public class TaskManagerTest {
                 success.set(true);
             }
         });
-        Task testData = new Task("name", 1, 1, 0, LocalDate.now(), false);
+        Task testData = new Task("name", 1, 1, LocalDateTime.now(), LocalDate.now(), null);
         taskManager.addTask(testData);
         taskManager.updateTask(testData);
         assertTrue("TaskManager failed to trigger a user updated event when necessary.",success.get());
@@ -136,7 +126,7 @@ public class TaskManagerTest {
                 success.set(true);
             }
         });
-        Task testData = new Task("name", 1, 1, 0, LocalDate.now(), false);
+        Task testData = new Task("name", 1, 1, LocalDateTime.now(), LocalDate.now(), null);
         taskManager.addTask(testData);
         assertTrue("TaskManager failed to trigger a user create event when necessary.",success.get());
     }

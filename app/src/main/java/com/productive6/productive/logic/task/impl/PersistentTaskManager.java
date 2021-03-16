@@ -12,6 +12,7 @@ import com.productive6.productive.objects.events.task.TaskUpdateEvent;
 import com.productive6.productive.persistence.datamanage.IDataManager;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Consumer;
@@ -58,9 +59,6 @@ public class PersistentTaskManager implements ITaskManager{
                 throw new ObjectFormatException("A priority of < 0 is not supported!");
         }
         validateTask(t);
-        if(t.getCreatedTime() == 0){
-            t.setCreatedTime(System.currentTimeMillis());
-        }
         data.task().insertTask(t, () ->{
             EventDispatch.dispatchEvent(new TaskCreateEvent(t));
         });
@@ -83,7 +81,7 @@ public class PersistentTaskManager implements ITaskManager{
         if(t.isCompleted()){
             throw new ObjectFormatException("Task has already been completed!");
         }
-        t.setCompleted(true);
+        t.setCompleted(LocalDateTime.now());
         updateTask(t);
         EventDispatch.dispatchEvent(new TaskCompleteEvent(t));
     }

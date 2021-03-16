@@ -1,14 +1,18 @@
-package com.productive6.productive;
+package com.productive6.productive.unit;
 
 import com.productive6.productive.logic.task.ITaskSorter;
 import com.productive6.productive.logic.task.impl.PersistentTaskSorter;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.persistence.datamanage.dummy.DummyDataManager;
 
+import net.bytebuddy.asm.Advice;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.junit.Assert.*;
 
@@ -33,9 +37,9 @@ public class TaskSorterTest {
      */
     @Test
     public void testGetByPriority(){
-        data.task().insertTask(new Task("task", 5, 1, System.currentTimeMillis()), () -> {});
+        data.task().insertTask(new Task("task", 5, 1, LocalDateTime.now()), () -> {});
 
-        Task t2 = new Task("task", 6,1, System.currentTimeMillis());
+        Task t2 = new Task("task", 6,1, LocalDateTime.now());
         data.task().insertTask(t2, () -> {});
         taskSorter.getTasksByPriority(tasks -> {
             assertEquals("Task Sorter is improperly getting completed tasks by priority!",
@@ -48,10 +52,10 @@ public class TaskSorterTest {
      */
     @Test
     public void testGetByCreation() throws InterruptedException {
-        Task t1 = new Task("task", 5, 5, System.currentTimeMillis());
+        Task t1 = new Task("task", 5, 5, LocalDateTime.now());
         //make t1 created 10ms before the second task.
         Thread.sleep(10);
-        data.task().insertTask(new Task("task2", 5, 5,System.currentTimeMillis()), () -> {});
+        data.task().insertTask(new Task("task2", 5, 5,LocalDateTime.now()), () -> {});
         data.task().insertTask(t1, () -> {});
         taskSorter.getTasksByCreation(tasks -> {
             assertEquals("Task sorter is improperly getting completed tasks by creation!",
@@ -65,10 +69,10 @@ public class TaskSorterTest {
      */
     @Test
     public void testGetByDueDate() throws InterruptedException {
-        Task t1 = new Task("task", 5, 5, System.currentTimeMillis(), LocalDate.now(), false);
-        data.task().insertTask(new Task("task2", 5, 5,System.currentTimeMillis(), LocalDate.now().plusDays(1), false), () -> {});
+        Task t1 = new Task("task", 5, 5, LocalDateTime.now(), LocalDate.now(), null);
+        data.task().insertTask(new Task("task2", 5, 5,LocalDateTime.now(), LocalDate.now().plusDays(1), null), () -> {});
         data.task().insertTask(t1, () -> {});
-        data.task().insertTask(new Task("task3", 5, 5,System.currentTimeMillis(), LocalDate.now().plusDays(2), false), () -> {});
+        data.task().insertTask(new Task("task3", 5, 5,LocalDateTime.now(), LocalDate.now().plusDays(2), null), () -> {});
         taskSorter.getTasksByDueDate(tasks -> {
             assertEquals("Task sorter is improperly getting completed tasks by due date!",
                     tasks.iterator().next(), t1);
@@ -80,7 +84,7 @@ public class TaskSorterTest {
      */
     @Test
     public void testDateFilterPositive(){
-        Task t1 = new Task("task", 5, 5, System.currentTimeMillis(), LocalDate.now(), false);
+        Task t1 = new Task("task", 5, 5, LocalDateTime.now(), LocalDate.now(), null);
         //make t1 created 10ms before the second task.
         data.task().insertTask(t1, () ->{});
         taskSorter.getTasksOnDate(LocalDate.now(),tasks -> {
@@ -93,7 +97,7 @@ public class TaskSorterTest {
      */
     @Test
     public void testDateFilterNegative(){
-        Task t1 = new Task("task", 5, 5, System.currentTimeMillis(), LocalDate.now().plusDays(1), false);
+        Task t1 = new Task("task", 5, 5, LocalDateTime.now(), LocalDate.now().plusDays(1), null);
         //make t1 created 10ms before the second task.
         data.task().insertTask(t1, () ->{});
         taskSorter.getTasksOnDate(LocalDate.now(),tasks -> {
@@ -106,10 +110,10 @@ public class TaskSorterTest {
      */
     @Test
     public void testGetCompletedIncludes(){
-        Task t1 = new Task("task", 5);
+        Task t1 = new Task("task", 5, 0);
 
         data.task().insertTask(t1, () ->{});
-        t1.setCompleted(true);
+        t1.setCompleted(LocalDateTime.now());
         taskSorter.getCompletedTasks(tasks -> {
             assertTrue("TaskManager Get Completed tasks missed a completed task.", tasks.contains(t1));
         });
@@ -120,11 +124,28 @@ public class TaskSorterTest {
      */
     @Test
     public void testGetCompletedExcludes(){
-        Task t2 = new Task("task2", 5, 1, System.currentTimeMillis());
+        Task t2 = new Task("task2", 5, 1, LocalDateTime.now());
         data.task().insertTask(t2, () ->{});
         taskSorter.getCompletedTasks(tasks -> {
             assertFalse("TaskManager Get Completed tasks didn't included an incomplete task.", tasks.contains(t2));
         });
+    }
+
+
+    @Test
+    public void testGetDaysWithTaskInMonth(){
+        Task t2 = new Task("task2", 5, 1, System.currentTimeMillis());
+        t2.setDueDate(LocalDate.now());
+        data.task().insertTask(t2, () ->{});
+        AtomicBoolean pass = new AtomicBoolean(false);
+        taskSorter.getDaysWithTaskInMonth(LocalDate.now().withDayOfMonth(1), localDate -> {
+            if(localDate.equals(LocalDate.now())){
+                pass.set(true);
+            }else{
+                fail("Get Days with Task in month gave a day without an actual task: " + localDate.toString());
+            }
+        });
+        assertTrue("Get Days with Task in month did not give the day expected!:", pass.get());
     }
 
 
