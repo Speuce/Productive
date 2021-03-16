@@ -3,6 +3,7 @@ package com.productive6.productive.persistence.access;
 import androidx.room.Query;
 
 import com.productive6.productive.objects.tuples.DayIntTuple;
+import com.productive6.productive.objects.tuples.EpochIntTuple;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -25,7 +26,7 @@ public interface ITaskStatsticsAccess extends ITaskAccess{
             "AND dat NOT NULL " +
             "GROUP BY dat " +
             "ORDER BY dat);")
-    List<DayIntTuple> getCompletedTasksByDay(int history);
+    List<EpochIntTuple> getCompletedTasksByDay(int history);
 
     /**
      * Gets a mapping of day:coins earned

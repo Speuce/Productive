@@ -134,7 +134,7 @@ public class TaskSorterTest {
 
     @Test
     public void testGetDaysWithTaskInMonth(){
-        Task t2 = new Task("task2", 5, 1, LocalDateTime.now());
+        Task t2 = new Task("task2", 5, 1);
         t2.setDueDate(LocalDate.now());
         data.task().insertTask(t2, () ->{});
         AtomicBoolean pass = new AtomicBoolean(false);
