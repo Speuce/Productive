@@ -16,7 +16,6 @@ import com.productive6.productive.objects.events.ProductiveListener;
 
 public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.ViewHolder> implements ProductiveListener {
 
-    private final View rootView;
 
     /**
      * Holds the recyclerView view and it's components
@@ -30,14 +29,6 @@ public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.ViewHolder> 
             statName = itemView.findViewById(R.id.stat_name);
             statValue = itemView.findViewById(R.id.stat_value);
         }
-    }
-
-    /**
-     * Get root from calling method
-     * @param root
-     */
-    public StatsAdapter(View root){
-        this.rootView = root;
     }
 
     /**

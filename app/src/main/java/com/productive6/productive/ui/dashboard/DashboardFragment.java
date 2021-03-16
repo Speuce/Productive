@@ -82,10 +82,7 @@ public class DashboardFragment extends Fragment {
         taskDisplayView.setAdapter(taskAdapter);//attach display to view + tasks
         taskDisplayView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false));//Describe how the data should be laid out
 
-        RecyclerView statsDisplayView = root.findViewById(R.id.stats_view);//Grab display
-        StatsAdapter statsAdapter = new StatsAdapter(root);
-        statsDisplayView.setAdapter(statsAdapter);//attach display to view
-        statsDisplayView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false));//Describe how the data should be laid out
+
 
         EventDispatch.registerListener(taskAdapter);
 
