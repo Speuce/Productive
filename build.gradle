@@ -3,7 +3,6 @@ buildscript {
     repositories {
         google()
         jcenter()
-        maven { url 'https://jitpack.io' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.1.2'
@@ -17,15 +16,13 @@ buildscript {
     ext.hilt_version = '2.32-alpha'
     repositories {
         jcenter()
-        mavenCentral()
-        maven { url 'https://jitpack.io' }// add repository
+        mavenCentral() // add repository
 //        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
 
     }
     dependencies {
         // other plugins...
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
-
     }
 
 
@@ -35,7 +32,6 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven { url 'https://jitpack.io' }
     }
     tasks.withType(JavaCompile) {
         options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
