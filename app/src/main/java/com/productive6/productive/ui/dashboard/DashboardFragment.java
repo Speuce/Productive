@@ -31,6 +31,10 @@ import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.logic.task.ITaskSorter;
 import com.productive6.productive.objects.Task;
+import com.productive6.productive.objects.events.DummyEvent;
+import com.productive6.productive.objects.events.ProductiveEventHandler;
+import com.productive6.productive.objects.events.ProductiveListener;
+import com.productive6.productive.objects.events.task.TaskCreateEvent;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -54,6 +58,7 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
     @Inject
     ITaskSorter taskSorter;
     private TaskAdapter taskAdapter;
+    private String sortingBy = "Priority";
 
     /**
      * Creates parent view for the tasks
@@ -85,13 +90,32 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
 
         EventDispatch.registerListener(taskAdapter);
 
-        taskSorter.getTasksByPriority((taskAdapter::setTasks));//logic call:: get tasks, provide it to task adapter
+        sortTasks();
         Button createButton = root.findViewById(R.id.newTaskButton);
         createButton.setOnClickListener(v -> {
             new TaskPopup(getContext(), null, taskManager::addTask).open(v);
         });
+        EventDispatch.registerListener(new ProductiveListener() {
+            @ProductiveEventHandler
+            public void onEvent(TaskCreateEvent e){
+                sortTasks();
+            }
+        });
     }
 
+    private void sortTasks(){
+        switch (sortingBy) {
+            case "Priority":
+                taskSorter.getTasksByPriority(new TaskConsumerStartup(taskAdapter));
+                break;
+            case "Due Date":
+                taskSorter.getTasksByDueDate(new TaskConsumerStartup(taskAdapter));
+                break;
+            case "Created Date":
+                taskSorter.getTasksByCreation(new TaskConsumerStartup(taskAdapter));
+                break;
+        }
+    }
     /**
      * Reacts to changes made to the sort-by dropdown.
      * Uses a switch statement to perform different actions based on what the dropdown was changed to.
@@ -103,17 +127,8 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String selection = parent.getItemAtPosition(position).toString();
-        switch(selection){
-            case "Priority":
-                taskSorter.getTasksByPriority(new TaskConsumerStartup(taskAdapter));
-                break;
-            case "Due Date":
-                taskSorter.getTasksByDueDate(new TaskConsumerStartup(taskAdapter));
-                break;
-            case "Created Date":
-                taskSorter.getTasksByCreation(new TaskConsumerStartup(taskAdapter));
-                break;
-        }
+        sortingBy = selection;
+        sortTasks();
     }
 
     @Override

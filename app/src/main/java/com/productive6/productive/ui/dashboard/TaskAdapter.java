@@ -168,7 +168,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
     public void setTasks(List<Task> tasks){
         this.tasks = tasks;
         updateData();
-
     }
     /**
      * Applies an animation to the given view.
