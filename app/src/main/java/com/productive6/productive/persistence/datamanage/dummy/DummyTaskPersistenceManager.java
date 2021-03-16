@@ -9,7 +9,10 @@ import com.productive6.productive.persistence.datamanage.IStatisticsDataManager;
 import com.productive6.productive.persistence.datamanage.ITaskPersistenceManager;
 
 import java.lang.reflect.Array;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -90,7 +93,7 @@ public class DummyTaskPersistenceManager implements ITaskPersistenceManager, ISt
     public void getFirstTaskDay(Consumer<LocalDate> callback) {
         OptionalLong opt = internalList.stream().mapToLong(Task::getCreatedTime).min();
         if(opt.isPresent()){
-            callback.accept(Converters.dateTimefromTimestamp(opt.getAsLong()).toLocalDate());
+            callback.accept(Instant.ofEpochMilli(opt.getAsLong()).atZone(ZoneId.systemDefault()).toLocalDate());
         }else{
             callback.accept(LocalDate.now());
         }
