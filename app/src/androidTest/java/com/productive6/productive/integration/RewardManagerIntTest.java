@@ -61,11 +61,11 @@ public class RewardManagerIntTest {
     @Test
     public void testManyEvents(){
 
-        for(int i = 0; i < 1001; i++){
+        for(int i = 0; i < 101; i++){
             EventDispatch.dispatchEvent(new TaskCompleteEvent(new Task("test",3,3)));
         }
-        assertEquals("Did not have 0 XP", 4,rewardManager.getExperience());
-        assertEquals("Did not have level as 1", 40,rewardManager.getLevel());
+        assertEquals("Did not have 4 XP", 4,rewardManager.getExperience());
+        assertEquals("Did not have level as 4", 4,rewardManager.getLevel());
 
     }
 
