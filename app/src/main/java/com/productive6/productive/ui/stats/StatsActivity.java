@@ -102,7 +102,7 @@ public class StatsActivity extends AppCompatActivity implements AdapterView.OnIt
         BarDataSet barDataSet = new BarDataSet(days, "Days");
 
         statsManager.getTasksCompletedPastDays(history,(dayIntTuple)->{
-            barDataSet.addEntry(new BarEntry(dayIntTuple.getDate().toEpochSecond(),dayIntTuple.getNumber()));
+            barDataSet.addEntry(new BarEntry(dayIntTuple.getDate().toEpochDay(),dayIntTuple.getNumber()));
 
             BarData barData = new BarData(barDataSet);
             barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
