@@ -1,28 +1,15 @@
 package com.productive6.productive.ui.dashboard;
 
-import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,21 +19,14 @@ import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.logic.task.ITaskSorter;
 import com.productive6.productive.objects.Task;
-import com.productive6.productive.objects.events.DummyEvent;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.task.TaskCreateEvent;
 import com.productive6.productive.ui.stats.StatsActivity;
 
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.function.Consumer;
 
 import javax.inject.Inject;
@@ -61,8 +41,9 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
     @Inject
     ITaskSorter taskSorter;
     private TaskAdapter taskAdapter;
-    private String sortingBy = "Priority";
-    private Spinner sort_by;
+    private static String sortingBySelection;
+    private static int sortBySelectionInt;
+    private Spinner sortBySpinner;
 
     /**
      * Creates parent view for the tasks
@@ -73,10 +54,12 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
      */
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        sort_by = (Spinner) root.findViewById(R.id.sortTasksDropdown);
-
+        sortBySpinner = (Spinner) root.findViewById(R.id.sortTasksDropdown);
+        if(sortingBySelection !=null) {//Set the spinner to where it was left the last time the user was on the page.
+            sortBySpinner.setSelection(sortBySelectionInt);
+        }
         attachTaskView(root);
-        sort_by.setOnItemSelectedListener(this);
+        sortBySpinner.setOnItemSelectedListener(this);
         return root;
     }
 
@@ -115,17 +98,25 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
         });
     }
 
+    /**
+     * Sorts by spinner selection and sets the tasks in the taskAdapter.
+     * This is the way to update the task view.
+     */
     private void sortTasks(){
-        switch (sortingBy) {
-            case "Priority":
-                taskSorter.getTasksByPriority(new TaskConsumerStartup(taskAdapter,sort_by));
-                break;
-            case "Due Date":
-                taskSorter.getTasksByDueDate(new TaskConsumerStartup(taskAdapter,sort_by));
-                break;
-            case "Created Date":
-                taskSorter.getTasksByCreation(new TaskConsumerStartup(taskAdapter,sort_by));
-                break;
+        if(sortingBySelection != null) {// When first started, sortBySelection will be null, so get by priority is chosen by default.
+            switch (sortingBySelection) {
+                case "Priority":
+                    taskSorter.getTasksByPriority(new TaskConsumerStartup(taskAdapter, sortBySpinner));
+                    break;
+                case "Due Date":
+                    taskSorter.getTasksByDueDate(new TaskConsumerStartup(taskAdapter, sortBySpinner));
+                    break;
+                case "Created Date":
+                    taskSorter.getTasksByCreation(new TaskConsumerStartup(taskAdapter, sortBySpinner));
+                    break;
+            }
+        }else{
+            taskSorter.getTasksByPriority(new TaskConsumerStartup(taskAdapter, sortBySpinner));
         }
 
     }
@@ -140,7 +131,8 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String selection = parent.getItemAtPosition(position).toString();
-        sortingBy = selection;
+        sortingBySelection = selection;
+        this.sortBySelectionInt = position;
         sortTasks();
     }
 
