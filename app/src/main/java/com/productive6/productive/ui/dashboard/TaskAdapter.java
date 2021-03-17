@@ -73,7 +73,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
      * Holds the recyclerView view and it's components
      */
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private final TextView id;
+//        private final TextView id;
         private final TextView taskName;
         private final TextView taskPriority;
         private final TextView taskDifficulty;
@@ -83,13 +83,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
-            taskName = itemView.findViewById(R.id.stat_name);
+            taskName = itemView.findViewById(R.id.taskNameTextView);
             taskPriority = itemView.findViewById(R.id.taskPriorityTextView);
             taskDifficulty = itemView.findViewById(R.id.taskDifficultyTextView);
             taskDueDate = itemView.findViewById(R.id.taskDueDateTextView);
             taskComplete = itemView.findViewById(R.id.taskCompleteToggleButton);
             Button editTask = itemView.findViewById(R.id.editButton);
-            id = itemView.findViewById(R.id.taskId);
+//            id = itemView.findViewById(R.id.taskId);
 //            initPopupWindow();
 
             //listener on 'complete'
@@ -143,10 +143,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
      */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.id.setText(""+tasks.get(position).getId());
+//        holder.id.setText(""+tasks.get(position).getId());
         holder.taskName.setText(tasks.get(position).getTaskName());
-        holder.taskPriority.setText(""+tasks.get(position).getPriority());
-        holder.taskDifficulty.setText(""+tasks.get(position).getDifficulty());
+        holder.taskPriority.setText(""+tasks.get(position).getPriorityInString());
+        holder.taskDifficulty.setText(""+tasks.get(position).getDifficultyInString());
         if (tasks.get(position).getDueDate() != null)
             holder.taskDueDate.setText(formatter.format(tasks.get(position).getDueDate()));
         else holder.taskDueDate.setText("");
