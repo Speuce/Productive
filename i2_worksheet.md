@@ -17,11 +17,9 @@ We would classify this debt as the inadvertent prudent kind. At the time, we did
 
 # Design patterns
 
-## Singleton Pattern
-https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/commit/2e2ebf1f32e9bd262f9997351aec6791c7affba4#71a5f6b12646cc3c0a8b4ebd854f0b8365beb8fe_26_28
+Singleton Pattern: https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/commit/2e2ebf1f32e9bd262f9997351aec6791c7affba4#71a5f6b12646cc3c0a8b4ebd854f0b8365beb8fe_26_28
 
-## Adapter
-https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/blob/develop/app/src/main/java/com/productive6/productive/ui/dashboard/TaskAdapter.java
+Adapter: https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/blob/develop/app/src/main/java/com/productive6/productive/ui/dashboard/TaskAdapter.java
 
 
 #Iteration 1 Feedback Fixes
