@@ -36,15 +36,8 @@ public class StatsActivity extends AppCompatActivity {
         BarChart barChart = findViewById(R.id.bar_chart);
 
         ArrayList<BarEntry> days = new ArrayList<>();
-
         BarDataSet barDataSet = new BarDataSet(days, "Days");
-        BarData barData = new BarData(barDataSet);
-        barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-        barDataSet.setValueTextColor(Color.BLACK);
-        barDataSet.setValueTextSize(16f);
-        barChart.setFitBars(true);
-        barChart.getDescription().setText("Bar Chart");
-        barChart.animateY(500);
+
 
 
         RecyclerView statsDisplayView = findViewById(R.id.stats_view);//Grab display
@@ -55,6 +48,13 @@ public class StatsActivity extends AppCompatActivity {
         statsManager.getTasksCompletedPastDays(7,(dayIntTuple)->{
             barDataSet.addEntry(new BarEntry(dayIntTuple.getDate().getDayOfMonth(),dayIntTuple.getNumber()));
 
+            BarData barData = new BarData(barDataSet);
+            barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+            barDataSet.setValueTextColor(Color.BLACK);
+            barDataSet.setValueTextSize(16f);
+            barChart.setFitBars(true);
+            barChart.getDescription().setText("Bar Chart");
+            barChart.animateY(500);
             barChart.setData(barData);
 
         });
