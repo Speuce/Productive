@@ -2,10 +2,14 @@ package com.productive6.productive.ui.stats;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Color;
+import android.graphics.PointF;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
@@ -19,13 +23,18 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.productive6.productive.R;
+import com.productive6.productive.logic.statstics.ICoinsStatsManager;
 import com.productive6.productive.logic.statstics.ITaskStatsManager;
-import com.productive6.productive.logic.task.ITaskManager;
-import com.productive6.productive.ui.dashboard.StatsAdapter;
+import com.productive6.productive.logic.statstics.IXPStatsManager;
+import com.productive6.productive.logic.util.CalenderUtilities;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.inject.Inject;
@@ -36,9 +45,31 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class StatsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     @Inject
+    IXPStatsManager xpStatsManager;
+
+    @Inject
+    ICoinsStatsManager coinsStatsManager;
+
+    @Inject
     ITaskStatsManager statsManager;
-    BarChart barChart;
-    final int DEFAULT_HISTORY = 7;
+
+    /**
+     * The Task Completed Chart
+     */
+    private BarChart barChart;
+
+    /**
+     * The default number of days to go back (if the user hasn't selected yet)
+     */
+    private static final int DEFAULT_HISTORY = 7;
+
+    /**
+     * For displaying the user's various statistics
+     */
+    private StatsAdapter statsAdapter;
+
+    private Timer timer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,38 +77,116 @@ public class StatsActivity extends AppCompatActivity implements AdapterView.OnIt
         setContentView(R.layout.activity_stats);
 
         barChart = findViewById(R.id.bar_chart);
+        barChart.getAxisRight().setEnabled(false);
+        configureXAxis();
+        configureYAxis();
 
         Spinner sort_by = (Spinner) findViewById(R.id.dateRangeSelection);
         sort_by.setOnItemSelectedListener(this);
 
-        ArrayList<BarEntry> days = new ArrayList<>();
-        BarDataSet barDataSet = new BarDataSet(days, "Days");
 
         RecyclerView statsDisplayView = findViewById(R.id.stats_view);//Grab display
-        StatsAdapter statsAdapter = new StatsAdapter();
+        statsAdapter = new StatsAdapter();
         statsDisplayView.setAdapter(statsAdapter);//attach display to view
-        statsDisplayView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));//Describe how the data should be laid out
+        statsDisplayView.addOnItemTouchListener(new RecyclerView.SimpleOnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(@NotNull RecyclerView rv, @NotNull MotionEvent e) {
+                return true;
+            }
+        });
+
+        //this code is for the smooth scrolling affect of the recylerview
+        //code from https://stackoverflow.com/a/36784136/6047183
+        statsDisplayView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false){
+            @Override
+            public void smoothScrollToPosition(RecyclerView recyclerView, RecyclerView.State state, int position) {
+
+
+                final LinearSmoothScroller linearSmoothScroller = new LinearSmoothScroller(recyclerView.getContext()) {
+
+                    @Override
+                    public PointF computeScrollVectorForPosition(int targetPosition) {
+                        return super.computeScrollVectorForPosition(targetPosition);
+                    }
+
+                    @Override
+                    protected float calculateSpeedPerPixel(DisplayMetrics displayMetrics) {
+                        return 200f / displayMetrics.densityDpi;
+                    }
+                };
+                linearSmoothScroller.setTargetPosition(position);
+                startSmoothScroll(linearSmoothScroller);
+            }
+        });
+        fillStatistics();
+
+        //and this is for the autoscrolling part
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            final AtomicInteger i = new AtomicInteger(0);
+            @Override
+            public void run() {
+                if(statsAdapter.getItemCount() == 0){
+                    return;
+                }
+                if(i.incrementAndGet() >= statsAdapter.getItemCount()){
+                    i.set(0);
+                }
+                statsDisplayView.smoothScrollToPosition(i.get());
+            }
+        }, 3000L, 2500L);
+
+
+        //Describe how the data should be laid out
 
         buildGraph( DEFAULT_HISTORY);
     }
 
-    private void buildGraph( int history){
+    @Override
+    public void onDestroy() {
+        timer.cancel();
+        super.onDestroy();
+    }
 
-
-        ArrayList<BarEntry> days = new ArrayList<>();
-        BarDataSet barDataSet = new BarDataSet(days, "Days");
-        barDataSet.setValueFormatter(new ValueFormatter() {
-            @Override
-            public String getFormattedValue(float value) {
-                return (int)value + "";
-            }
+    /**
+     * Gets the Statistics from StatsManagers and fills in the ui with them
+     */
+    private void fillStatistics(){
+        statsManager.getAverageTasksCompletedDaily(val ->{
+            statsAdapter.setStat("Average Tasks Per Day", ""+(Math.round(val * 100.0) / 100.0));
         });
+        statsManager.getTasksCompletedAllTime(val ->{
+            statsAdapter.setStat("Tasks Completed All Time", "" + val);
+        });
+        coinsStatsManager.getCoinsEarnedAllTime(val ->{
+            statsAdapter.setStat("Coins Earned All Time", "" + val);
+        });
+        xpStatsManager.getXPEarnedAllTime(val ->{
+            statsAdapter.setStat("Xp Earned All Time", "" + val);
+        });
+        statsManager.getFirstTaskDay(val -> {
+            statsAdapter.setStat("Tasker Since", CalenderUtilities.DATE_FORMATTER.format(val));
+        });
+    }
 
+    private void configureYAxis(){
+        YAxis leftAxis = barChart.getAxisLeft();
+        leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+        leftAxis.setDrawGridLines(true);
+        leftAxis.setGranularity(1f);
+        leftAxis.setAxisMinimum(0f);
+        leftAxis.setTextColor(Color.BLACK);
+        leftAxis.setDrawZeroLine(false);
+        leftAxis.enableGridDashedLine(10f, 10f, 0f);
+    }
 
-        barChart.getAxisRight().setEnabled(false);
+    /**
+     * Configures the x axis of the graph.
+     */
+    private void configureXAxis(){
 
         XAxis xAxis = barChart.getXAxis();
-        xAxis.setLabelCount(Math.min(history, 10));
+
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setTextSize(10f);
         xAxis.setLabelRotationAngle(-45);
@@ -94,15 +203,27 @@ public class StatsActivity extends AppCompatActivity implements AdapterView.OnIt
                 return format.format(day);
             }
         });
+    }
+
+    /**
+     * Builds the graph going back x days
+     * @param history x -- the number of days to go back in history
+     */
+    private void buildGraph( int history){
+        ArrayList<BarEntry> days = new ArrayList<>();
+        BarDataSet barDataSet = new BarDataSet(days, "Days");
+        barDataSet.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return (int)value + "";
+            }
+        });
+
+
+        XAxis xAxis = barChart.getXAxis();
+        xAxis.setLabelCount(Math.min(history, 10));
 
         YAxis leftAxis = barChart.getAxisLeft();
-        leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
-        leftAxis.setDrawGridLines(true);
-        leftAxis.setGranularity(1f);
-        leftAxis.setAxisMinimum(0f);
-        leftAxis.setTextColor(Color.BLACK);
-        leftAxis.setDrawZeroLine(false);
-        leftAxis.enableGridDashedLine(10f, 10f, 0f);
         AtomicInteger max = new AtomicInteger(3);
         statsManager.getTasksCompletedPastDays(history,(dayIntTuple)->{
             barDataSet.addEntry(new BarEntry(dayIntTuple.getDate().toEpochDay(),Math.max(dayIntTuple.getNumber(), 0.01f)));
