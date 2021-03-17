@@ -72,7 +72,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
     /**
      * Holds the recyclerView view and it's components
      */
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView id;
         private final TextView taskName;
         private final TextView taskPriority;
@@ -81,7 +81,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         private final Button taskComplete;
 
 
-        public ViewHolder(@NonNull View itemView){
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             taskName = itemView.findViewById(R.id.stat_name);
             taskPriority = itemView.findViewById(R.id.taskPriorityTextView);
@@ -93,11 +93,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
 //            initPopupWindow();
 
             //listener on 'complete'
-            taskComplete.setOnClickListener(v ->{
-                try{
+            taskComplete.setOnClickListener(v -> {
+                try {
                     taskManager.completeTask(tasks.get(getAdapterPosition()));
                     setAnimation(itemView, getAdapterPosition());
-                }catch(ObjectFormatException e){
+                } catch (ObjectFormatException e) {
                     taskComplete.setTextColor(0xFF00000);
                     taskComplete.setText("There was an issue with this task..");
                 }
@@ -105,7 +105,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
 
             //show edit popup window by clicking 'edit'
             editTask.setOnClickListener((v) -> {
-                new TaskPopup(itemView.getContext(), tasks.get(getAdapterPosition()), (task) ->{
+                new TaskPopup(itemView.getContext(), tasks.get(getAdapterPosition()), (task) -> {
                     taskManager.updateTask(task);
                     updateData();
                 }).open(v);
@@ -115,16 +115,18 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
 
     /**
      * Get Android injection from calling method.
+     *
      * @param taskManager
      * @param root
      */
-    public TaskAdapter(ITaskManager taskManager, View root){
+    public TaskAdapter(ITaskManager taskManager, View root) {
         this.taskManager = taskManager;
         this.rootView = root;
     }
 
     /**
      * Builds Recycler view that holds a list of tasks upon creation of ViewHolder.
+     *
      * @param parent
      * @param viewType
      * @return
@@ -138,15 +140,16 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
 
     /**
      * Fills the Recycler view built in onCreateViewHolder with task views using data from the task list.
+     *
      * @param holder
      * @param position
      */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.id.setText(""+tasks.get(position).getId());
+        holder.id.setText("" + tasks.get(position).getId());
         holder.taskName.setText(tasks.get(position).getTaskName());
-        holder.taskPriority.setText(""+tasks.get(position).getPriority());
-        holder.taskDifficulty.setText(""+tasks.get(position).getDifficulty());
+        holder.taskPriority.setText("" + tasks.get(position).getPriority());
+        holder.taskDifficulty.setText("" + tasks.get(position).getDifficulty());
         if (tasks.get(position).getDueDate() != null)
             holder.taskDueDate.setText(formatter.format(tasks.get(position).getDueDate()));
         else holder.taskDueDate.setText("");
@@ -154,6 +157,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
 
     /**
      * How many items are in the task list.
+     *
      * @return
      */
     @Override
@@ -163,31 +167,33 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
 
     /**
      * Sets the items being displayed in the task list.
+     *
      * @param tasks
      */
-    public void setTasks(List<Task> tasks){
+    public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
         updateData();
 
     }
+
     /**
      * Applies an animation to the given view.
      * Code from: https://stackoverflow.com/a/26748274/6047183
      */
     private void setAnimation(View viewToAnimate, int position) {
-            Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), android.R.anim.fade_out);
-            animation.setDuration(300);
-            viewToAnimate.startAnimation(animation);
-            new Handler(Looper.getMainLooper()).postDelayed(() -> {
-                tasks.remove(position);
-                updateData();
-            }, animation.getDuration()+20);
+        Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), android.R.anim.fade_out);
+        animation.setDuration(300);
+        viewToAnimate.startAnimation(animation);
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            tasks.remove(position);
+            updateData();
+        }, animation.getDuration() + 20);
     }
 
     /**
      * Refreshes the tasks being shown on the task list.
      */
-    private void updateData(){
+    private void updateData() {
         RecyclerView taskDisplayView = rootView.findViewById(R.id.taskDisplayView);
         TextView emptyView = rootView.findViewById(R.id.empty_view);
         if (tasks.isEmpty()) {
@@ -205,7 +211,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
      * Adds new tasks to current display.
      */
     @ProductiveEventHandler
-    public void onNewTask(TaskCreateEvent e){
+    public void onNewTask(TaskCreateEvent e) {
         this.tasks.add(e.getTask());
         updateData();
     }
