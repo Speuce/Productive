@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Spinner;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
@@ -38,6 +39,8 @@ public class StatsActivity extends AppCompatActivity implements AdapterView.OnIt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
         barChart = findViewById(R.id.bar_chart);
+        Spinner sort_by = (Spinner) findViewById(R.id.dateRangeSelection);
+        sort_by.setOnItemSelectedListener(this);
 
         RecyclerView statsDisplayView = findViewById(R.id.stats_view);//Grab display
         StatsAdapter statsAdapter = new StatsAdapter();
@@ -53,7 +56,7 @@ public class StatsActivity extends AppCompatActivity implements AdapterView.OnIt
         BarDataSet barDataSet = new BarDataSet(days, "Days");
 
         statsManager.getTasksCompletedPastDays(history,(dayIntTuple)->{
-            barDataSet.addEntry(new BarEntry(dayIntTuple.getDate().getDayOfMonth(),dayIntTuple.getNumber()));
+            barDataSet.addEntry(new BarEntry(dayIntTuple.getDate().toEpochDay(),dayIntTuple.getNumber()));
 
             BarData barData = new BarData(barDataSet);
             barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
