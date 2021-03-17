@@ -10,4 +10,10 @@
     <string name="rewards">Rewards</string>
     <string name="todo">To-do</string>
     <string name="schedule">Schedule</string>
+
+    <string-array name="dateRangeSelectionArray">
+        <item>7 days</item>
+        <item>14 days</item>
+        <item>30 days</item>
+    </string-array>
 </resources>
