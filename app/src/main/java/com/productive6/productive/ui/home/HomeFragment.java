@@ -18,6 +18,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.productive6.productive.R;
+import com.productive6.productive.logic.exceptions.AccessBeforeLoadedException;
 import com.productive6.productive.ui.title.TitleSelection;
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.rewards.IRewardManager;
@@ -108,10 +109,13 @@ public class HomeFragment extends Fragment implements ProductiveListener {
      * Updates the header to all the current values
      */
     private void updateHeader() {
-        userTitle.setText(titleManager.getTitleAsString());
-        experienceBar.setProgress(rewardManager.getExperience());
-        coinCounter.setText("" + rewardManager.getCoins());
-        levelNumber.setText("" + rewardManager.getLevel());
+       try {
+           userTitle.setText(titleManager.getTitleAsString());
+           experienceBar.setProgress(rewardManager.getExperience());
+           coinCounter.setText("" + rewardManager.getCoins());
+           levelNumber.setText("" + rewardManager.getLevel());
+       }
+        catch(AccessBeforeLoadedException e){} //nothing needs to be done, as the data will be updated later
     }
 
     /**

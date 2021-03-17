@@ -1,6 +1,7 @@
 package com.productive6.productive.logic.rewards.impl;
 
 import com.productive6.productive.logic.event.EventDispatch;
+import com.productive6.productive.logic.exceptions.AccessBeforeLoadedException;
 import com.productive6.productive.logic.rewards.IRewardManager;
 import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.logic.user.IUserManager;
@@ -39,21 +40,18 @@ public class RewardManager implements IRewardManager, ProductiveListener{
      * @return integer representation of current user level
      * returns 0 if person has not been initialized by the database
      */
-    public int getLevel() {
-        int level = 0;
-        if (person != null)
-            level = person.getLevel();
-        return level;
+    public int getLevel() throws AccessBeforeLoadedException{
+        if(person == null){throw new AccessBeforeLoadedException("Cannot access level before the database loads");}
+        return person.getLevel();
     }
+
     /**
      * @return integer representation of current user experience
      * returns 0 if person has not been initialized by the database
      */
-    public int getExperience(){
-        int xp = 0;
-        if(person != null)
-            xp = person.getExp();
-        return xp;
+    public int getExperience() throws AccessBeforeLoadedException{
+        if(person == null){throw new AccessBeforeLoadedException("Cannot access xp before the database loads");}
+        return person.getExp();
     }
 
     /**
@@ -65,11 +63,9 @@ public class RewardManager implements IRewardManager, ProductiveListener{
      * @return integer representation of current user coin count
      * returns 0 if person has not been initialized by the database
      */
-    public int getCoins(){
-        int coins = 0;
-            if(person != null)
-                 coins =  person.getCoins();
-        return coins;
+    public int getCoins() throws AccessBeforeLoadedException{
+        if(person == null){throw new AccessBeforeLoadedException("Cannot access coins before the database loads");}
+        return person.getCoins();
     }
 
     /**
