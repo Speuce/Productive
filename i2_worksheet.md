@@ -22,7 +22,7 @@ Singleton Pattern: https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-
 Adapter: https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/blob/develop/app/src/main/java/com/productive6/productive/ui/dashboard/TaskAdapter.java
 
 
-#Iteration 1 Feedback Fixes
+# Iteration 1 Feedback Fixes
 
 The only issue we got was https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/issues/64
 
