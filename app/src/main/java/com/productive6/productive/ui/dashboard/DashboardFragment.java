@@ -76,7 +76,7 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
 
         EventDispatch.registerListener(taskAdapter);
 
-        sortTasks();
+        sortAndDisplayTasks();
 
         taskSorter.getTasksByPriority((taskAdapter::setTasks));//logic call:: get tasks, provide it to task adapter
         root.findViewById(R.id.buttonBarChart).setOnClickListener(new View.OnClickListener(){
@@ -93,7 +93,7 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
         EventDispatch.registerListener(new ProductiveListener() {
             @ProductiveEventHandler
             public void onEvent(TaskCreateEvent e){
-                sortTasks();
+                sortAndDisplayTasks();
             }
         });
     }
@@ -102,7 +102,7 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
      * Sorts by spinner selection and sets the tasks in the taskAdapter.
      * This is the way to update the task view.
      */
-    private void sortTasks(){
+    private void sortAndDisplayTasks(){
         if(sortingBySelection != null) {// When first started, sortBySelection will be null, so get by priority is chosen by default.
             switch (sortingBySelection) {
                 case "Priority":
@@ -133,7 +133,7 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
         String selection = parent.getItemAtPosition(position).toString();
         sortingBySelection = selection;
         this.sortBySelectionInt = position;
-        sortTasks();
+        sortAndDisplayTasks();
     }
 
     @Override
