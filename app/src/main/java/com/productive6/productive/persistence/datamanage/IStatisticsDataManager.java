@@ -19,7 +19,7 @@ public interface IStatisticsDataManager {
      * @param callback
      * @return a list of {@link DayIntTuple}
      */
-    void getCompletedTasksByDay(int history, Consumer<List<EpochIntTuple>> callback);
+    void getCompletedTasksByDay(int history, Consumer<List<DayIntTuple>> callback);
 
     /**
      * Get the total # of tasks completed by the user

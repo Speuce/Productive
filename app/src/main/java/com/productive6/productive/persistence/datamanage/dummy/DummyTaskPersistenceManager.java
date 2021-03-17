@@ -60,12 +60,12 @@ public class DummyTaskPersistenceManager implements ITaskPersistenceManager, ISt
     }
 
     @Override
-    public void getCompletedTasksByDay(int history, Consumer<List<EpochIntTuple>> callback) {
+    public void getCompletedTasksByDay(int history, Consumer<List<DayIntTuple>> callback) {
         LocalDate before = LocalDate.now().minusDays(history);
         callback.accept(internalList.stream().filter(Task::isCompleted).filter(task -> task.getCompleted().isAfter(before.atStartOfDay())).collect(
                 Collectors.groupingBy(task -> task.getCompleted().toLocalDate(), Collectors.counting()))
                 .entrySet().stream()
-                .map(e ->new EpochIntTuple(e.getKey().atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli(), e.getValue().intValue()))
+                .map(e ->new DayIntTuple(e.getKey(), e.getValue().intValue()))
                 .collect(Collectors.toList()));
     }
 
