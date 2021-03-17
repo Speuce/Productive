@@ -62,6 +62,9 @@ public class StatsActivity extends AppCompatActivity implements AdapterView.OnIt
 
     private void buildGraph( int history){
 
+        XAxis axis = barChart.getXAxis();
+        axis.setLabelCount(Math.min(history, 10));
+
         ArrayList<BarEntry> days = new ArrayList<>();
         BarDataSet barDataSet = new BarDataSet(days, "Days");
         barDataSet.setValueFormatter(new ValueFormatter() {
