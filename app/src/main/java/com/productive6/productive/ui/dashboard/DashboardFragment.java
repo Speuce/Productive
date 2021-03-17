@@ -62,6 +62,7 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
     ITaskSorter taskSorter;
     private TaskAdapter taskAdapter;
     private String sortingBy = "Priority";
+    private Spinner sort_by;
 
     /**
      * Creates parent view for the tasks
@@ -72,7 +73,7 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
      */
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        Spinner sort_by = (Spinner) root.findViewById(R.id.sortTasksDropdown);
+        sort_by = (Spinner) root.findViewById(R.id.sortTasksDropdown);
 
         attachTaskView(root);
         sort_by.setOnItemSelectedListener(this);
@@ -90,10 +91,7 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
         taskDisplayView.setAdapter(taskAdapter);//attach display to view + tasks
         taskDisplayView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false));//Describe how the data should be laid out
 
-
-
         EventDispatch.registerListener(taskAdapter);
-
 
         sortTasks();
 
@@ -120,15 +118,16 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
     private void sortTasks(){
         switch (sortingBy) {
             case "Priority":
-                taskSorter.getTasksByPriority(new TaskConsumerStartup(taskAdapter));
+                taskSorter.getTasksByPriority(new TaskConsumerStartup(taskAdapter,sort_by));
                 break;
             case "Due Date":
-                taskSorter.getTasksByDueDate(new TaskConsumerStartup(taskAdapter));
+                taskSorter.getTasksByDueDate(new TaskConsumerStartup(taskAdapter,sort_by));
                 break;
             case "Created Date":
-                taskSorter.getTasksByCreation(new TaskConsumerStartup(taskAdapter));
+                taskSorter.getTasksByCreation(new TaskConsumerStartup(taskAdapter,sort_by));
                 break;
         }
+
     }
     /**
      * Reacts to changes made to the sort-by dropdown.
@@ -155,12 +154,20 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
      */
     public static class TaskConsumerStartup implements Consumer<List<Task>> {
         private final TaskAdapter taskAdapter;
+        private final Spinner sort_by;
 
-        TaskConsumerStartup(TaskAdapter taskAdapter){this.taskAdapter = taskAdapter;}
+        TaskConsumerStartup(TaskAdapter taskAdapter, Spinner sort_by){this.taskAdapter = taskAdapter;this.sort_by=sort_by;}
 
         @Override
         public void accept(List<Task> tasks) {
             taskAdapter.setTasks(tasks);
+            if(taskAdapter.getItemCount()!=0){
+                sort_by.setEnabled(true);
+                sort_by.setClickable(true);
+            }else{
+                sort_by.setEnabled(false);
+                sort_by.setClickable(false);
+            }
             //Give data to Task list and automatically re-renders the Task list view
         }
     }
