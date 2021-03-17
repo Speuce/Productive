@@ -58,6 +58,7 @@ public class DashboardFragment extends Fragment {
 
     /**
      * Creates parent view for the tasks
+     *
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -73,16 +74,15 @@ public class DashboardFragment extends Fragment {
 
     /**
      * Attaches task data, view, and display. Allowing for dynamically rendered tasks in the task display.
+     *
      * @param root
      */
-    private void attachTaskView(View root){
+    private void attachTaskView(View root) {
         RecyclerView taskDisplayView = root.findViewById(R.id.taskDisplayView);//Grab display
         TaskAdapter taskAdapter = new TaskAdapter(taskManager, root);
         taskAdapter.setTasks(new ArrayList<>());
         taskDisplayView.setAdapter(taskAdapter);//attach display to view + tasks
         taskDisplayView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false));//Describe how the data should be laid out
-
-
 
         EventDispatch.registerListener(taskAdapter);
 
