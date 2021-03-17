@@ -79,12 +79,8 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
         sortAndDisplayTasks();
 
         taskSorter.getTasksByPriority((taskAdapter::setTasks));//logic call:: get tasks, provide it to task adapter
-        root.findViewById(R.id.buttonBarChart).setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                startActivity(new Intent(getContext(), StatsActivity.class));
-            }
-        });
+
+        root.findViewById(R.id.buttonBarChart).setOnClickListener(view -> startActivity(new Intent(getContext(), StatsActivity.class)));
 
         Button createButton = root.findViewById(R.id.newTaskButton);
         createButton.setOnClickListener(v -> {
