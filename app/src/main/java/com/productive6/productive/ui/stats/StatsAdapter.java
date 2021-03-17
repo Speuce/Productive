@@ -1,4 +1,4 @@
-package com.productive6.productive.ui.dashboard;
+package com.productive6.productive.ui.stats;
 
 
 import android.view.LayoutInflater;
@@ -8,10 +8,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.productive6.productive.R;
-import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.events.ProductiveListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
