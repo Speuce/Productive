@@ -46,6 +46,31 @@ public class StatsActivity extends AppCompatActivity implements AdapterView.OnIt
 
         barChart = findViewById(R.id.bar_chart);
 
+        Spinner sort_by = (Spinner) findViewById(R.id.dateRangeSelection);
+        sort_by.setOnItemSelectedListener(this);
+
+        ArrayList<BarEntry> days = new ArrayList<>();
+        BarDataSet barDataSet = new BarDataSet(days, "Days");
+
+        RecyclerView statsDisplayView = findViewById(R.id.stats_view);//Grab display
+        StatsAdapter statsAdapter = new StatsAdapter();
+        statsDisplayView.setAdapter(statsAdapter);//attach display to view
+        statsDisplayView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));//Describe how the data should be laid out
+
+        buildGraph( DEFAULT_HISTORY);
+    }
+
+    private void buildGraph( int history){
+
+        ArrayList<BarEntry> days = new ArrayList<>();
+        BarDataSet barDataSet = new BarDataSet(days, "Days");
+        barDataSet.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return (int)value + "";
+            }
+        });
+
 
         barChart.getAxisRight().setEnabled(false);
 
@@ -75,23 +100,6 @@ public class StatsActivity extends AppCompatActivity implements AdapterView.OnIt
         leftAxis.setTextColor(Color.BLACK);
         leftAxis.setDrawZeroLine(false);
         leftAxis.enableGridDashedLine(10f, 10f, 0f);
-
-        barChart = findViewById(R.id.bar_chart);
-        Spinner sort_by = (Spinner) findViewById(R.id.dateRangeSelection);
-        sort_by.setOnItemSelectedListener(this);
-
-        RecyclerView statsDisplayView = findViewById(R.id.stats_view);//Grab display
-        StatsAdapter statsAdapter = new StatsAdapter();
-        statsDisplayView.setAdapter(statsAdapter);//attach display to view
-        statsDisplayView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));//Describe how the data should be laid out
-
-        buildGraph( DEFAULT_HISTORY);
-    }
-
-    private void buildGraph( int history){
-
-        ArrayList<BarEntry> days = new ArrayList<>();
-        BarDataSet barDataSet = new BarDataSet(days, "Days");
 
         statsManager.getTasksCompletedPastDays(history,(dayIntTuple)->{
             barDataSet.addEntry(new BarEntry(dayIntTuple.getDate().toEpochDay(),dayIntTuple.getNumber()));
