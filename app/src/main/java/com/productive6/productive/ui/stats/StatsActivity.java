@@ -71,6 +71,7 @@ public class StatsActivity extends AppCompatActivity implements AdapterView.OnIt
             }
         });
 
+
         barChart.getAxisRight().setEnabled(false);
 
         XAxis xAxis = barChart.getXAxis();
@@ -95,6 +96,7 @@ public class StatsActivity extends AppCompatActivity implements AdapterView.OnIt
         leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         leftAxis.setDrawGridLines(true);
         leftAxis.setAxisMinimum(0f);
+        leftAxis.setGranularity(1f);
         leftAxis.setTextColor(Color.BLACK);
         leftAxis.setDrawZeroLine(false);
         leftAxis.enableGridDashedLine(10f, 10f, 0f);
@@ -103,6 +105,13 @@ public class StatsActivity extends AppCompatActivity implements AdapterView.OnIt
             barDataSet.addEntry(new BarEntry(dayIntTuple.getDate().toEpochDay(),dayIntTuple.getNumber()));
 
             BarData barData = new BarData(barDataSet);
+
+            barDataSet.setValueFormatter(new ValueFormatter() {
+                @Override
+                public String getFormattedValue(float value) {
+                    return "";
+                }
+            });
             barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
             barDataSet.setValueTextColor(Color.BLACK);
             barDataSet.setValueTextSize(16f);
