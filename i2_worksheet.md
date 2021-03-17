@@ -24,4 +24,10 @@ https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/commit/2e2ebf1f
 https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/blob/develop/app/src/main/java/com/productive6/productive/ui/dashboard/TaskAdapter.java
 
 
-# Iteration 1 Feedback fixes
+#Iteration 1 Feedback Fixes
+The only issue we got was https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/issues/64
+
+We fixed this by moving the ProductiveApp file to the proper package (the ui layer).
+This happened in this commit: https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/commit/abf0474070bb27a7ad26374a36024c53367d2c90
+
+Thanks to Android Studio's beautiful refactoring tools, any references to the file in the manifest was automatically changed as well.
