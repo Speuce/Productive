@@ -23,6 +23,7 @@ Adapter: https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/blob/d
 
 
 #Iteration 1 Feedback Fixes
+
 The only issue we got was https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/issues/64
 
 We fixed this by moving the ProductiveApp file to the proper package (the ui layer).
