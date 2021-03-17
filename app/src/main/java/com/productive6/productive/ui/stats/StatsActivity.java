@@ -46,15 +46,6 @@ public class StatsActivity extends AppCompatActivity implements AdapterView.OnIt
 
         barChart = findViewById(R.id.bar_chart);
 
-        ArrayList<BarEntry> days = new ArrayList<>();
-        BarDataSet barDataSet = new BarDataSet(days, "Days");
-
-        barDataSet.setValueFormatter(new ValueFormatter() {
-            @Override
-            public String getFormattedValue(float value) {
-                return (int)value + "";
-            }
-        });
 
         barChart.getAxisRight().setEnabled(false);
 
@@ -105,6 +96,13 @@ public class StatsActivity extends AppCompatActivity implements AdapterView.OnIt
             barDataSet.addEntry(new BarEntry(dayIntTuple.getDate().toEpochDay(),dayIntTuple.getNumber()));
 
             BarData barData = new BarData(barDataSet);
+
+            barDataSet.setValueFormatter(new ValueFormatter() {
+                @Override
+                public String getFormattedValue(float value) {
+                    return "";
+                }
+            });
             barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
             barDataSet.setValueTextColor(Color.BLACK);
             barDataSet.setValueTextSize(16f);
