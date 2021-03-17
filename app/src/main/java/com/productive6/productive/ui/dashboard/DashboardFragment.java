@@ -47,6 +47,7 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
 
     /**
      * Creates parent view for the tasks
+     *
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -65,6 +66,7 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
 
     /**
      * Attaches task data, view, and display. Allowing for dynamically rendered tasks in the task display.
+     *
      * @param root
      */
     private void attachTaskView(View root) {

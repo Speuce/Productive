@@ -7,6 +7,7 @@
     tools:context=".ui.dashboard.DashboardFragment">
 
 
+
     <Spinner
         android:id="@+id/sortTasksDropdown"
         android:layout_width="171dp"
@@ -18,58 +19,72 @@
         android:spinnerMode="dropdown"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/buttonBarChart"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="bar_chart"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/bg_rounded_corners_purple"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.14"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.048" />
+        app:layout_constraintVertical_bias="0.156" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_chart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.14"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.156" />
 
 
     <TextView
         android:id="@+id/empty_view"
-        android:layout_width="0dp"
-        android:layout_height="511dp"
+        android:layout_width="597dp"
+        android:layout_height="609dp"
         android:layout_marginTop="165dp"
-        android:text="@string/tap_add_to_add_a_new_task"
-        android:visibility="invisible"
         android:gravity="center_horizontal"
+        android:text="@string/addTaskPrompt"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
+        app:layout_constraintVertical_bias="0.094" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/taskDisplayView"
-        android:layout_width="0dp"
-        android:layout_height="511dp"
+        android:layout_width="597dp"
+        android:layout_height="600dp"
         android:layout_marginTop="165dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.132" />
 
     <Button
         android:id="@+id/newTaskButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="101dp"
-        android:layout_marginEnd="16dp"
+        android:background="@drawable/bg_rounded_corners"
+        android:onClick="onButtonShowPopupWindowClick"
         android:text="@string/add"
+        app:layout_constraintBottom_toTopOf="@+id/empty_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.993" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
