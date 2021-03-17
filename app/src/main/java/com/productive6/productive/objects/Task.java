@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
  * @author Matt Kwiatkowski
  */
 @Entity(tableName = "tasks")
-public class Task implements Comparable<Task>{
+public class Task implements Comparable<Task> {
 
     @PrimaryKey(autoGenerate = true)
     private long id;
@@ -84,12 +84,13 @@ public class Task implements Comparable<Task>{
 
     /**
      * Constructor for a new task.
-     * @param taskName The user-defined name of the task
-     * @param priority The user-defined priority of this task
+     *
+     * @param taskName    The user-defined name of the task
+     * @param priority    The user-defined priority of this task
      * @param createdTime The timestamp (milliseconds, epoch time)
      *                    that this task was created.
-     * @param completed A flag to mark whether or not this task
-     *                  has been completed.
+     * @param completed   A flag to mark whether or not this task
+     *                    has been completed.
      */
     public Task(String taskName, int priority, int difficulty, LocalDateTime createdTime, LocalDate dueDate, LocalDateTime completed) {
         this.taskName = taskName;
@@ -102,6 +103,7 @@ public class Task implements Comparable<Task>{
 
     /**
      * Constructor for a new task without completion
+     *
      * @param taskName The user-defined name of the task
      * @param priority The user-defined priority of this task
      */
@@ -112,23 +114,25 @@ public class Task implements Comparable<Task>{
         this.priority = priority;
         this.createdTime = LocalDateTime.now();
         this.completed = null;
+        this.dueDate = null;
     }
 
     /**
      * Constructor for a new task without completion
-     * @param taskName The user-defined name of the task
-     * @param priority The user-defined priority of this task
+     *
+     * @param taskName    The user-defined name of the task
+     * @param priority    The user-defined priority of this task
      * @param createdTime The timestamp (milliseconds, epoch time)
      *                    that this task was created.
      */
     @Ignore
-    public Task(String taskName, int priority, int difficulty,@NotNull LocalDateTime createdTime) {
+    public Task(String taskName, int priority, int difficulty, @NotNull LocalDateTime createdTime) {
         this.taskName = taskName;
         this.priority = priority;
         this.createdTime = createdTime;
         this.difficulty = difficulty;
         this.completed = null;
-//        this.dueDate = "";
+        this.dueDate = null;
     }
 
 
@@ -159,11 +163,11 @@ public class Task implements Comparable<Task>{
         String priorityInString = "";
 
         if (getPriority() == 1) {
-            priorityInString = "Hard";
+            priorityInString = "High";
         } else if (getPriority() == 2) {
             priorityInString = "Medium";
         } else {
-            priorityInString = "Easy";
+            priorityInString = "Low";
         }
         return priorityInString;
     }
@@ -185,7 +189,7 @@ public class Task implements Comparable<Task>{
 
     /**
      * @param completed A flag to mark whether or not this task
-     * has been completed.
+     *                  has been completed.
      */
     public void setCompleted(LocalDateTime completed) {
         this.completed = completed;
@@ -205,13 +209,17 @@ public class Task implements Comparable<Task>{
     }
 
 
-    public void setCreatedTime(@NotNull  LocalDateTime createdTime) {
+    public void setCreatedTime(@NotNull LocalDateTime createdTime) {
         this.createdTime = createdTime;
     }
 
-    public LocalDate getDueDate() { return dueDate; }
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
 
-    public int getDifficulty() { return difficulty; }
+    public int getDifficulty() {
+        return difficulty;
+    }
 
 
     public String getDifficultyInString() {
@@ -227,9 +235,13 @@ public class Task implements Comparable<Task>{
         return difficultyInString;
     }
 
-    public void setDueDate(LocalDate dueDate) { this.dueDate = dueDate; }
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
+    }
 
-    public void setDifficulty(int difficulty) { this.difficulty = difficulty; }
+    public void setDifficulty(int difficulty) {
+        this.difficulty = difficulty;
+    }
 
     public int getCoinsEarned() {
         return coinsEarned;
@@ -249,7 +261,7 @@ public class Task implements Comparable<Task>{
 
     /**
      * @return The day/time that this task was completed.
-     *         Null if not completed.
+     * Null if not completed.
      */
     public LocalDateTime getCompleted() {
         return completed;
@@ -261,31 +273,31 @@ public class Task implements Comparable<Task>{
      */
     @Override
     public int compareTo(Task o) {
-        int prioritydiff = o.getPriority()-this.getPriority();
-        if(prioritydiff==0){
+        int prioritydiff = o.getPriority() - this.getPriority();
+        if (prioritydiff == 0) {
             return this.getCreatedTime().compareTo(o.getCreatedTime());
         }
         return prioritydiff;
     }
 
     @Override
-    public boolean equals(Object other){
-        if(other instanceof Task){
+    public boolean equals(Object other) {
+        if (other instanceof Task) {
             Task t2 = (Task) other;
             boolean result = t2.getId() == this.getId() &&
                     t2.getPriority() == this.getPriority() &&
                     t2.getCreatedTime().equals(this.getCreatedTime()) &&
                     t2.getTaskName().equals(this.getTaskName()) &&
                     t2.getDifficulty() == this.getDifficulty();
-            if(t2.getDueDate() != null){
+            if (t2.getDueDate() != null) {
                 result = result && t2.getDueDate().equals(this.getDueDate());
-            }else{
-                result = result && this.getDueDate()==null;
+            } else {
+                result = result && this.getDueDate() == null;
             }
-            if(t2.getCompleted() != null){
+            if (t2.getCompleted() != null) {
                 result = result && t2.getCompleted().equals(this.getCompleted());
-            }else{
-                result = result && this.getCompleted()==null;
+            } else {
+                result = result && this.getCompleted() == null;
             }
             return result;
         }
