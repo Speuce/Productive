@@ -8,14 +8,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.productive6.productive.R;
+import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.events.ProductiveListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  */
 
 public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.ViewHolder> implements ProductiveListener {
-
+    private List stats;
 
     /**
      * Holds the recyclerView view and it's components
@@ -43,6 +47,18 @@ public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.ViewHolder> 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.stats_details, parent, false);
         return new ViewHolder(view);
     }
+
+
+    /**
+     * Sets the items being displayed in the stats list.
+     * @param stats
+     */
+    public void setStats(List stats){
+        this.stats = stats;
+        notifyDataSetChanged();
+
+    }
+
 
     /**
      * Fills the Recycler view built in onCreateViewHolder with task views using fake data.
