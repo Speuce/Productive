@@ -19,14 +19,16 @@ public interface ITaskStatsticsAccess extends ITaskAccess{
      * @param history how far back to search
      * @return a list of {@link DayIntTuple}
      */
-    @Query("SELECT STRFTIME('%s',dat) as day, number FROM " +
-            "(SELECT JULIANDAY(DATE(ROUND(completedDay/1000) , 'unixepoch')) as dat, COUNT(id) as number" +
+    @Query("SELECT STRFTIME('%s',datl)/86400 as day, number FROM " +
+            "(SELECT JULIANDAY(DATE(ROUND(completedDay/1000) , 'unixepoch', 'localtime')) as datl," +
+            " JULIANDAY(DATE(ROUND(completedDay/1000) , 'unixepoch')) as dat," +
+            " COUNT(id) as number" +
             " FROM tasks " +
-            "WHERE dat>=(julianday(date('now'))-:history)" +
-            "AND dat NOT NULL " +
-            "GROUP BY dat " +
-            "ORDER BY dat);")
-    List<EpochIntTuple> getCompletedTasksByDay(int history);
+            "WHERE datl>=(julianday(date('now', 'localtime'))-:history)" +
+            "AND datl NOT NULL " +
+            "GROUP BY datl " +
+            "ORDER BY datl);")
+    List<DayIntTuple> getCompletedTasksByDay(int history);
 
     /**
      * Gets a mapping of day:coins earned

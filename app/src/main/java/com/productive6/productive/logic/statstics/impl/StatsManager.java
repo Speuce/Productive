@@ -11,6 +11,7 @@ import com.productive6.productive.persistence.datamanage.IDataManager;
 import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.Iterator;
@@ -55,11 +56,11 @@ public class StatsManager implements ITaskStatsManager, ICoinsStatsManager, IXPS
                     .collect(Collectors.toList());
             dates.forEach(day ->{
                 boolean found = false;
-                for (Iterator<EpochIntTuple> iterator = list.iterator(); iterator.hasNext(); ) {
-                    EpochIntTuple tuple = iterator.next();
+                for (Iterator<DayIntTuple> iterator = list.iterator(); iterator.hasNext(); ) {
+                    DayIntTuple tuple = iterator.next();
                     //long dt = Converters.dateToTimestamp(tuple.getDate());
-                    LocalDate dateStoredUTC = Instant.ofEpochSecond(tuple.getDate()).atZone(ZoneOffset.UTC).toLocalDate();
-                    if (dateStoredUTC.equals(day)) {
+
+                    if (tuple.getDate().equals(day)) {
                         found = true;
                         callback.accept(new DayIntTuple(day, tuple.getNumber()));
                         iterator.remove();

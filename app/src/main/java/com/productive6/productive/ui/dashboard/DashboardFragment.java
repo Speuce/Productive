@@ -2,6 +2,7 @@ package com.productive6.productive.ui.dashboard;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -35,6 +36,8 @@ import com.productive6.productive.objects.events.DummyEvent;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.task.TaskCreateEvent;
+import com.productive6.productive.ui.stats.StatsActivity;
+
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -85,12 +88,23 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
         taskAdapter = new TaskAdapter(taskManager, root);
         taskAdapter.setTasks(new ArrayList<>());
         taskDisplayView.setAdapter(taskAdapter);//attach display to view + tasks
-
         taskDisplayView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false));//Describe how the data should be laid out
+
+
 
         EventDispatch.registerListener(taskAdapter);
 
+
         sortTasks();
+
+        taskSorter.getTasksByPriority((taskAdapter::setTasks));//logic call:: get tasks, provide it to task adapter
+        root.findViewById(R.id.buttonBarChart).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                startActivity(new Intent(getContext(), StatsActivity.class));
+            }
+        });
+
         Button createButton = root.findViewById(R.id.newTaskButton);
         createButton.setOnClickListener(v -> {
             new TaskPopup(getContext(), null, taskManager::addTask).open(v);
