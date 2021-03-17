@@ -17,7 +17,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.denzcoskun.imageslider.interfaces.ItemClickListener;
 import com.productive6.productive.R;
 import com.productive6.productive.ui.title.TitleSelection;
 import com.productive6.productive.logic.event.EventDispatch;
@@ -27,10 +26,6 @@ import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.SystemLoadedEvent;
 import com.productive6.productive.objects.events.user.UserUpdateEvent;
-
-import com.denzcoskun.imageslider.ImageSlider;
-import com.denzcoskun.imageslider.models.SlideModel;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -54,7 +49,6 @@ public class HomeFragment extends Fragment implements ProductiveListener {
     private TextView coinCounter;
     private TextView levelNumber;
     private HomeViewModel homeViewModel;
-    private ImageSlider imageSlider;
     private int[] propIDs;
     TextView textView;
 
@@ -91,19 +85,11 @@ public class HomeFragment extends Fragment implements ProductiveListener {
         coinCounter = (TextView) root.findViewById(R.id.coin_counter);
         levelNumber = (TextView) root.findViewById(R.id.level_number);
 
-        textView = root.findViewById(R.id.text_home);
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
-
         //setting level and title as bold text
         levelNumber.setTypeface(null, Typeface.BOLD);
         userTitle.setTypeface(null, Typeface.BOLD);
         userTitle.setOnClickListener(v -> openTitleActivity());
         updateHeader();
-        populateSlider(root);
 
         return root;
     }
@@ -135,16 +121,5 @@ public class HomeFragment extends Fragment implements ProductiveListener {
     public void openTitleActivity() {
         Intent intent = new Intent(getContext(), TitleSelection.class);
         startActivity(intent);
-    }
-
-    public void populateSlider(View root) {
-        imageSlider = root.findViewById(R.id.slider);
-        List<SlideModel> slideModels = new ArrayList<>();
-
-        for (int i = 0; i < propIDs.length; i++) {
-            slideModels.add(new SlideModel(propIDs[i]));
-        }
-
-        imageSlider.setImageList(slideModels, true);
     }
 }

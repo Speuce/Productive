@@ -8,11 +8,13 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="light_grey">#EEEEEEEE</color>
-    <color name="navy">#06243A</color>
+    <color name="med_purple">#313b5e</color>
     <color name="primary_purple">#242B44</color>
     <color name="dark_purple">#22273D</color>
     <color name="accent">#D44B5E</color>
     <color name="light_accent">#ff6b7f</color>
+    <color name="tick_green">#007000</color>
+    <color name="edit_blue">#00a2ed</color>
 <!--    <color name="light_purple">#575E76</color>-->
     <color name="light_purple">#8b93ad</color>
 </resources>
