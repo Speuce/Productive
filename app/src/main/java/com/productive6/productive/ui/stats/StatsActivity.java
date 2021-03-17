@@ -44,7 +44,7 @@ public class StatsActivity extends AppCompatActivity implements AdapterView.OnIt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
 
-        BarChart barChart = findViewById(R.id.bar_chart);
+        barChart = findViewById(R.id.bar_chart);
 
         ArrayList<BarEntry> days = new ArrayList<>();
         BarDataSet barDataSet = new BarDataSet(days, "Days");
