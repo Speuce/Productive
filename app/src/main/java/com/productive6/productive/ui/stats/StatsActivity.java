@@ -71,6 +71,7 @@ public class StatsActivity extends AppCompatActivity implements AdapterView.OnIt
         leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         leftAxis.setDrawGridLines(true);
         leftAxis.setAxisMinimum(0f);
+        leftAxis.setGranularity(1f);
         leftAxis.setTextColor(Color.BLACK);
         leftAxis.setDrawZeroLine(false);
         leftAxis.enableGridDashedLine(10f, 10f, 0f);
