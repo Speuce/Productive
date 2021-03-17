@@ -8,3 +8,20 @@ Here for example, when paying off this debt, we had to change the default System
 We also had to come up with converters to save/retrieve the LocalDates in the DB.
 
 We would classify this debt as the inadvertent prudent kind. At the time, we didn't know of any better methods to represent dates, and this way seemed to work for us great at first, so why would we waste time looking for the 'best' solution if it worked? This is a 'now we know how we should've done it' situation -- inadvertant prudent debt.
+
+# SOLID
+
+
+# Retrospective
+
+
+# Design patterns
+
+## Singleton Pattern
+https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/commit/2e2ebf1f32e9bd262f9997351aec6791c7affba4#71a5f6b12646cc3c0a8b4ebd854f0b8365beb8fe_26_28
+
+## Adapter
+https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/blob/develop/app/src/main/java/com/productive6/productive/ui/dashboard/TaskAdapter.java
+
+
+# Iteration 1 Feedback fixes
