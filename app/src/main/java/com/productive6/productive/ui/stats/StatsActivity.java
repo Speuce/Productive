@@ -26,6 +26,7 @@ import com.productive6.productive.ui.dashboard.StatsAdapter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.inject.Inject;
 
@@ -62,8 +63,6 @@ public class StatsActivity extends AppCompatActivity implements AdapterView.OnIt
 
     private void buildGraph( int history){
 
-        XAxis axis = barChart.getXAxis();
-        axis.setLabelCount(Math.min(history, 10));
 
         ArrayList<BarEntry> days = new ArrayList<>();
         BarDataSet barDataSet = new BarDataSet(days, "Days");
@@ -78,6 +77,7 @@ public class StatsActivity extends AppCompatActivity implements AdapterView.OnIt
         barChart.getAxisRight().setEnabled(false);
 
         XAxis xAxis = barChart.getXAxis();
+        xAxis.setLabelCount(Math.min(history, 10));
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setTextSize(10f);
         xAxis.setLabelRotationAngle(-45);
@@ -98,15 +98,16 @@ public class StatsActivity extends AppCompatActivity implements AdapterView.OnIt
         YAxis leftAxis = barChart.getAxisLeft();
         leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         leftAxis.setDrawGridLines(true);
-        leftAxis.setAxisMinimum(0f);
         leftAxis.setGranularity(1f);
+        leftAxis.setAxisMinimum(0f);
         leftAxis.setTextColor(Color.BLACK);
         leftAxis.setDrawZeroLine(false);
         leftAxis.enableGridDashedLine(10f, 10f, 0f);
-
+        AtomicInteger max = new AtomicInteger(3);
         statsManager.getTasksCompletedPastDays(history,(dayIntTuple)->{
-            barDataSet.addEntry(new BarEntry(dayIntTuple.getDate().toEpochDay(),dayIntTuple.getNumber()));
-
+            barDataSet.addEntry(new BarEntry(dayIntTuple.getDate().toEpochDay(),Math.max(dayIntTuple.getNumber(), 0.01f)));
+            max.set(Math.max(max.get(), dayIntTuple.getNumber()));
+            leftAxis.setAxisMaximum(max.get());
             BarData barData = new BarData(barDataSet);
 
             barDataSet.setValueFormatter(new ValueFormatter() {
