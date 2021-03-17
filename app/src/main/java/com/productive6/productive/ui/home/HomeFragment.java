@@ -109,13 +109,12 @@ public class HomeFragment extends Fragment implements ProductiveListener {
      * Updates the header to all the current values
      */
     private void updateHeader() {
-       try {
+       if(rewardManager.isInitialized()) {
            userTitle.setText(titleManager.getTitleAsString());
            experienceBar.setProgress(rewardManager.getExperience());
            coinCounter.setText("" + rewardManager.getCoins());
            levelNumber.setText("" + rewardManager.getLevel());
        }
-        catch(AccessBeforeLoadedException e){} //nothing needs to be done, as the data will be updated later
     }
 
     /**

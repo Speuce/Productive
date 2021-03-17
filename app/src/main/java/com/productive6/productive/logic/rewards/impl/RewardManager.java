@@ -37,11 +37,18 @@ public class RewardManager implements IRewardManager, ProductiveListener{
     }
 
     /**
+     * isInitialized
+     * @return true if the manager has been initialized
+     */
+    public boolean isInitialized(){
+        return person != null;
+    }
+
+    /**
      * @return integer representation of current user level
      * returns 0 if person has not been initialized by the database
      */
-    public int getLevel() throws AccessBeforeLoadedException{
-        if(person == null){throw new AccessBeforeLoadedException("Cannot access level before the database loads");}
+    public int getLevel(){
         return person.getLevel();
     }
 
@@ -49,8 +56,7 @@ public class RewardManager implements IRewardManager, ProductiveListener{
      * @return integer representation of current user experience
      * returns 0 if person has not been initialized by the database
      */
-    public int getExperience() throws AccessBeforeLoadedException{
-        if(person == null){throw new AccessBeforeLoadedException("Cannot access xp before the database loads");}
+    public int getExperience(){
         return person.getExp();
     }
 
@@ -63,8 +69,7 @@ public class RewardManager implements IRewardManager, ProductiveListener{
      * @return integer representation of current user coin count
      * returns 0 if person has not been initialized by the database
      */
-    public int getCoins() throws AccessBeforeLoadedException{
-        if(person == null){throw new AccessBeforeLoadedException("Cannot access coins before the database loads");}
+    public int getCoins() {
         return person.getCoins();
     }
 
