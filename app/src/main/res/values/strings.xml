@@ -1,13 +1,20 @@
 <resources>
     <string name="app_name">Productive</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_home">Rewards</string>
+    <string name="title_dashboard">To-do</string>
     <string name="title_notifications">Calendar</string>
     <string name="task_scheduled">TASK_SCHEDULED</string>
     <string name="month_name">MONTH_NAME</string>
-    <string name="tap_add_to_add_a_new_task">Tap \'add\' To add a new Task</string>
-    <string name="add">Add</string>
+    <string name="addTaskPrompt">Tap \'Add Task\' To add a new Task</string>
+    <string name="add">Add Task</string>
     <string name="rewards">Rewards</string>
     <string name="todo">To-do</string>
-    <string name="schedule">Schedule</string>
+    <string name="schedule">Calendar</string>
+
+    <string-array name="dateRangeSelectionArray">
+        <item>7 days</item>
+        <item>14 days</item>
+        <item>30 days</item>
+    </string-array>
+
 </resources>

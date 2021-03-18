@@ -2,6 +2,7 @@ package com.productive6.productive.ui.dashboard;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -35,6 +36,8 @@ import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.task.TaskCompleteEvent;
+import com.productive6.productive.ui.stats.StatsActivity;
+
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -63,6 +66,7 @@ public class DashboardFragment extends Fragment implements ProductiveListener {
 
     /**
      * Creates parent view for the tasks
+     *
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -78,21 +82,21 @@ public class DashboardFragment extends Fragment implements ProductiveListener {
 
     /**
      * Attaches task data, view, and display. Allowing for dynamically rendered tasks in the task display.
+     *
      * @param root
      */
-    private void attachTaskView(View root){
+    private void attachTaskView(View root) {
         RecyclerView taskDisplayView = root.findViewById(R.id.taskDisplayView);//Grab display
         TaskAdapter taskAdapter = new TaskAdapter(taskManager, root);
         taskAdapter.setTasks(new ArrayList<>());
         taskDisplayView.setAdapter(taskAdapter);//attach display to view + tasks
-
         taskDisplayView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false));//Describe how the data should be laid out
 
         EventDispatch.registerListener(this);
         EventDispatch.registerListener(taskAdapter);
 
         taskSorter.getTasksByPriority((taskAdapter::setTasks));//logic call:: get tasks, provide it to task adapter
-
+        root.findViewById(R.id.buttonBarChart).setOnClickListener(view -> startActivity(new Intent(getContext(), StatsActivity.class)));
         Button createButton = root.findViewById(R.id.newTaskButton);
         createButton.setOnClickListener(v -> {
             new TaskPopup(getContext(), null, taskManager::addTask).open(v);

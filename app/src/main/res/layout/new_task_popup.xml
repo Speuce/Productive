@@ -3,14 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_rounded_corners">
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="408dp"
-        android:layout_height="350dp"
-        android:layout_marginTop="4dp"
-        android:background="#F4F4F4"
+        android:layout_width="410dp"
+        android:layout_height="385dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,8 +19,9 @@
         android:id="@+id/submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="40dp"
         android:layout_marginBottom="16dp"
+        android:onClick="addTask"
         android:text="Submit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -48,6 +48,7 @@
         style="?android:spinnerStyle"
         android:layout_width="160dp"
         android:layout_height="48dp"
+        android:onClick="deadlinePicker"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -83,7 +84,7 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
+        android:layout_marginStart="64dp"
         android:text="Priority"
         app:layout_constraintBottom_toTopOf="@+id/submit"
         app:layout_constraintStart_toStartOf="parent"
@@ -128,17 +129,6 @@
 
     </RadioGroup>
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
-        android:text="Difficulty"
-        app:layout_constraintBottom_toTopOf="@+id/submit"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/priorityGroup"
-        app:layout_constraintVertical_bias="0.594" />
-
     <RadioGroup
         android:id="@+id/difficultyGroup"
         android:layout_width="wrap_content"
@@ -148,7 +138,7 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/submit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintStart_toEndOf="@+id/textView3"
         app:layout_constraintTop_toBottomOf="@+id/priorityGroup">
 
         <RadioButton
@@ -156,26 +146,36 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Hard"
-            tools:layout_editor_absoluteX="198dp"
-            tools:layout_editor_absoluteY="203dp" />
+            tools:layout_editor_absoluteX="192dp"
+            tools:layout_editor_absoluteY="23dp" />
 
         <RadioButton
             android:id="@+id/medDiffButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Medium"
-            tools:layout_editor_absoluteX="281dp"
-            tools:layout_editor_absoluteY="203dp" />
+            tools:layout_editor_absoluteX="129dp"
+            tools:layout_editor_absoluteY="293dp" />
 
         <RadioButton
             android:id="@+id/easyButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Easy"
-            tools:layout_editor_absoluteX="136dp"
-            tools:layout_editor_absoluteY="203dp" />
-
+            tools:layout_editor_absoluteX="275dp"
+            tools:layout_editor_absoluteY="293dp" />
     </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:text="Difficulty"
+        app:layout_constraintBottom_toTopOf="@+id/submit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/priorityGroup"
+        app:layout_constraintVertical_bias="0.519" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

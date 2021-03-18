@@ -25,9 +25,9 @@ public class StatisticsDataManager implements IStatisticsDataManager {
     }
 
     @Override
-    public void getCompletedTasksByDay(int history, Consumer<List<EpochIntTuple>> callback) {
+    public void getCompletedTasksByDay(int history, Consumer<List<DayIntTuple>> callback) {
         executor.runASync(() ->{
-            List<EpochIntTuple> ret = stats.getCompletedTasksByDay(history);
+            List<DayIntTuple> ret = stats.getCompletedTasksByDay(history);
             executor.runSync(() -> callback.accept(ret));
         });
     }
