@@ -4,6 +4,7 @@ import com.productive6.productive.logic.statstics.impl.StatsManager;
 import com.productive6.productive.unit.EventDispatchTest;
 import com.productive6.productive.unit.RewardManagerTest;
 import com.productive6.productive.unit.StatsManagerTest;
+import com.productive6.productive.unit.StreakManagerTest;
 import com.productive6.productive.unit.TaskManagerTest;
 import com.productive6.productive.unit.TaskSorterTest;
 import com.productive6.productive.unit.TitleManagerTest;
@@ -24,7 +25,8 @@ import org.junit.runners.Suite;
         UserManagerTest.class,
         RewardManagerTest.class,
         TaskSorterTest.class,
-        StatsManagerTest.class
+        StatsManagerTest.class,
+        StreakManagerTest.class
 })
 public class TestAllUnitTests {
 }
