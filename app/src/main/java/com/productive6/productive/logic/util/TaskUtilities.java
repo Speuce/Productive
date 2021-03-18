@@ -37,7 +37,7 @@ public abstract class TaskUtilities {
             difficultyInString = "Hard";
         } else if (t.getDifficulty() == 2) {
             difficultyInString = "Medium";
-        } else if (t.getPriority() == 3){
+        } else if (t.getDifficulty() == 3){
             difficultyInString = "Easy";
         }
         return difficultyInString;

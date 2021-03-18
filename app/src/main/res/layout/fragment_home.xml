@@ -9,7 +9,7 @@
 
     <ImageView
         android:id="@+id/userInfoBG"
-        android:layout_width="300dp"
+        android:layout_width="330dp"
         android:layout_height="125dp"
         android:src="@drawable/bg_rounded_corners_smoke_white"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -40,15 +40,15 @@
         android:indeterminateOnly="false"
         android:progressDrawable="@drawable/experiencebar"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.317"
+        app:layout_constraintHorizontal_bias="0.284"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.109" />
+        app:layout_constraintVertical_bias="0.108" />
 
     <TextView
         android:id="@+id/user_title"
-        android:layout_width="165dp"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:gravity="left"
@@ -70,14 +70,14 @@
         android:gravity="left"
         android:text="100"
         android:textColor="@color/smoke_black"
-        android:textSize="22sp"
+        android:textSize="21sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/userInfoBG"
         app:layout_constraintEnd_toEndOf="@+id/userInfoBG"
-        app:layout_constraintHorizontal_bias="0.595"
+        app:layout_constraintHorizontal_bias="0.53"
         app:layout_constraintStart_toStartOf="@+id/userInfoBG"
         app:layout_constraintTop_toTopOf="@+id/userInfoBG"
-        app:layout_constraintVertical_bias="0.663" />
+        app:layout_constraintVertical_bias="0.64" />
 
     <ImageView
         android:id="@+id/coin_icon"
@@ -85,10 +85,10 @@
         android:layout_height="15dp"
         app:layout_constraintBottom_toBottomOf="@+id/userInfoBG"
         app:layout_constraintEnd_toEndOf="@+id/userInfoBG"
-        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintHorizontal_bias="0.416"
         app:layout_constraintStart_toStartOf="@+id/userInfoBG"
         app:layout_constraintTop_toTopOf="@+id/userInfoBG"
-        app:layout_constraintVertical_bias="0.645"
+        app:layout_constraintVertical_bias="0.636"
         app:srcCompat="@drawable/ic_coin" />
 
 
