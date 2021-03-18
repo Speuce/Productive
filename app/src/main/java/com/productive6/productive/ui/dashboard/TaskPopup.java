@@ -20,12 +20,11 @@ import android.widget.RadioGroup;
 import androidx.appcompat.widget.SwitchCompat;
 
 import com.productive6.productive.R;
+import com.productive6.productive.logic.util.CalenderUtilities;
 import com.productive6.productive.objects.Task;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
@@ -44,11 +43,6 @@ public class TaskPopup {
      * The task being changed.
      */
     private final Task task;
-
-    /**
-     * For formatting dates in the view
-     */
-    DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     private final Consumer<Task> complete;
 
@@ -167,16 +161,20 @@ public class TaskPopup {
      */
     private void initDatePicker() {
         SwitchCompat hasDeadline = popupView.findViewById(R.id.switchDeadline);
+        Button dateButton = popupView.findViewById(R.id.datePickerButton);
         //Initialize date to today when opening the date picker
         if(task.getDueDate() == null){
             task.setDueDate(LocalDate.now());
             hasDeadline.setChecked(false);
+            dateButton.setTextColor(Color.GRAY);
+            dateButton.setBackgroundTintList(ColorStateList.valueOf(Color.GRAY));
         }else{
             hasDeadline.setChecked(true);
+            dateButton.setTextColor(Color.BLACK);
+            dateButton.setBackgroundTintList(ColorStateList.valueOf(Color.BLACK));
         }
-
-        Button dateButton = popupView.findViewById(R.id.datePickerButton);
-        dateButton.setText(format.format(task.getDueDate()));
+        
+        dateButton.setText(CalenderUtilities.DATE_FORMATTER.format(task.getDueDate()));
         dateButton.setTextColor(Color.GRAY);
         dateButton.setBackgroundTintList(ColorStateList.valueOf(Color.GRAY));
 
@@ -197,7 +195,7 @@ public class TaskPopup {
             dateButton.setTextColor(Color.BLACK);
             dateButton.setBackgroundTintList(ColorStateList.valueOf(Color.BLACK));
             task.setDueDate(LocalDate.of(year, month+1, dayOfMonth));
-            dateButton.setText(format.format(task.getDueDate()));
+            dateButton.setText(CalenderUtilities.DATE_FORMATTER.format(task.getDueDate()));
         };
 
 

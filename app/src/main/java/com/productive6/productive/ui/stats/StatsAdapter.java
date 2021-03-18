@@ -1,4 +1,4 @@
-package com.productive6.productive.ui.dashboard;
+package com.productive6.productive.ui.stats;
 
 
 import android.view.LayoutInflater;
@@ -8,23 +8,36 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.productive6.productive.R;
-import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.events.ProductiveListener;
 
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Timer;
 
 /**
  *
  */
 
 public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.ViewHolder> implements ProductiveListener {
-    private List stats;
+
+    /**
+     * Internal list of String-String tuples representing the statistics
+     */
+    private final LinkedHashMap<String, String> stats;
+
+
+    public StatsAdapter() {
+        this.stats = new LinkedHashMap<>();
+
+    }
+
+
 
     /**
      * Holds the recyclerView view and it's components
      */
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder{
         private final TextView statName;
         private final TextView statValue;
 
@@ -48,27 +61,25 @@ public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.ViewHolder> 
         return new ViewHolder(view);
     }
 
-
-    /**
-     * Sets the items being displayed in the stats list.
-     * @param stats
-     */
-    public void setStats(List stats){
-        this.stats = stats;
+    public void setStat(String statistic, String value){
+        this.stats.put(statistic, value);
         notifyDataSetChanged();
-
     }
 
 
     /**
-     * Fills the Recycler view built in onCreateViewHolder with task views using fake data.
+     * Fills the Recycler view built in onCreateViewHolder with task views
      * @param holder
      * @param position
      */
     @Override
+    @SuppressWarnings("unchecked")//this suppression is here because java sucks.
+    //see https://stackoverflow.com/questions/509076/how-do-i-address-unchecked-cast-warnings
+    //the compiler cannot know that the cast is safe, but i do.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.statName.setText("Stat Name "+position);
-        holder.statValue.setText("Stat Value "+position);
+        Map.Entry<String, String> stat = (Map.Entry<String, String>) stats.entrySet().toArray()[position];
+        holder.statName.setText(stat.getKey());
+        holder.statValue.setText(stat.getValue());
     }
 
     /**
@@ -77,7 +88,7 @@ public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.ViewHolder> 
      */
     @Override
     public int getItemCount() {
-        return 3;
+        return stats.size();
     }
 
 }

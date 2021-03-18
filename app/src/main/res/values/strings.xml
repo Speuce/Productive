@@ -10,6 +10,9 @@
     <string name="rewards">Rewards</string>
     <string name="todo">To-do</string>
     <string name="schedule">Calendar</string>
+    <string name="my_productivity">My Productivity</string>
+    <string name="date_range">Date Range</string>
+    <string name="tasks_completed">Tasks Completed</string>
 
     <string-array name="sortFunctionArray">
         <item>Priority</item>
