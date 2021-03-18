@@ -142,18 +142,18 @@
         app:layout_constraintTop_toBottomOf="@+id/priorityGroup">
 
         <RadioButton
-            android:id="@+id/hardButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hard"
-            tools:layout_editor_absoluteX="192dp"
-            tools:layout_editor_absoluteY="23dp" />
-
-        <RadioButton
             android:id="@+id/medDiffButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Medium"
+            tools:layout_editor_absoluteX="192dp"
+            tools:layout_editor_absoluteY="23dp" />
+
+        <RadioButton
+            android:id="@+id/hardButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hard"
             tools:layout_editor_absoluteX="129dp"
             tools:layout_editor_absoluteY="293dp" />
 
