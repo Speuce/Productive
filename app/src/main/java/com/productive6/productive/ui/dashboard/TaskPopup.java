@@ -24,6 +24,7 @@ import com.productive6.productive.logic.util.CalenderUtilities;
 import com.productive6.productive.objects.Task;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
@@ -160,12 +161,17 @@ public class TaskPopup {
      */
     private void initDatePicker() {
         SwitchCompat hasDeadline = popupView.findViewById(R.id.switchDeadline);
+        Button dateButton = popupView.findViewById(R.id.datePickerButton);
         //Initialize date to today when opening the date picker
         if(task.getDueDate() == null){
             task.setDueDate(LocalDate.now());
             hasDeadline.setChecked(false);
+            dateButton.setTextColor(Color.GRAY);
+            dateButton.setBackgroundTintList(ColorStateList.valueOf(Color.GRAY));
         }else{
             hasDeadline.setChecked(true);
+            dateButton.setTextColor(Color.BLACK);
+            dateButton.setBackgroundTintList(ColorStateList.valueOf(Color.BLACK));
         }
 
         Button dateButton = popupView.findViewById(R.id.datePickerButton);

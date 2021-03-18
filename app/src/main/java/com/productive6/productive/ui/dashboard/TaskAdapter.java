@@ -24,6 +24,7 @@ import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.task.TaskCreateEvent;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -134,7 +135,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         holder.taskPriority.setText(TaskUtilities.getPriorityInString(tasks.get(position)));
         holder.taskDifficulty.setText(TaskUtilities.getDifficultyInString(tasks.get(position)));
         if (tasks.get(position).getDueDate() != null) {
-            holder.taskDueDate.setText(CalenderUtilities.DATE_FORMATTER.format(tasks.get(position).getDueDate()));
+            holder.taskDueDate.setVisibility(View.VISIBLE);
+            holder.dueImageView.setVisibility(View.VISIBLE);
+            holder.dueText.setVisibility(View.VISIBLE);
+            holder.taskDueDate.setText(formatter.format(tasks.get(position).getDueDate()));
         } else {
             holder.taskDueDate.setVisibility(View.INVISIBLE);
             holder.dueImageView.setVisibility(View.INVISIBLE);
