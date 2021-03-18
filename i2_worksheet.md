@@ -9,6 +9,20 @@ We also had to come up with converters to save/retrieve the LocalDates in the DB
 
 We would classify this debt as the inadvertent prudent kind. At the time, we didn't know of any better methods to represent dates, and this way seemed to work for us great at first, so why would we waste time looking for the 'best' solution if it worked? This is a 'now we know how we should've done it' situation -- inadvertant prudent debt.
 
+## Refactoring everything out of MainActivity
+
+When we first started adding features to the UI, much of that code ended up in the MainActivity file. The problem is, we had three separate fragments (subsections) in the MainActivity, and each fragment really should have its own code in a separate location. This was the debt. We knew it wasn't the best thing to do, but we had reason to create the debt.
+
+At the time, having everything in MainActivity was okay, because we needed to be agile and move quick. But as the codebase grew, it became quite 'spaghetti code'-like and hard to manuever and maintain. (The additional time it took to make changes in this file is the interest on said debt).
+
+So, through this iteration we worked on removing code out of the MainActivity, and properly separating out different parts of the code into their own locations.
+
+Here, for example, we pulled out code for the Add task UI into into the DashboardFragment, which meant that the Task list UI stuff would atleast all be in one location, and not intertwined with the schedule and rewards. This was us paying off our debt:
+
+https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/commit/f5d0f7840fa3b44a21ef5892777d909a70b136f2?merge_request_iid=47
+
+We would classify this as the deliberate prudent kind of debt. Deliberate because we knew what we were doing wasn't exactly the best. We forsaw future issues caused by the debt, and took it into consideration. Prudent because we did it by the means of being agile. At the time, the debt was small and easy to manage. The cost of figuring out what to change to make it work in the DashboardFragment just wasn't worth dealing with the debt. But of course, as the project grew, so did the debt. So we eventually had to pay it off.
+
 # SOLID
 
 
