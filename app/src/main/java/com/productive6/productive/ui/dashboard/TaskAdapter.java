@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.productive6.productive.R;
 import com.productive6.productive.logic.exceptions.ObjectFormatException;
 import com.productive6.productive.logic.task.ITaskManager;
+import com.productive6.productive.logic.util.CalenderUtilities;
+import com.productive6.productive.logic.util.TaskUtilities;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
@@ -47,10 +49,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
 
     private final View rootView;
 
-    /**
-     * For formatting dates in the view
-     */
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     /**
      * Holds the recyclerView view and it's components
@@ -133,10 +131,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
      */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        //holder.id.setText(""+tasks.get(position).getId());
         holder.taskName.setText(tasks.get(position).getTaskName());
-        holder.taskPriority.setText("" + tasks.get(position).getPriorityInString());
-        holder.taskDifficulty.setText("" + tasks.get(position).getDifficultyInString());
+        holder.taskPriority.setText(TaskUtilities.getPriorityInString(tasks.get(position)));
+        holder.taskDifficulty.setText(TaskUtilities.getDifficultyInString(tasks.get(position)));
         if (tasks.get(position).getDueDate() != null) {
             holder.taskDueDate.setVisibility(View.VISIBLE);
             holder.dueImageView.setVisibility(View.VISIBLE);
