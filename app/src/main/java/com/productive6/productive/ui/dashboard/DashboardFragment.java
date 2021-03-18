@@ -60,10 +60,6 @@ public class DashboardFragment extends Fragment implements ProductiveListener {
     @Inject
     ITaskSorter taskSorter;
 
-    @Inject
-    IStreakRewardManager streakRewardManager;
-
-    ImageView streakIcon;
 
     /**
      * Creates parent view for the tasks
@@ -95,9 +91,6 @@ public class DashboardFragment extends Fragment implements ProductiveListener {
         EventDispatch.registerListener(this);
         EventDispatch.registerListener(taskAdapter);
 
-        streakIcon = root.findViewById(R.id.fireIcon);
-        setStreakVisibility();
-
         taskSorter.getTasksByPriority((taskAdapter::setTasks));//logic call:: get tasks, provide it to task adapter
 
         Button createButton = root.findViewById(R.id.newTaskButton);
@@ -107,27 +100,5 @@ public class DashboardFragment extends Fragment implements ProductiveListener {
 
     }
 
-    public void setStreakVisibility(){
-
-        streakRewardManager.onStreak(tasks -> {
-            //ask logic layer whether on streak in not
-            Task temp = new Task();
-            temp.setCompleted(LocalDateTime.now());
-            boolean onStreak = DateUtilities.inStreakTime(tasks, temp, streakRewardManager.getStreakLength());
-
-            //once the logic has given use a boolean telling us whether we are on a streak or not
-            //use the boolean to display the view as visible or invisible
-            if(onStreak)
-                streakIcon.setVisibility(View.VISIBLE);
-            else
-                streakIcon.setVisibility(View.GONE);
-
-        });
-    }
-
-    @ProductiveEventHandler
-    public void checkStreak(TaskCompleteEvent event){
-        setStreakVisibility();
-    }
 
 }

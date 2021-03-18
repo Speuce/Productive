@@ -9,6 +9,9 @@ import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.User;
 import com.productive6.productive.objects.events.task.TaskCompleteEvent;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -16,13 +19,11 @@ import java.util.function.Consumer;
 public class StreakRewardManager extends RewardManager implements IStreakRewardManager {
 
     protected ITaskSorter taskSorter;
-    private int streakValueWeight;
     private int streakLength;
 
     public StreakRewardManager(IUserManager data, ITaskSorter taskSorter, ITaskManager taskManager, int[] configValues){
         super(data,taskManager,configValues[0],configValues[1],configValues[2]);
-        this.streakValueWeight = configValues[3];
-        this.streakLength = configValues[4];
+        this.streakLength = configValues[3];
         this.taskSorter = taskSorter;
     }
 
@@ -33,11 +34,7 @@ public class StreakRewardManager extends RewardManager implements IStreakRewardM
 
     }
 
-    public void onStreak(Consumer<List<Task>> run){
-        taskSorter.getCompletedTasks(run);
-    }
-
-    public int getStreakLength(){return streakLength;}
+    public int getStreakConstant(){return streakLength;}
 
     public class StreakConsumer implements Consumer<List<Task>> {
 
@@ -51,12 +48,32 @@ public class StreakRewardManager extends RewardManager implements IStreakRewardM
         @Override
         public void accept(List<Task> tasks) {
             //if streak is confirmed,
-            if(DateUtilities.inStreakTime(tasks, completedTask,streakLength)) {
-                User person = data.getCurrentUser();
-                person.setCoins(person.getCoins() + streakValueWeight);
+            int streakCount = inStreakTime(tasks, completedTask.getCompleted());
+
+            if(streakCount > 0){
+                person.setCoins(person.getCoins() + streakCount);
                 data.updateUser(person);
             }
         }
     }
+
+    public int inStreakTime(List<Task> tasks, LocalDateTime currTime){
+
+        int count = 0;
+
+        Iterator<Task> taskIterator = tasks.iterator();
+        while(taskIterator.hasNext()){
+            Task curr = taskIterator.next();
+            //calculate period
+            Duration timeDifference = Duration.between(curr.getCompleted(),currTime);
+            int hours = (int) timeDifference.toHours();
+            if(hours <= streakLength && curr.isCompleted()) //check if with streak window and different tasks
+                count++;
+
+        }
+        return count;
+    }
+
+
 
 }

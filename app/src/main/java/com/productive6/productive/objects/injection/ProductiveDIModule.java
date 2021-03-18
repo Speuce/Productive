@@ -122,8 +122,7 @@ public class ProductiveDIModule {
         configValues[0] = context.getResources().getInteger(R.integer.experienceweight);
         configValues[1] = context.getResources().getInteger(R.integer.coinsweight);
         configValues[2] = context.getResources().getInteger(R.integer.levelupvalue);
-        configValues[3] = context.getResources().getInteger(R.integer.streakbonus);
-        configValues[4] = context.getResources().getInteger(R.integer.streakhours);
+        configValues[3] = context.getResources().getInteger(R.integer.streakhours);
 
         IStreakRewardManager rm = new StreakRewardManager(data,sort, taskManager ,configValues);
         return rm;
