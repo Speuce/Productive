@@ -18,13 +18,13 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.content.ContextCompat;
 
 import com.productive6.productive.R;
 import com.productive6.productive.logic.util.CalenderUtilities;
 import com.productive6.productive.objects.Task;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
@@ -170,19 +170,17 @@ public class TaskPopup {
             dateButton.setBackgroundTintList(ColorStateList.valueOf(Color.GRAY));
         }else{
             hasDeadline.setChecked(true);
-            dateButton.setTextColor(Color.BLACK);
-            dateButton.setBackgroundTintList(ColorStateList.valueOf(Color.BLACK));
+            dateButton.setTextColor(ContextCompat.getColor(context,R.color.smoke_white));
+            dateButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context,R.color.smoke_white)));
         }
         
         dateButton.setText(CalenderUtilities.DATE_FORMATTER.format(task.getDueDate()));
-        dateButton.setTextColor(Color.GRAY);
-        dateButton.setBackgroundTintList(ColorStateList.valueOf(Color.GRAY));
 
         //Toggle the button if this task has due date
         hasDeadline.setOnClickListener(v -> {
             if (hasDeadline.isChecked()) {
-                dateButton.setTextColor(Color.BLACK);
-                dateButton.setBackgroundTintList(ColorStateList.valueOf(Color.BLACK));
+                dateButton.setTextColor(ContextCompat.getColor(context,R.color.smoke_white));
+                dateButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context,R.color.smoke_white)));
             } else {
                 dateButton.setTextColor(Color.GRAY);
                 dateButton.setBackgroundTintList(ColorStateList.valueOf(Color.GRAY));
@@ -192,8 +190,8 @@ public class TaskPopup {
         //Set the calendar date to the date user selected
         DatePickerDialog.OnDateSetListener dateSetListener = (view, year, month, dayOfMonth) -> {
             hasDeadline.setChecked(true);
-            dateButton.setTextColor(Color.BLACK);
-            dateButton.setBackgroundTintList(ColorStateList.valueOf(Color.BLACK));
+            dateButton.setTextColor(ContextCompat.getColor(context,R.color.smoke_white));
+            dateButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context,R.color.smoke_white)));
             task.setDueDate(LocalDate.of(year, month+1, dayOfMonth));
             dateButton.setText(CalenderUtilities.DATE_FORMATTER.format(task.getDueDate()));
         };

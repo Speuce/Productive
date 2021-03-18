@@ -17,4 +17,11 @@
     <color name="edit_blue">#00a2ed</color>
 <!--    <color name="light_purple">#575E76</color>-->
     <color name="light_purple">#8b93ad</color>
+
+<!-- pastel color set -->
+    <color name="pastel_blue">#415583</color>
+    <color name="pastel_red">#F76A6A</color>
+    <color name="light_blue">#7FBADC</color>
+    <color name="smoke_black">#272727</color>
+    <color name="smoke_white">#EFF0F4</color>
 </resources>

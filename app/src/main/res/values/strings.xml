@@ -5,7 +5,7 @@
     <string name="title_notifications">Calendar</string>
     <string name="task_scheduled">TASK_SCHEDULED</string>
     <string name="month_name">MONTH_NAME</string>
-    <string name="addTaskPrompt">Tap \'Add Task\' To add a new Task</string>
+    <string name="addTaskPrompt">Tap \'Add Task\' to add a new Task</string>
     <string name="add">Add Task</string>
     <string name="rewards">Rewards</string>
     <string name="todo">To-do</string>

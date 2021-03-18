@@ -1,6 +1,5 @@
 package com.productive6.productive.ui.notifications;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,10 +17,9 @@ import com.github.sundeepk.compactcalendarview.domain.Event;
 import com.productive6.productive.R;
 import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.logic.task.ITaskSorter;
+import com.productive6.productive.logic.util.CalenderUtilities;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.ui.dashboard.TaskAdapter;
-
-import com.productive6.productive.logic.util.CalenderUtilities;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -114,7 +113,7 @@ public class NotificationsFragment extends Fragment {
     private void fillMonth(LocalDate first){
         calendarView.removeAllEvents();
         taskSorter.getDaysWithTaskInMonth(first, (day) ->{
-            calendarView.addEvent(new Event(Color.RED, day.atStartOfDay(ZoneId.systemDefault()).toEpochSecond()*1000L));
+            calendarView.addEvent(new Event(ContextCompat.getColor(getContext(),R.color.pastel_red), day.atStartOfDay(ZoneId.systemDefault()).toEpochSecond()*1000L));
         });
     }
 

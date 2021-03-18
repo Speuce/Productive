@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,7 +23,6 @@ import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.task.TaskCreateEvent;
 
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +58,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         private final TextView taskDifficulty;
         private final TextView taskDueDate;
         private final Button taskComplete;
-        private final ImageView dueImageView;
         private final TextView dueText;
 
         public ViewHolder(@NonNull View itemView) {
@@ -71,7 +68,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
             taskDueDate = itemView.findViewById(R.id.taskDueDateTextView);
             taskComplete = itemView.findViewById(R.id.taskCompleteToggleButton);
             Button editTask = itemView.findViewById(R.id.editButton);
-            dueImageView = itemView.findViewById(R.id.dueImageView);
             dueText = itemView.findViewById(R.id.dueText);
 
             //id = itemView.findViewById(R.id.taskId);
@@ -136,12 +132,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         holder.taskDifficulty.setText(TaskUtilities.getDifficultyInString(tasks.get(position)));
         if (tasks.get(position).getDueDate() != null) {
             holder.taskDueDate.setVisibility(View.VISIBLE);
-            holder.dueImageView.setVisibility(View.VISIBLE);
             holder.dueText.setVisibility(View.VISIBLE);
             holder.taskDueDate.setText(CalenderUtilities.DATE_FORMATTER.format(tasks.get(position).getDueDate()));
         } else {
             holder.taskDueDate.setVisibility(View.INVISIBLE);
-            holder.dueImageView.setVisibility(View.INVISIBLE);
             holder.dueText.setVisibility(View.INVISIBLE);
         }
     }
