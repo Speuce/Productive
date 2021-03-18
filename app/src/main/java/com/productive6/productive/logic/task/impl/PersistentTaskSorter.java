@@ -33,7 +33,7 @@ public class PersistentTaskSorter implements ITaskSorter {
     @Override
     public void getTasksByCreation(Consumer<List<Task>> outputparam) {
         data.task().getAllTasks(false, ret ->{
-            ret.sort((a, b) -> a.getCreatedTime().compareTo(b.getCreatedTime()));
+            ret.sort((a, b) -> b.getCreatedTime().compareTo(a.getCreatedTime()));
             outputparam.accept(ret);
         });
     }
