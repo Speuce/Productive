@@ -40,6 +40,7 @@ public interface ITaskPersistenceManager {
      * Updates the database information of a task
      * which has already been assigned an id
      * @param t the task to update
+     * @param after called after the update has occured, on the main thread.
      */
-    void updateTask(Task t);
+    void updateTask(Task t, Runnable after);
 }

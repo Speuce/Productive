@@ -245,6 +245,21 @@ public class Task implements Comparable<Task> {
         return completed;
     }
 
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", taskName='" + taskName + '\'' +
+                ", priority=" + priority +
+                ", createdTime=" + createdTime +
+                ", completed=" + completed +
+                ", dueDate=" + dueDate +
+                ", difficulty=" + difficulty +
+                ", coinsEarned=" + coinsEarned +
+                ", xpEarned=" + xpEarned +
+                '}';
+    }
+
     /**
      * Compares this object with another task,
      * for comparable sorting.
