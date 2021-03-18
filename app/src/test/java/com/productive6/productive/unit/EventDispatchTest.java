@@ -1,11 +1,11 @@
 package com.productive6.productive.unit;
 
 import com.productive6.productive.logic.event.EventDispatch;
-import com.productive6.productive.objects.events.DummyEvent;
+import com.productive6.productive.objects.events.dummy.DummyEvent;
 import com.productive6.productive.objects.events.ProductiveEvent;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
-import com.productive6.productive.objects.events.SubDummyEvent;
+import com.productive6.productive.objects.events.dummy.SubDummyEvent;
 
 import org.junit.Test;
 
