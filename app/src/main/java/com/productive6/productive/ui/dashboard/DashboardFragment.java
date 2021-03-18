@@ -65,6 +65,7 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
         return root;
     }
 
+
     /**
      * Attaches task data, view, and display. Allowing for dynamically rendered tasks in the task display.
      *
@@ -97,6 +98,7 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
 
             @ProductiveEventHandler
             public void onUpdateTask(TaskUpdateEvent e) {
+                System.out.println("update");
                 sortAndDisplayTasks();
             }
         });

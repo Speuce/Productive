@@ -28,6 +28,7 @@ import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.task.TaskCreateEvent;
+import com.productive6.productive.objects.events.task.TaskUpdateEvent;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -102,7 +103,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
             editTask.setOnClickListener((v) -> {
                 new TaskPopup(itemView.getContext(), tasks.get(getAdapterPosition()), (task) -> {
                     taskManager.updateTask(task);
-                    updateData();
                 }).open(v);
             });
         }
@@ -214,6 +214,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
     public void onNewTask(TaskCreateEvent e) {
         this.tasks.add(e.getTask());
         updateData();
+    }
+
+    @ProductiveEventHandler
+    public void onTaskUpdate(TaskUpdateEvent e){
+
     }
 
 }
