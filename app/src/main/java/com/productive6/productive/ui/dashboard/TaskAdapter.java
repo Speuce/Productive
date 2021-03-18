@@ -9,6 +9,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,10 +22,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.productive6.productive.R;
 import com.productive6.productive.logic.exceptions.ObjectFormatException;
 import com.productive6.productive.logic.task.ITaskManager;
+import com.productive6.productive.logic.util.CalenderUtilities;
+import com.productive6.productive.logic.util.TaskUtilities;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.task.TaskCreateEvent;
+import com.productive6.productive.objects.events.task.TaskUpdateEvent;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -47,10 +55,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
 
     private final View rootView;
 
-    /**
-     * For formatting dates in the view
-     */
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     /**
      * Holds the recyclerView view and it's components
@@ -84,7 +88,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
                 try {
                     taskManager.completeTask(tasks.get(getAdapterPosition()));
                     setAnimation(itemView, getAdapterPosition());
-                } catch (ObjectFormatException e) {
+                    if(getItemCount() == 1){// If item being completed is the last in the list.
+                        Spinner sort_by = (Spinner)rootView.findViewById(R.id.sortTasksDropdown);
+                        sort_by.setEnabled(false);
+                        sort_by.setClickable(false);
+                    }
+                }catch(ObjectFormatException e){
                     taskComplete.setTextColor(0xFF00000);
                     taskComplete.setText("There was an issue with this task..");
                 }
@@ -94,7 +103,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
             editTask.setOnClickListener((v) -> {
                 new TaskPopup(itemView.getContext(), tasks.get(getAdapterPosition()), (task) -> {
                     taskManager.updateTask(task);
-                    updateData();
                 }).open(v);
             });
         }
@@ -133,15 +141,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
      */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        //holder.id.setText(""+tasks.get(position).getId());
         holder.taskName.setText(tasks.get(position).getTaskName());
-        holder.taskPriority.setText("" + tasks.get(position).getPriorityInString());
-        holder.taskDifficulty.setText("" + tasks.get(position).getDifficultyInString());
+        holder.taskPriority.setText(TaskUtilities.getPriorityInString(tasks.get(position)));
+        holder.taskDifficulty.setText(TaskUtilities.getDifficultyInString(tasks.get(position)));
         if (tasks.get(position).getDueDate() != null) {
             holder.taskDueDate.setVisibility(View.VISIBLE);
             holder.dueImageView.setVisibility(View.VISIBLE);
             holder.dueText.setVisibility(View.VISIBLE);
-            holder.taskDueDate.setText(formatter.format(tasks.get(position).getDueDate()));
+            holder.taskDueDate.setText(CalenderUtilities.DATE_FORMATTER.format(tasks.get(position).getDueDate()));
         } else {
             holder.taskDueDate.setVisibility(View.INVISIBLE);
             holder.dueImageView.setVisibility(View.INVISIBLE);
@@ -167,7 +174,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
         updateData();
-
     }
 
     /**
@@ -209,5 +215,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         this.tasks.add(e.getTask());
         updateData();
     }
+
 
 }

@@ -159,18 +159,7 @@ public class Task implements Comparable<Task> {
         return priority;
     }
 
-    public String getPriorityInString() {
-        String priorityInString = "";
 
-        if (getPriority() == 1) {
-            priorityInString = "High";
-        } else if (getPriority() == 2) {
-            priorityInString = "Medium";
-        } else {
-            priorityInString = "Low";
-        }
-        return priorityInString;
-    }
 
     /**
      * @param priority The user-defined priority of this task
@@ -222,18 +211,7 @@ public class Task implements Comparable<Task> {
     }
 
 
-    public String getDifficultyInString() {
-        String difficultyInString = "";
 
-        if (getDifficulty() == 1) {
-            difficultyInString = "Hard";
-        } else if (getDifficulty() == 2) {
-            difficultyInString = "Medium";
-        } else {
-            difficultyInString = "Easy";
-        }
-        return difficultyInString;
-    }
 
     public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
@@ -265,6 +243,21 @@ public class Task implements Comparable<Task> {
      */
     public LocalDateTime getCompleted() {
         return completed;
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", taskName='" + taskName + '\'' +
+                ", priority=" + priority +
+                ", createdTime=" + createdTime +
+                ", completed=" + completed +
+                ", dueDate=" + dueDate +
+                ", difficulty=" + difficulty +
+                ", coinsEarned=" + coinsEarned +
+                ", xpEarned=" + xpEarned +
+                '}';
     }
 
     /**

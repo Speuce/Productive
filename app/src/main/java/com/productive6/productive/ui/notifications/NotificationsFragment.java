@@ -32,7 +32,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.function.Consumer;
 
 import javax.inject.Inject;
 
@@ -76,7 +75,7 @@ public class NotificationsFragment extends Fragment {
 
         /** Initialize variables */
         calendar    = (Calendar.getInstance());
-        sdf         = DateTimeFormatter.ofPattern("yyyy-M-d");
+        sdf         = CalenderUtilities.DATE_FORMATTER;
         dateInSDF   = LocalDate.now();
         month       = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
         tasksByDate = new ArrayList<>();

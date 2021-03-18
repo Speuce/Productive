@@ -25,9 +25,9 @@ import java.util.stream.Collectors;
 public class PersistentTaskManager implements ITaskManager{
 
 
-    private IDataManager data;
-    private int minDifficulty;
-    private int minPriority;
+    private final IDataManager data;
+    private final int minDifficulty;
+    private final int minPriority;
 
     public PersistentTaskManager(IDataManager data, int[] configValues) {
         this.data = data;
@@ -74,8 +74,8 @@ public class PersistentTaskManager implements ITaskManager{
             throw new PersistentIDAssignmentException();
         }
         validateTask(t);
-        data.task().updateTask(t);
-        EventDispatch.dispatchEvent(new TaskUpdateEvent(t));
+        data.task().updateTask(t,() -> EventDispatch.dispatchEvent(new TaskUpdateEvent(t)));
+
     }
 
     @Override

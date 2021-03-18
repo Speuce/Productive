@@ -20,6 +20,7 @@ import android.widget.RadioGroup;
 import androidx.appcompat.widget.SwitchCompat;
 
 import com.productive6.productive.R;
+import com.productive6.productive.logic.util.CalenderUtilities;
 import com.productive6.productive.objects.Task;
 
 import java.time.LocalDate;
@@ -42,11 +43,6 @@ public class TaskPopup {
      * The task being changed.
      */
     private final Task task;
-
-    /**
-     * For formatting dates in the view
-     */
-    DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     private final Consumer<Task> complete;
 
@@ -177,8 +173,10 @@ public class TaskPopup {
             dateButton.setTextColor(Color.BLACK);
             dateButton.setBackgroundTintList(ColorStateList.valueOf(Color.BLACK));
         }
-
-        dateButton.setText(format.format(task.getDueDate()));
+        
+        dateButton.setText(CalenderUtilities.DATE_FORMATTER.format(task.getDueDate()));
+        dateButton.setTextColor(Color.GRAY);
+        dateButton.setBackgroundTintList(ColorStateList.valueOf(Color.GRAY));
 
         //Toggle the button if this task has due date
         hasDeadline.setOnClickListener(v -> {
@@ -197,7 +195,7 @@ public class TaskPopup {
             dateButton.setTextColor(Color.BLACK);
             dateButton.setBackgroundTintList(ColorStateList.valueOf(Color.BLACK));
             task.setDueDate(LocalDate.of(year, month+1, dayOfMonth));
-            dateButton.setText(format.format(task.getDueDate()));
+            dateButton.setText(CalenderUtilities.DATE_FORMATTER.format(task.getDueDate()));
         };
 
 

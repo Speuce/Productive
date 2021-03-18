@@ -7,6 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * Annotation used to mark any class method that is to handle Productive App Events.
+ * Annotation interfaces don't typicall have much for an implementation.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)

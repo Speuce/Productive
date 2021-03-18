@@ -54,7 +54,10 @@ public class TaskPersistenceManager implements ITaskPersistenceManager {
     }
 
     @Override
-    public void updateTask(final Task t) {
-        executor.runASync(() ->access.updateTask(t));
+    public void updateTask(final Task t, final Runnable after) {
+        executor.runASync(() ->{
+            access.updateTask(t);
+            executor.runSync(after);
+        });
     }
 }

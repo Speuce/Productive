@@ -14,6 +14,8 @@ A new task is added to the task list. The task list data is ready for the UI. Yo
 
 ## ‘Okay… uh why don’t we just do things the normal way?’
 
+You mean by _every_ class maintaining its own list of listening classes?
+_that sounds easy to maintain and develop_ /s
 
 Really this is about abstraction and information hiding. 
 
