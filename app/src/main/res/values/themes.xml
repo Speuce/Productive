@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.Productive" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/pastel_blue</item>
+        <item name="colorPrimary">@color/smoke_black</item>
         <item name="colorPrimaryVariant">@color/smoke_black</item>
         <item name="colorOnPrimary">@color/smoke_white</item>
         <!-- Secondary brand color. -->
