@@ -31,9 +31,18 @@ We would classify this as the deliberate prudent kind of debt. Deliberate becaus
 
 # Design patterns
 
-Singleton Pattern: https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/commit/2e2ebf1f32e9bd262f9997351aec6791c7affba4#71a5f6b12646cc3c0a8b4ebd854f0b8365beb8fe_26_28
+## Observer Pattern
+As described [here](https://refactoring.guru/design-patterns/observer), we used a generified observer pattern as a central part of our codebase.
 
-Adapter: https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/blob/develop/app/src/main/java/com/productive6/productive/ui/dashboard/TaskAdapter.java
+Any class can subscribe itself to listening to any kind of 'event', as seen [here](https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/blob/develop/app/src/main/java/com/productive6/productive/logic/rewards/impl/RewardManager.java#L149), so long as it registers itself by calling [this static function.](https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/blob/develop/app/src/main/java/com/productive6/productive/logic/event/EventDispatch.java#L36)
+
+Then, any other class can notify all subscribed methods of a particular 'event', as seen [here](https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/blob/develop/app/src/main/java/com/productive6/productive/logic/rewards/impl/RewardManager.java#L175) by calling [this static function.](https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/blob/develop/app/src/main/java/com/productive6/productive/logic/event/EventDispatch.java#L73) 
+
+[We even wrote up an extra piece of documentation for the event system.](https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/blob/develop/EventSystem.md).
+
+## Adapter Pattern
+
+Much like the adapter pattern described [here](https://refactoring.guru/design-patterns/adapter),[this](https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/blob/develop/app/src/main/java/com/productive6/productive/ui/dashboard/TaskAdapter.java) class is for displaying Task objects. It _adapts_ a list of tasks into a list of UI elements that the device can then display to the user.
 
 
 # Iteration 1 Feedback Fixes
