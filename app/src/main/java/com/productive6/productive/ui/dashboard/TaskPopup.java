@@ -173,8 +173,7 @@ public class TaskPopup {
             dateButton.setTextColor(Color.BLACK);
             dateButton.setBackgroundTintList(ColorStateList.valueOf(Color.BLACK));
         }
-
-        Button dateButton = popupView.findViewById(R.id.datePickerButton);
+        
         dateButton.setText(CalenderUtilities.DATE_FORMATTER.format(task.getDueDate()));
         dateButton.setTextColor(Color.GRAY);
         dateButton.setBackgroundTintList(ColorStateList.valueOf(Color.GRAY));

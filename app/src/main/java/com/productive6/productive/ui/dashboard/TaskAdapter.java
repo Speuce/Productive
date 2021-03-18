@@ -138,7 +138,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
             holder.taskDueDate.setVisibility(View.VISIBLE);
             holder.dueImageView.setVisibility(View.VISIBLE);
             holder.dueText.setVisibility(View.VISIBLE);
-            holder.taskDueDate.setText(formatter.format(tasks.get(position).getDueDate()));
+            holder.taskDueDate.setText(CalenderUtilities.DATE_FORMATTER.format(tasks.get(position).getDueDate()));
         } else {
             holder.taskDueDate.setVisibility(View.INVISIBLE);
             holder.dueImageView.setVisibility(View.INVISIBLE);
