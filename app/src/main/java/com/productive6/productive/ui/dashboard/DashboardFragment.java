@@ -21,6 +21,7 @@ import com.productive6.productive.logic.task.ITaskSorter;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
+import com.productive6.productive.objects.events.task.TaskCompleteEvent;
 import com.productive6.productive.objects.events.task.TaskCreateEvent;
 import com.productive6.productive.objects.events.task.TaskUpdateEvent;
 import com.productive6.productive.ui.stats.StatsActivity;
@@ -98,8 +99,10 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
 
             @ProductiveEventHandler
             public void onUpdateTask(TaskUpdateEvent e) {
-                System.out.println("update");
-                sortAndDisplayTasks();
+                if(!e.getTask().isCompleted()){
+                    sortAndDisplayTasks();
+                }
+
             }
         });
     }

@@ -216,9 +216,5 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         updateData();
     }
 
-    @ProductiveEventHandler
-    public void onTaskUpdate(TaskUpdateEvent e){
-
-    }
 
 }
