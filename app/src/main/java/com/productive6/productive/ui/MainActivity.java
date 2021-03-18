@@ -47,10 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     private LocalDate selectedDate;
 
-    /**
-     * For formatting dates in the view
-     */
-    DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

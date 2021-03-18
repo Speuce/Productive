@@ -7,6 +7,7 @@ import com.productive6.productive.persistence.datamanage.IStatisticsDataManager;
 import com.productive6.productive.services.executor.IRunnableExecutor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -59,8 +60,13 @@ public class StatisticsDataManager implements IStatisticsDataManager {
     @Override
     public void getFirstTaskDay(Consumer<LocalDate> callback) {
         executor.runASync(() ->{
-            LocalDate ret = stats.getFirstTaskDay().toLocalDate();
-            executor.runSync(() ->callback.accept(ret));
+            LocalDateTime first = stats.getFirstTaskDay();
+            LocalDate ret = LocalDate.now();
+            if(first != null){
+                ret = first.toLocalDate();
+            }
+            LocalDate finalRet = ret;
+            executor.runSync(() ->callback.accept(finalRet));
         });
     }
 }

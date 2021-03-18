@@ -27,10 +27,10 @@
         android:background="@drawable/bg_rounded_corners_purple"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.14"
+        app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.156" />
+        app:layout_constraintVertical_bias="0.1" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -39,17 +39,17 @@
         android:src="@drawable/ic_chart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.14"
+        app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.156" />
+        app:layout_constraintVertical_bias="0.1" />
 
 
     <TextView
         android:id="@+id/empty_view"
         android:layout_width="597dp"
-        android:layout_height="609dp"
-        android:layout_marginTop="165dp"
+        android:layout_height="600dp"
+        android:layout_marginTop="140dp"
         android:gravity="center_horizontal"
         android:text="@string/addTaskPrompt"
         android:visibility="invisible"
@@ -64,7 +64,7 @@
         android:id="@+id/taskDisplayView"
         android:layout_width="597dp"
         android:layout_height="600dp"
-        android:layout_marginTop="165dp"
+        android:layout_marginTop="140dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -79,12 +79,12 @@
         android:background="@drawable/bg_rounded_corners"
         android:onClick="onButtonShowPopupWindowClick"
         android:text="@string/add"
-        app:layout_constraintBottom_toTopOf="@+id/empty_view"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.993" />
+        app:layout_constraintVertical_bias="0.1" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

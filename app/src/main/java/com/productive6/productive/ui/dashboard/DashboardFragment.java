@@ -22,6 +22,7 @@ import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.task.TaskCreateEvent;
+import com.productive6.productive.objects.events.task.TaskUpdateEvent;
 import com.productive6.productive.ui.stats.StatsActivity;
 
 
@@ -34,7 +35,7 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class DashboardFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class DashboardFragment extends Fragment implements AdapterView.OnItemSelectedListener, ProductiveListener {
 
     @Inject
     ITaskManager taskManager;
@@ -129,6 +130,7 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String selection = parent.getItemAtPosition(position).toString();
+
         sortingBySelection = selection;
         this.sortBySelectionInt = position;
         sortAndDisplayTasks();
@@ -162,4 +164,9 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
         }
     }
 
+
+    @ProductiveEventHandler
+    public void onUpdateTask(TaskUpdateEvent e) {
+        sortAndDisplayTasks();
+    }
 }
