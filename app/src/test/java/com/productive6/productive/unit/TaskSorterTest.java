@@ -52,10 +52,11 @@ public class TaskSorterTest {
      */
     @Test
     public void testGetByCreation() throws InterruptedException {
-        Task t1 = new Task("task", 5, 5, LocalDateTime.now());
+        data.task().insertTask(new Task("task2", 5, 5,LocalDateTime.now()), () -> {});
         //make t1 created 10ms before the second task.
         Thread.sleep(10);
-        data.task().insertTask(new Task("task2", 5, 5,LocalDateTime.now()), () -> {});
+        Task t1 = new Task("task", 5, 5, LocalDateTime.now());
+
         data.task().insertTask(t1, () -> {});
         taskSorter.getTasksByCreation(tasks -> {
             assertEquals("Task sorter is improperly getting completed tasks by creation!",

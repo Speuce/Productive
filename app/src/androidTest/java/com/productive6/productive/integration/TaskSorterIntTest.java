@@ -55,7 +55,7 @@ public class TaskSorterIntTest {
     public void testGetByPriority(){
         data.task().insertTask(new Task("task", 5, 1, LocalDateTime.now()), () -> {});
 
-        Task t2 = new Task("task", 6,1, LocalDateTime.now());
+        Task t2 = new Task("task", 4,1, LocalDateTime.now());
         data.task().insertTask(t2, () -> {});
         taskSorter.getTasksByPriority(tasks -> {
             assertEquals("Task Sorter is improperly getting completed tasks by priority!",
@@ -68,10 +68,11 @@ public class TaskSorterIntTest {
      */
     @Test
     public void testGetByCreation() throws InterruptedException {
-        Task t1 = new Task("task", 5, 5, LocalDateTime.now());
+
         //make t1 created 10ms before the second task.
-        Thread.sleep(10);
         data.task().insertTask(new Task("task2", 5, 5,LocalDateTime.now()), () -> {});
+        Thread.sleep(10);
+        Task t1 = new Task("task", 5, 5, LocalDateTime.now());
         data.task().insertTask(t1, () -> {});
         taskSorter.getTasksByCreation(tasks -> {
             assertEquals("Task sorter is improperly getting completed tasks by creation!",
