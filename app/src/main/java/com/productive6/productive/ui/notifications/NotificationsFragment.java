@@ -47,7 +47,6 @@ public class NotificationsFragment extends Fragment {
     private RecyclerView taskDisplayView;
     private Calendar calendar;
     private CompactCalendarView calendarView;
-    private ImageView streakView;
 
     /** Variables */
     private LocalDate dateInSDF;
@@ -90,8 +89,6 @@ public class NotificationsFragment extends Fragment {
         /** Initialize tasks for the RecyclerView */
         initTaskList(dateInSDF, root);
 
-        /** Initialize streakIcon */
-        streakView.setVisibility(View.GONE);
 
         /** Set a listener to CompactCalendarView */
         calendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
