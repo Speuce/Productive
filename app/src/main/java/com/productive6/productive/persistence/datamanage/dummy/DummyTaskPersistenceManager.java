@@ -55,8 +55,9 @@ public class DummyTaskPersistenceManager implements ITaskPersistenceManager, ISt
     }
 
     @Override
-    public void updateTask(Task t) {
+    public void updateTask(Task t, Runnable after) {
         //doesn't need t really happen. Thanks pointers!
+        after.run();
     }
 
     @Override

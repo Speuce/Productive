@@ -8,6 +8,12 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,7 +28,9 @@ import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.task.TaskCreateEvent;
+import com.productive6.productive.objects.events.task.TaskUpdateEvent;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,7 +86,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
                 try {
                     taskManager.completeTask(tasks.get(getAdapterPosition()));
                     setAnimation(itemView, getAdapterPosition());
-                } catch (ObjectFormatException e) {
+                    if(getItemCount() == 1){// If item being completed is the last in the list.
+                        Spinner sort_by = (Spinner)rootView.findViewById(R.id.sortTasksDropdown);
+                        sort_by.setEnabled(false);
+                        sort_by.setClickable(false);
+                    }
+                }catch(ObjectFormatException e){
                     taskComplete.setTextColor(0xFF00000);
                     taskComplete.setText("There was an issue with this task..");
                 }
@@ -88,7 +101,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
             editTask.setOnClickListener((v) -> {
                 new TaskPopup(itemView.getContext(), tasks.get(getAdapterPosition()), (task) -> {
                     taskManager.updateTask(task);
-                    updateData();
                 }).open(v);
             });
         }
@@ -158,7 +170,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
         updateData();
-
     }
 
     /**
@@ -200,5 +211,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         this.tasks.add(e.getTask());
         updateData();
     }
+
 
 }

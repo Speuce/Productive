@@ -27,7 +27,7 @@ public interface ITaskAccess {
      * then date created
      * @return an {@link List} of all tasks
      */
-    @Query("SELECT * FROM tasks ORDER BY priority, created;")
+    @Query("SELECT * FROM tasks ORDER BY priority, created DESC;")
     List<Task> getAllTasks();
 
     /**
@@ -39,7 +39,7 @@ public interface ITaskAccess {
     @Query("SELECT * FROM tasks WHERE " +
             "(:complete = 1 AND completedDay is not null) " +
             "OR (:complete = 0 AND completedDay is null) " +
-            "ORDER BY priority DESC, created;")
+            "ORDER BY priority, created DESC;")
     List<Task> getAllTasks(boolean complete);
 
      /**

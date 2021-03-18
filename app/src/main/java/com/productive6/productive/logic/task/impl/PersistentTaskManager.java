@@ -74,8 +74,8 @@ public class PersistentTaskManager implements ITaskManager{
             throw new PersistentIDAssignmentException();
         }
         validateTask(t);
-        data.task().updateTask(t);
-        EventDispatch.dispatchEvent(new TaskUpdateEvent(t));
+        data.task().updateTask(t,() -> EventDispatch.dispatchEvent(new TaskUpdateEvent(t)));
+
     }
 
     @Override

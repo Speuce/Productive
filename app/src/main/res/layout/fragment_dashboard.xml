@@ -7,6 +7,18 @@
     tools:context=".ui.dashboard.DashboardFragment">
 
 
+
+    <Spinner
+        android:id="@+id/sortTasksDropdown"
+        android:layout_width="171dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="100dp"
+        android:background="@android:drawable/btn_dropdown"
+        android:entries="@array/sortFunctionArray"
+        android:spinnerMode="dropdown"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <Button
         android:id="@+id/buttonBarChart"
         style="?android:attr/borderlessButtonStyle"
@@ -32,6 +44,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.049" />
+
 
     <TextView
         android:id="@+id/empty_view"
