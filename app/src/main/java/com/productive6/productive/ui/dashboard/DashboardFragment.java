@@ -94,6 +94,11 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
             public void onEvent(TaskCreateEvent e){
                 sortAndDisplayTasks();
             }
+
+            @ProductiveEventHandler
+            public void onUpdateTask(TaskUpdateEvent e) {
+                sortAndDisplayTasks();
+            }
         });
     }
 
@@ -164,9 +169,4 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
         }
     }
 
-
-    @ProductiveEventHandler
-    public void onUpdateTask(TaskUpdateEvent e) {
-        sortAndDisplayTasks();
-    }
 }
