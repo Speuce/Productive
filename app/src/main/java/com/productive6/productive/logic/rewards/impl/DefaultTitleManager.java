@@ -1,6 +1,7 @@
 package com.productive6.productive.logic.rewards.impl;
 
 import com.productive6.productive.logic.event.EventDispatch;
+import com.productive6.productive.logic.exceptions.AccessBeforeLoadedException;
 import com.productive6.productive.logic.rewards.ITitleManager;
 import com.productive6.productive.logic.user.IUserManager;
 import com.productive6.productive.objects.Title;
@@ -52,14 +53,9 @@ public class DefaultTitleManager implements ITitleManager, ProductiveListener{
      * @return String representing the current title, returns an empty string
      * if person has not been initialized by the database
      */
-    public String getTitleAsString(){
-
-        String str = "";
-
-        if(person != null)
-            str = person.getSelectedTitle();
-
-        return str;
+    public String getTitleAsString() throws AccessBeforeLoadedException{
+        if(person == null){throw new AccessBeforeLoadedException("Cannot access titles before the database loads");}
+        return   person.getSelectedTitle();
     }
 
     /**
