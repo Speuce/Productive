@@ -27,7 +27,7 @@ We would classify this as the deliberate prudent kind of debt. Deliberate becaus
 
 
 # Retrospective
-
+After the retrospective for iteration 1, our group has acknowledged more efficient way to do the project. As in iteration 1, our group had to push backone user story because we underestimated workload for one feature, our feature in iteration 1 is too general and it has too much work to do. Therefore, in this iteration, we divided user stories and dev tasks more reasonably, which can be proved by we finish all feature before due date. We do not have to rush in last few hours and push back any task to later iteration. For example, in first iteration, we have feature [Manage a To-Do List](#1) whose description is too general and it had 4 user stories at first, which we decided to push back [Schedule Due Dates](#19). Meanwhile, in iteration 2, feature [Prioritize Tasks](#4) has more specific description so it is easier to create reasonable workload user stories. Moreover, our group decided to create label "To Do" and "Doing" to be easier to keep track on each other's workflow. For example, dev task [UI for user to create due date variable in a task](#42) was changed label from "To Do" to "Doing" when in progress and removed "Doing" when had finished.
 
 # Design patterns
 
