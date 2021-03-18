@@ -2,6 +2,7 @@ package com.productive6.productive.integration;
 
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.rewards.IRewardManager;
+import com.productive6.productive.logic.rewards.IStreakRewardManager;
 import com.productive6.productive.logic.rewards.impl.StreakRewardManager;
 import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.logic.task.ITaskSorter;
@@ -9,6 +10,7 @@ import com.productive6.productive.logic.task.impl.PersistentTaskManager;
 import com.productive6.productive.logic.task.impl.PersistentTaskSorter;
 import com.productive6.productive.logic.user.IUserManager;
 import com.productive6.productive.logic.user.impl.PersistentSingleUserManager;
+import com.productive6.productive.logic.util.DateUtilities;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.User;
 import com.productive6.productive.objects.events.task.TaskCompleteEvent;
@@ -19,6 +21,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 
+import static com.productive6.productive.logic.util.DateUtilities.strToDate;
 import static org.junit.Assert.assertEquals;
 
 public class StreakRewardManagerIntTest {
@@ -26,7 +29,7 @@ public class StreakRewardManagerIntTest {
     IUserManager userManager;
     ITaskSorter taskSorter;
     ITaskManager taskManager;
-    IRewardManager streak;
+    IStreakRewardManager streak;
     DummyDataManager dummy;
 
     @Before
@@ -40,36 +43,31 @@ public class StreakRewardManagerIntTest {
 
         userManager.load();
 
-        int[] rewardArr = {1,1,100,1,24};
+        int[] rewardArr = {1,1,100,24};
 
 
         streak = new StreakRewardManager(userManager,taskSorter,taskManager,rewardArr);
         EventDispatch.dispatchEvent(new UserLoadedEvent(userManager.getCurrentUser()));
     }
 
+
     @Test
-    public void testNotOnStreak(){
+    public void testStreak(){
 
-        Task tempTask = new Task("",3,3);
-        taskManager.addTask(tempTask);
-        taskManager.completeTask(tempTask);
+        for(int i = 0; i < 4; i++) {
+            Task t = new Task(""+i,3,3);
+            taskManager.addTask(t);
+            taskManager.completeTask(t);
+        }
 
-        assertEquals("Value is not 1",1, streak.getCoins());
+        assertEquals("Number of coins did not equal 14",14,streak.getCoins());
 
     }
 
     @Test
-    public void testOnStreak(){
-
-        Task tempTask1 = new Task("x",3,3);
-        Task tempTask2 = new Task("y",3,3);
-
-        taskManager.addTask(tempTask1);
-        taskManager.addTask(tempTask2);
-        taskManager.completeTask(tempTask1);
-        taskManager.completeTask(tempTask2);
-
-        assertEquals("Value is not 3", 3, streak.getCoins());
-
+    public void testConst(){
+        assertEquals("Streak const was not 24 hours", 24, streak.getStreakConstant());
     }
+
+
 }

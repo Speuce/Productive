@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
@@ -27,13 +28,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.productive6.productive.R;
 import com.productive6.productive.logic.event.EventDispatch;
+import com.productive6.productive.logic.rewards.IStreakRewardManager;
 import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.logic.task.ITaskSorter;
+import com.productive6.productive.logic.util.DateUtilities;
 import com.productive6.productive.objects.Task;
+import com.productive6.productive.objects.events.ProductiveEventHandler;
+import com.productive6.productive.objects.events.ProductiveListener;
+import com.productive6.productive.objects.events.task.TaskCompleteEvent;
 import com.productive6.productive.ui.stats.StatsActivity;
+
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -47,7 +55,7 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class DashboardFragment extends Fragment {
+public class DashboardFragment extends Fragment implements ProductiveListener {
 
     @Inject
     ITaskManager taskManager;
@@ -84,6 +92,7 @@ public class DashboardFragment extends Fragment {
         taskDisplayView.setAdapter(taskAdapter);//attach display to view + tasks
         taskDisplayView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false));//Describe how the data should be laid out
 
+        EventDispatch.registerListener(this);
         EventDispatch.registerListener(taskAdapter);
 
         taskSorter.getTasksByPriority((taskAdapter::setTasks));//logic call:: get tasks, provide it to task adapter
@@ -94,5 +103,6 @@ public class DashboardFragment extends Fragment {
         });
 
     }
+
 
 }
