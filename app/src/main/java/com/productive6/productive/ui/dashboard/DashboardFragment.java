@@ -7,8 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Button;
+import android.widget.TextView;
 
 
 import androidx.annotation.NonNull;
@@ -18,11 +20,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.productive6.productive.R;
 import com.productive6.productive.logic.event.EventDispatch;
+import com.productive6.productive.logic.rewards.IStreakRewardManager;
 import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.logic.task.ITaskSorter;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
+import com.productive6.productive.objects.events.task.TaskCompleteEvent;
 import com.productive6.productive.ui.stats.StatsActivity;
 
 
@@ -31,8 +35,7 @@ import com.productive6.productive.objects.events.task.TaskCreateEvent;
 import com.productive6.productive.objects.events.task.TaskUpdateEvent;
 
 
-
-
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -48,10 +51,16 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
     ITaskManager taskManager;
     @Inject
     ITaskSorter taskSorter;
+    @Inject
+    IStreakRewardManager streakRewardManager;
+
     private TaskAdapter taskAdapter;
     private static String sortingBySelection;
     private static int sortBySelectionInt;
     private Spinner sortBySpinner;
+
+    private TextView streakText;
+    private ImageView streakBox;
 
     /**
      * Creates parent view for the tasks
@@ -95,6 +104,12 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
         taskAdapter.setTasks(new ArrayList<>());
         taskDisplayView.setAdapter(taskAdapter);//attach display to view + tasks
         taskDisplayView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false));//Describe how the data should be laid out
+
+        //streak UI elements
+        streakBox = root.findViewById(R.id.streak_box);
+        streakText = root.findViewById(R.id.streak_text);
+
+        updateStreaksElements();
 
         EventDispatch.registerListener(this);
         EventDispatch.registerListener(taskAdapter);
@@ -190,6 +205,26 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
             }
             //Give data to Task list and automatically re-renders the Task list view
         }
+    }
+
+    public void updateStreaksElements(){
+        taskSorter.getCompletedTasks(tasks -> {
+            if(streakRewardManager.onStreak(tasks,LocalDateTime.now())){ //if on streak set elements
+                streakBox.setVisibility(View.VISIBLE);
+                streakText.setVisibility(View.VISIBLE);
+                streakText.setText(streakRewardManager.getStreakAsString(tasks,LocalDateTime.now()));
+            }
+            else{ //hide UI elements
+                streakBox.setVisibility(View.GONE);
+                streakText.setVisibility(View.GONE);
+            }
+
+        });
+    }
+
+    @ProductiveEventHandler
+    public void completedEventHandler(TaskCompleteEvent task){
+        updateStreaksElements();
     }
 
 

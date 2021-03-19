@@ -18,6 +18,36 @@
         app:layout_constraintVertical_bias="0.047" />
 
     <ImageView
+        android:id="@+id/streak_box"
+        android:layout_width="172dp"
+        android:layout_height="50dp"
+        android:src="@drawable/bg_edit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonBarChart"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/empty_view"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.049" />
+
+    <TextView
+        android:id="@+id/streak_text"
+        android:layout_width="164dp"
+        android:layout_height="48dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="4dp"
+        android:gravity="center"
+        android:text="Streak Bonus: 1"
+        android:textColor="@color/pastel_red"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/streak_box"
+        app:layout_constraintEnd_toEndOf="@+id/streak_box"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/streak_box"
+        app:layout_constraintTop_toTopOf="@+id/streak_box"
+        app:layout_constraintVertical_bias="0.265" />
+
+    <ImageView
         android:layout_width="37dp"
         android:layout_height="34dp"
         android:clickable="false"
