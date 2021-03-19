@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_rounded_corners">
+    android:background="@drawable/bg_rounded_corners_white">
 
     <TextView
         android:id="@+id/textView"
@@ -21,6 +21,8 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="40dp"
         android:layout_marginBottom="16dp"
+        app:backgroundTint="@color/pastel_red"
+        android:textColor="@color/smoke_white"
         android:onClick="addTask"
         android:text="Submit"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -40,6 +42,7 @@
             android:id="@+id/taskNameForm"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:maxLength="17"
             android:hint="Name" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -50,6 +53,7 @@
         android:layout_height="48dp"
         android:onClick="deadlinePicker"
         android:textSize="15sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -62,6 +66,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="76dp"
+        android:textColor="@color/light_blue"
+        android:textStyle="bold"
         android:text="Deadline"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +78,10 @@
         android:id="@+id/popupTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add a Task"
+        android:textColor="@color/pastel_red"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text="Add Task"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -85,6 +94,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
+        android:textColor="@color/light_blue"
+        android:textStyle="bold"
         android:text="Priority"
         app:layout_constraintBottom_toTopOf="@+id/submit"
         app:layout_constraintStart_toStartOf="parent"
@@ -108,6 +119,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="High"
+            android:textColor="@color/smoke_white"
+            android:textStyle="bold"
             tools:layout_editor_absoluteX="198dp"
             tools:layout_editor_absoluteY="203dp" />
 
@@ -115,6 +128,8 @@
             android:id="@+id/medButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/smoke_white"
+            android:textStyle="bold"
             android:text="Medium"
             tools:layout_editor_absoluteX="281dp"
             tools:layout_editor_absoluteY="203dp" />
@@ -123,6 +138,8 @@
             android:id="@+id/lowButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/smoke_white"
+            android:textStyle="bold"
             android:text="Low"
             tools:layout_editor_absoluteX="136dp"
             tools:layout_editor_absoluteY="203dp" />
@@ -145,6 +162,8 @@
             android:id="@+id/hardButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/smoke_white"
+            android:textStyle="bold"
             android:text="Hard"
             tools:layout_editor_absoluteX="192dp"
             tools:layout_editor_absoluteY="23dp" />
@@ -153,6 +172,8 @@
             android:id="@+id/medDiffButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/smoke_white"
+            android:textStyle="bold"
             android:text="Medium"
             tools:layout_editor_absoluteX="129dp"
             tools:layout_editor_absoluteY="293dp" />
@@ -161,6 +182,8 @@
             android:id="@+id/easyButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/smoke_white"
+            android:textStyle="bold"
             android:text="Easy"
             tools:layout_editor_absoluteX="275dp"
             tools:layout_editor_absoluteY="293dp" />
@@ -171,6 +194,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
+        android:textColor="@color/light_blue"
+        android:textStyle="bold"
         android:text="Difficulty"
         app:layout_constraintBottom_toTopOf="@+id/submit"
         app:layout_constraintStart_toStartOf="parent"
