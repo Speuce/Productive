@@ -28,5 +28,5 @@ import org.junit.runners.Suite;
         StatsManagerTest.class,
         StreakManagerTest.class
 })
-public class TestAllUnitTests {
+public class TestAll {
 }
