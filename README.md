@@ -23,7 +23,7 @@
 ### Worksheet
 **Iteration 1:** [Worksheet 1](https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/blob/master/i1_worksheet.md)
 
-**Iteration 2:** 
+**Iteration 2:** [Worksheet 2](https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/blob/master/i2_worksheet.md)
 
 # Device
 
