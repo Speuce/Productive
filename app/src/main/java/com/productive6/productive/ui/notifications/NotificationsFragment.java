@@ -16,11 +16,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 import com.productive6.productive.R;
+import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.rewards.IStreakRewardManager;
 import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.logic.task.ITaskSorter;
 import com.productive6.productive.logic.util.CalenderUtilities;
 import com.productive6.productive.objects.Task;
+import com.productive6.productive.objects.events.ProductiveEventHandler;
+import com.productive6.productive.objects.events.ProductiveListener;
+import com.productive6.productive.objects.events.task.TaskUpdateEvent;
 import com.productive6.productive.ui.dashboard.TaskAdapter;
 
 import java.time.LocalDate;
@@ -37,7 +41,7 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class NotificationsFragment extends Fragment {
+public class NotificationsFragment extends Fragment implements ProductiveListener {
 
     /** Views */
     private TextView monthTextView;
@@ -52,6 +56,8 @@ public class NotificationsFragment extends Fragment {
     private List<Task> tasksByDate;
     private DateTimeFormatter sdf;
 
+    private View root;
+
     @Inject
     ITaskManager taskManager;
 
@@ -65,6 +71,8 @@ public class NotificationsFragment extends Fragment {
     }
 
     private void initOnCreate(View root) {
+        EventDispatch.registerListener(this);
+        this.root = root;
         /** Initialize views */
         taskDisplayView = root.findViewById(R.id.taskDisplayView);
         userClickedDate = root.findViewById(R.id.selectedDateTextView);
@@ -137,6 +145,12 @@ public class NotificationsFragment extends Fragment {
             /** Set text above the RecyclerView based on the number of task on the clicked date */
             userClickedDate.setText(tasksByDate.size() + " task(s) scheduled for " + CalenderUtilities.getDateWithSuffix(calendar.get(Calendar.DATE)) + " " + month);
         }));
+    }
+
+    @ProductiveEventHandler
+    public void onUpdate(TaskUpdateEvent e){
+        initTaskList(dateInSDF, root);
+        fillMonth(dateInSDF.withDayOfMonth(1));
     }
 
 }
