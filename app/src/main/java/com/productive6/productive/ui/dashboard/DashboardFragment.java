@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Button;
 
@@ -58,6 +59,17 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
         sortBySpinner = (Spinner) root.findViewById(R.id.sortTasksDropdown);
+
+        List<String> itemsList = new ArrayList<>();
+        itemsList.add("Task Priority");
+        itemsList.add("Created Date");
+        itemsList.add("Due Date");
+
+        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(getContext(), R.layout.custom_spinner, itemsList);
+        stringArrayAdapter.setDropDownViewResource(R.layout.custom_spinner_item);
+        sortBySpinner.setAdapter(stringArrayAdapter);
+
+
         if(sortingBySelection !=null) {//Set the spinner to where it was left the last time the user was on the page.
             sortBySpinner.setSelection(sortBySelectionInt);
         }
@@ -114,7 +126,7 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
     private void sortAndDisplayTasks(){
         if(sortingBySelection != null) {// When first started, sortBySelection will be null, so get by priority is chosen by default.
             switch (sortingBySelection) {
-                case "Priority":
+                case "Task Priority":
                     taskSorter.getTasksByPriority(new TaskConsumerStartup(taskAdapter, sortBySpinner));
                     break;
                 case "Due Date":

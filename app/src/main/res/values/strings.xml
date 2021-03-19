@@ -14,12 +14,6 @@
     <string name="date_range">Date Range</string>
     <string name="tasks_completed">Tasks Completed</string>
 
-    <string-array name="sortFunctionArray">
-        <item>Priority</item>
-        <item>Created Date</item>
-        <item>Due Date</item>
-    </string-array>
-
     <string-array name="dateRangeSelectionArray">
         <item>7 days</item>
         <item>14 days</item>
