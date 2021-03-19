@@ -1,7 +1,9 @@
 package com.productive6.productive.logic.rewards.impl;
 
 import com.productive6.productive.logic.event.EventDispatch;
+import com.productive6.productive.logic.exceptions.AccessBeforeLoadedException;
 import com.productive6.productive.logic.rewards.IRewardManager;
+import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.logic.user.IUserManager;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
@@ -13,44 +15,49 @@ import com.productive6.productive.objects.User;
 
 public class RewardManager implements IRewardManager, ProductiveListener{
 
-    private int coinWeight; //weight value for how many coins are awarded
-    private int experienceWeight; //weight value for how much XP is added
-    private int levelUpValue; //the amount of XP needed for a level up to occur
+    protected int coinWeight; //weight value for how many coins are awarded
+    protected int experienceWeight; //weight value for how much XP is added
+    protected int levelUpValue; //the amount of XP needed for a level up to occur
+    protected ITaskManager taskManager;
 
-    private User person;
-    private IUserManager data;
+    protected User person;
+    protected IUserManager data;
     /**
      * @param data a UserManager object used to update the user information in the database
      */
-    public RewardManager(IUserManager data, int xpWeight, int coinWeight, int levelUpValue){
+    public RewardManager(IUserManager data,ITaskManager taskManager, int xpWeight, int coinWeight, int levelUpValue){
+        EventDispatch.registerListener(this);
         experienceWeight = xpWeight;
         this.coinWeight = coinWeight;
+        this.taskManager = taskManager;
         this.levelUpValue = levelUpValue;
-
-        EventDispatch.registerListener(this);
         this.data = data;
+        this.taskManager = taskManager;
         person = null;
+    }
+
+    /**
+     * isInitialized
+     * @return true if the manager has been initialized
+     */
+    public boolean isInitialized(){
+        return person != null;
     }
 
     /**
      * @return integer representation of current user level
      * returns 0 if person has not been initialized by the database
      */
-    public int getLevel() {
-        int level = 0;
-        if (person != null)
-            level = person.getLevel();
-        return level;
+    public int getLevel(){
+        return person.getLevel();
     }
+
     /**
      * @return integer representation of current user experience
      * returns 0 if person has not been initialized by the database
      */
     public int getExperience(){
-        int xp = 0;
-        if(person != null)
-            xp = person.getExp();
-        return xp;
+        return person.getExp();
     }
 
     /**
@@ -62,11 +69,8 @@ public class RewardManager implements IRewardManager, ProductiveListener{
      * @return integer representation of current user coin count
      * returns 0 if person has not been initialized by the database
      */
-    public int getCoins(){
-        int coins = 0;
-            if(person != null)
-                 coins =  person.getCoins();
-        return coins;
+    public int getCoins() {
+        return person.getCoins();
     }
 
     /**
@@ -83,6 +87,7 @@ public class RewardManager implements IRewardManager, ProductiveListener{
 
         //once all the reward updates are complete, do one user update to the database
         data.updateUser(person);
+        taskManager.updateTask(completedTask);
     }
 
     /**
@@ -90,7 +95,12 @@ public class RewardManager implements IRewardManager, ProductiveListener{
      * @param completedTask the task that was completed that the user is receiving coins for
      */
     private void updateCoins(Task completedTask){
-        person.setCoins(person.getCoins() + completedTask.getPriority()*coinWeight);
+
+        int coins = calculateNewCoins(completedTask);
+        completedTask.setCoinsEarned(coins);
+
+
+        person.setCoins(person.getCoins()+coins);
     }
 
     /**
@@ -100,12 +110,23 @@ public class RewardManager implements IRewardManager, ProductiveListener{
      */
     private void updateExperience(Task completedTask){
 
-        person.setExp(person.getExp() + completedTask.getPriority()*experienceWeight);
+        int XP = calculateNewXP(completedTask);
+        completedTask.setXpEarned(XP);
+
+        person.setExp(person.getExp() + XP);
 
         if(person.getExp() >= levelUpValue){
             levelUp();
         }
 
+    }
+
+    protected int calculateNewXP(Task completedTask){
+        return ((taskManager.minPriority() - completedTask.getPriority()) + 1) * experienceWeight;
+    }
+
+    protected int calculateNewCoins(Task completedTask){
+        return ((taskManager.minDifficulty()- completedTask.getDifficulty()) + 1) * coinWeight;
     }
 
     /**
@@ -126,28 +147,33 @@ public class RewardManager implements IRewardManager, ProductiveListener{
      * @param event
      */
     @ProductiveEventHandler
-    public void taskCompleted(TaskCompleteEvent event){
+    public void taskCompletedEventHandler(TaskCompleteEvent event){
+        taskCompleted(event);
+    }
+
+    /**
+    * Helper method for taskCompletedEventHandler
+     */
+    protected void taskCompleted(TaskCompleteEvent event){
         updateRewards(event.getTask());
     }
 
     /**
      * After the user is updated this object is notified
-     * @param e: the event that has this method handles
+     * @param event: the event that has this method handles
      * dispatches event to show that title has been initialized
      */
     @ProductiveEventHandler
-    public void initializeValues(UserLoadedEvent e){
-        person = e.getUser();
-        EventDispatch.dispatchEvent(new UserTitleInitialized());
+    public void initializeValuesEventHandler(UserLoadedEvent event){
+        initializeValues(event);
     }
 
     /**
-     * After the user is updated this object is notified
-     * @param e: the event that has this method handles
+     * Helper method for initializeValuesEventHandler
      */
-    @ProductiveEventHandler
-    public void updateUser(UserUpdateEvent e){
-        person = e.getUser();
+    protected void initializeValues(UserLoadedEvent event){
+        person = event.getUser();
+        EventDispatch.dispatchEvent(new UserTitleInitialized());
     }
 
 }

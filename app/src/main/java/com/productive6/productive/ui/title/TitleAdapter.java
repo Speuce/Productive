@@ -1,6 +1,6 @@
 package com.productive6.productive.ui.title;
 
-import android.graphics.Color;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.productive6.productive.R;
@@ -25,6 +26,7 @@ import java.util.List;
  */
 public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.TitleViewHolder> {
     private ITitleManager titleManager;
+    private Context context;
 
     /**
      * List of task options
@@ -54,6 +56,7 @@ public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.TitleViewHol
     @NonNull
     @Override
     public TitleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        context = parent.getContext();
         return new TitleViewHolder(
                 LayoutInflater.from(parent.getContext()).inflate(
                         R.layout.title_details,
@@ -97,7 +100,7 @@ public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.TitleViewHol
             levelText = itemView.findViewById(R.id.levelText);
             titleText = itemView.findViewById(R.id.titleText);
             backgroundTitle = itemView.findViewById(R.id.backgroundTitle);
-            backgroundTitle.setBackgroundColor(Color.BLACK);
+            titleOption();
         }
 
         /**
@@ -111,18 +114,30 @@ public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.TitleViewHol
             if (titleManager.getTitleAsString().equals(title.getString())) {
                 checkedPosition = getAdapterPosition();
                 titleManager.setTitle(title.getString());
-                backgroundTitle.setBackgroundColor(Color.BLUE);
+                selectedTitle();
             }
-            else backgroundTitle.setBackgroundColor(Color.BLACK);
+            else titleOption();
 
             layoutTitle.setOnClickListener(v -> {
                 if (!titleManager.getTitleAsString().equals(title.getString())) {
                     notifyItemChanged(checkedPosition);
                     titleManager.setTitle(title.getString());
                     checkedPosition = getAdapterPosition();
-                    backgroundTitle.setBackgroundColor(Color.BLUE);
+                    selectedTitle();
                 }
             });
+        }
+
+        private void selectedTitle(){
+            levelText.setTextColor(ContextCompat.getColor(context,R.color.smoke_white));
+            titleText.setTextColor(ContextCompat.getColor(context,R.color.smoke_white));
+            backgroundTitle.setBackgroundResource(R.drawable.bg_rounded_corners_red);
+        }
+
+        private void titleOption(){
+            levelText.setTextColor(ContextCompat.getColor(context,R.color.pastel_blue));
+            titleText.setTextColor(ContextCompat.getColor(context,R.color.pastel_blue));
+            backgroundTitle.setBackgroundResource(R.drawable.bg_rounded_corners_smoke_white);
         }
     }
 }

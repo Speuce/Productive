@@ -10,9 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.productive6.productive.R;
@@ -22,8 +20,7 @@ import com.productive6.productive.logic.rewards.IRewardManager;
 import com.productive6.productive.logic.rewards.ITitleManager;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
-import com.productive6.productive.objects.events.SystemLoadedEvent;
-import com.productive6.productive.objects.events.user.UserUpdateEvent;
+import com.productive6.productive.objects.events.system.SystemLoadedEvent;
 
 import javax.inject.Inject;
 
@@ -43,32 +40,23 @@ public class HomeFragment extends Fragment implements ProductiveListener {
     private TextView userTitle;
     private TextView coinCounter;
     private TextView levelNumber;
-
     private HomeViewModel homeViewModel;
+
 
     /**
      * Creates the view by inflating the layout
      * Initializes all the header elements with objects to allow for updating
      * updates the values of the header elements
      */
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+
 
         //register listener
         EventDispatch.registerListener(this);
 
         //connecting header elements to objects
-
         experienceBar = (ProgressBar) root.findViewById(R.id.experience_bar);
         userTitle = (TextView) root.findViewById(R.id.user_title);
         coinCounter = (TextView) root.findViewById(R.id.coin_counter);
@@ -77,32 +65,32 @@ public class HomeFragment extends Fragment implements ProductiveListener {
         //setting level and title as bold text
         levelNumber.setTypeface(null, Typeface.BOLD);
         userTitle.setTypeface(null, Typeface.BOLD);
-
         userTitle.setOnClickListener(v -> openTitleActivity());
-
         updateHeader();
 
         return root;
     }
 
-
     /**
      * When the system has been fully loaded, this method updates the header
+     *
      * @param event symbolizes the system having loaded
      */
     @ProductiveEventHandler
-    public void catchSystemLoaded(SystemLoadedEvent event){
+    public void catchSystemLoaded(SystemLoadedEvent event) {
         updateHeader();
     }
 
     /**
      * Updates the header to all the current values
      */
-    private void updateHeader(){
-            userTitle.setText(titleManager.getTitleAsString());
-            experienceBar.setProgress(rewardManager.getExperience());
-            coinCounter.setText("" + rewardManager.getCoins());
-            levelNumber.setText("" + rewardManager.getLevel());
+    private void updateHeader() {
+       if(rewardManager.isInitialized()) {
+           userTitle.setText(titleManager.getTitleAsString());
+           experienceBar.setProgress(rewardManager.getExperience());
+           coinCounter.setText("" + rewardManager.getCoins());
+           levelNumber.setText("" + rewardManager.getLevel());
+       }
     }
 
     /**
@@ -113,7 +101,4 @@ public class HomeFragment extends Fragment implements ProductiveListener {
         Intent intent = new Intent(getContext(), TitleSelection.class);
         startActivity(intent);
     }
-
-
-
 }

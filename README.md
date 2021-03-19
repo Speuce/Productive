@@ -12,6 +12,19 @@
 
 &emsp; The goal of the app is to reach as many people as possible. As such, the goal of Productive is to achieve 100,000 regular users. The reason we chose this as our success criteria is because the number of total downloads would include many people who download the app without using it regularly, and thus fails to portray the engagement of the user base. A regular user is a user who adds or completes at least one task, a minimum of three days a week. This way, we can objectively measure the usefulness of Productive, instead of its marketing. 
 
+# Required Documentation
+
+### Branching Strategy
+[BranchingStrategy](https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/blob/master/BranchingStratagy.md)
+
+### Architecture
+[Architecture.png](https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/blob/master/architecture.png)
+
+### Worksheet
+**Iteration 1:** [Worksheet 1](https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/blob/master/i1_worksheet.md)
+
+**Iteration 2:** [Worksheet 2](https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/blob/master/i2_worksheet.md)
+
 # Device
 
 We are using the **Nexus 7 API 30**, with target: **Android 11.0(Google APIs)**.
@@ -43,3 +56,26 @@ Additionally, some of these libaries generate class implemenations at compile-ti
 
 ### CompactCalendarView
 &emsp; We use [CompactCalendarView](https://github.com/SundeepK/CompactCalendarView), a library specific to android applications, which offers a wide range of features in addition to the default CalendarView. The library allows theming, animations, and adding dots underneath dates as an indication to the user about the presence of tasks on that day.
+
+### MPAndroidChart
+&emsp; We use [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart), a library specific to android applications, which allows us to display our data in graphs for the user. This library enables lots of customization for how the graphs look and behave, including a little animation we use that is played upon first opening the graph. This Library is entirely front-end in its use, so we expanded our logic layer to include more specific get functions route to accomidate this limitation.
+
+# Unit/Integration Tests
+We have our unit tests under the com.productive6.productive (test) foler.
+Our integration tests are instrumented tests, so they are under the com.productive6.productive (androidTest) folder
+
+Code coverage cannot be obtained normally with instrumented tests in Android Studio, so you will need to go through some extra steps to get coverage of our integration tests:
+
+## Coverage of integration tests
+
+First, make sure you have a device emulator running.
+
+Click 'gradle' in the top right (its written sideways).
+
+Then under productive > tasks > other, find 'createDebugAndroidTestCoverageReport' and right click it and run it.
+
+Let it do its thing. Then once it's done, you will have to go into file explorer and find where the project directory is located.
+
+Once you do, go to app > build > reports > coverage > debug, and open 'index.html' in your favourite web browser.
+
+There ya go!
