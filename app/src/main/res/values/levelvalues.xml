@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="levelupvalue">100</integer>
-    <integer name="experienceweight">40</integer>
+    <integer name="experienceweight">10</integer>
     <integer name="coinsweight">3</integer>
+    <integer name="streakbonus">5</integer>
+    <integer name="streakhours">24</integer>
+    <integer name="minimumdifficulty">3</integer>
+    <integer name="minimumpriority">3</integer>
+
 </resources>

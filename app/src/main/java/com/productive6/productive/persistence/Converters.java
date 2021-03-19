@@ -2,6 +2,11 @@ package com.productive6.productive.persistence;
 
 import androidx.room.TypeConverter;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.Date;
 
 /**
@@ -10,12 +15,23 @@ import java.util.Date;
 public class Converters {
 
     @TypeConverter
-    public static Date fromTimestamp(Long value) {
-        return value == null ? null : new Date(value);
+    public static LocalDate fromTimestamp(Long value) {
+        return value == null ? null : LocalDate.ofEpochDay(value);
     }
 
     @TypeConverter
-    public static Long dateToTimestamp(Date date) {
-        return date == null ? null : date.getTime();
+    public static Long dateToTimestamp(LocalDate date) {
+        return date == null ? null : date.toEpochDay();
     }
+
+    @TypeConverter
+    public static LocalDateTime dateTimefromTimestamp(Long value) {
+        return value == null ? null : Instant.ofEpochMilli(value).atZone(ZoneId.systemDefault()).toLocalDateTime();
+    }
+
+    @TypeConverter
+    public static Long dateTimeToTimestamp(LocalDateTime date) {
+        return date == null ? null : date.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+    }
+
 }

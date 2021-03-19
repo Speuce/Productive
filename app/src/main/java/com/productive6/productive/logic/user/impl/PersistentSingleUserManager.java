@@ -6,7 +6,7 @@ import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.exceptions.AccessBeforeLoadedException;
 import com.productive6.productive.logic.user.IUserManager;
 import com.productive6.productive.objects.User;
-import com.productive6.productive.objects.events.SystemLoadedEvent;
+import com.productive6.productive.objects.events.system.SystemLoadedEvent;
 import com.productive6.productive.objects.events.user.UserLoadedEvent;
 import com.productive6.productive.objects.events.user.UserUpdateEvent;
 import com.productive6.productive.persistence.datamanage.IDataManager;

@@ -30,4 +30,10 @@ public interface IRewardManager {
      */
     int getCoins();
 
+    /**
+     * isInitialized
+     * @return true if the manager has been initialized
+     */
+    boolean isInitialized();
+
 }
