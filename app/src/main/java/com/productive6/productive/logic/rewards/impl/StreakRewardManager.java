@@ -57,7 +57,7 @@ public class StreakRewardManager extends RewardManager implements IStreakRewardM
         @Override
         public void accept(List<Task> tasks) {
             //if streak is confirmed,
-            int streakCount = inStreakTime(tasks, completedTask.getCompleted());
+            int streakCount = streakCount(tasks, completedTask.getCompleted());
 
             if(streakCount > 0){
                 person.setCoins(person.getCoins() + streakCount);
@@ -72,7 +72,7 @@ public class StreakRewardManager extends RewardManager implements IStreakRewardM
      * @param currTime The current time
      * @return The size of the current streak
      */
-    public int inStreakTime(List<Task> tasks, LocalDateTime currTime){
+    public int streakCount(List<Task> tasks, LocalDateTime currTime){
 
         int count = 0;
 
@@ -89,6 +89,14 @@ public class StreakRewardManager extends RewardManager implements IStreakRewardM
         return count;
     }
 
+    //returns true if on streak
+    public boolean onStreak(List<Task> tasks, LocalDateTime currTime){
+        return (streakCount(tasks, currTime) > 0);
+    }
 
+    //String representation of streak
+    public String getStreakAsString(List<Task> tasks, LocalDateTime currTime){
+        return "Streak Bonus: " + streakCount(tasks, currTime);
+    }
 
 }
