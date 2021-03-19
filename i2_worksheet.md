@@ -27,7 +27,7 @@ We would classify this as the deliberate prudent kind of debt. Deliberate becaus
 
 
 # Retrospective
-After the retrospective for iteration 1, our group has acknowledged more efficient way to do the project. As in iteration 1, our group had to push backone user story because we underestimated workload for one feature, our feature in iteration 1 is too general and it has too much work to do. Therefore, in this iteration, we divided user stories and dev tasks more reasonably, which can be proved by we finish all feature before due date. We do not have to rush in last few hours and push back any task to later iteration. For example, in first iteration, we have feature [Manage a To-Do List](#1) whose description is too general and it had 4 user stories at first, which we decided to push back [Schedule Due Dates](#19). Meanwhile, in iteration 2, feature [Prioritize Tasks](#4) has more specific description so it is easier to create reasonable workload user stories. Moreover, our group decided to create label "To Do" and "Doing" to be easier to keep track on each other's workflow. For example, dev task [UI for user to create due date variable in a task](#42) was changed label from "To Do" to "Doing" when in progress and removed "Doing" when had finished.
+After the retrospective for iteration 1, our group has acknowledged more efficient way to do the project. As in iteration 1, our group had to push back one user story because we underestimated workload for one feature, our feature in iteration 1 is too general and it has too much work to do. Therefore, in this iteration, we divided user stories and dev tasks more reasonably, which is eveident in the completion of all features before the due date. We do not have to rush in last few hours and push back any task to later iteration. For example, in first iteration, we have feature [Manage a To-Do List](#1) whose description is too general and it had 4 user stories at first, which we decided to push back [Schedule Due Dates](#19). Meanwhile, in iteration 2, feature [Prioritize Tasks](#4) has more specific description so it is easier to create reasonable workload user stories. Moreover, our group decided to create label "To Do" and "Doing" to be easier to keep track on each other's workflow. For example, dev task [UI for user to create due date variable in a task](#42) was changed label from "To Do" to "Doing" when in progress and removed "Doing" when had finished.
 
 # Design patterns
 
@@ -42,7 +42,7 @@ Then, any other class can notify all subscribed methods of a particular 'event',
 
 ### Adapter Pattern
 
-Much like the adapter pattern described [here](https://refactoring.guru/design-patterns/adapter),[this](https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/blob/develop/app/src/main/java/com/productive6/productive/ui/dashboard/TaskAdapter.java) class is for displaying Task objects. It _adapts_ a list of tasks into a list of UI elements that the device can then display to the user.
+Much like the adapter pattern described [here](https://refactoring.guru/design-patterns/adapter), [this](https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/blob/develop/app/src/main/java/com/productive6/productive/ui/dashboard/TaskAdapter.java) class is for displaying Task objects. It _adapts_ a list of tasks into a list of UI elements that the device can then display to the user.
 
 
 # Iteration 1 Feedback Fixes
