@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="500dp"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layoutTitle"
-    android:layout_margin="30dp">
+    android:background="@color/pastel_blue"
+    android:layout_marginHorizontal="50dp"
+    android:layout_marginBottom="30dp">
 
     <LinearLayout
         android:id="@+id/backgroundTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black"
+        android:background="@drawable/bg_rounded_corners_smoke_white"
         android:orientation="horizontal"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:padding="20dp">
+        android:paddingHorizontal="40dp"
+        android:paddingVertical="30dp">
 
         <TextView
             android:id="@+id/levelText"
@@ -22,7 +25,8 @@
             android:layout_height="50dp"
             android:layout_weight="1"
             android:textAlignment="center"
-            android:textColor="@color/white"
+            android:textColor="@color/pastel_blue"
+            android:textStyle="bold"
             android:textSize="35sp" />
 
         <TextView
@@ -31,7 +35,8 @@
             android:layout_height="50dp"
             android:layout_weight="5"
             android:textAlignment="center"
-            android:textColor="@color/white"
+            android:textColor="@color/pastel_blue"
+            android:textStyle="bold"
             android:textSize="35sp" />
     </LinearLayout>
 
