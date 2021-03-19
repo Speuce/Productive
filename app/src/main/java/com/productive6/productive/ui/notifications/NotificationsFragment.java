@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 import com.productive6.productive.R;
+import com.productive6.productive.logic.rewards.IStreakRewardManager;
 import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.logic.task.ITaskSorter;
 import com.productive6.productive.logic.util.CalenderUtilities;
@@ -69,6 +71,7 @@ public class NotificationsFragment extends Fragment {
         monthTextView   = root.findViewById(R.id.monthNameTextView);
         calendarView    = root.findViewById(R.id.calendarView);
 
+
         /** Initialize variables */
         calendar    = (Calendar.getInstance());
         sdf         = CalenderUtilities.DATE_FORMATTER;
@@ -83,6 +86,7 @@ public class NotificationsFragment extends Fragment {
 
         /** Initialize tasks for the RecyclerView */
         initTaskList(dateInSDF, root);
+
 
         /** Set a listener to CompactCalendarView */
         calendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {

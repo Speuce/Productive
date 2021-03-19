@@ -44,6 +44,9 @@ Additionally, some of these libaries generate class implemenations at compile-ti
 ### CompactCalendarView
 &emsp; We use [CompactCalendarView](https://github.com/SundeepK/CompactCalendarView), a library specific to android applications, which offers a wide range of features in addition to the default CalendarView. The library allows theming, animations, and adding dots underneath dates as an indication to the user about the presence of tasks on that day.
 
+### MPAndroidChart
+&emsp; We use [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart), a library specific to android applications, which allows us to display our data in graphs for the user. This library enables lots of customization for how the graphs look and behave, including a little animation we use that is played upon first opening the graph. This Library is entirely front-end in its use, so we expanded our logic layer to include more specific get functions route to accomidate this limitation.
+
 # Unit/Integration Tests
 We have our unit tests under the com.productive6.productive (test) foler.
 Our integration tests are instrumented tests, so they are under the com.productive6.productive (androidTest) folder

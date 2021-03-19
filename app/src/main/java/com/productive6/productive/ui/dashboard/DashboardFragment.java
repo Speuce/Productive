@@ -9,6 +9,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -17,15 +23,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.productive6.productive.R;
 import com.productive6.productive.logic.event.EventDispatch;
+import com.productive6.productive.logic.rewards.IStreakRewardManager;
 import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.logic.task.ITaskSorter;
+import com.productive6.productive.logic.util.DateUtilities;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.task.TaskCompleteEvent;
+import com.productive6.productive.ui.stats.StatsActivity;
+
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import com.productive6.productive.objects.events.task.TaskCreateEvent;
 import com.productive6.productive.objects.events.task.TaskUpdateEvent;
 import com.productive6.productive.ui.stats.StatsActivity;
+
 
 
 import java.util.ArrayList;
@@ -91,6 +107,7 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
         taskDisplayView.setAdapter(taskAdapter);//attach display to view + tasks
         taskDisplayView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false));//Describe how the data should be laid out
 
+        EventDispatch.registerListener(this);
         EventDispatch.registerListener(taskAdapter);
 
         sortAndDisplayTasks();
@@ -185,5 +202,6 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemSel
             //Give data to Task list and automatically re-renders the Task list view
         }
     }
+
 
 }
