@@ -149,7 +149,9 @@ public class NotificationsFragment extends Fragment implements ProductiveListene
 
     @ProductiveEventHandler
     public void onUpdate(TaskUpdateEvent e){
-        initTaskList(dateInSDF, root);
+        if(!e.getTask().isCompleted()){
+            initTaskList(dateInSDF, root);
+        }
         fillMonth(dateInSDF.withDayOfMonth(1));
     }
 
