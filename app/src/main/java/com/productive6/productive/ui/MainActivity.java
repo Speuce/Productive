@@ -16,14 +16,9 @@ import com.productive6.productive.R;
 import com.productive6.productive.logic.rewards.ITitleManager;
 import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.logic.user.IUserManager;
-import com.productive6.productive.objects.Task;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
+
 
 import javax.inject.Inject;
 
