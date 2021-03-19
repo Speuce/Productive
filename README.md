@@ -12,6 +12,19 @@
 
 &emsp; The goal of the app is to reach as many people as possible. As such, the goal of Productive is to achieve 100,000 regular users. The reason we chose this as our success criteria is because the number of total downloads would include many people who download the app without using it regularly, and thus fails to portray the engagement of the user base. A regular user is a user who adds or completes at least one task, a minimum of three days a week. This way, we can objectively measure the usefulness of Productive, instead of its marketing. 
 
+# Required Documentation
+
+### Branching Strategy
+[BranchingStrategy](https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/blob/master/BranchingStratagy.md)
+
+### Architecture
+[Architecture.png](https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/blob/master/architecture.png)
+
+### Worksheet
+**Iteration 1:** [Worksheet 1](https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/blob/master/i1_worksheet.md)
+
+**Iteration 2:** 
+
 # Device
 
 We are using the **Nexus 7 API 30**, with target: **Android 11.0(Google APIs)**.
