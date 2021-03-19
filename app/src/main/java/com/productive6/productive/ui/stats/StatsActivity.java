@@ -95,6 +95,22 @@ public class StatsActivity extends AppCompatActivity implements AdapterView.OnIt
             }
         });
 
+        setLayoutManager();
+        fillStatistics();
+        setTimer();
+
+
+
+        //Describe how the data should be laid out
+
+        buildGraph( DEFAULT_HISTORY);
+    }
+
+    /**
+     * Custom code to make the statistics scroll slower.
+     */
+    private void setLayoutManager(){
+        RecyclerView statsDisplayView = findViewById(R.id.stats_view);//Grab display
         //this code is for the smooth scrolling affect of the recylerview
         //code from https://stackoverflow.com/a/36784136/6047183
         statsDisplayView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false){
@@ -118,8 +134,15 @@ public class StatsActivity extends AppCompatActivity implements AdapterView.OnIt
                 startSmoothScroll(linearSmoothScroller);
             }
         });
-        fillStatistics();
+    }
 
+
+
+    /**
+     * Create the timer for the autoscroller
+     */
+    private void setTimer(){
+        RecyclerView statsDisplayView = findViewById(R.id.stats_view);//Grab display
         //and this is for the autoscrolling part
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
@@ -135,11 +158,6 @@ public class StatsActivity extends AppCompatActivity implements AdapterView.OnIt
                 statsDisplayView.smoothScrollToPosition(i.get());
             }
         }, 3000L, 2500L);
-
-
-        //Describe how the data should be laid out
-
-        buildGraph( DEFAULT_HISTORY);
     }
 
     @Override

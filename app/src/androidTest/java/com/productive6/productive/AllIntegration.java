@@ -29,7 +29,7 @@ import org.junit.runners.Suite;
         StatsManagerIntTest.class,
         StreakRewardManagerIntTest.class
 })
-public class TestAllIntegration {
+public class AllIntegration {
 
 
 }

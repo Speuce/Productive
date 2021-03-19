@@ -83,8 +83,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
                     setAnimation(itemView, getAdapterPosition());
                     if(getItemCount() == 1){// If item being completed is the last in the list.
                         Spinner sort_by = (Spinner)rootView.findViewById(R.id.sortTasksDropdown);
-                        sort_by.setEnabled(false);
-                        sort_by.setClickable(false);
+                        if(sort_by != null){
+                            sort_by.setEnabled(false);
+                            sort_by.setClickable(false);
+                        }
                     }
                 }catch(ObjectFormatException e){
                     taskComplete.setTextColor(0xFF00000);
