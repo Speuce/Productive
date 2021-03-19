@@ -27,6 +27,10 @@ public class StreakRewardManager extends RewardManager implements IStreakRewardM
         this.taskSorter = taskSorter;
     }
 
+    /**
+     * Overload of what happens when a task completed in RewardManager
+     * @param event the event that was completed
+     */
     protected void taskCompleted(TaskCompleteEvent event){
 
         super.taskCompleted(event);
@@ -34,7 +38,12 @@ public class StreakRewardManager extends RewardManager implements IStreakRewardM
 
     }
 
+    /**
+     * Returns the time period (hours) over which a streak runs
+     * @return
+     */
     public int getStreakConstant(){return streakLength;}
+
 
     public class StreakConsumer implements Consumer<List<Task>> {
 
@@ -57,6 +66,12 @@ public class StreakRewardManager extends RewardManager implements IStreakRewardM
         }
     }
 
+    /**
+     * Counts the current streak length in a task list
+     * @param tasks the list of tasks to search for streaking tasks in
+     * @param currTime The current time
+     * @return The size of the current streak
+     */
     public int inStreakTime(List<Task> tasks, LocalDateTime currTime){
 
         int count = 0;
