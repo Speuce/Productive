@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -14,13 +15,13 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.productive6.productive.R;
-import com.productive6.productive.ui.title.TitleSelection;
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.rewards.IRewardManager;
 import com.productive6.productive.logic.rewards.ITitleManager;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.system.SystemLoadedEvent;
+import com.productive6.productive.ui.title.TitleSelection;
 
 import javax.inject.Inject;
 
@@ -40,6 +41,7 @@ public class HomeFragment extends Fragment implements ProductiveListener {
     private TextView userTitle;
     private TextView coinCounter;
     private TextView levelNumber;
+    private Button buttonTitle;
     private HomeViewModel homeViewModel;
 
 
@@ -61,10 +63,12 @@ public class HomeFragment extends Fragment implements ProductiveListener {
         userTitle = (TextView) root.findViewById(R.id.user_title);
         coinCounter = (TextView) root.findViewById(R.id.coin_counter);
         levelNumber = (TextView) root.findViewById(R.id.level_number);
+        buttonTitle = (Button) root.findViewById(R.id.selectTitle);
 
         //setting level and title as bold text
         levelNumber.setTypeface(null, Typeface.BOLD);
         userTitle.setTypeface(null, Typeface.BOLD);
+        buttonTitle.setOnClickListener(v -> openTitleActivity());
         userTitle.setOnClickListener(v -> openTitleActivity());
         updateHeader();
 

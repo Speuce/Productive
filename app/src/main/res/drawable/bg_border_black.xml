@@ -4,5 +4,7 @@
     <corners
         android:radius="8dp"/>
 
-    <solid android:color="@color/disable_button"/>
+    <solid android:color="@color/smoke_white"/>
+
+    <stroke android:width="1.5dp" android:color="@color/pastel_red"/>
 </shape>
