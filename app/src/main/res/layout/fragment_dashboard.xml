@@ -24,7 +24,7 @@
         android:layout_height="48dp"
         android:layout_centerVertical="true"
         android:gravity="center"
-        android:text="Streak Bonus: 1"
+        android:text="@string/streak"
         android:textColor="@color/pastel_red"
         android:textSize="18sp"
         android:textStyle="bold"
