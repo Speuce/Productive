@@ -80,7 +80,7 @@
         android:layout_marginTop="165dp"
         android:gravity="center_horizontal"
         android:textColor="@color/light_blue"
-        android:text="Add tasks from To-do to see them here"
+        android:text="@string/addTaskPromptCalendar"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
