@@ -74,8 +74,6 @@ public class StatsActivity extends AppCompatActivity implements AdapterView.OnIt
 
     private Timer timer;
 
-    private Button backButton;
-
     private static String sortingBySelection;
     private static int sortBySelectionInt;
 
@@ -85,7 +83,7 @@ public class StatsActivity extends AppCompatActivity implements AdapterView.OnIt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
 
-        backButton = findViewById(R.id.backButton);
+        Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v->onBackPressed());
 
         barChart = findViewById(R.id.bar_chart);
