@@ -27,6 +27,10 @@
             android:name=".ui.title.TitleSelection"
             android:label="Select Title">
         </activity>
+        <activity
+            android:name=".ui.shop.ShopActivity"
+            android:label="Treat Yourself">
+        </activity>
     </application>
 
 </manifest>
