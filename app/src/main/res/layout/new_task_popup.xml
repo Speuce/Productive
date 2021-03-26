@@ -23,8 +23,7 @@
         android:layout_marginBottom="16dp"
         app:backgroundTint="@color/pastel_red"
         android:textColor="@color/smoke_white"
-        android:onClick="addTask"
-        android:text="Submit"
+        android:text="@string/submit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -43,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:maxLength="17"
-            android:hint="Name" />
+            android:hint="@string/stats_name" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -51,7 +50,6 @@
         style="?android:spinnerStyle"
         android:layout_width="160dp"
         android:layout_height="48dp"
-        android:onClick="deadlinePicker"
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -68,7 +66,7 @@
         android:layout_marginStart="76dp"
         android:textColor="@color/light_blue"
         android:textStyle="bold"
-        android:text="Deadline"
+        android:text="@string/deadline"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
@@ -81,7 +79,7 @@
         android:textColor="@color/pastel_red"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:text="Add Task"
+        android:text="@string/add"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

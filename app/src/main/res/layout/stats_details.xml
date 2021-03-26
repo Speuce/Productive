@@ -3,7 +3,7 @@
     android:id="@+id/reletiveLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/light_grey"
+    android:background="@color/smoke_black"
     android:elevation="5dp"
     android:paddingBottom="20dp"
     android:visibility="visible">
@@ -13,24 +13,28 @@
         android:id="@+id/stat_name"
         android:layout_width="210dp"
         android:layout_height="wrap_content"
+        android:textColor="@color/pastel_red"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerVertical="true"
         android:layout_marginStart="14dp"
-        android:layout_marginTop="13dp"
-        android:text="Name"
+        android:layout_marginTop="14dp"
+        android:text="@string/stats_name"
+        android:textStyle="bold|italic"
         android:textSize="18sp" />
 
     <TextView
         android:id="@+id/stat_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/pastel_red"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="14dp"
         android:layout_marginEnd="14dp"
-        android:text="Name"
+        android:text="@string/stats_name"
+        android:textStyle="bold|italic"
         android:textSize="18sp" />
 
 </RelativeLayout>

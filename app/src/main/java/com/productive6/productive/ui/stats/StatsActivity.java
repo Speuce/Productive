@@ -1,10 +1,5 @@
 package com.productive6.productive.ui.stats;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.LinearSmoothScroller;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.graphics.Color;
 import android.graphics.PointF;
 import android.os.Bundle;
@@ -12,7 +7,14 @@ import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSmoothScroller;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -33,6 +35,8 @@ import org.jetbrains.annotations.NotNull;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -70,11 +74,17 @@ public class StatsActivity extends AppCompatActivity implements AdapterView.OnIt
 
     private Timer timer;
 
+    private static String sortingBySelection;
+    private static int sortBySelectionInt;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
+
+        Button backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(v->onBackPressed());
 
         barChart = findViewById(R.id.bar_chart);
         barChart.getAxisRight().setEnabled(false);
@@ -82,6 +92,16 @@ public class StatsActivity extends AppCompatActivity implements AdapterView.OnIt
         configureYAxis();
 
         Spinner sort_by = (Spinner) findViewById(R.id.dateRangeSelection);
+
+        List<String> itemsList = Arrays.asList(getResources().getStringArray(R.array.dateRangeSelectionArray));
+
+        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(this, R.layout.custom_spinner, itemsList);
+        stringArrayAdapter.setDropDownViewResource(R.layout.custom_spinner_item);
+        sort_by.setAdapter(stringArrayAdapter);
+
+        if(sortingBySelection !=null) {//Set the spinner to where it was left the last time the user was on the page.
+            sort_by.setSelection(sortBySelectionInt);
+        }
         sort_by.setOnItemSelectedListener(this);
 
 
@@ -278,16 +298,22 @@ public class StatsActivity extends AppCompatActivity implements AdapterView.OnIt
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String selection = parent.getItemAtPosition(position).toString();
-        switch(selection){
-            case "7 days":
-                buildGraph( 7);
-                break;
-            case "14 days":
-                buildGraph( 14);
-                break;
-            case "30 days":
-                buildGraph( 30);
-                break;
+        sortingBySelection = selection;
+        this.sortBySelectionInt = position;
+        if(sortingBySelection != null) {// When first started, sortBySelection will be null, so get by priority is chosen by default.
+            switch(selection){
+                case "7 days":
+                    buildGraph( 7);
+                    break;
+                case "14 days":
+                    buildGraph( 14);
+                    break;
+                case "30 days":
+                    buildGraph( 30);
+                    break;
+            }
+        }else{
+            buildGraph( 7);
         }
     }
 
