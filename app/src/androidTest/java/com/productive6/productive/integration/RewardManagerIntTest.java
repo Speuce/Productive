@@ -14,11 +14,8 @@ import com.productive6.productive.logic.task.impl.PersistentTaskManager;
 import com.productive6.productive.logic.user.IUserManager;
 import com.productive6.productive.logic.user.impl.PersistentSingleUserManager;
 import com.productive6.productive.objects.Task;
-import com.productive6.productive.objects.events.ProductiveEventHandler;
-import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.task.TaskCompleteEvent;
-import com.productive6.productive.objects.events.user.UserLoadedEvent;
-import com.productive6.productive.persistence.datamanage.impl.InMemoryAndroidDataManager;
+import com.productive6.productive.persistence.room.impl.InMemoryAndroidDataManager;
 import com.productive6.productive.services.executor.IRunnableExecutor;
 import com.productive6.productive.services.executor.impl.TestExecutor;
 

@@ -1,4 +1,4 @@
-package com.productive6.productive.persistence.access;
+package com.productive6.productive.persistence.room.access;
 
 import androidx.room.Insert;
 import androidx.room.Query;

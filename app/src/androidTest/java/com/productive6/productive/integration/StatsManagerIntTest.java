@@ -10,7 +10,7 @@ import com.productive6.productive.logic.statstics.IXPStatsManager;
 import com.productive6.productive.logic.statstics.impl.StatsManager;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.persistence.datamanage.IDataManager;
-import com.productive6.productive.persistence.datamanage.impl.InMemoryAndroidDataManager;
+import com.productive6.productive.persistence.room.impl.InMemoryAndroidDataManager;
 import com.productive6.productive.services.executor.IRunnableExecutor;
 import com.productive6.productive.services.executor.impl.TestExecutor;
 
@@ -19,7 +19,6 @@ import org.junit.Test;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.Assert.assertEquals;

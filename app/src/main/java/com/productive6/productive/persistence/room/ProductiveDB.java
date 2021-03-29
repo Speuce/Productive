@@ -1,4 +1,4 @@
-package com.productive6.productive.persistence;
+package com.productive6.productive.persistence.room;
 
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
@@ -6,8 +6,8 @@ import androidx.room.TypeConverters;
 
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.User;
-import com.productive6.productive.persistence.daos.TaskDao;
-import com.productive6.productive.persistence.daos.UserDao;
+import com.productive6.productive.persistence.room.daos.TaskDao;
+import com.productive6.productive.persistence.room.daos.UserDao;
 
 /**
  * Default database structure code required by Room.

@@ -1,4 +1,4 @@
-package com.productive6.productive.persistence;
+package com.productive6.productive.persistence.room;
 
 import androidx.room.TypeConverter;
 

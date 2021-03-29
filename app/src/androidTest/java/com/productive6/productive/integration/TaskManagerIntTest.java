@@ -17,7 +17,7 @@ import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.task.TaskCreateEvent;
 import com.productive6.productive.objects.events.task.TaskUpdateEvent;
-import com.productive6.productive.persistence.datamanage.impl.InMemoryAndroidDataManager;
+import com.productive6.productive.persistence.room.impl.InMemoryAndroidDataManager;
 import com.productive6.productive.services.executor.IRunnableExecutor;
 import com.productive6.productive.services.executor.impl.TestExecutor;
 

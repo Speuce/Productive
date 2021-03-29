@@ -1,11 +1,9 @@
-package com.productive6.productive.persistence.access;
+package com.productive6.productive.persistence.room.access;
 
 import androidx.room.Query;
 
 import com.productive6.productive.objects.tuples.DayIntTuple;
-import com.productive6.productive.objects.tuples.EpochIntTuple;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 

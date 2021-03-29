@@ -2,7 +2,7 @@ package com.productive6.productive.persistence.datamanage.impl;
 
 import com.productive6.productive.services.executor.IRunnableExecutor;
 import com.productive6.productive.objects.User;
-import com.productive6.productive.persistence.access.IUserAccess;
+import com.productive6.productive.persistence.room.access.IUserAccess;
 import com.productive6.productive.persistence.datamanage.IUserPersistenceManager;
 
 import java.util.List;
