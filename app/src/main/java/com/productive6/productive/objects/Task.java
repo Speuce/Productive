@@ -6,6 +6,9 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.productive6.productive.objects.enums.Difficulty;
+import com.productive6.productive.objects.enums.Priority;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
@@ -31,7 +34,7 @@ public class Task implements Comparable<Task> {
      * The user-defined priority of this task
      */
     @ColumnInfo(name = "priority")
-    private int priority;
+    private Priority priority;
 
     /**
      * The timestamp (milliseconds, epoch time)
@@ -58,7 +61,7 @@ public class Task implements Comparable<Task> {
      * When a given task is due
      */
     @ColumnInfo(name = "difficulty")
-    private int difficulty;
+    private Difficulty difficulty;
 
     /**
      * Coins earned from the completion of the task (if applicable)
@@ -77,8 +80,8 @@ public class Task implements Comparable<Task> {
      */
     @Ignore
     public Task() {
-        this.priority = 1;
-        this.difficulty = 1;
+        this.priority = Priority.MEDIUM;
+        this.difficulty = Difficulty.MEDIUM;
         createdTime = LocalDateTime.now();
     }
 
@@ -92,7 +95,7 @@ public class Task implements Comparable<Task> {
      * @param completed   A flag to mark whether or not this task
      *                    has been completed.
      */
-    public Task(String taskName, int priority, int difficulty, LocalDateTime createdTime, LocalDate dueDate, LocalDateTime completed) {
+    public Task(String taskName, Priority priority, Difficulty difficulty, LocalDateTime createdTime, LocalDate dueDate, LocalDateTime completed) {
         this.taskName = taskName;
         this.priority = priority;
         this.createdTime = createdTime;
@@ -108,7 +111,7 @@ public class Task implements Comparable<Task> {
      * @param priority The user-defined priority of this task
      */
     @Ignore
-    public Task(String taskName, int priority, int difficulty) {
+    public Task(String taskName, Priority priority, Difficulty difficulty) {
         this.taskName = taskName;
         this.difficulty = difficulty;
         this.priority = priority;
@@ -126,7 +129,7 @@ public class Task implements Comparable<Task> {
      *                    that this task was created.
      */
     @Ignore
-    public Task(String taskName, int priority, int difficulty, @NotNull LocalDateTime createdTime) {
+    public Task(String taskName, Priority priority, Difficulty difficulty, @NotNull LocalDateTime createdTime) {
         this.taskName = taskName;
         this.priority = priority;
         this.createdTime = createdTime;
@@ -155,16 +158,14 @@ public class Task implements Comparable<Task> {
     /**
      * @return The user-defined priority of this task
      */
-    public int getPriority() {
+    public Priority getPriority() {
         return priority;
     }
-
-
 
     /**
      * @param priority The user-defined priority of this task
      */
-    public void setPriority(int priority) {
+    public void setPriority(Priority priority) {
         this.priority = priority;
     }
 
@@ -206,18 +207,15 @@ public class Task implements Comparable<Task> {
         return dueDate;
     }
 
-    public int getDifficulty() {
+    public Difficulty getDifficulty() {
         return difficulty;
     }
-
-
-
 
     public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
 
-    public void setDifficulty(int difficulty) {
+    public void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
     }
 
@@ -266,7 +264,7 @@ public class Task implements Comparable<Task> {
      */
     @Override
     public int compareTo(Task o) {
-        int prioritydiff = o.getPriority() - this.getPriority();
+        int prioritydiff = o.getPriority().ordinal() - this.getPriority().ordinal();
         if (prioritydiff == 0) {
             return this.getCreatedTime().compareTo(o.getCreatedTime());
         }
