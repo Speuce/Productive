@@ -4,10 +4,9 @@ package com.productive6.productive.objects.enums;
  * Represents the users selected priority of a task
  */
 public enum Priority {
-
-    LOW("Low"),
+    HIGH("High"),
     MEDIUM("Medium"),
-    HIGH("High");
+    LOW("Low");
 
     private final String string;
 

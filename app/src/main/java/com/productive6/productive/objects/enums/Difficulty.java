@@ -4,9 +4,10 @@ package com.productive6.productive.objects.enums;
  * Enum representing the difficulty of a tas
  */
 public enum Difficulty {
-    EASY("Easy"),
+    HARD("Hard"),
     MEDIUM("Medium"),
-    HARD("Hard");
+    EASY("Easy");
+
 
 
     /**
