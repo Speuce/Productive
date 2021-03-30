@@ -109,15 +109,33 @@ public class Task implements Comparable<Task> {
      *
      * @param taskName The user-defined name of the task
      * @param priority The user-defined priority of this task
+     *
+     * @deprecated use {@link Priority} and {@link Difficulty} instead of integers.
+     *              this constructor is only here for backwards-compatibility.
+     *              any use of this constructor is technical debt.
      */
     @Ignore
-    public Task(String taskName, Priority priority, Difficulty difficulty) {
-        this.taskName = taskName;
-        this.difficulty = difficulty;
-        this.priority = priority;
-        this.createdTime = LocalDateTime.now();
-        this.completed = null;
-        this.dueDate = null;
+    @Deprecated
+    public Task(String taskName, int priority, int difficulty) {
+        this(taskName, Priority.values()[priority-1], Difficulty.values()[difficulty-1]);
+    }
+
+    /**
+     * Constructor for a new task without completion
+     *
+     * @param taskName    The user-defined name of the task
+     * @param priority    The user-defined priority of this task
+     * @param createdTime The timestamp (milliseconds, epoch time)
+     *                    that this task was created.
+     *
+     * @deprecated use {@link Priority} and {@link Difficulty} instead of integers.
+     *              this constructor is only here for backwards-compatibility.
+     *              any use of this constructor is technical debt.
+     */
+    @Ignore
+    @Deprecated
+    public Task(String taskName, int priority, int difficulty, @NotNull LocalDateTime createdTime) {
+        this(taskName, Priority.values()[priority-1], Difficulty.values()[difficulty-1], createdTime);
     }
 
     /**
@@ -134,6 +152,22 @@ public class Task implements Comparable<Task> {
         this.priority = priority;
         this.createdTime = createdTime;
         this.difficulty = difficulty;
+        this.completed = null;
+        this.dueDate = null;
+    }
+
+    /**
+     * Constructor for a new task without completion
+     *
+     * @param taskName The user-defined name of the task
+     * @param priority The user-defined priority of this task
+     */
+    @Ignore
+    public Task(String taskName, Priority priority, Difficulty difficulty) {
+        this.taskName = taskName;
+        this.difficulty = difficulty;
+        this.priority = priority;
+        this.createdTime = LocalDateTime.now();
         this.completed = null;
         this.dueDate = null;
     }
