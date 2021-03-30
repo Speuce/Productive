@@ -137,8 +137,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.taskName.setText(tasks.get(position).getTaskName());
-        holder.taskPriority.setText(TaskUtilities.getPriorityInString(tasks.get(position)));
-        holder.taskDifficulty.setText(TaskUtilities.getDifficultyInString(tasks.get(position)));
+        holder.taskPriority.setText(tasks.get(position).getPriority().getString());
+        holder.taskDifficulty.setText(tasks.get(position).getDifficulty().getString());
         if (tasks.get(position).getDueDate() != null) {
             holder.taskDueDate.setVisibility(View.VISIBLE);
             holder.dueText.setVisibility(View.VISIBLE);
