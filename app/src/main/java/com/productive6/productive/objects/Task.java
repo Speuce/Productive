@@ -94,8 +94,26 @@ public class Task implements Comparable<Task> {
      *                    that this task was created.
      * @param completed   A flag to mark whether or not this task
      *                    has been completed.
+     *
+     * @deprecated use {@link Priority} and {@link Difficulty} instead of integers.
+     *              this constructor is only here for backwards-compatibility.
+     *              any use of this constructor is technical debt.
      */
-    public Task(String taskName, Priority priority, Difficulty difficulty, LocalDateTime createdTime, LocalDate dueDate, LocalDateTime completed) {
+    public Task(String taskName, int priority, int difficulty, LocalDateTime createdTime, LocalDate dueDate, LocalDateTime completed) {
+        this(taskName, Priority.values()[priority-1], Difficulty.values()[difficulty-1], createdTime, dueDate, completed);
+    }
+
+    /**
+     * Constructor for a new task.
+     *
+     * @param taskName    The user-defined name of the task
+     * @param priority    The user-defined priority of this task
+     * @param createdTime The timestamp (milliseconds, epoch time)
+     *                    that this task was created.
+     * @param completed   A flag to mark whether or not this task
+     *                    has been completed.
+     */
+    public Task(String taskName, Priority priority, Difficulty difficulty, @NotNull LocalDateTime createdTime, LocalDate dueDate, LocalDateTime completed) {
         this.taskName = taskName;
         this.priority = priority;
         this.createdTime = createdTime;
@@ -148,12 +166,7 @@ public class Task implements Comparable<Task> {
      */
     @Ignore
     public Task(String taskName, Priority priority, Difficulty difficulty, @NotNull LocalDateTime createdTime) {
-        this.taskName = taskName;
-        this.priority = priority;
-        this.createdTime = createdTime;
-        this.difficulty = difficulty;
-        this.completed = null;
-        this.dueDate = null;
+        this(taskName, priority, difficulty,createdTime, null, null);
     }
 
     /**
