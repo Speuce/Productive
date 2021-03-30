@@ -122,11 +122,11 @@ public class RewardManager implements IRewardManager, ProductiveListener{
     }
 
     protected int calculateNewXP(Task completedTask){
-        return ((taskManager.minPriority() - completedTask.getPriority()) + 1) * experienceWeight;
+        return ((taskManager.minPriority() - completedTask.getPriority().ordinal()+1) + 1) * experienceWeight;
     }
 
     protected int calculateNewCoins(Task completedTask){
-        return ((taskManager.minDifficulty()- completedTask.getDifficulty()) + 1) * coinWeight;
+        return ((taskManager.minDifficulty()- completedTask.getDifficulty().ordinal()+1) + 1) * coinWeight;
     }
 
     /**
