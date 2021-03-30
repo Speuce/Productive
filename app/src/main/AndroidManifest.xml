@@ -27,6 +27,12 @@
             android:name=".ui.title.TitleSelection"
             android:label="Select Title">
         </activity>
+
+        <receiver
+            android:name=".ui.notifications.MyAlarmReceiver"
+            android:process=":remote" >
+        </receiver>
+
     </application>
 
 </manifest>
