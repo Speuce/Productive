@@ -104,15 +104,6 @@ public class TaskManagerIntTest {
         taskManager.addTask(testData);
     }
 
-    /**
-     * Tests that insertion priorty checking is functional
-     */
-    @Test(expected = ObjectFormatException.class)
-    public void testPriorityChecking(){
-        Task testData = new Task("name", -1, 1, LocalDateTime.now(), LocalDate.now(), null);
-        taskManager.addTask(testData);
-    }
-
     @Test
     public void testCompleteTask(){
         Task testData = new Task("name", 1, 1, LocalDateTime.now(), LocalDate.now(), null);
