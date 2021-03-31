@@ -1,9 +1,12 @@
 package com.productive6.productive.ui.home;
 
 
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +19,7 @@ import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.ui.dashboard.TaskAdapter;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -28,8 +32,9 @@ import java.util.Map;
 public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.ViewHolder> implements ProductiveListener {
 
     private List<String> inventory = new ArrayList<>();
-
-    public InventoryAdapter() {
+    private View root;
+    public InventoryAdapter(View root) {
+        this.root = root;
         for (int i = 0; i < 32; i++) {//Fill in the example display while we wait for the backend implementation
             inventory.add("Test Item "+i);
         }
@@ -40,9 +45,11 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
      */
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private final TextView itemName;
+        private final ImageView itemImg;
         public ViewHolder(@NonNull View itemView){
             super(itemView);
             itemName = itemView.findViewById(R.id.item_name);
+            itemImg = itemView.findViewById(R.id.item_img);
         }
     }
 
@@ -61,7 +68,9 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Resources res = root.getResources();
         holder.itemName.setText(inventory.get(position));
+        holder.itemImg.setImageDrawable(res.getDrawable(R.drawable.prop_arrow_1,res.newTheme()));//Dynamically set the image
     }
 
     /**

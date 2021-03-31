@@ -80,7 +80,7 @@ public class HomeFragment extends Fragment implements ProductiveListener {
 
         //WILL BE MOVING INTO THE INVENTORY ACTIVITY ONCE THAT GETS APPROVED
         RecyclerView inventoryDisplayView = root.findViewById(R.id.inventoryDisplayView);//Grab display
-        InventoryAdapter inventoryAdapter = new InventoryAdapter();
+        InventoryAdapter inventoryAdapter = new InventoryAdapter(root);
         inventoryDisplayView.setAdapter(inventoryAdapter);//attach display to view + tasks
         inventoryDisplayView.setLayoutManager(new GridLayoutManager(getContext(), 4));
 
