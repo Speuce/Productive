@@ -21,6 +21,7 @@ import com.productive6.productive.logic.rewards.ITitleManager;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.system.SystemLoadedEvent;
+import com.productive6.productive.ui.stats.StatsActivity;
 import com.productive6.productive.ui.title.TitleSelection;
 
 import javax.inject.Inject;
