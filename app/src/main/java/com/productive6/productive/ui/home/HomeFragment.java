@@ -13,6 +13,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.productive6.productive.R;
 import com.productive6.productive.logic.event.EventDispatch;
@@ -21,7 +24,10 @@ import com.productive6.productive.logic.rewards.ITitleManager;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.system.SystemLoadedEvent;
+import com.productive6.productive.ui.dashboard.TaskAdapter;
 import com.productive6.productive.ui.title.TitleSelection;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -71,6 +77,12 @@ public class HomeFragment extends Fragment implements ProductiveListener {
         buttonTitle.setOnClickListener(v -> openTitleActivity());
         userTitle.setOnClickListener(v -> openTitleActivity());
         updateHeader();
+
+        //WILL BE MOVING INTO THE INVENTORY ACTIVITY ONCE THAT GETS APPROVED
+        RecyclerView inventoryDisplayView = root.findViewById(R.id.inventoryDisplayView);//Grab display
+        InventoryAdapter inventoryAdapter = new InventoryAdapter();
+        inventoryDisplayView.setAdapter(inventoryAdapter);//attach display to view + tasks
+        inventoryDisplayView.setLayoutManager(new GridLayoutManager(getContext(), 4));
 
         return root;
     }
