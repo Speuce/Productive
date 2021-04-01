@@ -33,6 +33,7 @@
     <string name="channel_name">Productive</string>
     <string name="channel_description">Productive App</string>
     <string name="inventory">Inventory</string>
+    <string name="confirmMessage">Are you sure you want to spend %s coins?</string>
 
     <string-array name="dateRangeSelectionArray">
         <item>7 days</item>

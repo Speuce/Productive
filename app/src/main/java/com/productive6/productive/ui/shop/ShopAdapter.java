@@ -1,17 +1,22 @@
 package com.productive6.productive.ui.shop;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.res.TypedArray;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.productive6.productive.R;
+import com.productive6.productive.logic.rewards.IRewardSpenderManager;
 import com.productive6.productive.objects.events.ProductiveListener;
 
 import java.util.List;
@@ -24,18 +29,22 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> im
     /**
      * List of cosmetics' prices
      */
-    List<String> coins;
+    private List<String> coins;
     /**
      * List of cosmetics' images
      */
-    TypedArray images;
+    private TypedArray images;
 
+    private Context context;
+
+    private IRewardSpenderManager spenderManager;
     /**
      * Construct the ShopAdapter
      * @param coins list of prices
      * @param images list of images for prop
      */
-    public ShopAdapter(List<String> coins, TypedArray images){
+    public ShopAdapter(IRewardSpenderManager spenderManager, List<String> coins, TypedArray images){
+        this.spenderManager = spenderManager;
         this.coins = coins;
         this.images = images;
     }
@@ -53,7 +62,28 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> im
             coin = itemView.findViewById(R.id.price);
             propImg = itemView.findViewById(R.id.propImg);
             buyButton = itemView.findViewById(R.id.buyButton);
+            buyButton.setOnClickListener(v->confirmBox());
+        }
 
+        //confirm buying box
+        public void confirmBox() {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setCancelable(true);
+            builder.setTitle("Confirm");
+            builder.setMessage(context.getString(R.string.confirmMessage,coin.getText()));
+            builder.setPositiveButton("Confirm",
+                    (dialog, which) -> {
+                        spenderManager.spendCoins(Integer.parseInt(coin.getText().toString()));
+                        Toast toast = Toast.makeText(context, "Go to inventory to see your new item!",
+                                Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.TOP,0,0);
+                        toast.show();
+                    });
+            builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> {
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
         }
     }
 
@@ -66,6 +96,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> im
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        context = parent.getContext();
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(
             R.layout.shop_item,
             parent,

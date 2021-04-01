@@ -10,12 +10,21 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.productive6.productive.R;
+import com.productive6.productive.logic.rewards.IRewardSpenderManager;
 import com.productive6.productive.ui.MainActivity;
 
 import java.util.Arrays;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class ShopActivity extends AppCompatActivity {
+
+    @Inject
+    IRewardSpenderManager spenderManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,7 +41,7 @@ public class ShopActivity extends AppCompatActivity {
         //attach adapter to shop display
         //Grid View 2 columns
         shopItem.setLayoutManager(new GridLayoutManager(this,2,GridLayoutManager.VERTICAL,false));
-        shopItem.setAdapter(new ShopAdapter(coins,images));
+        shopItem.setAdapter(new ShopAdapter(spenderManager,coins,images));
     }
 
     /**
