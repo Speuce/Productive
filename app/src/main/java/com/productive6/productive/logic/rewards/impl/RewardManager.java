@@ -1,7 +1,6 @@
 package com.productive6.productive.logic.rewards.impl;
 
 import com.productive6.productive.logic.event.EventDispatch;
-import com.productive6.productive.logic.exceptions.AccessBeforeLoadedException;
 import com.productive6.productive.logic.rewards.IRewardManager;
 import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.logic.user.IUserManager;
@@ -61,11 +60,6 @@ public class RewardManager implements IRewardManager, ProductiveListener{
     }
 
     /**
-     * @return an integer representation of the amount of experience required for a level up
-     */
-    public int getLevelUpValue(){return levelUpValue;}
-
-    /**
      * @return integer representation of current user coin count
      * returns 0 if person has not been initialized by the database
      */
@@ -122,11 +116,11 @@ public class RewardManager implements IRewardManager, ProductiveListener{
     }
 
     protected int calculateNewXP(Task completedTask){
-        return ((taskManager.minPriority() - completedTask.getPriority()) + 1) * experienceWeight;
+        return ((taskManager.minPriority() - completedTask.getPriority().ordinal())) * experienceWeight;
     }
 
     protected int calculateNewCoins(Task completedTask){
-        return ((taskManager.minDifficulty()- completedTask.getDifficulty()) + 1) * coinWeight;
+        return ((taskManager.minDifficulty()- completedTask.getDifficulty().ordinal())) * coinWeight;
     }
 
     /**

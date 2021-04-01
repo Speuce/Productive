@@ -13,11 +13,13 @@ import com.productive6.productive.logic.task.ITaskSorter;
 import com.productive6.productive.logic.task.impl.PersistentTaskManager;
 import com.productive6.productive.logic.task.impl.PersistentTaskSorter;
 import com.productive6.productive.objects.Task;
+import com.productive6.productive.objects.enums.Difficulty;
+import com.productive6.productive.objects.enums.Priority;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.task.TaskCreateEvent;
 import com.productive6.productive.objects.events.task.TaskUpdateEvent;
-import com.productive6.productive.persistence.datamanage.impl.InMemoryAndroidDataManager;
+import com.productive6.productive.persistence.room.impl.InMemoryAndroidDataManager;
 import com.productive6.productive.services.executor.IRunnableExecutor;
 import com.productive6.productive.services.executor.impl.TestExecutor;
 
@@ -64,7 +66,7 @@ public class TaskManagerIntTest {
      */
     @Test(expected = PersistentIDAssignmentException.class )
     public void testIDFormatInsert() {
-        Task testData = new Task("name", 1, 1, LocalDateTime.now(), LocalDate.now(), null);
+        Task testData = new Task("name", Priority.HIGH, Difficulty.HARD, LocalDateTime.now(), LocalDate.now(), null);
         testData.setId(1);
         taskManager.addTask(testData);
     }
@@ -76,7 +78,7 @@ public class TaskManagerIntTest {
     @Test
     public void testDateConversion() {
         LocalDate day = LocalDate.now();
-        Task testData = new Task("name", 1, 1, LocalDateTime.now(), day, null);
+        Task testData = new Task("name", Priority.HIGH, Difficulty.HARD, LocalDateTime.now(), day, null);
         taskManager.addTask(testData);
 
         taskSorter.getTasksByPriority(tasks -> {
@@ -90,7 +92,7 @@ public class TaskManagerIntTest {
      */
     @Test(expected = PersistentIDAssignmentException.class)
     public void testIDFormatUpdate() {
-        Task testData = new Task("name", 1, 1, LocalDateTime.now(), LocalDate.now(), null);
+        Task testData = new Task("name", Priority.HIGH, Difficulty.HARD, LocalDateTime.now(), LocalDate.now(), null);
         testData.setId(0);
         taskManager.updateTask(testData);
     }
@@ -100,22 +102,13 @@ public class TaskManagerIntTest {
      */
     @Test(expected = ObjectFormatException.class)
     public void testCompletionChecking(){
-        Task testData = new Task("name", 1, 1, LocalDateTime.now(), LocalDate.now(), LocalDateTime.now());
-        taskManager.addTask(testData);
-    }
-
-    /**
-     * Tests that insertion priorty checking is functional
-     */
-    @Test(expected = ObjectFormatException.class)
-    public void testPriorityChecking(){
-        Task testData = new Task("name", -1, 1, LocalDateTime.now(), LocalDate.now(), null);
+        Task testData = new Task("name", Priority.HIGH, Difficulty.HARD, LocalDateTime.now(), LocalDate.now(), LocalDateTime.now());
         taskManager.addTask(testData);
     }
 
     @Test
     public void testCompleteTask(){
-        Task testData = new Task("name", 1, 1, LocalDateTime.now(), LocalDate.now(), null);
+        Task testData = new Task("name", Priority.HIGH, Difficulty.HARD, LocalDateTime.now(), LocalDate.now(), null);
         taskManager.addTask(testData);
 
         EventDispatch.registerListener(new ProductiveListener() {
@@ -130,7 +123,7 @@ public class TaskManagerIntTest {
     @Test
     public void testUpdateEvent(){
         AtomicBoolean success = new AtomicBoolean(false);
-        Task testData = new Task("name", 1, 1, LocalDateTime.now(), LocalDate.now(), null);
+        Task testData = new Task("name", Priority.HIGH, Difficulty.HARD, LocalDateTime.now(), LocalDate.now(), null);
         taskManager.addTask(testData);
 
         EventDispatch.registerListener(new ProductiveListener() {
@@ -158,7 +151,7 @@ public class TaskManagerIntTest {
                 assertTrue("TaskManager failed to trigger a user create event when necessary.",success.get());
             }
         });
-        Task testData = new Task("name", 1, 1, LocalDateTime.now(), LocalDate.now(), null);
+        Task testData = new Task("name", Priority.HIGH, Difficulty.HARD, LocalDateTime.now(), LocalDate.now(), null);
         taskManager.addTask(testData);
     }
 

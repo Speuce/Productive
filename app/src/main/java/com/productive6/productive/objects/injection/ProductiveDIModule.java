@@ -5,8 +5,10 @@ import android.content.res.Resources;
 import com.productive6.productive.R;
 
 import com.productive6.productive.logic.rewards.IRewardManager;
+import com.productive6.productive.logic.rewards.IRewardSpenderManager;
 import com.productive6.productive.logic.rewards.IStreakRewardManager;
 import com.productive6.productive.logic.rewards.impl.RewardManager;
+import com.productive6.productive.logic.rewards.impl.RewardSpenderManager;
 import com.productive6.productive.logic.rewards.impl.StreakRewardManager;
 import com.productive6.productive.logic.statstics.ICoinsStatsManager;
 import com.productive6.productive.logic.statstics.ITaskStatsManager;
@@ -24,7 +26,7 @@ import com.productive6.productive.logic.rewards.impl.DefaultTitleManager;
 import com.productive6.productive.logic.task.impl.PersistentTaskManager;
 import com.productive6.productive.logic.user.impl.PersistentSingleUserManager;
 import com.productive6.productive.persistence.datamanage.IDataManager;
-import com.productive6.productive.persistence.datamanage.impl.PersistentAndroidDataManager;
+import com.productive6.productive.persistence.room.impl.PersistentAndroidDataManager;
 
 import javax.inject.Singleton;
 
@@ -115,7 +117,7 @@ public class ProductiveDIModule {
 
     @Singleton
     @Provides
-    public IStreakRewardManager provideIStreakRewardManager(IUserManager data, ITaskSorter sort, ITaskManager taskManager, @ApplicationContext Context context){
+    public IRewardSpenderManager provideIRewardSpenderManager(IUserManager data, ITaskSorter sort, ITaskManager taskManager, @ApplicationContext Context context){
 
         int[] configValues = new int[5];
 
@@ -124,8 +126,14 @@ public class ProductiveDIModule {
         configValues[2] = context.getResources().getInteger(R.integer.levelupvalue);
         configValues[3] = context.getResources().getInteger(R.integer.streakhours);
 
-        IStreakRewardManager rm = new StreakRewardManager(data,sort, taskManager ,configValues);
-        return rm;
+        IRewardSpenderManager sm = new RewardSpenderManager(data, sort, taskManager, configValues);
+        return sm;
+    }
+
+    @Singleton
+    @Provides
+    public IStreakRewardManager provideIStreakRewardManager(IRewardSpenderManager spenderManager){
+        return  spenderManager;
     }
 
     @Singleton

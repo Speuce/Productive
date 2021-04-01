@@ -2,7 +2,7 @@ package com.productive6.productive.persistence.datamanage.impl;
 
 import com.productive6.productive.services.executor.IRunnableExecutor;
 import com.productive6.productive.objects.Task;
-import com.productive6.productive.persistence.access.ITaskAccess;
+import com.productive6.productive.persistence.room.access.ITaskAccess;
 import com.productive6.productive.persistence.datamanage.ITaskPersistenceManager;
 
 import java.util.List;

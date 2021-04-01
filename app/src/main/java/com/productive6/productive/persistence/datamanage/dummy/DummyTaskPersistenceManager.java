@@ -2,15 +2,13 @@ package com.productive6.productive.persistence.datamanage.dummy;
 
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.tuples.DayIntTuple;
-import com.productive6.productive.objects.tuples.EpochIntTuple;
-import com.productive6.productive.persistence.access.ITaskAccess;
+import com.productive6.productive.persistence.room.access.ITaskAccess;
 import com.productive6.productive.persistence.datamanage.IStatisticsDataManager;
 import com.productive6.productive.persistence.datamanage.ITaskPersistenceManager;
 
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.OptionalLong;

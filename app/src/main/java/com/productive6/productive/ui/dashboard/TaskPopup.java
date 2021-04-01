@@ -23,6 +23,8 @@ import androidx.core.content.ContextCompat;
 import com.productive6.productive.R;
 import com.productive6.productive.logic.util.CalenderUtilities;
 import com.productive6.productive.objects.Task;
+import com.productive6.productive.objects.enums.Difficulty;
+import com.productive6.productive.objects.enums.Priority;
 
 import java.time.LocalDate;
 import java.util.function.Consumer;
@@ -122,13 +124,13 @@ public class TaskPopup {
             RadioGroup radioGroup = popupView.findViewById(R.id.priorityGroup);
             RadioButton radioButton = radioGroup.findViewById(radioGroup.getCheckedRadioButtonId());
             int priority = radioGroup.indexOfChild(radioButton);
-            task.setPriority(priority+1);
+            task.setPriority(Priority.values()[priority]);
 
             //update difficulty choice
             RadioGroup radioDiffGroup = popupView.findViewById(R.id.difficultyGroup);
             RadioButton radioDiffButton = radioDiffGroup.findViewById(radioDiffGroup.getCheckedRadioButtonId());
             int difficulty = radioDiffGroup.indexOfChild(radioDiffButton);
-            task.setDifficulty(difficulty+1);
+            task.setDifficulty(Difficulty.values()[difficulty]);
 
             //update due date choice
             SwitchCompat hasDeadline = popupView.findViewById(R.id.switchDeadline);
@@ -220,7 +222,7 @@ public class TaskPopup {
      */
     private void initPriority() {
         RadioGroup radioGroup = popupView.findViewById(R.id.priorityGroup);
-        RadioButton oldChoice = (RadioButton) radioGroup.getChildAt(task.getPriority()-1);
+        RadioButton oldChoice = (RadioButton) radioGroup.getChildAt(task.getPriority().ordinal());
         oldChoice.setChecked(true);
 
     }
@@ -230,7 +232,7 @@ public class TaskPopup {
      */
     private void initDifficulty() {
         RadioGroup radioGroup = popupView.findViewById(R.id.difficultyGroup);
-        RadioButton oldChoice = (RadioButton) radioGroup.getChildAt(task.getDifficulty()-1);
+        RadioButton oldChoice = (RadioButton) radioGroup.getChildAt(task.getDifficulty().ordinal());
         oldChoice.setChecked(true);
     }
 
