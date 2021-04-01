@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.res.Resources;
 import com.productive6.productive.R;
 
+import com.productive6.productive.logic.adapters.ICosmeticAdapter;
+import com.productive6.productive.logic.adapters.impl.DefaultCosmeticAdapter;
 import com.productive6.productive.logic.rewards.IRewardManager;
 import com.productive6.productive.logic.rewards.IStreakRewardManager;
 import com.productive6.productive.logic.rewards.impl.StreakRewardManager;
@@ -134,5 +136,21 @@ public class ProductiveDIModule {
     }
 
 
+    @Singleton
+    @Provides
+    public ICosmeticAdapter provideICosmeticAdapter( @ApplicationContext Context context){
+        Resources res = context.getResources();
+        int keyAdapter[][] = new int[2][];
+
+        keyAdapter[0] = res.getIntArray(R.array.CosmeticIdArray);
+        keyAdapter[1] = res.getIntArray(R.array.CosmeticResourceIdArray);
+
+        int costArr[] = res.getIntArray(R.array.CosmeticCostArray);
+        String names[] = res.getStringArray(R.array.CosmeticNameArray);
+
+        ICosmeticAdapter cosmeticAdapter = new DefaultCosmeticAdapter(keyAdapter,costArr,names);
+
+        return cosmeticAdapter;
+    }
 
 }
