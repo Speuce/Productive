@@ -82,8 +82,6 @@ public class HomeFragment extends Fragment implements ProductiveListener {
         userTitle.setOnClickListener(v -> openTitleActivity());
         updateHeader();
 
-
-
         //Attach button to inventory activity
         root.findViewById(R.id.inventoryButton).setOnClickListener(view -> startActivity(new Intent(getContext(), InventoryActivity.class)));
 
