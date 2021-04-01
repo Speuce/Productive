@@ -42,7 +42,7 @@ public class PersistentTaskManager implements ITaskManager{
      * @param t the task to validate.
      */
     private void validateTask(Task t){
-        if(t.getPriority() < 0){
+        if(t.getPriority().ordinal() < 0){
             throw new ObjectFormatException("A priority of < 0 is not supported!");
         }
     }
@@ -58,8 +58,6 @@ public class PersistentTaskManager implements ITaskManager{
             throw new PersistentIDAssignmentException();
         }else if(t.isCompleted()){
               throw new ObjectFormatException("A new task was passed with completed=true!");
-        }else if(t.getPriority() < 0){
-                throw new ObjectFormatException("A priority of < 0 is not supported!");
         }
         validateTask(t);
         data.task().insertTask(t, () ->{

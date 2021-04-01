@@ -1,6 +1,4 @@
-package com.productive6.productive.persistence.access;
-
-import androidx.room.Insert;
+package com.productive6.productive.persistence.room.access;
 
 import com.productive6.productive.objects.User;
 
