@@ -21,7 +21,7 @@ public class InventoryActivity extends AppCompatActivity {
         Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v->onBackPressed());
 
-        //WILL BE MOVING INTO THE INVENTORY ACTIVITY ONCE THAT GETS APPROVED
+        //Attach inventory adapter to the inventory display
         RecyclerView inventoryDisplayView = findViewById(R.id.inventoryDisplayView);//Grab display
         InventoryAdapter inventoryAdapter = new InventoryAdapter(root);
         inventoryDisplayView.setAdapter(inventoryAdapter);//attach display to view + tasks

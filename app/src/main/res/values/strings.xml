@@ -32,6 +32,7 @@
     <string name="easy">Easy</string>
     <string name="channel_name">Productive</string>
     <string name="channel_description">Productive App</string>
+    <string name="inventory">Inventory</string>
 
     <string-array name="dateRangeSelectionArray">
         <item>7 days</item>

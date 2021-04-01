@@ -46,7 +46,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
     }
 
     /**
-     * Builds Recycler view that holds a list of dummy status upon creation of ViewHolder.
+     * Builds Recycler view that holds a list of dummy items upon creation of ViewHolder.
      * @param parent
      * @param viewType
      * @return
@@ -58,6 +58,11 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         return new ViewHolder(view);
     }
 
+    /**
+     * setup for each individual item. Get them to display the data in our array list
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Resources res = root.getResources();
