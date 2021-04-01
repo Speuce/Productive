@@ -39,7 +39,7 @@ public class DefaultCosmeticAdapter implements ICosmeticAdapter {
             }
 
         }
-        
+
         return item;
     }
 }
