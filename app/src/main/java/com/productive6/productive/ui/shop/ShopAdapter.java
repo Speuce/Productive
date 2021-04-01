@@ -31,6 +31,10 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> im
      */
     private List<String> coins;
     /**
+     * List of cosmetics' names
+     */
+    private List<String> itemNames;
+    /**
      * List of cosmetics' images
      */
     private TypedArray images;
@@ -43,8 +47,9 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> im
      * @param coins list of prices
      * @param images list of images for prop
      */
-    public ShopAdapter(IRewardSpenderManager spenderManager, List<String> coins, TypedArray images){
+    public ShopAdapter(IRewardSpenderManager spenderManager, List<String> coins,List<String> itemNames, TypedArray images){
         this.spenderManager = spenderManager;
+        this.itemNames = itemNames;
         this.coins = coins;
         this.images = images;
     }
@@ -55,11 +60,13 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> im
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView coin;
         ImageView propImg;
+        TextView itemName;
         Button buyButton;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
             coin = itemView.findViewById(R.id.price);
+            itemName = itemView.findViewById(R.id.propName);
             propImg = itemView.findViewById(R.id.propImg);
             buyButton = itemView.findViewById(R.id.buyButton);
             buyButton.setOnClickListener(v->confirmBox());
@@ -70,7 +77,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> im
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setCancelable(true);
             builder.setTitle("Confirm");
-            builder.setMessage(context.getString(R.string.confirmMessage,coin.getText()));
+            builder.setMessage(context.getString(R.string.confirmMessage,coin.getText(),itemName.getText()));
             builder.setPositiveButton("Confirm",
                     (dialog, which) -> {
                         spenderManager.spendCoins(Integer.parseInt(coin.getText().toString()));
@@ -113,6 +120,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> im
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.coin.setText(coins.get(position));
+        holder.itemName.setText(itemNames.get(position));
         holder.propImg.setImageResource(images.getResourceId(position,0));
     }
 

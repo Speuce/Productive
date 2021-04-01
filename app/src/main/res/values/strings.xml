@@ -33,7 +33,9 @@
     <string name="channel_name">Productive</string>
     <string name="channel_description">Productive App</string>
     <string name="inventory">Inventory</string>
-    <string name="confirmMessage">Are you sure you want to spend %s coins?</string>
+    <string name="buyText">Buy</string>
+    <string name="itemName">Armor 1</string>
+    <string name="confirmMessage">Are you sure you want to spend %s coins for %s?</string>
 
     <string-array name="dateRangeSelectionArray">
         <item>7 days</item>
@@ -52,6 +54,19 @@
         <item>80</item>
         <item>90</item>
         <item>100</item>
+    </string-array>
+
+    <string-array name="propNameItem">
+        <item>Armor 1</item>
+        <item>Armor 2</item>
+        <item>Armor 3</item>
+        <item>Armor 4</item>
+        <item>Arrow 1</item>
+        <item>Arrow 2</item>
+        <item>Arrow 3</item>
+        <item>Arrow 4</item>
+        <item>Bow 1</item>
+        <item>Bow 2</item>
     </string-array>
 
     <integer-array name="propItem">

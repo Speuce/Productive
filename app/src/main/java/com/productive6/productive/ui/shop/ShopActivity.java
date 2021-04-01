@@ -37,11 +37,12 @@ public class ShopActivity extends AppCompatActivity {
 
         //initialize test values
         List<String> coins = Arrays.asList(this.getResources().getStringArray(R.array.priceItem));
+        List<String> itemNames = Arrays.asList(this.getResources().getStringArray(R.array.propNameItem));
         TypedArray images = this.getResources().obtainTypedArray(R.array.propItem);
         //attach adapter to shop display
         //Grid View 2 columns
         shopItem.setLayoutManager(new GridLayoutManager(this,2,GridLayoutManager.VERTICAL,false));
-        shopItem.setAdapter(new ShopAdapter(spenderManager,coins,images));
+        shopItem.setAdapter(new ShopAdapter(spenderManager,coins,itemNames,images));
     }
 
     /**
