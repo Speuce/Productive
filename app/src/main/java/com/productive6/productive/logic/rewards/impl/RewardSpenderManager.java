@@ -24,3 +24,4 @@ public class RewardSpenderManager extends StreakRewardManager implements IReward
         return person.getCoins() >= num;
     }
 }
+
