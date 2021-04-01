@@ -4,6 +4,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.productive6.productive.integration.RewardManagerIntTest;
 import com.productive6.productive.integration.RunnableExecutorInstrumentedTest;
+import com.productive6.productive.integration.SpenderManagerIntTest;
 import com.productive6.productive.integration.StreakRewardManagerIntTest;
 import com.productive6.productive.integration.StatsManagerIntTest;
 import com.productive6.productive.integration.TaskManagerIntTest;
@@ -19,6 +20,7 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+        SpenderManagerIntTest.class,
         RewardManagerIntTest.class,
         RunnableExecutorInstrumentedTest.class,
         TaskManagerIntTest.class,

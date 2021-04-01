@@ -41,7 +41,7 @@ public class RewardManagerTest {
     @BeforeClass
     public static void initializeManager(){
         int[] config = {4,3,100};
-
+        EventDispatch.clear();
         when(taskManager.minDifficulty()).thenReturn(3);
         when(taskManager.minPriority()).thenReturn(3);
         rewardManager = new RewardManager(data, taskManager,config[0],config[1],config[2]);
