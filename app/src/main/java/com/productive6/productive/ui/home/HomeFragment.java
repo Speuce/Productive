@@ -1,5 +1,6 @@
 package com.productive6.productive.ui.home;
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -24,7 +25,12 @@ import com.productive6.productive.logic.rewards.ITitleManager;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.system.SystemLoadedEvent;
+<<<<<<< HEAD
 import com.productive6.productive.ui.dashboard.TaskAdapter;
+=======
+import com.productive6.productive.ui.inventory.InventoryActivity;
+import com.productive6.productive.ui.stats.StatsActivity;
+>>>>>>> de21a00a62bac62d002400a957e3bec12fae923f
 import com.productive6.productive.ui.title.TitleSelection;
 
 import java.util.ArrayList;
@@ -83,6 +89,9 @@ public class HomeFragment extends Fragment implements ProductiveListener {
         InventoryAdapter inventoryAdapter = new InventoryAdapter(root);
         inventoryDisplayView.setAdapter(inventoryAdapter);//attach display to view + tasks
         inventoryDisplayView.setLayoutManager(new GridLayoutManager(getContext(), 4));
+
+        //Attach button to inventory activity
+        root.findViewById(R.id.inventoryButton).setOnClickListener(view -> startActivity(new Intent(getContext(), InventoryActivity.class)));
 
         return root;
     }

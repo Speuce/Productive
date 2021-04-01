@@ -15,6 +15,10 @@
             android:label="My Productivity">
         </activity>
         <activity
+            android:name=".ui.inventory.InventoryActivity"
+            android:label="My Inventory">
+        </activity>
+        <activity
             android:name=".ui.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
@@ -27,6 +31,12 @@
             android:name=".ui.title.TitleSelection"
             android:label="Select Title">
         </activity>
+
+        <receiver
+            android:name=".ui.notifications.MyAlarmReceiver"
+            android:process=":remote" >
+        </receiver>
+
     </application>
 
 </manifest>

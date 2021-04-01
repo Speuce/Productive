@@ -30,6 +30,8 @@
     <string name="medium">Medium</string>
     <string name="low">Low</string>
     <string name="easy">Easy</string>
+    <string name="channel_name">Productive</string>
+    <string name="channel_description">Productive App</string>
 
     <string-array name="dateRangeSelectionArray">
         <item>7 days</item>
