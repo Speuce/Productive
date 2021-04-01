@@ -40,4 +40,30 @@
         <item>30 days</item>
     </string-array>
 
+    <string-array name="priceItem">
+        <item>10</item>
+        <item>20</item>
+        <item>30</item>
+        <item>40</item>
+        <item>50</item>
+        <item>60</item>
+        <item>70</item>
+        <item>80</item>
+        <item>90</item>
+        <item>100</item>
+    </string-array>
+
+    <integer-array name="propItem">
+        <item>@drawable/prop_armor_1</item>
+        <item>@drawable/prop_armor_2</item>
+        <item>@drawable/prop_armor_3</item>
+        <item>@drawable/prop_armor_4</item>
+        <item>@drawable/prop_arrow_1</item>
+        <item>@drawable/prop_arrow_2</item>
+        <item>@drawable/prop_arrow_3</item>
+        <item>@drawable/prop_arrow_4</item>
+        <item>@drawable/prop_bow_1</item>
+        <item>@drawable/prop_bow_2</item>
+    </integer-array>
+
 </resources>
