@@ -26,7 +26,7 @@ import com.productive6.productive.logic.rewards.impl.DefaultTitleManager;
 import com.productive6.productive.logic.task.impl.PersistentTaskManager;
 import com.productive6.productive.logic.user.impl.PersistentSingleUserManager;
 import com.productive6.productive.persistence.datamanage.IDataManager;
-import com.productive6.productive.persistence.datamanage.impl.PersistentAndroidDataManager;
+import com.productive6.productive.persistence.room.impl.PersistentAndroidDataManager;
 
 import javax.inject.Singleton;
 
