@@ -1,4 +1,4 @@
-package com.productive6.productive.persistence.daos;
+package com.productive6.productive.persistence.room.daos;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
@@ -6,7 +6,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.productive6.productive.objects.User;
-import com.productive6.productive.persistence.access.IUserAccess;
+import com.productive6.productive.persistence.room.access.IUserAccess;
 
 import java.util.List;
 
