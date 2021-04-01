@@ -103,9 +103,4 @@ public class StreakManagerTest {
 
     }
 
-    @Test
-    public void testConst(){
-        assertEquals("Streak const was not 24 hours", 24, streakRewardManager.getStreakConstant());
-    }
-
 }

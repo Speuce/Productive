@@ -18,14 +18,6 @@ public interface IRewardManager {
     int getExperience();
 
     /**
-     * @return the amount of experience at which a levelup occurs
-     * can be used to calculate how far a user is through a level
-     * i.e. if getExperience() = 50 and getLevelScalingValue() = 100
-     * => user is 50% done the level
-     */
-    int getLevelUpValue();
-
-    /**
      * @Returns the user's current coin count as an int
      */
     int getCoins();

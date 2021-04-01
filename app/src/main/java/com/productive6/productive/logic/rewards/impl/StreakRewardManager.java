@@ -4,9 +4,7 @@ import com.productive6.productive.logic.rewards.IStreakRewardManager;
 import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.logic.task.ITaskSorter;
 import com.productive6.productive.logic.user.IUserManager;
-import com.productive6.productive.logic.util.DateUtilities;
 import com.productive6.productive.objects.Task;
-import com.productive6.productive.objects.User;
 import com.productive6.productive.objects.events.task.TaskCompleteEvent;
 
 import java.time.Duration;
@@ -37,12 +35,6 @@ public class StreakRewardManager extends RewardManager implements IStreakRewardM
         taskSorter.getCompletedTasks(new StreakConsumer(event.getTask()));
 
     }
-
-    /**
-     * Returns the time period (hours) over which a streak runs
-     * @return
-     */
-    public int getStreakConstant(){return streakLength;}
 
 
     public class StreakConsumer implements Consumer<List<Task>> {
