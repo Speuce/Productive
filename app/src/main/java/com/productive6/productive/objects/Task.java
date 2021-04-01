@@ -99,6 +99,7 @@ public class Task implements Comparable<Task> {
      *              this constructor is only here for backwards-compatibility.
      *              any use of this constructor is technical debt.
      */
+    @Deprecated
     public Task(String taskName, int priority, int difficulty, LocalDateTime createdTime, LocalDate dueDate, LocalDateTime completed) {
         this(taskName, Priority.values()[priority-1], Difficulty.values()[difficulty-1], createdTime, dueDate, completed);
     }
