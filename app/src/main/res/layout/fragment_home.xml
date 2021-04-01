@@ -129,5 +129,16 @@
         app:layout_constraintStart_toStartOf="@+id/selectTitle"
         app:layout_constraintTop_toTopOf="@+id/selectTitle" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/favorite_item_display"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:scrollbars="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.406"
+        app:layout_constraintStart_toEndOf="@+id/inventoryButton"
+        app:layout_constraintTop_toBottomOf="@+id/userInfoBG" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

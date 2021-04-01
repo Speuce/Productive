@@ -27,6 +27,7 @@ import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.system.SystemLoadedEvent;
 
 import com.productive6.productive.ui.inventory.InventoryActivity;
+import com.productive6.productive.ui.inventory.InventoryAdapter;
 import com.productive6.productive.ui.stats.StatsActivity;
 
 import com.productive6.productive.ui.title.TitleSelection;
@@ -84,6 +85,12 @@ public class HomeFragment extends Fragment implements ProductiveListener {
 
         //Attach button to inventory activity
         root.findViewById(R.id.inventoryButton).setOnClickListener(view -> startActivity(new Intent(getContext(), InventoryActivity.class)));
+
+        //Attach inventory adapter to display the user's favorite item
+        RecyclerView inventoryDisplayView = root.findViewById(R.id.favorite_item_display);//Grab display
+        InventoryAdapter inventoryAdapter = new InventoryAdapter(root,1);
+        inventoryDisplayView.setAdapter(inventoryAdapter);//attach display to view + tasks
+        inventoryDisplayView.setLayoutManager(new GridLayoutManager(root.getContext(), 1));
 
         return root;
     }

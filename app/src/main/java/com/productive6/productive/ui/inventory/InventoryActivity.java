@@ -23,7 +23,7 @@ public class InventoryActivity extends AppCompatActivity {
 
         //Attach inventory adapter to the inventory display
         RecyclerView inventoryDisplayView = findViewById(R.id.inventoryDisplayView);//Grab display
-        InventoryAdapter inventoryAdapter = new InventoryAdapter(root);
+        InventoryAdapter inventoryAdapter = new InventoryAdapter(root,32);
         inventoryDisplayView.setAdapter(inventoryAdapter);//attach display to view + tasks
         inventoryDisplayView.setLayoutManager(new GridLayoutManager(root.getContext(), 4));
     }
