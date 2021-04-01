@@ -1,5 +1,6 @@
 package com.productive6.productive.ui.home;
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -21,6 +22,8 @@ import com.productive6.productive.logic.rewards.ITitleManager;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.system.SystemLoadedEvent;
+import com.productive6.productive.ui.inventory.InventoryActivity;
+import com.productive6.productive.ui.stats.StatsActivity;
 import com.productive6.productive.ui.title.TitleSelection;
 
 import javax.inject.Inject;
@@ -72,6 +75,8 @@ public class HomeFragment extends Fragment implements ProductiveListener {
         userTitle.setOnClickListener(v -> openTitleActivity());
         updateHeader();
 
+        //Attach button to inventory activity
+        root.findViewById(R.id.inventoryButton).setOnClickListener(view -> startActivity(new Intent(getContext(), InventoryActivity.class)));
         return root;
     }
 
