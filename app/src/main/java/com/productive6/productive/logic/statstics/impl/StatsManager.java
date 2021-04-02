@@ -50,7 +50,6 @@ public class StatsManager implements ITaskStatsManager, ICoinsStatsManager, IXPS
                 boolean found = false;
                 for (Iterator<DayIntTuple> iterator = list.iterator(); iterator.hasNext(); ) {
                     DayIntTuple tuple = iterator.next();
-                    //long dt = Converters.dateToTimestamp(tuple.getDate());
 
                     if (tuple.getDate().equals(day)) {
                         found = true;
@@ -63,7 +62,6 @@ public class StatsManager implements ITaskStatsManager, ICoinsStatsManager, IXPS
                     callback.accept(new DayIntTuple(day, 0));
                 }
             });
-            //list.forEach(callback);
         });
     }
 
