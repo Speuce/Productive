@@ -52,7 +52,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
      * Holds the recyclerView view and it's components
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
-        //        private final TextView id;
         private final TextView taskName;
         private final TextView taskPriority;
         private final TextView taskDifficulty;
@@ -69,9 +68,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
             taskComplete = itemView.findViewById(R.id.taskCompleteToggleButton);
             Button editTask = itemView.findViewById(R.id.editButton);
             dueText = itemView.findViewById(R.id.dueText);
-
-            //id = itemView.findViewById(R.id.taskId);
-            //initPopupWindow();
 
             //listener on 'complete'
             taskComplete.setOnClickListener(v -> {

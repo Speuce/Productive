@@ -16,7 +16,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.productive6.productive.system.utils.CustomTestRunner"
     }
 
     buildTypes {
@@ -41,6 +41,8 @@ android {
 dependencies {
     def room_version = "2.2.6"
 
+
+
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
 
@@ -48,6 +50,8 @@ dependencies {
     testImplementation "androidx.room:room-testing:$room_version"
 
     implementation 'com.github.sundeepk:compact-calendar-view:3.0.0'
+
+
 }
 dependencies {
 

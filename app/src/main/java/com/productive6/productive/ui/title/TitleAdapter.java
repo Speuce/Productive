@@ -29,7 +29,7 @@ public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.TitleViewHol
     private Context context;
 
     /**
-     * List of task options
+     * List of title options
      */
     private List<Title> titles;
 
