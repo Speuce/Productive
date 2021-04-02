@@ -3,7 +3,6 @@ package com.productive6.productive.ui.shop;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -117,10 +116,8 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> im
         builder.setPositiveButton("Confirm",
                 (dialog, which) -> {
                     spenderManager.spendCoins(coins[position]);
-                    Toast toast = Toast.makeText(context, "Go to inventory to see your new item!",
-                            Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.TOP, 0, 0);
-                    toast.show();
+                    Toast.makeText(context, "Go to inventory to see your new item!",
+                            Toast.LENGTH_SHORT).show();
                     notifyDataSetChanged();
                 });
         builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> {
