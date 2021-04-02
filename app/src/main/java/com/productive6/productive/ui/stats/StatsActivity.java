@@ -257,7 +257,6 @@ public class StatsActivity extends AppCompatActivity implements AdapterView.OnIt
             }
         });
 
-
         XAxis xAxis = barChart.getXAxis();
         xAxis.setLabelCount(Math.min(history, 10));
 
