@@ -69,24 +69,6 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         Resources res = root.getResources();
         holder.itemName.setText(inventory.get(position));
         holder.itemImg.setImageDrawable(res.getDrawable(R.drawable.prop_arrow_1,res.newTheme()));//Dynamically set the image
-
-        //UI changes for selected items
-        if(selectedItemIndex == position){
-            holder.itemView.setBackgroundColor(res.getColor(R.color.pastel_red,res.newTheme()));
-        }else{//Need this else to prevent an odd situation where random items were changing their background colors upon scrolling to them
-            holder.itemView.setBackgroundColor(res.getColor(R.color.light_blue,res.newTheme()));
-        }
-        holder.itemImg.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                if(selectedItemIndex == position){//Deselect if selected
-                    selectedItemIndex = -1;
-                }else{//Select if not selected
-                    selectedItemIndex = position;
-                }
-                notifyDataSetChanged();
-            }
-        });
     }
 
     /**
