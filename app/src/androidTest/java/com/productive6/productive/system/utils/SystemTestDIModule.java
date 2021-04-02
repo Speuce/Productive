@@ -21,8 +21,8 @@ import com.productive6.productive.logic.user.IUserManager;
 import com.productive6.productive.logic.user.impl.PersistentSingleUserManager;
 import com.productive6.productive.objects.injection.ProductiveDIModule;
 import com.productive6.productive.persistence.datamanage.IDataManager;
-import com.productive6.productive.persistence.datamanage.impl.InMemoryAndroidDataManager;
-import com.productive6.productive.persistence.datamanage.impl.PersistentAndroidDataManager;
+import com.productive6.productive.persistence.room.impl.InMemoryAndroidDataManager;
+import com.productive6.productive.persistence.room.impl.PersistentAndroidDataManager;
 import com.productive6.productive.services.executor.IRunnableExecutor;
 import com.productive6.productive.services.executor.impl.AndroidExecutor;
 
