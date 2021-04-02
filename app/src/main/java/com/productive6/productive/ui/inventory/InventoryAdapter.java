@@ -77,7 +77,11 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         holder.itemImg.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                selectedItemIndex = position;
+                if(selectedItemIndex == position){
+                    selectedItemIndex = -1;
+                }else{
+                    selectedItemIndex = position;
+                }
                 notifyDataSetChanged();
             }
         });
