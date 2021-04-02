@@ -29,7 +29,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> im
     /**
      * List of cosmetics' prices
      */
-    private List<String> coins;
+    private int[] coins;
     /**
      * List of cosmetics' names
      */
@@ -47,7 +47,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> im
      * @param coins list of prices
      * @param images list of images for prop
      */
-    public ShopAdapter(IRewardSpenderManager spenderManager, List<String> coins,List<String> itemNames, TypedArray images){
+    public ShopAdapter(IRewardSpenderManager spenderManager, int[] coins,List<String> itemNames, TypedArray images){
         this.spenderManager = spenderManager;
         this.itemNames = itemNames;
         this.coins = coins;
@@ -69,28 +69,6 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> im
             itemName = itemView.findViewById(R.id.propName);
             propImg = itemView.findViewById(R.id.propImg);
             buyButton = itemView.findViewById(R.id.buyButton);
-            buyButton.setOnClickListener(v->confirmBox());
-        }
-
-        //confirm buying box
-        public void confirmBox() {
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setCancelable(true);
-            builder.setTitle("Confirm");
-            builder.setMessage(context.getString(R.string.confirmMessage,coin.getText(),itemName.getText()));
-            builder.setPositiveButton("Confirm",
-                    (dialog, which) -> {
-                        spenderManager.spendCoins(Integer.parseInt(coin.getText().toString()));
-                        Toast toast = Toast.makeText(context, "Go to inventory to see your new item!",
-                                Toast.LENGTH_SHORT);
-                        toast.setGravity(Gravity.TOP,0,0);
-                        toast.show();
-                    });
-            builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> {
-            });
-
-            AlertDialog dialog = builder.create();
-            dialog.show();
         }
     }
 
@@ -119,9 +97,37 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> im
      */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.coin.setText(coins.get(position));
+        holder.coin.setText(String.valueOf(coins[position]));
         holder.itemName.setText(itemNames.get(position));
         holder.propImg.setImageResource(images.getResourceId(position,0));
+
+        if (spenderManager.canSpend(Integer.parseInt(holder.coin.getText().toString()))) {
+            holder.buyButton.setEnabled(true);
+            holder.buyButton.setOnClickListener(v -> confirmBox(position));
+        }
+        else holder.buyButton.setEnabled(false);
+    }
+
+    //confirm buying box
+    public void confirmBox(int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setCancelable(true);
+        builder.setTitle("Confirm");
+        builder.setMessage(context.getString(R.string.confirmMessage,String.valueOf(coins[position]),itemNames.get(position)));
+        builder.setPositiveButton("Confirm",
+                (dialog, which) -> {
+                    spenderManager.spendCoins(coins[position]);
+                    Toast toast = Toast.makeText(context, "Go to inventory to see your new item!",
+                            Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.TOP, 0, 0);
+                    toast.show();
+                    notifyDataSetChanged();
+                });
+        builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> {
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     /**
@@ -130,6 +136,6 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> im
      */
     @Override
     public int getItemCount() {
-        return coins.size();
+        return itemNames.size();
     }
 }

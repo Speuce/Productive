@@ -36,7 +36,7 @@ public class ShopActivity extends AppCompatActivity {
         RecyclerView shopItem = findViewById(R.id.shopItemRecycler);
 
         //initialize test values
-        List<String> coins = Arrays.asList(this.getResources().getStringArray(R.array.priceItem));
+        int[] coins = this.getResources().getIntArray(R.array.priceItem);
         List<String> itemNames = Arrays.asList(this.getResources().getStringArray(R.array.propNameItem));
         TypedArray images = this.getResources().obtainTypedArray(R.array.propItem);
         //attach adapter to shop display
