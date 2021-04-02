@@ -1,6 +1,5 @@
 package com.productive6.productive.ui.home;
 
-import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -8,15 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.productive6.productive.R;
 import com.productive6.productive.logic.event.EventDispatch;
@@ -25,13 +22,10 @@ import com.productive6.productive.logic.rewards.ITitleManager;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.system.SystemLoadedEvent;
-
 import com.productive6.productive.ui.inventory.InventoryActivity;
 import com.productive6.productive.ui.stats.StatsActivity;
 import com.productive6.productive.ui.shop.ShopActivity;
 import com.productive6.productive.ui.title.TitleSelection;
-
-import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -85,6 +79,11 @@ public class HomeFragment extends Fragment implements ProductiveListener {
 
         //Attach button to inventory activity
         root.findViewById(R.id.inventoryButton).setOnClickListener(view -> startActivity(new Intent(getContext(), InventoryActivity.class)));
+
+        //Display the user's favorite item
+        ImageView favItem = root.findViewById(R.id.propFavImg);
+        favItem.setImageResource(R.drawable.prop_armor_1);//replace with method return fav item in CosmeticsManager afterwards
+
         return root;
     }
 

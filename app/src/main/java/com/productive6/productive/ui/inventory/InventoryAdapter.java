@@ -24,10 +24,11 @@ import java.util.List;
 public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.ViewHolder> implements ProductiveListener {
 
     private List<String> inventory = new ArrayList<>();
+    private int selectedItemIndex = -1;
     private View root;
-    public InventoryAdapter(View root) {
+    public InventoryAdapter(View root, int itemCount) {//ItemCount will eventually be replaced with their inventory or an inventory manager
         this.root = root;
-        for (int i = 0; i < 32; i++) {//Fill in the example display while we wait for the backend implementation
+        for (int i = 0; i < itemCount; i++) {//Fill in the example display while we wait for the backend implementation
             inventory.add("Test Item "+i);
         }
     }
