@@ -1,14 +1,17 @@
 package com.productive6.productive.ui.inventory;
 
 
+import android.app.AlertDialog;
 import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.productive6.productive.R;
@@ -25,11 +28,17 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
 
     private List<String> inventory = new ArrayList<>();
     private View root;
+
+    private int favPosition;
+
     public InventoryAdapter(View root, int itemCount) {//ItemCount will eventually be replaced with their inventory or an inventory manager
         this.root = root;
         for (int i = 0; i < itemCount; i++) {//Fill in the example display while we wait for the backend implementation
             inventory.add("Test Item "+i);
         }
+
+        //initialize test fav position
+        favPosition = 0;
     }
 
     /**
@@ -38,10 +47,12 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private final TextView itemName;
         private final ImageView itemImg;
+        private final RadioButton starButton;
         public ViewHolder(@NonNull View itemView){
             super(itemView);
             itemName = itemView.findViewById(R.id.item_name);
             itemImg = itemView.findViewById(R.id.item_img);
+            starButton = itemView.findViewById(R.id.starIcon);
         }
     }
 
@@ -67,7 +78,17 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Resources res = root.getResources();
         holder.itemName.setText(inventory.get(position));
-        holder.itemImg.setImageDrawable(res.getDrawable(R.drawable.prop_arrow_1,res.newTheme()));//Dynamically set the image
+        holder.itemImg.setImageDrawable(res.getDrawable(R.drawable.prop_armor_1,res.newTheme()));//Dynamically set the image
+        //Set fav item
+        if (favPosition == position) {
+            holder.starButton.setChecked(true);
+            holder.itemName.setTextColor(ContextCompat.getColor(root.getContext(),R.color.pastel_red));
+        }
+        else {
+            holder.starButton.setChecked(false);
+            holder.itemName.setTextColor(ContextCompat.getColor(root.getContext(),R.color.smoke_black));
+            holder.starButton.setOnClickListener(v->confirmBox(position));
+        }
     }
 
     /**
@@ -77,6 +98,24 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
     @Override
     public int getItemCount() {
         return inventory.size();
+    }
+
+    //confirm selecting fav box
+    private void confirmBox(int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(root.getContext());
+        builder.setCancelable(true);
+        builder.setTitle("Confirm");
+        builder.setMessage(root.getContext().getString(R.string.confirmFavMessage,inventory.get(position)));
+        builder.setPositiveButton("Confirm",
+                (dialog, which) -> {
+                    notifyItemChanged(favPosition);
+                    favPosition = position;
+                    notifyItemChanged(favPosition);
+                });
+        builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> notifyItemChanged(position));
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 }
