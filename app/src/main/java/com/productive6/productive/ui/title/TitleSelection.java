@@ -24,8 +24,6 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class TitleSelection extends AppCompatActivity implements ProductiveListener {
 
 
-    private Button submit;
-
     @Inject
     ITitleManager titleManager;
 
@@ -42,7 +40,7 @@ public class TitleSelection extends AppCompatActivity implements ProductiveListe
 
         RecyclerView titleView = findViewById(R.id.titleRecyclerView);
 
-        submit = findViewById(R.id.submit);
+        Button submit = findViewById(R.id.submit);
 
         final TitleAdapter titleAdapter = new TitleAdapter(titleManager);
         titleView.setAdapter(titleAdapter);

@@ -23,6 +23,8 @@ import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.system.SystemLoadedEvent;
 import com.productive6.productive.ui.inventory.InventoryActivity;
+import com.productive6.productive.ui.stats.StatsActivity;
+import com.productive6.productive.ui.shop.ShopActivity;
 import com.productive6.productive.ui.title.TitleSelection;
 
 import javax.inject.Inject;
@@ -43,7 +45,6 @@ public class HomeFragment extends Fragment implements ProductiveListener {
     private TextView userTitle;
     private TextView coinCounter;
     private TextView levelNumber;
-    private Button buttonTitle;
     private HomeViewModel homeViewModel;
 
 
@@ -65,13 +66,15 @@ public class HomeFragment extends Fragment implements ProductiveListener {
         userTitle = (TextView) root.findViewById(R.id.user_title);
         coinCounter = (TextView) root.findViewById(R.id.coin_counter);
         levelNumber = (TextView) root.findViewById(R.id.level_number);
-        buttonTitle = (Button) root.findViewById(R.id.selectTitle);
+        Button buttonTitle = (Button) root.findViewById(R.id.selectTitle);
+        Button buttonShop = (Button) root.findViewById(R.id.shopButton);
 
         //setting level and title as bold text
         levelNumber.setTypeface(null, Typeface.BOLD);
         userTitle.setTypeface(null, Typeface.BOLD);
         buttonTitle.setOnClickListener(v -> openTitleActivity());
         userTitle.setOnClickListener(v -> openTitleActivity());
+        buttonShop.setOnClickListener(v -> openShopActivity());
         updateHeader();
 
         //Attach button to inventory activity
@@ -108,10 +111,19 @@ public class HomeFragment extends Fragment implements ProductiveListener {
 
     /**
      * Opens the title selection activity
-     * when the user's title is clicked
+     * when the user's title or the button is clicked
      */
     public void openTitleActivity() {
         Intent intent = new Intent(getContext(), TitleSelection.class);
+        startActivity(intent);
+    }
+
+    /**
+     * Opens the shop activity
+     * when the shop button is clicked
+     */
+    public void openShopActivity() {
+        Intent intent = new Intent(getContext(), ShopActivity.class);
         startActivity(intent);
     }
 }
