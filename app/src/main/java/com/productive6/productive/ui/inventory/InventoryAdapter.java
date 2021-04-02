@@ -24,6 +24,7 @@ import java.util.List;
 public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.ViewHolder> implements ProductiveListener {
 
     private List<String> inventory = new ArrayList<>();
+    private int selectedItemIndex = -1;
     private View root;
     public InventoryAdapter(View root, int itemCount) {//ItemCount will eventually be replaced with their inventory or an inventory manager
         this.root = root;
@@ -68,6 +69,18 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         Resources res = root.getResources();
         holder.itemName.setText(inventory.get(position));
         holder.itemImg.setImageDrawable(res.getDrawable(R.drawable.prop_arrow_1,res.newTheme()));//Dynamically set the image
+        if(selectedItemIndex == position){
+            holder.itemView.setBackgroundColor(res.getColor(R.color.pastel_red,res.newTheme()));
+        }else{
+            holder.itemView.setBackgroundColor(res.getColor(R.color.light_blue,res.newTheme()));
+        }
+        holder.itemImg.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                selectedItemIndex = position;
+                notifyDataSetChanged();
+            }
+        });
     }
 
     /**
