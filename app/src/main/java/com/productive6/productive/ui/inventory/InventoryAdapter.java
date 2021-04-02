@@ -3,6 +3,7 @@ package com.productive6.productive.ui.inventory;
 
 import android.app.AlertDialog;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.productive6.productive.R;
 import com.productive6.productive.objects.events.ProductiveListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,16 +26,23 @@ import java.util.List;
 
 public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.ViewHolder> implements ProductiveListener {
 
-    private List<String> inventory = new ArrayList<>();
+    /**
+     * List of cosmetics' names
+     */
+    private List<String> itemNames;
+    /**
+     * List of cosmetics' images
+     */
+    private TypedArray images;
+
     private View root;
 
     private int favPosition;
 
-    public InventoryAdapter(View root, int itemCount) {//ItemCount will eventually be replaced with their inventory or an inventory manager
+    public InventoryAdapter(View root, List<String> itemNames, TypedArray images) {
         this.root = root;
-        for (int i = 0; i < itemCount; i++) {//Fill in the example display while we wait for the backend implementation
-            inventory.add("Test Item "+i);
-        }
+        this.itemNames = itemNames;
+        this.images = images;
 
         //initialize test fav position
         favPosition = 0;
@@ -48,11 +55,13 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         private final TextView itemName;
         private final ImageView itemImg;
         private final RadioButton starButton;
+        private final ImageView clickField;
         public ViewHolder(@NonNull View itemView){
             super(itemView);
             itemName = itemView.findViewById(R.id.item_name);
             itemImg = itemView.findViewById(R.id.item_img);
             starButton = itemView.findViewById(R.id.starIcon);
+            clickField = itemView.findViewById(R.id.clickField);
         }
     }
 
@@ -77,8 +86,8 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Resources res = root.getResources();
-        holder.itemName.setText(inventory.get(position));
-        holder.itemImg.setImageDrawable(res.getDrawable(R.drawable.prop_armor_1,res.newTheme()));//Dynamically set the image
+        holder.itemName.setText(itemNames.get(position));
+        holder.itemImg.setImageResource(images.getResourceId(position,0));//Dynamically set the image
         //Set fav item
         if (favPosition == position) {
             holder.starButton.setChecked(true);
@@ -89,7 +98,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
             holder.starButton.setChecked(false);
             holder.itemName.setTextColor(ContextCompat.getColor(root.getContext(),R.color.smoke_black));
             holder.itemName.setBackgroundColor(ContextCompat.getColor(root.getContext(),R.color.smoke_white));
-            holder.starButton.setOnClickListener(v->confirmBox(position));
+            holder.clickField.setOnClickListener(v->confirmBox(position));
         }
     }
 
@@ -99,7 +108,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
      */
     @Override
     public int getItemCount() {
-        return inventory.size();
+        return itemNames.size();
     }
 
     //confirm selecting fav box
@@ -107,14 +116,13 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         AlertDialog.Builder builder = new AlertDialog.Builder(root.getContext());
         //builder.setCancelable(true);
         builder.setTitle("Confirm");
-        builder.setMessage(root.getContext().getString(R.string.confirmFavMessage,inventory.get(position)));
+        builder.setMessage(root.getContext().getString(R.string.confirmFavMessage,itemNames.get(position)));
         builder.setPositiveButton("Confirm",
                 (dialog, which) -> {
                     favPosition = position;
                     notifyDataSetChanged();
                 });
-        builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> notifyDataSetChanged());
-        builder.setOnCancelListener(v->notifyDataSetChanged());
+        builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> {});
 
         AlertDialog dialog = builder.create();
         dialog.show();

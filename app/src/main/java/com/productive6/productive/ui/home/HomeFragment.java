@@ -1,6 +1,5 @@
 package com.productive6.productive.ui.home;
 
-import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -14,9 +13,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.productive6.productive.R;
 import com.productive6.productive.logic.event.EventDispatch;
@@ -25,14 +21,9 @@ import com.productive6.productive.logic.rewards.ITitleManager;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.system.SystemLoadedEvent;
-
 import com.productive6.productive.ui.inventory.InventoryActivity;
-import com.productive6.productive.ui.inventory.InventoryAdapter;
-import com.productive6.productive.ui.stats.StatsActivity;
 import com.productive6.productive.ui.shop.ShopActivity;
 import com.productive6.productive.ui.title.TitleSelection;
-
-import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -88,10 +79,10 @@ public class HomeFragment extends Fragment implements ProductiveListener {
         root.findViewById(R.id.inventoryButton).setOnClickListener(view -> startActivity(new Intent(getContext(), InventoryActivity.class)));
 
         //Attach inventory adapter to display the user's favorite item
-        RecyclerView inventoryDisplayView = root.findViewById(R.id.favorite_item_display);//Grab display
-        InventoryAdapter inventoryAdapter = new InventoryAdapter(root,1);
-        inventoryDisplayView.setAdapter(inventoryAdapter);//attach display to view + tasks
-        inventoryDisplayView.setLayoutManager(new GridLayoutManager(root.getContext(), 1));
+//        RecyclerView inventoryDisplayView = root.findViewById(R.id.favorite_item_display);//Grab display
+//        InventoryAdapter inventoryAdapter = new InventoryAdapter(root,1);
+//        inventoryDisplayView.setAdapter(inventoryAdapter);//attach display to view + tasks
+//        inventoryDisplayView.setLayoutManager(new GridLayoutManager(root.getContext(), 1));
 
         return root;
     }
