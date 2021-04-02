@@ -82,11 +82,13 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         //Set fav item
         if (favPosition == position) {
             holder.starButton.setChecked(true);
-            holder.itemName.setTextColor(ContextCompat.getColor(root.getContext(),R.color.pastel_red));
+            holder.itemName.setBackgroundColor(ContextCompat.getColor(root.getContext(),R.color.pastel_red));
+            holder.itemName.setTextColor(ContextCompat.getColor(root.getContext(),R.color.smoke_white));
         }
         else {
             holder.starButton.setChecked(false);
             holder.itemName.setTextColor(ContextCompat.getColor(root.getContext(),R.color.smoke_black));
+            holder.itemName.setBackgroundColor(ContextCompat.getColor(root.getContext(),R.color.smoke_white));
             holder.starButton.setOnClickListener(v->confirmBox(position));
         }
     }
@@ -103,16 +105,16 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
     //confirm selecting fav box
     private void confirmBox(int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(root.getContext());
-        builder.setCancelable(true);
+        //builder.setCancelable(true);
         builder.setTitle("Confirm");
         builder.setMessage(root.getContext().getString(R.string.confirmFavMessage,inventory.get(position)));
         builder.setPositiveButton("Confirm",
                 (dialog, which) -> {
-                    notifyItemChanged(favPosition);
                     favPosition = position;
-                    notifyItemChanged(favPosition);
+                    notifyDataSetChanged();
                 });
-        builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> notifyItemChanged(position));
+        builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> notifyDataSetChanged());
+        builder.setOnCancelListener(v->notifyDataSetChanged());
 
         AlertDialog dialog = builder.create();
         dialog.show();
