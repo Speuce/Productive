@@ -1,6 +1,7 @@
 package com.productive6.productive;
 
 import com.productive6.productive.logic.statstics.impl.StatsManager;
+import com.productive6.productive.unit.CosmeticManagerTest;
 import com.productive6.productive.unit.EventDispatchTest;
 import com.productive6.productive.unit.RewardManagerTest;
 import com.productive6.productive.unit.StatsManagerTest;
@@ -26,7 +27,8 @@ import org.junit.runners.Suite;
         RewardManagerTest.class,
         TaskSorterTest.class,
         StatsManagerTest.class,
-        StreakManagerTest.class
+        StreakManagerTest.class,
+        CosmeticManagerTest.class
 })
 public class TestAll {
 }
