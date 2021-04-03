@@ -3,11 +3,18 @@ package com.productive6.productive.objects;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverter;
+import androidx.room.TypeConverters;
+
+import com.productive6.productive.persistence.room.adapters.CosmeticConverter;
+
+import java.util.List;
 
 /**
  * Encapsulates information of a user including XP, Coins, and applicable level
  */
 @Entity(tableName = "users")
+@TypeConverters({CosmeticConverter.class})
 public class User {
 
     /**
@@ -35,6 +42,17 @@ public class User {
      * The currently-selected title for the user
      */
     private String selectedTitle;
+
+
+    /**
+     * The user's chosen 'favourite' cosmetic
+     */
+    private Cosmetic favouriteCosmetic;
+
+    /**
+     * List of all cosmetics owned by the user
+     */
+    private List<Cosmetic> ownedCosmetics;
 
     /**
      * The nothing constructor
@@ -136,6 +154,27 @@ public class User {
 
     }
 
+    public Cosmetic getFavouriteCosmetic() {
+        return favouriteCosmetic;
+    }
+
+    public void setFavouriteCosmetic(Cosmetic favouriteCosmetic) {
+        this.favouriteCosmetic = favouriteCosmetic;
+    }
+
+    /**
+     * @return a list of all cosmetics owned by the user
+     */
+    public List<Cosmetic> getOwnedCosmetics() {
+        return ownedCosmetics;
+    }
+
+    /**
+     * Adds the given cosmetic to the user's cosmetic collection.
+     */
+    public void addToOwnedCosmetics(Cosmetic c){
+        this.ownedCosmetics.add(c);
+    }
 
     /**
      * @return id -- for persistence purposes.
@@ -149,5 +188,9 @@ public class User {
      */
     public void setId(long id) {
         this.id = id;
+    }
+
+    public void setOwnedCosmetics(List<Cosmetic> ownedCosmetics) {
+        this.ownedCosmetics = ownedCosmetics;
     }
 }
