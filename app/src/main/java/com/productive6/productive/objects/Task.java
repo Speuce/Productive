@@ -6,6 +6,7 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.productive6.productive.objects.enums.Category;
 import com.productive6.productive.objects.enums.Difficulty;
 import com.productive6.productive.objects.enums.Priority;
 
@@ -58,7 +59,7 @@ public class Task implements Comparable<Task> {
     private LocalDate dueDate;
 
     /**
-     * When a given task is due
+     * Difficulty of the task
      */
     @ColumnInfo(name = "difficulty")
     private Difficulty difficulty;
@@ -76,12 +77,19 @@ public class Task implements Comparable<Task> {
     private int xpEarned;
 
     /**
+     * Category of the task
+     */
+    @ColumnInfo(name = "category")
+    private Category category;
+
+    /**
      * Default Constructor
      */
     @Ignore
     public Task() {
         this.priority = Priority.MEDIUM;
         this.difficulty = Difficulty.MEDIUM;
+        this.category = Category.UNCATEGORIZED;
         createdTime = LocalDateTime.now();
     }
 
@@ -94,14 +102,13 @@ public class Task implements Comparable<Task> {
      *                    that this task was created.
      * @param completed   A flag to mark whether or not this task
      *                    has been completed.
-     *
      * @deprecated use {@link Priority} and {@link Difficulty} instead of integers.
-     *              this constructor is only here for backwards-compatibility.
-     *              any use of this constructor is technical debt.
+     * this constructor is only here for backwards-compatibility.
+     * any use of this constructor is technical debt.
      */
     @Deprecated
     public Task(String taskName, int priority, int difficulty, LocalDateTime createdTime, LocalDate dueDate, LocalDateTime completed) {
-        this(taskName, Priority.values()[priority-1], Difficulty.values()[difficulty-1], createdTime, dueDate, completed);
+        this(taskName, Priority.values()[priority - 1], Difficulty.values()[difficulty - 1], createdTime, dueDate, completed);
     }
 
     /**
@@ -114,6 +121,28 @@ public class Task implements Comparable<Task> {
      * @param completed   A flag to mark whether or not this task
      *                    has been completed.
      */
+    public Task(String taskName, Priority priority, Difficulty difficulty, @NotNull LocalDateTime createdTime, LocalDate dueDate, LocalDateTime completed, Category category) {
+        this.taskName = taskName;
+        this.priority = priority;
+        this.createdTime = createdTime;
+        this.completed = completed;
+        this.difficulty = difficulty;
+        this.dueDate = dueDate;
+        this.category = category;
+    }
+
+    /**
+     * Constructor for a new task without category.
+     *
+     * @param taskName    The user-defined name of the task
+     * @param priority    The user-defined priority of this task
+     * @param createdTime The timestamp (milliseconds, epoch time)
+     *                    that this task was created.
+     * @param completed   A flag to mark whether or not this task
+     *                    has been completed.
+     */
+    @Ignore
+    @Deprecated
     public Task(String taskName, Priority priority, Difficulty difficulty, @NotNull LocalDateTime createdTime, LocalDate dueDate, LocalDateTime completed) {
         this.taskName = taskName;
         this.priority = priority;
@@ -128,15 +157,14 @@ public class Task implements Comparable<Task> {
      *
      * @param taskName The user-defined name of the task
      * @param priority The user-defined priority of this task
-     *
      * @deprecated use {@link Priority} and {@link Difficulty} instead of integers.
-     *              this constructor is only here for backwards-compatibility.
-     *              any use of this constructor is technical debt.
+     * this constructor is only here for backwards-compatibility.
+     * any use of this constructor is technical debt.
      */
     @Ignore
     @Deprecated
     public Task(String taskName, int priority, int difficulty) {
-        this(taskName, Priority.values()[priority-1], Difficulty.values()[difficulty-1]);
+        this(taskName, Priority.values()[priority - 1], Difficulty.values()[difficulty - 1]);
     }
 
     /**
@@ -146,15 +174,14 @@ public class Task implements Comparable<Task> {
      * @param priority    The user-defined priority of this task
      * @param createdTime The timestamp (milliseconds, epoch time)
      *                    that this task was created.
-     *
      * @deprecated use {@link Priority} and {@link Difficulty} instead of integers.
-     *              this constructor is only here for backwards-compatibility.
-     *              any use of this constructor is technical debt.
+     * this constructor is only here for backwards-compatibility.
+     * any use of this constructor is technical debt.
      */
     @Ignore
     @Deprecated
     public Task(String taskName, int priority, int difficulty, @NotNull LocalDateTime createdTime) {
-        this(taskName, Priority.values()[priority-1], Difficulty.values()[difficulty-1], createdTime);
+        this(taskName, Priority.values()[priority - 1], Difficulty.values()[difficulty - 1], createdTime);
     }
 
     /**
@@ -167,7 +194,7 @@ public class Task implements Comparable<Task> {
      */
     @Ignore
     public Task(String taskName, Priority priority, Difficulty difficulty, @NotNull LocalDateTime createdTime) {
-        this(taskName, priority, difficulty,createdTime, null, null);
+        this(taskName, priority, difficulty, createdTime, null, null);
     }
 
     /**
@@ -185,7 +212,6 @@ public class Task implements Comparable<Task> {
         this.completed = null;
         this.dueDate = null;
     }
-
 
     /**
      * @return an {@code String} representing
@@ -246,7 +272,6 @@ public class Task implements Comparable<Task> {
         return this.createdTime;
     }
 
-
     public void setCreatedTime(@NotNull LocalDateTime createdTime) {
         this.createdTime = createdTime;
     }
@@ -283,6 +308,14 @@ public class Task implements Comparable<Task> {
         this.xpEarned = xpEarned;
     }
 
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
     /**
      * @return The day/time that this task was completed.
      * Null if not completed.
@@ -301,6 +334,7 @@ public class Task implements Comparable<Task> {
                 ", completed=" + completed +
                 ", dueDate=" + dueDate +
                 ", difficulty=" + difficulty +
+                ", category=" + category +
                 ", coinsEarned=" + coinsEarned +
                 ", xpEarned=" + xpEarned +
                 '}';
@@ -327,7 +361,8 @@ public class Task implements Comparable<Task> {
                     t2.getPriority() == this.getPriority() &&
                     t2.getCreatedTime().equals(this.getCreatedTime()) &&
                     t2.getTaskName().equals(this.getTaskName()) &&
-                    t2.getDifficulty() == this.getDifficulty();
+                    t2.getDifficulty() == this.getDifficulty() &&
+                    t2.getCategory() == this.getCategory();
             if (t2.getDueDate() != null) {
                 result = result && t2.getDueDate().equals(this.getDueDate());
             } else {
