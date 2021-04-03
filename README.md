@@ -41,9 +41,9 @@ Not a result of our code. See: https://stackoverflow.com/a/54917041/6047183.
 Although we do not directly use this annotation in our project, some of the libraries that we use (Hilt and Room) auto-generate class implementations which DO use these annotations. This isn't a direct result of our code.
 
 
-# Libaries in Use
-All of these libaries are added using gradle. You (the person trying to run this app in Android Studio) may need to open this gradle file at first and Click 'Sync Now' to have gradle download the required libraries for the project.
-Additionally, some of these libaries generate class implemenations at compile-time, so until you first build the project, there MAY be some apparent red compiler issues. Have no fear, a build shall fix all of this!
+# Libraries in Use
+All of these libraries are added using gradle. You (the person trying to run this app in Android Studio) may need to open this gradle file at first and Click 'Sync Now' to have gradle download the required libraries for the project.
+Additionally, some of these libraries generate class implementations at compile-time, so until you first build the project, there MAY be some apparent red compiler issues. Have no fear, a build shall fix all of this!
 
 ### Room
 &emsp; [Room](https://developer.android.com/jetpack/androidx/releases/room) is an ORM that takes care of our real persistence layer with relative ease. Annotations are used throughout our codebase for integration with room. Although room is android specific, many of the annotations used are _very_ similar to annotations for desktop ORM. Additionally, we added a layer of Interfaces ontop of what is required by room so that we could easily swap out implementations if we so decide to switch libraries.
