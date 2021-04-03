@@ -23,6 +23,10 @@ public class DefaultCosmeticAdapter implements ICosmeticAdapter {
         }
     }
 
+    public ArrayList<Cosmetic> getAllCosmeticOptions(){
+        return cosmeticList;
+    }
+
     @Override
     public Cosmetic idToCosmetic(int id) {
         Cosmetic item = null;
@@ -42,4 +46,5 @@ public class DefaultCosmeticAdapter implements ICosmeticAdapter {
 
         return item;
     }
+
 }
