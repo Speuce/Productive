@@ -79,6 +79,7 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.mockito/mockito-core
     testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.7.0'
+    androidTestImplementation group: 'org.mockito', name: 'mockito-android', version: '3.7.0'
 
     // For local unit tests
     testImplementation "com.google.dagger:hilt-android-testing:$hilt_version"

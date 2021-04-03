@@ -5,6 +5,8 @@ import android.content.Context;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import com.productive6.productive.logic.adapters.ICosmeticAdapter;
+import com.productive6.productive.logic.adapters.impl.DefaultCosmeticAdapter;
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.exceptions.ObjectFormatException;
 import com.productive6.productive.logic.exceptions.PersistentIDAssignmentException;
@@ -31,6 +33,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 
 /**
  * Tests logic-layer task manager verification and computation
@@ -51,7 +54,7 @@ public class TaskManagerIntTest {
     public void init(){
         mContext = InstrumentationRegistry.getInstrumentation().getContext();
         mRunnableExecutor = new TestExecutor();
-        InMemoryAndroidDataManager data = new InMemoryAndroidDataManager(mContext, mRunnableExecutor);
+        InMemoryAndroidDataManager data = new InMemoryAndroidDataManager(mContext, mRunnableExecutor,  mock(DefaultCosmeticAdapter.class));
         data.init();
         int config[] = {3,3};
         taskManager = new PersistentTaskManager(data,config);

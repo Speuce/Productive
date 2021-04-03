@@ -24,6 +24,7 @@ public class InMemoryAndroidDataManager extends LiveDataManager {
         this.c = new CosmeticConverter(adapter);
     }
 
+
     @Override
     public void init() {
         db = Room.inMemoryDatabaseBuilder(context,

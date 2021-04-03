@@ -8,6 +8,8 @@ import androidx.room.TypeConverters;
 
 import com.productive6.productive.persistence.room.adapters.CosmeticConverter;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -52,7 +54,7 @@ public class User {
     /**
      * List of all cosmetics owned by the user
      */
-    private List<Cosmetic> ownedCosmetics;
+    private List<Cosmetic> ownedCosmetics = new LinkedList<>();
 
     /**
      * The nothing constructor

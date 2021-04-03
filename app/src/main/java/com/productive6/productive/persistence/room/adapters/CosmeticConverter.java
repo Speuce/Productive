@@ -35,11 +35,17 @@ public class CosmeticConverter {
 
     @TypeConverter
     public int cosmeticToInt(Cosmetic c){
+        if(c == null){
+            return 0;
+        }
         return c.getId();
     }
 
     @TypeConverter
     public Cosmetic intToCosmetic(int i){
+        if(i == 0){
+            return null;
+        }
         return adapter.idToCosmetic(i);
     }
 
