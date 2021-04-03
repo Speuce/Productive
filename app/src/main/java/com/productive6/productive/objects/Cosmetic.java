@@ -1,6 +1,6 @@
 package com.productive6.productive.objects;
 
-public class Cosmetic {
+public class Cosmetic implements Comparable<Cosmetic> {
 
     /**
      * id of this cosmetic
@@ -57,7 +57,21 @@ public class Cosmetic {
         return name;
     }
 
+
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public int compareTo(Cosmetic item) {
+
+        int val = 1;
+
+        if (getCost() < item.getCost())
+            val = -1;
+        else if (getCost() == item.getCost())
+            val = 0;
+
+        return val;
     }
 }

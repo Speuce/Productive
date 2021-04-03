@@ -11,6 +11,7 @@ import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.user.UserLoadedEvent;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 public class CosmeticManager implements ICosmeticManager,ProductiveListener {
@@ -27,7 +28,9 @@ public class CosmeticManager implements ICosmeticManager,ProductiveListener {
     }
 
     public ArrayList<Cosmetic> getOwnedItems(){
-        return new ArrayList<>(person.getOwnedCosmetics());
+        ArrayList<Cosmetic> owned = new ArrayList<>(person.getOwnedCosmetics());
+        Collections.sort(owned);
+        return owned;
     }
 
     public ArrayList<Cosmetic> getPurchasable(){
@@ -56,6 +59,7 @@ public class CosmeticManager implements ICosmeticManager,ProductiveListener {
 
         }
 
+        Collections.sort(purchasable);
         return purchasable;
     }
 
