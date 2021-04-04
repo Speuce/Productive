@@ -16,7 +16,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 /**
- * Runs all associated unit tests in this project.
+ * Runs all associated system tests in this project.
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
@@ -24,6 +24,4 @@ import org.junit.runners.Suite;
 })
 @LargeTest
 public class AllSystem {
-
-
 }
