@@ -1,8 +1,8 @@
 package com.productive6.productive.ui.shop;
 
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,46 +10,53 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.productive6.productive.R;
+import com.productive6.productive.logic.cosmetics.ICosmeticManager;
 import com.productive6.productive.logic.rewards.IRewardSpenderManager;
 import com.productive6.productive.ui.MainActivity;
-
-import java.util.Arrays;
-import java.util.List;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
+/**
+ * Activity for buying items
+ */
 @AndroidEntryPoint
 public class ShopActivity extends AppCompatActivity {
 
     @Inject
     IRewardSpenderManager spenderManager;
 
+    @Inject
+    ICosmeticManager cosmeticManager;
+
+    View root;
+
+    /**
+     * Creates view for the purchasable items
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop);
         Button returnButton = findViewById(R.id.returnButtonShop);
-        returnButton.setOnClickListener(v -> openActivity());
+        returnButton.setOnClickListener(v -> onBackPressed());
 
         RecyclerView shopItem = findViewById(R.id.shopItemRecycler);
 
-        //initialize test values
-        int[] coins = this.getResources().getIntArray(R.array.priceItem);
-        List<String> itemNames = Arrays.asList(this.getResources().getStringArray(R.array.propNameItem));
-        TypedArray images = this.getResources().obtainTypedArray(R.array.propItem);
+        root = shopItem.getRootView();
+
         //attach adapter to shop display
         //Grid View 2 columns
         shopItem.setLayoutManager(new GridLayoutManager(this,2,GridLayoutManager.VERTICAL,false));
-        shopItem.setAdapter(new ShopAdapter(spenderManager,coins,itemNames,images));
+        shopItem.setAdapter(new ShopAdapter(root,spenderManager,cosmeticManager));
     }
 
     /**
-     * Returns to the Main Activity
+     * Return to main activity
      */
-    public void openActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(root.getContext(), MainActivity.class));
     }
 }

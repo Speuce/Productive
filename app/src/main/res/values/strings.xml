@@ -40,50 +40,13 @@
     <string name="itemName">Armor 1</string>
     <string name="confirmMessage">Are you sure you want to spend %s coins for %s?</string>
     <string name="shopActiv">Shop</string>
+    <string name="inventoryPrompt">You have nothing here, go to Shop to buy items!</string>
+    <string name="shopPrompt">You bought everything here!!!</string>
 
     <string-array name="dateRangeSelectionArray">
         <item>7 days</item>
         <item>14 days</item>
         <item>30 days</item>
     </string-array>
-
-    <integer-array name="priceItem">
-        <item>10</item>
-        <item>20</item>
-        <item>30</item>
-        <item>40</item>
-        <item>50</item>
-        <item>60</item>
-        <item>70</item>
-        <item>80</item>
-        <item>90</item>
-        <item>100</item>
-    </integer-array>
-
-    <string-array name="propNameItem">
-        <item>Armor 1</item>
-        <item>Armor 2</item>
-        <item>Armor 3</item>
-        <item>Armor 4</item>
-        <item>Arrow 1</item>
-        <item>Arrow 2</item>
-        <item>Arrow 3</item>
-        <item>Arrow 4</item>
-        <item>Bow 1</item>
-        <item>Bow 2</item>
-    </string-array>
-
-    <integer-array name="propItem">
-        <item>@drawable/prop_armor_1</item>
-        <item>@drawable/prop_armor_2</item>
-        <item>@drawable/prop_armor_3</item>
-        <item>@drawable/prop_armor_4</item>
-        <item>@drawable/prop_arrow_1</item>
-        <item>@drawable/prop_arrow_2</item>
-        <item>@drawable/prop_arrow_3</item>
-        <item>@drawable/prop_arrow_4</item>
-        <item>@drawable/prop_bow_1</item>
-        <item>@drawable/prop_bow_2</item>
-    </integer-array>
 
 </resources>

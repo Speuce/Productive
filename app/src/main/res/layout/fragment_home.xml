@@ -7,6 +7,7 @@
     android:background="@color/pastel_blue"
     tools:context=".ui.home.HomeFragment">
 
+
     <ImageView
         android:id="@+id/userInfoBG"
         android:layout_width="340dp"
@@ -16,12 +17,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.108" />
-
+        app:layout_constraintVertical_bias="0.16" />
 
     <Button
         android:id="@+id/inventoryButton"
-        style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:background="@drawable/bg_edit"
@@ -32,10 +31,10 @@
         app:backgroundTint="@color/smoke_black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintHorizontal_bias="0.519"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.855" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        app:layout_constraintVertical_bias="0.231" />
 
     <TextView
         android:id="@+id/level_number"
@@ -63,7 +62,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.108" />
+        app:layout_constraintVertical_bias="0.16" />
 
     <TextView
         android:id="@+id/user_title"
@@ -142,26 +141,26 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.894"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/inventoryButton"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.855" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        app:layout_constraintVertical_bias="0.231" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="340dp"
         android:layout_height="340dp"
         android:src="@drawable/bg_rounded_corners_smoke_white"
-        app:layout_constraintBottom_toTopOf="@+id/inventoryButton"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userInfoBG"
-        app:layout_constraintVertical_bias="0.783" />
+        app:layout_constraintVertical_bias="0.199" />
 
     <ImageView
         android:id="@+id/propFavImg"
-        android:layout_width="280dp"
-        android:layout_height="280dp"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView3"
         app:layout_constraintEnd_toEndOf="@+id/imageView3"
         app:layout_constraintStart_toStartOf="@+id/imageView3"

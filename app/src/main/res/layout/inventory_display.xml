@@ -19,6 +19,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/emptyInventory"
+        android:layout_width="match_parent"
+        android:layout_height="640dp"
+        android:gravity="center"
+        android:text="@string/inventoryPrompt"
+        android:visibility="invisible"
+        android:textColor="@color/light_blue"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="76dp"
+        android:layout_marginRight="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/backButton"
         android:layout_width="130dp"

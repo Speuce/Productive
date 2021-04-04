@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.productive6.productive.R;
+import com.productive6.productive.logic.cosmetics.ICosmeticManager;
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.rewards.IRewardManager;
 import com.productive6.productive.logic.rewards.ITitleManager;
@@ -40,10 +41,15 @@ public class HomeFragment extends Fragment implements ProductiveListener {
     @Inject
     IRewardManager rewardManager;
 
+    @Inject
+    ICosmeticManager cosmeticManager;
+
     private ProgressBar experienceBar;
     private TextView userTitle;
     private TextView coinCounter;
     private TextView levelNumber;
+    private ImageView favItem;
+    private TextView emptyFavItem;
     private HomeViewModel homeViewModel;
 
 
@@ -80,9 +86,9 @@ public class HomeFragment extends Fragment implements ProductiveListener {
         root.findViewById(R.id.inventoryButton).setOnClickListener(view -> startActivity(new Intent(getContext(), InventoryActivity.class)));
 
         //Display the user's favorite item
-        ImageView favItem = root.findViewById(R.id.propFavImg);
-        favItem.setImageResource(R.drawable.prop_armor_1);//replace with method return fav item in CosmeticsManager afterwards
-
+        favItem = root.findViewById(R.id.propFavImg);
+        emptyFavItem = root.findViewById(R.id.emptyFavItem);
+        displayFavItem();
         return root;
     }
 
@@ -94,6 +100,7 @@ public class HomeFragment extends Fragment implements ProductiveListener {
     @ProductiveEventHandler
     public void catchSystemLoaded(SystemLoadedEvent event) {
         updateHeader();
+        displayFavItem();
     }
 
     /**
@@ -103,9 +110,23 @@ public class HomeFragment extends Fragment implements ProductiveListener {
        if(rewardManager.isInitialized()) {
            userTitle.setText(titleManager.getTitleAsString());
            experienceBar.setProgress(rewardManager.getExperience());
-           coinCounter.setText("" + rewardManager.getCoins());
-           levelNumber.setText("" + rewardManager.getLevel());
+           coinCounter.setText(String.valueOf(rewardManager.getCoins()));
+           levelNumber.setText(String.valueOf(rewardManager.getLevel()));
        }
+    }
+
+    /**
+     * When no fav item, show textview
+     */
+    private void displayFavItem(){
+        if (cosmeticManager.isInitialized()) {
+            if (cosmeticManager.getFavorite() == null)
+                emptyFavItem.setVisibility(View.VISIBLE);
+            else {
+                emptyFavItem.setVisibility(View.INVISIBLE);
+                favItem.setImageResource(cosmeticManager.getFavorite().getResource());
+            }
+        }
     }
 
     /**
