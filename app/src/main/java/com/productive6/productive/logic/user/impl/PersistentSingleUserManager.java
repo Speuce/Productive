@@ -43,20 +43,20 @@ public class PersistentSingleUserManager implements IUserManager {
      */
     private void loadCurrentUser(){
         data.user().getAllUsers(users -> {
-            User u;
             if(users.isEmpty()){
-                //create a default user. Iteration 1 smelly stuff. Iteration 2/3 will have a user creation UI
-                u = new User();
-                u.setCoins(0);
-                data.user().insertUser(u, () ->{
+                //create a default user.
+                currentUser = new User();
+                currentUser.setCoins(0);
+                data.user().insertUser(currentUser, () ->{
                     EventDispatch.dispatchEvent(new UserLoadedEvent(currentUser));
+                    EventDispatch.dispatchEvent(new SystemLoadedEvent());
                 });
             }else{
-                u = users.get(0);
+                currentUser = users.get(0);
+                EventDispatch.dispatchEvent(new UserLoadedEvent(currentUser));
+                EventDispatch.dispatchEvent(new SystemLoadedEvent());
             }
-            currentUser = u;
-            EventDispatch.dispatchEvent(new UserLoadedEvent(currentUser));
-            EventDispatch.dispatchEvent(new SystemLoadedEvent());
+
         });
     }
 
@@ -76,9 +76,6 @@ public class PersistentSingleUserManager implements IUserManager {
         if(u.getId() == 0){
             throw new ObjectFormatException("Attempted to update a user without the user having an associated id first!");
         }
-        data.user().updateUser(u);
-        
-
-        EventDispatch.dispatchEvent(new UserUpdateEvent(u));
+        data.user().updateUser(u, () ->EventDispatch.dispatchEvent(new UserUpdateEvent(u)));
     }
 }

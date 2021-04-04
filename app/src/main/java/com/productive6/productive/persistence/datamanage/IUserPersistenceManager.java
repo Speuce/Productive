@@ -31,6 +31,8 @@ public interface IUserPersistenceManager {
      * Updates the database information of a user
      * which has already been assigned an id
      * @param u the task to update
+     * @param after called after the user has been created.
+     *              (ran on main thread)
      */
-    void updateUser(User u);
+    void updateUser(User u, Runnable after);
 }

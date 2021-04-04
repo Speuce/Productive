@@ -1,5 +1,6 @@
 package com.productive6.productive.logic.event;
 
+import com.productive6.productive.BuildConfig;
 import com.productive6.productive.objects.events.ProductiveEvent;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
@@ -79,8 +80,11 @@ public class EventDispatch {
                         m.setAccessible(true);
                         try {
                             m.invoke(entry.getKey(), e);
-                        } catch (IllegalAccessException | InvocationTargetException illegalAccessException) {
-                            illegalAccessException.printStackTrace();
+                        } catch (Exception exception) {
+                            exception.printStackTrace();
+                            if (BuildConfig.DEBUG) {
+                                throw new AssertionError("Event dispatch caught an error while dispatching event: " + e.getClass().getSimpleName(), exception);
+                            }
                         }
                     }
                 }
