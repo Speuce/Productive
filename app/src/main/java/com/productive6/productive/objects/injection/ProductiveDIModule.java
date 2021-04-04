@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.res.Resources;
 import com.productive6.productive.R;
 
+import com.productive6.productive.logic.adapters.ICosmeticAdapter;
+import com.productive6.productive.logic.adapters.impl.DefaultCosmeticAdapter;
 import com.productive6.productive.logic.rewards.IRewardManager;
 import com.productive6.productive.logic.rewards.IRewardSpenderManager;
 import com.productive6.productive.logic.rewards.IStreakRewardManager;
@@ -46,14 +48,31 @@ public class ProductiveDIModule {
 
     @Singleton
     @Provides
+    public ICosmeticAdapter provideICosmeticAdapter( @ApplicationContext Context context){
+        Resources res = context.getResources();
+        int keyAdapter[][] = new int[2][];
+
+        keyAdapter[0] = res.getIntArray(R.array.CosmeticIdArray);
+        keyAdapter[1] = res.getIntArray(R.array.CosmeticResourceIdArray);
+
+        int costArr[] = res.getIntArray(R.array.CosmeticCostArray);
+        String names[] = res.getStringArray(R.array.CosmeticNameArray);
+
+        ICosmeticAdapter cosmeticAdapter = new DefaultCosmeticAdapter(keyAdapter,costArr,names);
+
+        return cosmeticAdapter;
+    }
+
+    @Singleton
+    @Provides
     public IRunnableExecutor provideExecutorService(){
         return new AndroidExecutor();
     }
 
     @Singleton
     @Provides
-    public IDataManager provideDataManager(@ApplicationContext Context context, IRunnableExecutor e){
-        IDataManager d = new PersistentAndroidDataManager(context, e);
+    public IDataManager provideDataManager(@ApplicationContext Context context, IRunnableExecutor e, ICosmeticAdapter cosmeticAdapter){
+        IDataManager d = new PersistentAndroidDataManager(context, e, cosmeticAdapter);
         d.init();
         return d;
     }
@@ -141,6 +160,7 @@ public class ProductiveDIModule {
     public IRewardManager provideIRewardManager(IStreakRewardManager streak){
         return  streak;
     }
+
 
 
 

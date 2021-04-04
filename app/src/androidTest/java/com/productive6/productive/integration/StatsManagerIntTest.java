@@ -4,6 +4,7 @@ import android.content.Context;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import com.productive6.productive.logic.adapters.impl.DefaultCosmeticAdapter;
 import com.productive6.productive.logic.statstics.ICoinsStatsManager;
 import com.productive6.productive.logic.statstics.ITaskStatsManager;
 import com.productive6.productive.logic.statstics.IXPStatsManager;
@@ -23,6 +24,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
 
 public class StatsManagerIntTest {
 
@@ -38,7 +40,7 @@ public class StatsManagerIntTest {
     public void init(){
         Context context = InstrumentationRegistry.getInstrumentation().getContext();
         IRunnableExecutor executor = new TestExecutor();
-        data = new InMemoryAndroidDataManager(context, executor);
+        data = new InMemoryAndroidDataManager(context, executor, mock(DefaultCosmeticAdapter.class));
         data.init();
         taskManager = new StatsManager(data);
         xpManager = (StatsManager)taskManager;

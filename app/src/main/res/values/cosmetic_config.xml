@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="CosmeticNameArray">
+        <item>cosmetic1</item>
+        <item>cosmetic2</item>
+        <item>cosmetic3</item>
+        <item>cosmetic4</item>
+    </string-array>
+
+    <integer-array name="CosmeticCostArray">
+        <item>10</item>
+        <item>20</item>
+        <item>30</item>
+        <item>40</item>
+    </integer-array>
+
+    <integer-array name="CosmeticIdArray">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </integer-array>
+
+    <integer-array name="CosmeticResourceIdArray">
+        <item>11</item>
+        <item>22</item>
+        <item>33</item>
+        <item>44</item>
+    </integer-array>
+
+
+</resources>
