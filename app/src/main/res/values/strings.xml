@@ -33,10 +33,13 @@
     <string name="channel_name">Productive</string>
     <string name="channel_description">Productive App</string>
     <string name="inventory">INVENTORY</string>
-    <string name="confirmFavMessage">Are you sure you want to set %s as your favourite?</string>
+    <string name="confirmFavMessage">Are you sure you want to set %s as your favorite?</string>
+    <string name="confirmNoFav">Stop using %s as your favorite?</string>
+    <string name="selectFavPrompt">Select favorite item in Inventory</string>
     <string name="buyText">Buy</string>
     <string name="itemName">Armor 1</string>
     <string name="confirmMessage">Are you sure you want to spend %s coins for %s?</string>
+    <string name="shopActiv">Shop</string>
 
     <string-array name="dateRangeSelectionArray">
         <item>7 days</item>

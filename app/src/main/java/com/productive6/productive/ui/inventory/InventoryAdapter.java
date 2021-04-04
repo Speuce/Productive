@@ -37,7 +37,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
 
     private View root;
 
-    private int favPosition;
+    private int selectedItemIndex;
 
     public InventoryAdapter(View root, List<String> itemNames, TypedArray images) {
         this.root = root;
@@ -45,7 +45,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         this.images = images;
 
         //initialize test fav position
-        favPosition = 0;
+        selectedItemIndex = -1;
     }
 
     /**
@@ -89,16 +89,19 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         holder.itemName.setText(itemNames.get(position));
         holder.itemImg.setImageResource(images.getResourceId(position,0));//Dynamically set the image
         //Set fav item
-        if (favPosition == position) {
+        if (selectedItemIndex == position) {
             holder.starButton.setChecked(true);
-            holder.itemName.setBackgroundColor(ContextCompat.getColor(root.getContext(),R.color.pastel_red));
             holder.itemName.setTextColor(ContextCompat.getColor(root.getContext(),R.color.smoke_white));
+            holder.itemName.setBackgroundColor(ContextCompat.getColor(root.getContext(),R.color.pastel_red));
+            String messageString = root.getContext().getString(R.string.confirmNoFav,itemNames.get(position));
+            holder.clickField.setOnClickListener(v->confirmBox(-1,messageString));
         }
         else {
             holder.starButton.setChecked(false);
             holder.itemName.setTextColor(ContextCompat.getColor(root.getContext(),R.color.smoke_black));
             holder.itemName.setBackgroundColor(ContextCompat.getColor(root.getContext(),R.color.smoke_white));
-            holder.clickField.setOnClickListener(v->confirmBox(position));
+            String messageString = root.getContext().getString(R.string.confirmFavMessage,itemNames.get(position));
+            holder.clickField.setOnClickListener(v->confirmBox(position,messageString));
         }
     }
 
@@ -111,15 +114,14 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         return itemNames.size();
     }
 
-    //confirm selecting fav box
-    private void confirmBox(int position) {
+    //confirm box
+    private void confirmBox(int position,String messageString) {
         AlertDialog.Builder builder = new AlertDialog.Builder(root.getContext());
-        //builder.setCancelable(true);
         builder.setTitle("Confirm");
-        builder.setMessage(root.getContext().getString(R.string.confirmFavMessage,itemNames.get(position)));
+        builder.setMessage(messageString);
         builder.setPositiveButton("Confirm",
                 (dialog, which) -> {
-                    favPosition = position;
+                    selectedItemIndex = position;
                     notifyDataSetChanged();
                 });
         builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> {});
