@@ -32,7 +32,8 @@
     <string name="easy">Easy</string>
     <string name="channel_name">Productive</string>
     <string name="channel_description">Productive App</string>
-    <string name="inventory">Inventory</string>
+    <string name="inventory">INVENTORY</string>
+    <string name="confirmFavMessage">Are you sure you want to set %s as your favourite?</string>
     <string name="buyText">Buy</string>
     <string name="itemName">Armor 1</string>
     <string name="confirmMessage">Are you sure you want to spend %s coins for %s?</string>
