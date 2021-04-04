@@ -36,7 +36,8 @@ public class DummyUserPersistenceManager implements IUserPersistenceManager {
     }
 
     @Override
-    public void updateUser(User u) {
+    public void updateUser(User u, Runnable after) {
         //doesn't need to be worried about; Thanks pointers!
+        after.run();
     }
 }
