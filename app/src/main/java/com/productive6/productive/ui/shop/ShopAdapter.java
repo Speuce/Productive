@@ -2,7 +2,6 @@ package com.productive6.productive.ui.shop;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,42 +14,40 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.productive6.productive.R;
+import com.productive6.productive.logic.cosmetics.ICosmeticManager;
 import com.productive6.productive.logic.rewards.IRewardSpenderManager;
+import com.productive6.productive.objects.Cosmetic;
 import com.productive6.productive.objects.events.ProductiveListener;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Enabling the translation from data to view
  */
 public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> implements ProductiveListener {
 
-    /**
-     * List of cosmetics' prices
-     */
-    private int[] coins;
-    /**
-     * List of cosmetics' names
-     */
-    private List<String> itemNames;
-    /**
-     * List of cosmetics' images
-     */
-    private TypedArray images;
+    private ArrayList<Cosmetic> buyableList;
 
     private Context context;
 
     private IRewardSpenderManager spenderManager;
+
+    private ICosmeticManager cosmeticManager;
+
+    TextView emptyShop;
+
     /**
      * Construct the ShopAdapter
-     * @param coins list of prices
-     * @param images list of images for prop
+     * @param root rootView
+     * @param spenderManager manage spending coins
+     * @param cosmeticManager manage cosmetics items
      */
-    public ShopAdapter(IRewardSpenderManager spenderManager, int[] coins,List<String> itemNames, TypedArray images){
+    public ShopAdapter(View root, IRewardSpenderManager spenderManager, ICosmeticManager cosmeticManager){
         this.spenderManager = spenderManager;
-        this.itemNames = itemNames;
-        this.coins = coins;
-        this.images = images;
+        this.cosmeticManager = cosmeticManager;
+        buyableList = cosmeticManager.getPurchasable();
+        emptyShop = root.findViewById(R.id.emptyShop);
+        checkEmptyView();
     }
 
     /**
@@ -81,7 +78,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> im
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(
+        return new ViewHolder(LayoutInflater.from(context).inflate(
             R.layout.shop_item,
             parent,
             false
@@ -96,9 +93,9 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> im
      */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.coin.setText(String.valueOf(coins[position]));
-        holder.itemName.setText(itemNames.get(position));
-        holder.propImg.setImageResource(images.getResourceId(position,0));
+        holder.coin.setText(String.valueOf(buyableList.get(position).getCost()));
+        holder.itemName.setText(buyableList.get(position).getName());
+        holder.propImg.setImageResource(buyableList.get(position).getResource());
 
         if (spenderManager.canSpend(Integer.parseInt(holder.coin.getText().toString()))) {
             holder.buyButton.setEnabled(true);
@@ -107,18 +104,24 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> im
         else holder.buyButton.setEnabled(false);
     }
 
-    //confirm buying box
+    /**
+     * Confirm Box for spending money
+     * @param position position of item
+     */
     public void confirmBox(int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setCancelable(true);
         builder.setTitle("Confirm");
-        builder.setMessage(context.getString(R.string.confirmMessage,String.valueOf(coins[position]),itemNames.get(position)));
+        builder.setMessage(context.getString(R.string.confirmMessage,String.valueOf(buyableList.get(position).getCost()),buyableList.get(position).getName()));
         builder.setPositiveButton("Confirm",
                 (dialog, which) -> {
-                    spenderManager.spendCoins(coins[position]);
+                    spenderManager.spendCoins(buyableList.get(position).getCost());
+                    cosmeticManager.purchaseCosmetic(buyableList.get(position));
                     Toast.makeText(context, "Go to inventory to see your new item!",
                             Toast.LENGTH_SHORT).show();
+                    buyableList.remove(position);
                     notifyDataSetChanged();
+                    checkEmptyView();
                 });
         builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> {
         });
@@ -133,6 +136,15 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> im
      */
     @Override
     public int getItemCount() {
-        return itemNames.size();
+        return buyableList.size();
+    }
+
+    /**
+     * Show TextView when purchasable list of items is empty
+     */
+    private void checkEmptyView(){
+        if (buyableList.isEmpty())
+            emptyShop.setVisibility(View.VISIBLE);
+        else emptyShop.setVisibility(View.INVISIBLE);
     }
 }

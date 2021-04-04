@@ -1,35 +1,51 @@
 package com.productive6.productive.ui.inventory;
 
 
-import android.content.res.Resources;
+import android.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.productive6.productive.R;
+import com.productive6.productive.logic.cosmetics.ICosmeticManager;
+import com.productive6.productive.objects.Cosmetic;
 import com.productive6.productive.objects.events.ProductiveListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
- *
+ * Enabling the translation from data to view
  */
-
 public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.ViewHolder> implements ProductiveListener {
 
-    private List<String> inventory = new ArrayList<>();
     private View root;
-    public InventoryAdapter(View root) {
+
+    private ICosmeticManager cosmeticManager;
+
+    private ArrayList<Cosmetic> ownedList;
+
+    /**
+     * Construct the InventoryAdapter
+     * @param root rootView
+     * @param cosmeticManager manage cosmetics items
+     */
+    public InventoryAdapter(View root, ICosmeticManager cosmeticManager) {
         this.root = root;
-        for (int i = 0; i < 32; i++) {//Fill in the example display while we wait for the backend implementation
-            inventory.add("Test Item "+i);
-        }
+        this.cosmeticManager = cosmeticManager;
+        ownedList = cosmeticManager.getOwnedItems();
+
+        //show textview when no items in inventory
+        TextView emptyInventory = root.findViewById(R.id.emptyInventory);
+        if (ownedList.isEmpty())
+            emptyInventory.setVisibility(View.VISIBLE);
+        else emptyInventory.setVisibility(View.INVISIBLE);
     }
 
     /**
@@ -38,18 +54,22 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private final TextView itemName;
         private final ImageView itemImg;
+        private final RadioButton starButton;
+        private final ImageView clickField;
         public ViewHolder(@NonNull View itemView){
             super(itemView);
             itemName = itemView.findViewById(R.id.item_name);
             itemImg = itemView.findViewById(R.id.item_img);
+            starButton = itemView.findViewById(R.id.starIcon);
+            clickField = itemView.findViewById(R.id.clickField);
         }
     }
 
     /**
      * Builds Recycler view that holds a list of dummy items upon creation of ViewHolder.
-     * @param parent
-     * @param viewType
-     * @return
+     * @param parent parent view
+     * @param viewType view type
+     * @return return view holder for recycler view
      */
     @NonNull
     @Override
@@ -60,23 +80,58 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
 
     /**
      * setup for each individual item. Get them to display the data in our array list
-     * @param holder
-     * @param position
+     * @param holder viewholder for each item
+     * @param position position of each item
      */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Resources res = root.getResources();
-        holder.itemName.setText(inventory.get(position));
-        holder.itemImg.setImageDrawable(res.getDrawable(R.drawable.prop_arrow_1,res.newTheme()));//Dynamically set the image
+        holder.itemName.setText(ownedList.get(position).getName());
+        holder.itemImg.setImageResource(ownedList.get(position).getResource());//Dynamically set the image
+        //Set fav item
+        if (cosmeticManager.getFavorite() != null && ownedList.get(position).getId() == cosmeticManager.getFavorite().getId()) {
+            holder.starButton.setChecked(true);
+            holder.itemName.setTextColor(ContextCompat.getColor(root.getContext(),R.color.smoke_white));
+            holder.itemName.setBackgroundColor(ContextCompat.getColor(root.getContext(),R.color.pastel_red));
+            String messageString = root.getContext().getString(R.string.confirmNoFav,ownedList.get(position).getName());
+            holder.clickField.setOnClickListener(v->confirmBox(-1,messageString));
+        }
+        else {
+            holder.starButton.setChecked(false);
+            holder.itemName.setTextColor(ContextCompat.getColor(root.getContext(),R.color.smoke_black));
+            holder.itemName.setBackgroundColor(ContextCompat.getColor(root.getContext(),R.color.smoke_white));
+            String messageString = root.getContext().getString(R.string.confirmFavMessage,ownedList.get(position).getName());
+            holder.clickField.setOnClickListener(v->confirmBox(position,messageString));
+        }
     }
 
     /**
      * How many items to add to the view.
-     * @return
+     * @return number of items in view
      */
     @Override
     public int getItemCount() {
-        return inventory.size();
+        return ownedList.size();
+    }
+
+    /**
+     * Confirm Box for selecting and deselecting fav item
+     * @param position position of chosen favorite item
+     * @param messageString message on confirm box
+     */
+    private void confirmBox(int position,String messageString) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(root.getContext());
+        builder.setTitle("Confirm");
+        builder.setMessage(messageString);
+        builder.setPositiveButton("Confirm",
+                (dialog, which) -> {
+                    if (position == -1)
+                        cosmeticManager.setFavorite(null);
+                    else cosmeticManager.setFavorite(ownedList.get(position));
+                    notifyDataSetChanged();
+                });
+        builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> {});
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 }

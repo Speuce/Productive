@@ -6,6 +6,8 @@ import android.content.Context;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import com.productive6.productive.logic.adapters.ICosmeticAdapter;
+import com.productive6.productive.logic.adapters.impl.DefaultCosmeticAdapter;
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.rewards.IRewardManager;
 import com.productive6.productive.logic.rewards.impl.RewardManager;
@@ -22,9 +24,11 @@ import com.productive6.productive.services.executor.impl.TestExecutor;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
 
 @RunWith(AndroidJUnit4.class)
 public class RewardManagerIntTest {
@@ -41,12 +45,15 @@ public class RewardManagerIntTest {
 
      ITaskManager taskManager;
 
+     @Mock
+     ICosmeticAdapter adapter;
+
     @Before
     public void init(){ //refresh the data between each test
         EventDispatch.clear();
         mContext = InstrumentationRegistry.getInstrumentation().getContext();
         mRunnableExecutor = new TestExecutor();
-        data = new InMemoryAndroidDataManager(mContext,mRunnableExecutor);
+        data = new InMemoryAndroidDataManager(mContext,mRunnableExecutor, mock(DefaultCosmeticAdapter.class));
         data.init();
         userManager = new PersistentSingleUserManager(data);
         int[] config = {3,3};
