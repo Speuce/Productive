@@ -175,6 +175,9 @@ public class User {
      * Adds the given cosmetic to the user's cosmetic collection.
      */
     public void addToOwnedCosmetics(Cosmetic c){
+        if(ownedCosmetics == null){
+            ownedCosmetics = new LinkedList<>();
+        }
         this.ownedCosmetics.add(c);
     }
 
