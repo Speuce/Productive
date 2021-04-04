@@ -5,11 +5,13 @@ import android.content.Context;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import com.productive6.productive.logic.adapters.ICosmeticAdapter;
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.exceptions.AccessBeforeLoadedException;
 import com.productive6.productive.logic.exceptions.ObjectFormatException;
 import com.productive6.productive.logic.user.IUserManager;
 import com.productive6.productive.logic.user.impl.PersistentSingleUserManager;
+import com.productive6.productive.objects.Cosmetic;
 import com.productive6.productive.objects.User;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
@@ -22,11 +24,14 @@ import com.productive6.productive.services.executor.impl.TestExecutor;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 /**
  * Tests the logic-layer user manager with dummy database implementations.
@@ -38,12 +43,19 @@ public class UserManagerIntTest {
 
     private IUserManager userManager;
 
+    @Mock
+    ICosmeticAdapter cosmeticAdapter;
+
+    private Cosmetic testCosmetic;
+
     @Before
     public void init(){
         EventDispatch.clear();
+        testCosmetic = new Cosmetic(5, 1, 1, "hey");
         Context mContext = InstrumentationRegistry.getInstrumentation().getContext();
         IRunnableExecutor mRunnableExecutor = new TestExecutor();
-        InMemoryAndroidDataManager data = new InMemoryAndroidDataManager(mContext, mRunnableExecutor);
+//        when(cosmeticAdapter.idToCosmetic(any(Integer.class))).
+        InMemoryAndroidDataManager data = new InMemoryAndroidDataManager(mContext, mRunnableExecutor, cosmeticAdapter);
         data.init();
         userManager = new PersistentSingleUserManager(data);
     }

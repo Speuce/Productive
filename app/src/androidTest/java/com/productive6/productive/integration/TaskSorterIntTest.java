@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import com.productive6.productive.logic.adapters.impl.DefaultCosmeticAdapter;
 import com.productive6.productive.logic.task.ITaskSorter;
 import com.productive6.productive.logic.task.impl.PersistentTaskSorter;
 import com.productive6.productive.objects.Task;
@@ -26,6 +27,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
 
 /**
  * Tests logic-layer task sorting by the task Manager
@@ -44,7 +46,7 @@ public class TaskSorterIntTest {
     public void init(){
         mContext = InstrumentationRegistry.getInstrumentation().getContext();
         mRunnableExecutor = new TestExecutor();
-        data = new InMemoryAndroidDataManager(mContext, mRunnableExecutor);
+        data = new InMemoryAndroidDataManager(mContext, mRunnableExecutor, mock(DefaultCosmeticAdapter.class));
         data.init();
         taskSorter = new PersistentTaskSorter(data);
     }
