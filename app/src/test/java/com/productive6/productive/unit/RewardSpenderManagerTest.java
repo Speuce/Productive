@@ -11,6 +11,8 @@ import com.productive6.productive.logic.task.ITaskSorter;
 import com.productive6.productive.logic.user.IUserManager;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.User;
+import com.productive6.productive.objects.enums.Difficulty;
+import com.productive6.productive.objects.enums.Priority;
 import com.productive6.productive.objects.events.task.TaskCompleteEvent;
 import com.productive6.productive.objects.events.user.UserLoadedEvent;
 
@@ -57,7 +59,7 @@ public class RewardSpenderManagerTest {
     @Test
     public void TestRemoveCoins(){
 
-        Task completedTask = new Task("task1", 3, 3);
+        Task completedTask = new Task("task1", Priority.LOW, Difficulty.EASY);
         EventDispatch.dispatchEvent(new TaskCompleteEvent(completedTask));
 
         assertEquals("Did not have 100 coins after add", 100, spenderManager.getCoins());
@@ -70,7 +72,7 @@ public class RewardSpenderManagerTest {
     @Test
     public void TestCheckCoins(){
 
-        Task completedTask = new Task("task1", 3, 3);
+        Task completedTask = new Task("task1", Priority.LOW, Difficulty.EASY);
         EventDispatch.dispatchEvent(new TaskCompleteEvent(completedTask));
 
         assertEquals("Did not have 100 coins after add", 100, spenderManager.getCoins());
