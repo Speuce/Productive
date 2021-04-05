@@ -150,6 +150,7 @@ public class Task implements Comparable<Task> {
         this.completed = completed;
         this.difficulty = difficulty;
         this.dueDate = dueDate;
+        this.category = Category.UNCATEGORIZED;
     }
 
     /**
@@ -194,7 +195,7 @@ public class Task implements Comparable<Task> {
      */
     @Ignore
     public Task(String taskName, Priority priority, Difficulty difficulty, @NotNull LocalDateTime createdTime) {
-        this(taskName, priority, difficulty, createdTime, null, null);
+        this(taskName, priority, difficulty, createdTime, null, null, Category.UNCATEGORIZED);
     }
 
     /**
@@ -211,6 +212,7 @@ public class Task implements Comparable<Task> {
         this.createdTime = LocalDateTime.now();
         this.completed = null;
         this.dueDate = null;
+        this.category = Category.UNCATEGORIZED;
     }
 
     /**
