@@ -24,7 +24,8 @@
     <string name="deadline">Deadline</string>
     <string name="priority">Priority</string>
     <string name="difficulty">Difficulty</string>
-    <string name="due_date">Due</string>
+    <string name="due_date">Due Date</string>
+    <string name="category">Category</string>
     <string name="high">High</string>
     <string name="hard">Hard</string>
     <string name="medium">Medium</string>
@@ -47,6 +48,15 @@
         <item>7 days</item>
         <item>14 days</item>
         <item>30 days</item>
+    </string-array>
+
+    <string-array name="categories">
+        <item>Uncategorized</item>
+        <item>School</item>
+        <item>Home</item>
+        <item>Work</item>
+        <item>Personal</item>
+        <item>Social</item>
     </string-array>
 
 </resources>
