@@ -83,32 +83,4 @@ public class AddTaskTest {
                        )));
     }
 
-//    @Test
-//    public void setPriority() {
-//        String lowTest = R.string.low;
-//
-//        //open the 'add task popup'
-//        //withId filters to find components in the current view with the given id
-//        //you can also filter by component title/text or whatever. but for us id is fine.
-//        onView(withId(R.id.navigation_todo)).perform(click());
-//        onView(withId(R.id.newTaskButton)).perform(click());
-//
-//        //perform actions in the popup window
-//        //in order to use the popup, you need to add the 'inroot isplatformpopup' part
-//        onView(withId(R.id.lowButton)).inRoot(RootMatchers.isPlatformPopup())
-//                //multiple actions can be performed, in this case, first is typeText, next is close keyboard
-//                .perform(click());
-//        onView(withId(R.id.submit)).inRoot(RootMatchers.isPlatformPopup()).perform(click());
-//
-//        //assert that the priority actually is 'low'
-//        onView(withId(R.id.taskDisplayView))
-//                .check(matches(atPosition(0,
-//                        //this next part i understand
-//                        //since each entry in the recyclerView is itself its own view,
-//                        //you have to search in the DESCENDANTS of the view at position 0
-//                        //allOf is just set intersection (so you want ALL of these conditions to
-//                        //be valid.
-//                        hasDescendant(allOf(withText(stringToBetyped), withId(R.id.taskNameTextView)))
-//                )));
-//    }
 }
