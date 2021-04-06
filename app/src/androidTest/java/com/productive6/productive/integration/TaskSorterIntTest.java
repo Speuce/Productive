@@ -168,13 +168,4 @@ public class TaskSorterIntTest {
         });
         assertTrue("Get Days with Task in month did not give the day expected!:", pass.get());
     }
-
-
-
-
-
-
-
-
-
 }
