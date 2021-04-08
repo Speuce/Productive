@@ -4,13 +4,12 @@ import androidx.room.TypeConverter;
 
 import com.productive6.productive.objects.enums.Difficulty;
 import com.productive6.productive.objects.enums.Priority;
+import com.productive6.productive.objects.enums.Category;
 
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.util.Date;
 
 /**
  * Defines type converters for the room library to use.
@@ -38,23 +37,32 @@ public class Converters {
     }
 
     @TypeConverter
-    public static Difficulty difficultyFromInt(int value){
+    public static Difficulty difficultyFromInt(int value) {
         return Difficulty.values()[value];
     }
 
     @TypeConverter
-    public static int intFromDifficulty(Difficulty d){
+    public static Category categoryFromInt(int value) {
+        return Category.values()[value];
+    }
+
+    @TypeConverter
+    public static int intFromCategory(Category c) {
+        return c.ordinal();
+    }
+
+    @TypeConverter
+    public static int intFromDifficulty(Difficulty d) {
         return d.ordinal();
     }
 
     @TypeConverter
-    public static Priority priorityFromInt(int value){
+    public static Priority priorityFromInt(int value) {
         return Priority.values()[value];
     }
 
     @TypeConverter
-    public static int intFromPriority(Priority p){
+    public static int intFromPriority(Priority p) {
         return p.ordinal();
     }
-
 }
