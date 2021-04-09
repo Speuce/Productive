@@ -6,9 +6,10 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 
 import androidx.test.espresso.ViewInteraction;
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
 
 import com.productive6.productive.R;
 
@@ -18,6 +19,9 @@ import org.hamcrest.TypeSafeMatcher;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import dagger.hilt.android.testing.HiltAndroidRule;
+import dagger.hilt.android.testing.HiltAndroidTest;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -35,10 +39,15 @@ import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
+@HiltAndroidTest
 public class CalanderTest {
 
     @Rule
-    public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
+    public HiltAndroidRule hiltRule = new HiltAndroidRule(this);
+
+    @Rule
+    public ActivityScenarioRule<MainActivity> activityRule
+            = new ActivityScenarioRule<>(MainActivity.class);
 
     @Test
     public void calanderTest() {
@@ -64,11 +73,6 @@ public class CalanderTest {
 
         ViewInteraction textInputEditText = onView(
                 allOf(withId(R.id.taskNameForm),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.textInputLayout),
-                                        0),
-                                0),
                         isDisplayed()));
         textInputEditText.perform(replaceText("Task1"), closeSoftKeyboard());
 
@@ -97,12 +101,6 @@ public class CalanderTest {
                                 2),
                         isDisplayed()));
         bottomNavigationItemView2.perform(click());
-
-        ViewInteraction imageView = onView(
-                allOf(withParent(allOf(withId(R.id.constraintLayout),
-                        withParent(withId(R.id.taskDisplayView)))),
-                        isDisplayed()));
-        imageView.check(matches(isDisplayed()));
 
         ViewInteraction textView = onView(
                 allOf(withId(R.id.taskNameTextView), withText("Task1"),
