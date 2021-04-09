@@ -11,6 +11,8 @@ eventually violates OCP. In iteration 3, we cleaned up the debt by using enum cl
 after having acknowledged the smell. Using enum classes makes it easier to modify or
 add more choices in the future. This is inadvertent prudent debt.
 
+Link: [Commit link](!79)
+
 What technical debt did you leave?
 ==================================
 
