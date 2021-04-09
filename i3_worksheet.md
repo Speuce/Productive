@@ -29,13 +29,23 @@ iteration.
 Our group decided to leave out the feature [Let Multiple People use the app](#10)
 at the beginning of iteration 3 though it has been considered whether it is needed
 at the beginning of the project. Because people don't typically let others use
-their phone so the feature wouldn't make sense and is redundant.
+their phone so the feature wouldn't make sense and is redundant. Maybe the feature
+can be developed to be a login logout system for users to transfer data between
+devices in the future.
 
 Acceptance test/end-to-end
 ==========================
 
 Write a discussion about an end-to-end test that you wrote. What did you test,
 how did you set up the test so it was not flaky? Provide a link to that test.
+
+We test our basic but important feature: "Add Task". We perform add task with name
+and check whether the appearing task has the correct information or not.
+In order to prevent from having flaky test, we used deterministic value for our
+test input. To be specific, input "Espresso" as the name of the task and let other
+choices as default.
+
+Test link: [Add Task](https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/tree/master/app/src/androidTest/java/com/productive6/productive/system/AddTaskTest.java)
 
 Acceptance test, untestable
 ===============
@@ -48,3 +58,9 @@ Velocity/teamwork
 
 Did your estimates get better or worse through the course? Show some
 evidence of the estimates/actuals from tasks.
+
+The differences between our estimates and actuals time are quite stable.
+Though the commit time and actual time is less than iteration 1, but we used more
+of our time in iteration 2 and 3 for fixing the bugs in UI, in databases and writing tests.
+
+Evidence: *i'm waiting for time estimation of iteration 3 so ...*
