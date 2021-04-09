@@ -50,6 +50,7 @@ public class CalanderTest {
 
     @Test
     public void calanderTest() {
+        //Move to to-do tab
         ViewInteraction bottomNavigationItemView = onView(
                 allOf(withId(R.id.navigation_todo), withContentDescription("To-do"),
                         childAtPosition(
@@ -60,6 +61,7 @@ public class CalanderTest {
                         isDisplayed()));
         bottomNavigationItemView.perform(click());
 
+        //Press add task button
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.newTaskButton), withText("Add Task"),
                         childAtPosition(
@@ -70,6 +72,7 @@ public class CalanderTest {
                         isDisplayed()));
         materialButton.perform(click());
 
+        //Fill out task information
         ViewInteraction textInputEditText = onView(
                 allOf(withId(R.id.taskNameForm),
                         isDisplayed()));
@@ -83,6 +86,7 @@ public class CalanderTest {
                         isDisplayed()));
         switchCompat.perform(click());
 
+        //Submit task
         ViewInteraction materialButton2 = onView(
                 allOf(withId(R.id.submit), withText("Submit"),
                         childAtPosition(
@@ -91,6 +95,7 @@ public class CalanderTest {
                         isDisplayed()));
         materialButton2.perform(click());
 
+        //Move to calander view
         ViewInteraction bottomNavigationItemView2 = onView(
                 allOf(withId(R.id.navigation_schedule), withContentDescription("Calendar"),
                         childAtPosition(
@@ -101,6 +106,7 @@ public class CalanderTest {
                         isDisplayed()));
         bottomNavigationItemView2.perform(click());
 
+        //Assert task shows up properly
         ViewInteraction textView = onView(
                 allOf(withId(R.id.taskNameTextView), withText("Task1"),
                         withParent(allOf(withId(R.id.constraintLayout),
@@ -108,6 +114,7 @@ public class CalanderTest {
                         isDisplayed()));
         textView.check(matches(withText("Task1")));
 
+        //Remove task
         ViewInteraction materialButton3 = onView(
                 allOf(withId(R.id.taskCompleteToggleButton),
                         childAtPosition(
@@ -119,6 +126,7 @@ public class CalanderTest {
                         isDisplayed()));
         materialButton3.perform(click());
 
+        //Assert task was removed
         ViewInteraction textView2 = onView(
                 allOf(withId(R.id.empty_view), withText("Add tasks from To-do to see them here"),
                         withParent(withParent(withId(R.id.nav_host_fragment))),

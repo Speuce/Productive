@@ -55,6 +55,7 @@ public class SortingTest {
 
     @Test
     public void sortingTest() {
+        //Move to to-do tab
         ViewInteraction bottomNavigationItemView = onView(
                 allOf(withId(R.id.navigation_todo), withContentDescription("To-do"),
                         childAtPosition(
@@ -65,6 +66,7 @@ public class SortingTest {
                         isDisplayed()));
         bottomNavigationItemView.perform(click());
 
+        //Press add task button
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.newTaskButton), withText("Add Task"),
                         childAtPosition(
@@ -75,6 +77,7 @@ public class SortingTest {
                         isDisplayed()));
         materialButton.perform(click());
 
+        //Fill out information for tasks
         ViewInteraction textInputEditText = onView(
                 allOf(withId(R.id.taskNameForm),
                         isDisplayed()));
@@ -163,7 +166,9 @@ public class SortingTest {
                         isDisplayed()));
         materialButton4.perform(click());
 
-
+        /**
+         *  The following blocks alternate sorting tasks, and asserting the tasks were sorted
+         */
         onView(withId(R.id.taskDisplayView))
                 .check(matches(atPosition(0,
                         //this next part i understand
@@ -334,6 +339,7 @@ public class SortingTest {
                         hasDescendant(allOf(withText("Task2"), withId(R.id.taskNameTextView)))
                 )));
 
+        //Remove tasks by completing them
         ViewInteraction materialButton5 = onView(
                 allOf(withId(R.id.taskCompleteToggleButton),
                         childAtPosition(

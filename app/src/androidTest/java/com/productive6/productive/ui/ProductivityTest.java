@@ -53,6 +53,7 @@ public class ProductivityTest {
 
     @Test
     public void productivityTest() {
+        //Move to to-do page
         ViewInteraction bottomNavigationItemView = onView(
                 allOf(withId(R.id.navigation_todo), withContentDescription("To-do"),
                         childAtPosition(
@@ -63,6 +64,7 @@ public class ProductivityTest {
                         isDisplayed()));
         bottomNavigationItemView.perform(click());
 
+        //open bar chart
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.buttonBarChart),
                         childAtPosition(
@@ -72,7 +74,7 @@ public class ProductivityTest {
                                 3),
                         isDisplayed()));
         materialButton.perform(click());
-
+        //switch between date ranges
         ViewInteraction textView = onView(
                 allOf(withId(android.R.id.text1), withText("7 days"),
                         withParent(allOf(withId(R.id.dateRangeSelection),
@@ -97,6 +99,7 @@ public class ProductivityTest {
                 .atPosition(1);
         materialTextView.perform(click());
 
+        //switch between date ranges again
         ViewInteraction textView2 = onView(
                 allOf(withId(android.R.id.text1), withText("14 days"),
                         withParent(allOf(withId(R.id.dateRangeSelection),
@@ -121,6 +124,7 @@ public class ProductivityTest {
                 .atPosition(2);
         materialTextView2.perform(click());
 
+        //switch between date ranges again
         ViewInteraction textView3 = onView(
                 allOf(withId(android.R.id.text1), withText("30 days"),
                         withParent(allOf(withId(R.id.dateRangeSelection),
@@ -128,18 +132,21 @@ public class ProductivityTest {
                         isDisplayed()));
         textView3.check(matches(withText("30 days")));
 
+        //Assert stats display exists on the page
         ViewInteraction recyclerView = onView(
                 allOf(withId(R.id.stats_view),
                         withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
         recyclerView.check(matches(isDisplayed()));
 
+        //Assert bar chart exists on the page
         ViewInteraction viewGroup = onView(
                 allOf(withId(R.id.bar_chart),
                         withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
         viewGroup.check(matches(isDisplayed()));
 
+        //leave the bar chart page
         ViewInteraction materialButton2 = onView(
                 allOf(withId(R.id.backButton), withText("RETURN"),
                         childAtPosition(
@@ -150,7 +157,6 @@ public class ProductivityTest {
                         isDisplayed()));
         materialButton2.perform(click());
 
-        pressBack();
     }
 
     private static Matcher<View> childAtPosition(
