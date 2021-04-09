@@ -19,6 +19,8 @@ What technical debt did you leave?
 What one item would you like to fix, and can't? Anything you write will not
 be marked negatively. Classify this debt.
 
+- tests @before 
+
 Discuss a Feature or User Story that was cut/re-prioritized
 ============================================
 
