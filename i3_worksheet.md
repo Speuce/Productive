@@ -17,6 +17,11 @@ When did you change the priority of a Feature or User Story? Why was it
 re-prioritized? Provide a link to the Feature or User Story. This can be from any
 iteration.
 
+Our group decided to leave out the feature [Let Multiple People use the app](#10)
+at the beginning of iteration 3 though it has been considered whether it is needed
+at the beginning of the project. Because people don't typically let others use
+their phone so the feature wouldn't make sense and is redundant.
+
 Acceptance test/end-to-end
 ==========================
 
