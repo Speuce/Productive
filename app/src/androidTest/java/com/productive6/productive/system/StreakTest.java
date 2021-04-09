@@ -23,7 +23,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 @HiltAndroidTest
-public class RewardTest {
+public class StreakTest {
 
     @Rule
     public HiltAndroidRule hiltRule = new HiltAndroidRule(this);
@@ -34,15 +34,17 @@ public class RewardTest {
 
 
     @Test
-    public void basicRewardsTask() {
+    public void streakTest() {
 
         onView(withId(R.id.navigation_todo)).perform(click());
-        onView(withId(R.id.newTaskButton)).perform(click());
-        onView(withId(R.id.submit)).inRoot(RootMatchers.isPlatformPopup()).perform(click());
-        onView(withId(R.id.taskCompleteToggleButton)).perform(click());
-        onView(withId(R.id.navigation_rewards)).perform(click());
 
-        onView(withId(R.id.coin_counter)).check(matches(withText("7")));
+        for(int i = 0; i < 5; i++) {
+            onView(withId(R.id.newTaskButton)).perform(click());
+            onView(withId(R.id.submit)).inRoot(RootMatchers.isPlatformPopup()).perform(click());
+            onView(withId(R.id.taskCompleteToggleButton)).perform(click());
+        }
+
+        onView(withId(R.id.streak_text)).check(matches(withText("Streak Bonus: 5")));
 
     }
 
