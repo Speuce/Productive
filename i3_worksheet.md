@@ -4,6 +4,13 @@ What technical debt has been cleaned up
 Show links to a commit where you paid off technical debt. Write 2-5 sentences
 that explain what debt was paid, and what its classification is.
 
+We have cleaned up the technical debt for priority and difficulty choices. In
+iteration 2, our group used condition statements to assign strings to each value
+of priority and difficulty, such as `if (priority = 1) return "High"`. It also
+eventually violates OCP. In iteration 3, we cleaned up the debt by using enum classes
+after having acknowledged the smell. Using enum classes makes it easier to modify or
+add more choices in the future. This is inadvertent prudent debt.
+
 What technical debt did you leave?
 ==================================
 
