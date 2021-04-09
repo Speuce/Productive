@@ -7,9 +7,10 @@ import android.view.ViewParent;
 
 import androidx.test.espresso.DataInteraction;
 import androidx.test.espresso.ViewInteraction;
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
 
 import com.productive6.productive.R;
 
@@ -20,28 +21,38 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import dagger.hilt.android.testing.HiltAndroidRule;
+import dagger.hilt.android.testing.HiltAndroidTest;
+
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static com.productive6.productive.system.utils.Utils.atPosition;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
+@HiltAndroidTest
 public class SortingTest {
 
     @Rule
-    public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
+    public HiltAndroidRule hiltRule = new HiltAndroidRule(this);
+
+    @Rule
+    public ActivityScenarioRule<MainActivity> activityRule
+            = new ActivityScenarioRule<>(MainActivity.class);
 
     @Test
     public void sortingTest() {
@@ -67,11 +78,6 @@ public class SortingTest {
 
         ViewInteraction textInputEditText = onView(
                 allOf(withId(R.id.taskNameForm),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.textInputLayout),
-                                        0),
-                                0),
                         isDisplayed()));
         textInputEditText.perform(replaceText("Task1"), closeSoftKeyboard());
 
@@ -125,11 +131,6 @@ public class SortingTest {
 
         ViewInteraction textInputEditText2 = onView(
                 allOf(withId(R.id.taskNameForm),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.textInputLayout),
-                                        0),
-                                0),
                         isDisplayed()));
         textInputEditText2.perform(replaceText("Task2"), closeSoftKeyboard());
 
@@ -163,17 +164,25 @@ public class SortingTest {
                         isDisplayed()));
         materialButton4.perform(click());
 
-        ViewInteraction imageView = onView(
-                allOf(withParent(allOf(withId(R.id.constraintLayout),
-                        withParent(withId(R.id.taskDisplayView)))),
-                        isDisplayed()));
-        imageView.check(matches(isDisplayed()));
 
-        ViewInteraction imageView2 = onView(
-                allOf(withParent(allOf(withId(R.id.constraintLayout),
-                        withParent(withId(R.id.taskDisplayView)))),
-                        isDisplayed()));
-        imageView2.check(matches(isDisplayed()));
+        onView(withId(R.id.taskDisplayView))
+                .check(matches(atPosition(0,
+                        //this next part i understand
+                        //since each entry in the recyclerView is itself its own view,
+                        //you have to search in the DESCENDANTS of the view at position 0
+                        //allOf is just set intersection (so you want ALL of these conditions to
+                        //be valid.
+                        hasDescendant(allOf(withText("Task2"), withId(R.id.taskNameTextView)))
+                )));
+        onView(withId(R.id.taskDisplayView))
+                .check(matches(atPosition(1,
+                        //this next part i understand
+                        //since each entry in the recyclerView is itself its own view,
+                        //you have to search in the DESCENDANTS of the view at position 0
+                        //allOf is just set intersection (so you want ALL of these conditions to
+                        //be valid.
+                        hasDescendant(allOf(withText("Task1"), withId(R.id.taskNameTextView)))
+                )));
 
         ViewInteraction appCompatSpinner = onView(
                 allOf(withId(R.id.sortTasksDropdown),
@@ -185,12 +194,35 @@ public class SortingTest {
                         isDisplayed()));
         appCompatSpinner.perform(click());
 
+
         DataInteraction materialTextView = onData(anything())
                 .inAdapterView(childAtPosition(
                         withClassName(is("android.widget.PopupWindow$PopupBackgroundView")),
                         0))
                 .atPosition(1);
         materialTextView.perform(click());
+
+        onView(withId(R.id.taskDisplayView))
+                .check(matches(atPosition(0,
+                        //this next part i understand
+                        //since each entry in the recyclerView is itself its own view,
+                        //you have to search in the DESCENDANTS of the view at position 0
+                        //allOf is just set intersection (so you want ALL of these conditions to
+                        //be valid.
+                        hasDescendant(allOf(withText("Task2"), withId(R.id.taskNameTextView)))
+                )));
+        onView(withId(R.id.taskDisplayView))
+                .check(matches(atPosition(1,
+                        //this next part i understand
+                        //since each entry in the recyclerView is itself its own view,
+                        //you have to search in the DESCENDANTS of the view at position 0
+                        //allOf is just set intersection (so you want ALL of these conditions to
+                        //be valid.
+                        hasDescendant(allOf(withText("Task1"), withId(R.id.taskNameTextView)))
+                )));
+
+
+
 
         ViewInteraction appCompatSpinner2 = onView(
                 allOf(withId(R.id.sortTasksDropdown),
@@ -209,6 +241,26 @@ public class SortingTest {
                 .atPosition(2);
         materialTextView2.perform(click());
 
+
+        onView(withId(R.id.taskDisplayView))
+                .check(matches(atPosition(0,
+                        //this next part i understand
+                        //since each entry in the recyclerView is itself its own view,
+                        //you have to search in the DESCENDANTS of the view at position 0
+                        //allOf is just set intersection (so you want ALL of these conditions to
+                        //be valid.
+                        hasDescendant(allOf(withText("Task1"), withId(R.id.taskNameTextView)))
+                )));
+        onView(withId(R.id.taskDisplayView))
+                .check(matches(atPosition(1,
+                        //this next part i understand
+                        //since each entry in the recyclerView is itself its own view,
+                        //you have to search in the DESCENDANTS of the view at position 0
+                        //allOf is just set intersection (so you want ALL of these conditions to
+                        //be valid.
+                        hasDescendant(allOf(withText("Task2"), withId(R.id.taskNameTextView)))
+                )));
+
         ViewInteraction appCompatSpinner3 = onView(
                 allOf(withId(R.id.sortTasksDropdown),
                         childAtPosition(
@@ -226,6 +278,26 @@ public class SortingTest {
                 .atPosition(0);
         materialTextView3.perform(click());
 
+
+        onView(withId(R.id.taskDisplayView))
+                .check(matches(atPosition(0,
+                        //this next part i understand
+                        //since each entry in the recyclerView is itself its own view,
+                        //you have to search in the DESCENDANTS of the view at position 0
+                        //allOf is just set intersection (so you want ALL of these conditions to
+                        //be valid.
+                        hasDescendant(allOf(withText("Task2"), withId(R.id.taskNameTextView)))
+                )));
+        onView(withId(R.id.taskDisplayView))
+                .check(matches(atPosition(1,
+                        //this next part i understand
+                        //since each entry in the recyclerView is itself its own view,
+                        //you have to search in the DESCENDANTS of the view at position 0
+                        //allOf is just set intersection (so you want ALL of these conditions to
+                        //be valid.
+                        hasDescendant(allOf(withText("Task1"), withId(R.id.taskNameTextView)))
+                )));
+
         ViewInteraction appCompatSpinner4 = onView(
                 allOf(withId(R.id.sortTasksDropdown),
                         childAtPosition(
@@ -242,6 +314,26 @@ public class SortingTest {
                         0))
                 .atPosition(2);
         materialTextView4.perform(click());
+
+
+        onView(withId(R.id.taskDisplayView))
+                .check(matches(atPosition(0,
+                        //this next part i understand
+                        //since each entry in the recyclerView is itself its own view,
+                        //you have to search in the DESCENDANTS of the view at position 0
+                        //allOf is just set intersection (so you want ALL of these conditions to
+                        //be valid.
+                        hasDescendant(allOf(withText("Task1"), withId(R.id.taskNameTextView)))
+                )));
+        onView(withId(R.id.taskDisplayView))
+                .check(matches(atPosition(1,
+                        //this next part i understand
+                        //since each entry in the recyclerView is itself its own view,
+                        //you have to search in the DESCENDANTS of the view at position 0
+                        //allOf is just set intersection (so you want ALL of these conditions to
+                        //be valid.
+                        hasDescendant(allOf(withText("Task2"), withId(R.id.taskNameTextView)))
+                )));
 
         ViewInteraction materialButton5 = onView(
                 allOf(withId(R.id.taskCompleteToggleButton),
