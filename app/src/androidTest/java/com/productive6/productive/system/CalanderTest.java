@@ -1,4 +1,4 @@
-package com.productive6.productive.ui;
+package com.productive6.productive.system;
 
 
 import android.view.View;
@@ -11,6 +11,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 
 import com.productive6.productive.R;
+import com.productive6.productive.ui.MainActivity;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
