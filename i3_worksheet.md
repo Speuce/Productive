@@ -19,7 +19,8 @@ What technical debt did you leave?
 What one item would you like to fix, and can't? Anything you write will not
 be marked negatively. Classify this debt.
 
-- tests @before 
+One item that our group would like to fix is using many constructors in @Before
+in tests. This is deliberate prudent debt.
 
 Discuss a Feature or User Story that was cut/re-prioritized
 ============================================
