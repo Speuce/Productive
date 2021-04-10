@@ -11,6 +11,7 @@ import com.productive6.productive.integration.TaskSorterIntTest;
 import com.productive6.productive.integration.TitleManagerIntTest;
 import com.productive6.productive.integration.UserManagerIntTest;
 import com.productive6.productive.system.AddTaskTest;
+import com.productive6.productive.system.NotificationTest;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -20,7 +21,8 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        AddTaskTest.class
+        AddTaskTest.class,
+        NotificationTest.class
 })
 @LargeTest
 public class AllSystem {
