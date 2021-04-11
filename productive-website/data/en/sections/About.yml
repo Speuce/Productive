@@ -38,7 +38,7 @@ topics:
       \nComplete tasks and earn EXP and coins to spend on items in the shop!  
       \nAcquire awesome™ titles and show them off to your friends!  
 
-      \n\nProductivity is like RAM: the best way to attain it, is to download it!  
+      \n\nIf you want to be productive, you’ve got to get Productive!
       "
   - subject: "Contributors"
     summary: "
@@ -48,5 +48,7 @@ topics:
         \n\t- I have contributed mostly in UI development. Throughout this course, I have developed my communication skills (though still not so good), testing and learned more about architecture design and agile development.
       \n- Matt
       \n- Farabi
+        \n\t- I’ve learned that building a project is more than just throwing code at an IDE. Maintainability, planning, the ability to communicate your ideas clearly are all crucial. I’ve worked mostly on the UI layer and learned what makes it intuitive, and what it takes to support the UI functionalities.W
       \n- Ben
+        \n\t- During the course of this project, I contributed mostly to business logic and testing. I have vastly improved my skills in testing and code design. I have also become better at team-based development and gained many skills in that area (communication, version control and documentation).
 "
