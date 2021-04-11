@@ -1,0 +1,47 @@
+# section information
+section:
+  name: About
+  id: about
+  enable: true
+  weight: 2
+  showOnNavbar: true
+  template: sections/about.html
+
+
+topics:
+  - subject: "Who should use this app?"
+    summary: "Are you distracted? Do you like video games? Then Productive is the app for you!\n"
+  - subject: 'Features'
+    summary: " You can add, you can edit, and **YOU. CAN. COMPLETE!**
+
+      \n - You can view and complete your tasks in a convenient calendar format.  
+
+      \n - You can view your task completion statistics, **because fun isn’t allowed until statistics have entered the building**.
+
+      \n - Once you rack up enough completed tasks, you can select a **wicked-sick title for yourself**.
+
+      \n - **Did we mention coins?** You can buy yourself something nice in our in-app shop with the coins you gained for completing tasks.
+
+      \n - Not only can you build a **dragon’s hoard of loot**, you can also display your favorite piece **right on the front page of your app!**
+      
+"
+
+  - subject: "Why should you download Productive?"
+    summary: "Have fun while keeping productive. Productive is a to-do list, calendar, and productivity tracking app all at once!
+      \nCreate tasks and sort them to keep important due dates in mind!  
+      \nWatch your productivity skyrocket with our productivity graph and stats!  
+      \nComplete tasks and earn EXP and coins to spend on items in the shop!  
+      \nAcquire awesome™ titles and show them off to your friends!  
+
+      \n\nProductivity is like RAM: the best way to attain it, is to download it!  
+      "
+  - subject: "Contributors"
+    summary: "
+      \n- Luke
+        \n\t- The largest areas I feel to have grown over the course of this project are: code reviewing, android UI development, technical communications, and testing.
+      \n- Trang
+        \n\t- I have contributed mostly in UI development. Throughout this course, I have developed my communication skills (though still not so good), testing and learned more about architecture design and agile development.
+      \n- Matt
+      \n- Farabi
+      \n- Ben
+"
