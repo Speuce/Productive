@@ -1,0 +1,13 @@
+# section information
+section:
+  name: Velocity
+  id: velocity
+  enable: true
+  weight: 5
+  showOnNavbar: true
+  template: sections/velocity.html
+
+description: "Our velocity chart over the past 3 iterations."
+explanation: "
+Placeholder explanation.
+"

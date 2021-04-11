@@ -9,8 +9,13 @@ section:
 
 
 topics:
-  - subject: "Who should use this app?"
-    summary: "Are you distracted? Do you like video games? Then Productive is the app for you!\n"
+  - subject: ""
+    summary: "
+    ## Are you distracted?
+
+    ## Do you like video games?
+
+    # Then Productive is the app for you!"
   - subject: 'Features'
     summary: " You can add, you can edit, and **YOU. CAN. COMPLETE!**
 
