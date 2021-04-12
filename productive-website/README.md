@@ -1,7 +1,7 @@
 Get [hugo](https://gohugo.io/getting-started/installing)  
 You'll need a package manager with it. The website above walks you through it.  
 
-Once you have hugo installed, you can run `hugo server -D` to host the server.  
+Once you have hugo installed, you can run `hugo server -D` to host the server. (need to use powershell if on windows)
 The server hosts on `localhost:1313`
 
 We designed this using an altered version of the https://github.com/hugo-toha/toha theme
