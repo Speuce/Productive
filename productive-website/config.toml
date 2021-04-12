@@ -1,4 +1,5 @@
-baseURL = "http://productive.org/"
+baseURL = "/"
 languageCode = "en-us"
 title = "Productive"
 theme = "toha" 
+relativeURLs = true

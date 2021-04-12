@@ -1,3 +1,10 @@
+
+### Running as static file
+
+open `public>index.html`
+
+### Running as a server
+
 Get [hugo](https://gohugo.io/getting-started/installing)  
 You'll need a package manager with it. The website above walks you through it.  
 
