@@ -29,6 +29,22 @@
 
 We are using the **Nexus 7 API 30**, with target: **Android 11.0(Google APIs)**.
 
+# Flaky Tests
+## Notification Test
+Our notification test is a textbook example of a flaky test. Sometimes it works, sometimes it doesn't. The reason for this is because in order for the notification to show, you need to EXIT the app. So we had to use another library to EXIT the app and test that the notification is actually sent. Problem is, this test is kinda dependant on your device. Some devices block notifications by default (so the test will fail). Other times, the emulator may have issues with being able to swipe down to see the notification panel (this happened more than once for us), and therefore the system test will fail to open the notification pane, and fail.
+Its a symptom of the device itself.
+If you'd like to test the notification by hand, do the following
+```
+1) Start the app from a fresh install
+2) Tap 'todo' to navigate to the todo list
+3) Tap the 'add task' button to open the task addition popup
+4) tap the switch next to 'due date' to activate the due date
+5) tap 'submit'
+6) exit the app
+7) wait up to one minute, and a notification should appear saying that you have 1 task(s) due today
+```
+
+
 # Known Warnings/Errors
 
 ### Warning: 'Accessing Hidden Field', Error 'Access denied finding property "ro.serialno"'
@@ -58,7 +74,11 @@ Additionally, some of these libraries generate class implementations at compile-
 &emsp; We use [CompactCalendarView](https://github.com/SundeepK/CompactCalendarView), a library specific to android applications, which offers a wide range of features in addition to the default CalendarView. The library allows theming, animations, and adding dots underneath dates as an indication to the user about the presence of tasks on that day.
 
 ### MPAndroidChart
-&emsp; We use [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart), a library specific to android applications, which allows us to display our data in graphs for the user. This library enables lots of customization for how the graphs look and behave, including a little animation we use that is played upon first opening the graph. This Library is entirely front-end in its use, so we expanded our logic layer to include more specific get functions route to accommodate this limitation.
+&emsp; We use [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart), a library specific to android applications, which allows us to display our data in graphs for the user. This library enables lots of customization for how the graphs look and behave, including a little animation we use that is played upon first opening the graph. This Library is entirely front-end in its use, so we expanded our logic layer to include a more specific get functions route to accommodate this limitation.
+
+### UIAutomator
+&emsp; We use [UIAutomator](https://developer.android.com/training/testing/ui-automator), a library specific to android applications, for one specific system test that needs to test *outside* the context of the app itself.
+
 
 # Unit/Integration Tests
 We have our unit tests under the com.productive6.productive (test) folder.
@@ -79,3 +99,4 @@ Let it do its thing. Then once it's done, you will have to go into file explorer
 Once you do, go to app > build > reports > coverage > debug, and open 'index.html' in your favourite web browser.
 
 There ya go!
+
