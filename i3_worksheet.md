@@ -32,7 +32,7 @@ iteration.
 Our group decided to leave out the feature [Let Multiple People use the app](#10)
 at the beginning of iteration 3 though it has been considered whether it is needed
 at the beginning of the project. Because people don't typically let others use
-their phone so the feature wouldn't make sense and is redundant. Maybe the feature
+their phone so the feature wouldn't make sense and is rather redundant. Maybe the feature
 can be developed to be a login logout system for users to transfer data between
 devices in the future.
 
