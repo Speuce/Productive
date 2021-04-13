@@ -32,10 +32,15 @@ public class CosmeticManagerTest {
 
     private ICosmeticManager cosmeticManager;
 
+    private User person;
 
     @Before
     public void init(){
+        EventDispatch.clear();
         cosmeticManager = new CosmeticManager(adapter,data);
+        person = new User();
+        EventDispatch.dispatchEvent(new UserLoadedEvent(person));
+
     }
 
     @Test
@@ -66,8 +71,16 @@ public class CosmeticManagerTest {
 
     }
 
+    @Test
+    public void favoriteTest(){
+        Cosmetic item1 = new Cosmetic(1,11,0, "item1");
+        cosmeticManager.setFavorite(item1);
+        assertEquals("Did not return expected favorite cosmetic", item1.getId(), cosmeticManager.getFavorite().getId());
+    }
 
-    List<Cosmetic> converter(ArrayList<Cosmetic> arrList){
+
+
+        List<Cosmetic> converter(ArrayList<Cosmetic> arrList){
         List<Cosmetic> list = new LinkedList<>();
         Iterator<Cosmetic> iterator =  arrList.iterator();
 
