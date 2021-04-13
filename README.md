@@ -100,3 +100,6 @@ Once you do, go to app > build > reports > coverage > debug, and open 'index.htm
 
 There ya go!
 
+## Website
+
+The index.html for the website is located: `./productive-website/public/`

@@ -1,0 +1,19 @@
+# section information
+section:
+  name: Velocity
+  id: velocity
+  enable: true
+  weight: 5
+  showOnNavbar: true
+  template: sections/velocity.html
+
+description: "Our velocity chart over the past 3 iterations."
+explanation: "
+We think this trend can be easily explained, if taken one iteration at a time.
+
+\nAt the beginning, we were all learning each aspect of developing for android. This, in addition to our significantly increased free time, is what lead to the first iteration having a high number of ours projected and used.
+
+\n The second iteration, other courses started ramping up and we got most of the hard stuff done in the first iteration. So the graph shows how we had significantly less time for work, and less work to do.
+
+\n For the final iteration, we started working on what we predicted to be the hardest features we had planned. Because of this, we gave ourselves more time to implement them. But the features were largely easier than expected, and we finished them relatively quickly.
+"
