@@ -10,7 +10,11 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import com.productive6.productive.R;
+import com.productive6.productive.logic.rewards.IStreakRewardManager;
 import com.productive6.productive.ui.MainActivity;
+
+import javax.inject.Inject;
+
 import dagger.hilt.android.testing.HiltAndroidRule;
 import dagger.hilt.android.testing.HiltAndroidTest;
 import static androidx.test.espresso.Espresso.onView;
@@ -31,7 +35,6 @@ public class RewardTest {
     @Rule
     public ActivityScenarioRule<MainActivity> activityRule
             = new ActivityScenarioRule<>(MainActivity.class);
-
 
     @Test
     public void basicRewardsTask() {

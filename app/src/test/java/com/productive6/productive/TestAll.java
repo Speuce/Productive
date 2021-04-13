@@ -23,7 +23,7 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        //RewardSpenderManagerTest.class,
+        RewardSpenderManagerTest.class,
         TaskManagerTest.class,
         TitleManagerTest.class,
         EventDispatchTest.class,
