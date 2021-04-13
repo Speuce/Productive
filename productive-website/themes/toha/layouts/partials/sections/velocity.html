@@ -1,0 +1,21 @@
+{{ $sectionID := replace (lower .section.name) " " "-"  }}
+{{ if .section.id }}
+  {{ $sectionID = .section.id }}
+{{ end }}
+{{ $velChart := "/images/velocity-chart2.png" }}
+
+<div class="container-fluid anchor pb-5 skills-section" id="{{ $sectionID }}">
+  {{ if not (.section.hideTitle) }}
+    <h1 class="text-center">{{ .section.name }}</h1>
+  {{ end }}
+    <div class="container">
+      <div class="row" id="velocity chart">
+        <div class="col text-center">
+          <img src="https://i.imgur.com/VbQeIlB.png" class="w-100" title="Velocity Chart" />
+            {{.description | markdownify}}
+          <hr>
+            {{.explanation | markdownify}}
+        </div>
+      </div>
+    </div>
+</div>
