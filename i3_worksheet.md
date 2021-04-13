@@ -56,6 +56,8 @@ Acceptance test, untestable
 What challenges did you face when creating acceptance tests? What was difficult
 or impossible to test?
 
+By far the biggest challenge we faced with acceptance tests was testing the notifcation feature of out app. The english acceptance test was simple enough to figure out -- exit the app, wait for notification. But when it came to automating this acceptance test; that was an issue. The reason for this was because the library we used for automating our acceptance tests, Espresso, only worked within the context of the app itself. So we tried to combine Espresso with another library (UIAutomator) that allowed us to test inside the context of the device, instead of only the app. The issue with this being that the test itself ended up super flaky. Often times the test will fail simply due to the previous state of the device, which is not something we can control for with the acceptance test. Sometimes it would fail because the device blocks notifications; Sometimes it would fail because the emulator device would _refuse_ to show the notification panel; and sometimes it would fail on other devices because the manner in which the notifiction panel opens varies from device-to-device. The feature of "notifying the user of impending deadlines" was very very difficult to test. This issue is further discussed in the readme. 
+
 Velocity/teamwork
 =================
 
