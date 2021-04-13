@@ -64,8 +64,11 @@ Velocity/teamwork
 Did your estimates get better or worse through the course? Show some
 evidence of the estimates/actuals from tasks.
 
-The differences between our estimates and actuals time are quite stable.
-Though the commit time and actual time is less than iteration 1, but we used more
+The differences between our estimates and actuals time are quite stable. But actual time
+is less than commit time in iteration 2 and 3 because we did everything faster when we got used
+to the course project. We also had a more reasonable workload for each iteration, which is reflected
+on the velocity chart and we didn't have to leave anything to later iteration like in iteration 1.
+Though the commit time and actual time decreased by each iteration, but we used more
 of our time in iteration 2 and 3 for fixing the bugs in UI, in databases and writing tests.
 
-Evidence: *i'm waiting for time estimation of iteration 3 so ...*
+Evidence: [Picture of velocity chart for each iteration](https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/blob/master/velocity-chart2.png)
