@@ -438,7 +438,11 @@ Acquire awesome™ titles and show them off to your friends!</p>
 <li>I have contributed mostly in UI development. Throughout this course, I have developed my communication skills (though still not so good), testing and learned more about architecture design and agile development.</li>
 </ul>
 </li>
-<li>Matt</li>
+<li>Matt
+<ul>
+<li>I’ve contributed mostly to the backend, with the logic and persistence layer.  Through this project I’ve learned a lot about testing, having an end goal in mind, time estimation of large projects, and time management.</li>
+</ul>
+</li>
 <li>Farabi
 <ul>
 <li>I’ve learned that building a project is more than just throwing code at an IDE. Maintainability, planning, the ability to communicate your ideas clearly are all crucial. I’ve worked mostly on the UI layer and learned what makes it intuitive, and what it takes to support the UI functionalities.W</li>
@@ -570,7 +574,33 @@ But with the coordination and communication prowess of our team, we saw the grea
       <br>
       
       <h4 class="p-1">Are there any outstanding bugs?</h4>
-      No outstanding bugs were found from our testing/usage
+      No outstanding bugs were found from our testing/usage. The only potential issue, is one flaky system test
+      <hr>
+
+      <br>
+      
+      <h4 class="p-1">Are there any particular design smells, or brilliant design decisions?</h4>
+      We made an event dispatching/listener system and that proved incredibly helpful in multiple components of the project. Every class could talk to one shared instance of an EventDispatch class, and either subscribe themselves to a certain event list, or send out a certain event to all classes that were listening. This is based off the widely-known observer pattern.
+      <hr>
+
+      <br>
+      
+      <h4 class="p-1">What took the most time? The least? Any surprises?</h4>
+      It took significantly longer than expected to integrate the ORM in a way that would technically allow a swapping of ORM libraries. Initially, we thought this would be fairly straightforward, but unfortunately this took much, much longer and involved making interfaces on top of interfaces, and multiple implementations of classes that uses these interfaces. It was a bit of a surprise with how much effort that took.
+      <hr>
+
+      <br>
+      
+      <h4 class="p-1">Are you using any technologies other than what was required (e.g. JMock, GUI builders, etc.)?</h4>
+      <ul>
+<li>Room - Room is an ORM that takes care of our real persistence layer with relative ease. Annotations are used throughout our codebase for integration with room. Although room is android specific, many of the annotations used are <em>very</em> similar to annotations for desktop ORM. Additionally, we added a layer of Interfaces ontop of what is required by room so that we could easily swap out implementations if we so decide to switch libraries.</li>
+<li>Hilt - We use Hilt to take care of some of our dependency injection of single-instance classes. Hilt can be used for both android and desktop applications. The annotations @AndroidEntryPoint is specific to the android hilt, but others with all other fields marked with @Inject are platform non-specific.</li>
+<li>Mockito  -  We use Mockito to create mocks of classes (mostly databases) to allow for easy unit testing of logic layer classes. Mockito is an industry standard and cross-platform testing framework for java. mock(myClass.class) creates an object that mocks or dummies myClass. Which can be used with .when(method parameters) and .returns() to simulate dependent classes for testing purposes.</li>
+<li>CompactCalendarView - We use CompactCalendarView,  a library specific to android applications, which offers a wide range of features in addition to the default CalendarView. The library allows theming, animations, and adding dots underneath dates as an indication to the user about the presence of tasks on that day.</li>
+<li>MPAndroidChart - We use MPAndroidChart, a library specific to android applications, which allows us to display our data in graphs for the user. This library enables lots of customization for how the graphs look and behave, including a little animation we use that is played upon first opening the graph. This Library is entirely front-end in its use, so we expanded our logic layer to include a more specific get functions route to accommodate this limitation.</li>
+<li>UIAutomator - We use UIAutomator , a library specific to android applications, for one specific system test that needs to test outside the context of the app itself.</li>
+</ul>
+
       <hr>
 
       <br>
