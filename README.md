@@ -6,16 +6,16 @@ Productive is an app that allows the user to track and monitor their productivit
 # How To Run
 ```
 1. Install the apk file and open the app
-2. There is navigation bar at the bottom of your screen
-- 💰 "Rewards" is to display your title, coins, XP and favorite item:
-    - You can change your title when you level up
-    - Go to "Shop" to buy cosmetics by using coins
-    - Go to "Inventory" to choose your favorite item
-- ⏳ "To-do" is to manage your tasks:
-    - Add, edit, sort and complete tasks
-    - Go to "Statistics" to see your record/history
-- 🗓 "Calendar" is to manage tasks by date:
-    - Select a date to see your incomplete tasks on that date
+2. There is navigation bar at the bottom of your screen:
+    💰 "Rewards" is to display your title, coins, XP and favorite item:
+        - You can change your title when you level up
+        - Go to "Shop" to buy cosmetics by using coins
+        - Go to "Inventory" to choose your favorite item
+    ⏳ "To-do" is to manage your tasks:
+        - Add, edit, sort and complete tasks
+        - Go to "Statistics" to see your record/history
+    🗓 "Calendar" is to manage tasks by date:
+        - Select a date to see your incomplete tasks on that date
 3. Close the app
 4. Enjoy your day! (until you receive notifications "You have an incomplete task!" on deadline date)
 ```
