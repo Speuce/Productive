@@ -113,5 +113,5 @@ Once you do, go to app > build > reports > coverage > debug, and open 'index.htm
 There ya go!
 
 ## Website
-Website folder: [Productive-website](https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/tree/master/productive-website)
+Website folder: [Productive-website](https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/tree/master/productive-website)  
 The index.html for the website is located: [`./productive-website/public/`](https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/tree/master/productive-website/public)
