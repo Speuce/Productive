@@ -57,6 +57,9 @@ Not a result of our code. See: https://stackoverflow.com/a/54917041/6047183.
 ### Use of @SuppressWarning annotation
 Although we do not directly use this annotation in our project, some of the libraries that we use (Hilt and Room) auto-generate class implementations which DO use these annotations. This isn't a direct result of our code.
 
+### Warning: [unchecked] unchecked generic array creation for varargs parameter of type Matcher<? super String>[]
+Not a result of our code, it is an internal hamcrest thing for allOf() see:
+https://stackoverflow.com/questions/17679405/unchecked-generic-array-creation-for-varargs-parameter-of-type-matcher-exten
 
 # Libraries in Use
 All of these libraries are added using gradle. You (the person trying to run this app in Android Studio) may need to open this gradle file at first and Click 'Sync Now' to have gradle download the required libraries for the project.
