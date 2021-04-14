@@ -23,7 +23,6 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(AndroidJUnit4.class)
@@ -53,7 +52,7 @@ public class CategorizeTaskTest {
         onView(withId(R.id.newTaskButton)).perform(click());
 
         onView(withId(R.id.categorySpinner)).perform(click());
-        onData(anyOf(is(selectionText))).perform(click());
+        onData(allOf(is(selectionText))).perform(click());
 
         onView(withId(R.id.submit)).perform(click());
 
