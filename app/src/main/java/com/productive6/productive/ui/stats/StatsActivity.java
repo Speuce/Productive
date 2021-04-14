@@ -95,7 +95,6 @@ public class StatsActivity extends AppCompatActivity implements AdapterView.OnIt
         dateSelectionMap = Arrays.stream(DateSelection.values()).collect(Collectors.toMap(DateSelection::getDisplay, i -> i));
 
 
-
         Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v->onBackPressed());
 
@@ -316,7 +315,7 @@ public class StatsActivity extends AppCompatActivity implements AdapterView.OnIt
             buildGraph(Objects.requireNonNull(dateSelectionMap.get(selection)).getDays());
         }else{
             //default to 7 days
-            buildGraph( 7);
+            buildGraph( DEFAULT_HISTORY);
         }
     }
 
