@@ -102,24 +102,6 @@ public class Task implements Comparable<Task> {
      *                    that this task was created.
      * @param completed   A flag to mark whether or not this task
      *                    has been completed.
-     * @deprecated use {@link Priority} and {@link Difficulty} instead of integers.
-     * this constructor is only here for backwards-compatibility.
-     * any use of this constructor is technical debt.
-     */
-    @Deprecated
-    public Task(String taskName, int priority, int difficulty, LocalDateTime createdTime, LocalDate dueDate, LocalDateTime completed) {
-        this(taskName, Priority.values()[priority - 1], Difficulty.values()[difficulty - 1], createdTime, dueDate, completed);
-    }
-
-    /**
-     * Constructor for a new task.
-     *
-     * @param taskName    The user-defined name of the task
-     * @param priority    The user-defined priority of this task
-     * @param createdTime The timestamp (milliseconds, epoch time)
-     *                    that this task was created.
-     * @param completed   A flag to mark whether or not this task
-     *                    has been completed.
      */
     public Task(String taskName, Priority priority, Difficulty difficulty, @NotNull LocalDateTime createdTime, LocalDate dueDate, LocalDateTime completed, Category category) {
         this.taskName = taskName;
@@ -142,7 +124,6 @@ public class Task implements Comparable<Task> {
      *                    has been completed.
      */
     @Ignore
-    @Deprecated
     public Task(String taskName, Priority priority, Difficulty difficulty, @NotNull LocalDateTime createdTime, LocalDate dueDate, LocalDateTime completed) {
         this.taskName = taskName;
         this.priority = priority;
@@ -151,38 +132,6 @@ public class Task implements Comparable<Task> {
         this.difficulty = difficulty;
         this.dueDate = dueDate;
         this.category = Category.UNCATEGORIZED;
-    }
-
-    /**
-     * Constructor for a new task without completion
-     *
-     * @param taskName The user-defined name of the task
-     * @param priority The user-defined priority of this task
-     * @deprecated use {@link Priority} and {@link Difficulty} instead of integers.
-     * this constructor is only here for backwards-compatibility.
-     * any use of this constructor is technical debt.
-     */
-    @Ignore
-    @Deprecated
-    public Task(String taskName, int priority, int difficulty) {
-        this(taskName, Priority.values()[priority - 1], Difficulty.values()[difficulty - 1]);
-    }
-
-    /**
-     * Constructor for a new task without completion
-     *
-     * @param taskName    The user-defined name of the task
-     * @param priority    The user-defined priority of this task
-     * @param createdTime The timestamp (milliseconds, epoch time)
-     *                    that this task was created.
-     * @deprecated use {@link Priority} and {@link Difficulty} instead of integers.
-     * this constructor is only here for backwards-compatibility.
-     * any use of this constructor is technical debt.
-     */
-    @Ignore
-    @Deprecated
-    public Task(String taskName, int priority, int difficulty, @NotNull LocalDateTime createdTime) {
-        this(taskName, Priority.values()[priority - 1], Difficulty.values()[difficulty - 1], createdTime);
     }
 
     /**
