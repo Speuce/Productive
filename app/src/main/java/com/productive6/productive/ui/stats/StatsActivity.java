@@ -36,10 +36,14 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
@@ -77,11 +81,20 @@ public class StatsActivity extends AppCompatActivity implements AdapterView.OnIt
     private static String sortingBySelection;
     private static int sortBySelectionInt;
 
+    /**
+     * Mapping of String display to DateSelection objects.
+     */
+    private Map<String, DateSelection> dateSelectionMap;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
+
+        dateSelectionMap = Arrays.stream(DateSelection.values()).collect(Collectors.toMap(DateSelection::getDisplay, i -> i));
+
+
 
         Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v->onBackPressed());
@@ -93,7 +106,7 @@ public class StatsActivity extends AppCompatActivity implements AdapterView.OnIt
 
         Spinner sort_by = (Spinner) findViewById(R.id.dateRangeSelection);
 
-        List<String> itemsList = Arrays.asList(getResources().getStringArray(R.array.dateRangeSelectionArray));
+        List<String> itemsList = Arrays.stream(DateSelection.values()).map(DateSelection::getDisplay).collect(Collectors.toList());
 
         ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(this, R.layout.custom_spinner, itemsList);
         stringArrayAdapter.setDropDownViewResource(R.layout.custom_spinner_item);
@@ -299,19 +312,10 @@ public class StatsActivity extends AppCompatActivity implements AdapterView.OnIt
         String selection = parent.getItemAtPosition(position).toString();
         sortingBySelection = selection;
         this.sortBySelectionInt = position;
-        if(sortingBySelection != null) {// When first started, sortBySelection will be null, so get by priority is chosen by default.
-            switch(selection){
-                case "7 days":
-                    buildGraph( 7);
-                    break;
-                case "14 days":
-                    buildGraph( 14);
-                    break;
-                case "30 days":
-                    buildGraph( 30);
-                    break;
-            }
+        if(sortingBySelection != null && dateSelectionMap.containsKey(selection)) {// When first started, sortBySelection will be null, so get by priority is chosen by default.
+            buildGraph(Objects.requireNonNull(dateSelectionMap.get(selection)).getDays());
         }else{
+            //default to 7 days
             buildGraph( 7);
         }
     }
