@@ -50,7 +50,6 @@ public class HomeFragment extends Fragment implements ProductiveListener {
     private TextView levelNumber;
     private ImageView favItem;
     private TextView emptyFavItem;
-    private HomeViewModel homeViewModel;
 
 
     /**
@@ -59,7 +58,6 @@ public class HomeFragment extends Fragment implements ProductiveListener {
      * updates the values of the header elements
      */
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
 
