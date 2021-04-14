@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import com.productive6.productive.logic.adapters.ICosmeticAdapter;
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.rewards.ITitleManager;
 import com.productive6.productive.logic.rewards.impl.DefaultTitleManager;
@@ -16,7 +17,8 @@ import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.user.UserLoadedEvent;
 import com.productive6.productive.objects.events.user.UserUpdateEvent;
-import com.productive6.productive.persistence.datamanage.impl.InMemoryAndroidDataManager;
+import com.productive6.productive.persistence.room.adapters.CosmeticConverter;
+import com.productive6.productive.persistence.room.impl.InMemoryAndroidDataManager;
 import com.productive6.productive.services.executor.IRunnableExecutor;
 import com.productive6.productive.services.executor.impl.TestExecutor;
 
@@ -27,6 +29,7 @@ import org.junit.runner.RunWith;
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 
 @RunWith(AndroidJUnit4.class)
 public class TitleManagerIntTest {
@@ -41,7 +44,7 @@ public class TitleManagerIntTest {
         EventDispatch.clear();
         String[] tempTitles = {"TEST1", "TEST2", "TEST3"};
         int[] tempVals = {1, 2, 3};
-        InMemoryAndroidDataManager data = new InMemoryAndroidDataManager(mContext, mRunnableExecutor);
+        InMemoryAndroidDataManager data = new InMemoryAndroidDataManager(mContext, mRunnableExecutor, mock(ICosmeticAdapter.class));
         data.init();
         IUserManager userManager = new PersistentSingleUserManager(data);
         TitleManager = new DefaultTitleManager(userManager,tempTitles,tempVals);

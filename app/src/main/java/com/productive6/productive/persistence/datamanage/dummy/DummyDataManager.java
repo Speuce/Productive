@@ -1,8 +1,6 @@
 package com.productive6.productive.persistence.datamanage.dummy;
 
-import com.productive6.productive.persistence.access.IUserAccess;
 import com.productive6.productive.persistence.datamanage.IDataManager;
-import com.productive6.productive.persistence.access.ITaskAccess;
 import com.productive6.productive.persistence.datamanage.IStatisticsDataManager;
 import com.productive6.productive.persistence.datamanage.ITaskPersistenceManager;
 import com.productive6.productive.persistence.datamanage.IUserPersistenceManager;

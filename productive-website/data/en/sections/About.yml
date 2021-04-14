@@ -1,0 +1,55 @@
+# section information
+section:
+  name: About
+  id: about
+  enable: true
+  weight: 2
+  showOnNavbar: true
+  template: sections/about.html
+
+
+topics:
+  - subject: ""
+    summary: "
+    ## Are you distracted?
+
+    ## Do you like video games?
+
+    # Then Productive is the app for you!"
+  - subject: 'Features'
+    summary: " You can add, you can edit, and **YOU. CAN. COMPLETE!**
+
+      \n - You can view and complete your tasks in a convenient calendar format.  
+
+      \n - You can view your task completion statistics, **because fun isn’t allowed until statistics have entered the building**.
+
+      \n - Once you rack up enough completed tasks, you can select a **wicked-sick title for yourself**.
+
+      \n - **Did we mention coins?** You can buy yourself something nice in our in-app shop with the coins you gained for completing tasks.
+
+      \n - Not only can you build a **dragon’s hoard of loot**, you can also display your favorite piece **right on the front page of your app!**
+      
+"
+
+  - subject: "Why should you download Productive?"
+    summary: "Have fun while keeping productive. Productive is a to-do list, calendar, and productivity tracking app all at once!
+      \nCreate tasks and sort them to keep important due dates in mind!  
+      \nWatch your productivity skyrocket with our productivity graph and stats!  
+      \nComplete tasks and earn EXP and coins to spend on items in the shop!  
+      \nAcquire awesome™ titles and show them off to your friends!  
+
+      \n\nIf you want to be productive, you’ve got to get Productive!
+      "
+  - subject: "Contributors"
+    summary: "
+      \n- Luke
+        \n\t- The largest areas I feel to have grown over the course of this project are: code reviewing, android UI development, technical communications, and testing.
+      \n- Trang
+        \n\t- I have contributed mostly in UI development. Throughout this course, I have developed my communication skills (though still not so good), testing and learned more about architecture design and agile development.
+      \n- Matt
+        \n\t- I’ve contributed mostly to the backend, with the logic and persistence layer.  Through this project I’ve learned a lot about testing, having an end goal in mind, time estimation of large projects, and time management.
+      \n- Farabi
+        \n\t- I’ve learned that building a project is more than just throwing code at an IDE. Maintainability, planning, the ability to communicate your ideas clearly are all crucial. I’ve worked mostly on the UI layer and learned what makes it intuitive, and what it takes to support the UI functionalities.W
+      \n- Ben
+        \n\t- During the course of this project, I contributed mostly to business logic and testing. I have vastly improved my skills in testing and code design. I have also become better at team-based development and gained many skills in that area (communication, version control and documentation).
+"

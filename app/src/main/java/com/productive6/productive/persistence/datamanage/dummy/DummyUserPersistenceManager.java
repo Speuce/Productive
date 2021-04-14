@@ -1,7 +1,7 @@
 package com.productive6.productive.persistence.datamanage.dummy;
 
 import com.productive6.productive.objects.User;
-import com.productive6.productive.persistence.access.IUserAccess;
+import com.productive6.productive.persistence.room.access.IUserAccess;
 import com.productive6.productive.persistence.datamanage.IUserPersistenceManager;
 
 import java.util.ArrayList;
@@ -36,7 +36,8 @@ public class DummyUserPersistenceManager implements IUserPersistenceManager {
     }
 
     @Override
-    public void updateUser(User u) {
+    public void updateUser(User u, Runnable after) {
         //doesn't need to be worried about; Thanks pointers!
+        after.run();
     }
 }

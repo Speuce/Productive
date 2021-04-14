@@ -5,6 +5,8 @@ import android.content.Context;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import com.productive6.productive.logic.adapters.ICosmeticAdapter;
+import com.productive6.productive.logic.adapters.impl.DefaultCosmeticAdapter;
 import com.productive6.productive.logic.event.EventDispatch;
 import com.productive6.productive.logic.exceptions.ObjectFormatException;
 import com.productive6.productive.logic.exceptions.PersistentIDAssignmentException;
@@ -13,11 +15,13 @@ import com.productive6.productive.logic.task.ITaskSorter;
 import com.productive6.productive.logic.task.impl.PersistentTaskManager;
 import com.productive6.productive.logic.task.impl.PersistentTaskSorter;
 import com.productive6.productive.objects.Task;
+import com.productive6.productive.objects.enums.Difficulty;
+import com.productive6.productive.objects.enums.Priority;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.task.TaskCreateEvent;
 import com.productive6.productive.objects.events.task.TaskUpdateEvent;
-import com.productive6.productive.persistence.datamanage.impl.InMemoryAndroidDataManager;
+import com.productive6.productive.persistence.room.impl.InMemoryAndroidDataManager;
 import com.productive6.productive.services.executor.IRunnableExecutor;
 import com.productive6.productive.services.executor.impl.TestExecutor;
 
@@ -31,6 +35,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 
 /**
  * Tests logic-layer task manager verification and computation
@@ -51,7 +56,7 @@ public class TaskManagerIntTest {
     public void init(){
         mContext = InstrumentationRegistry.getInstrumentation().getContext();
         mRunnableExecutor = new TestExecutor();
-        InMemoryAndroidDataManager data = new InMemoryAndroidDataManager(mContext, mRunnableExecutor);
+        InMemoryAndroidDataManager data = new InMemoryAndroidDataManager(mContext, mRunnableExecutor,  mock(DefaultCosmeticAdapter.class));
         data.init();
         int config[] = {3,3};
         taskManager = new PersistentTaskManager(data,config);
@@ -64,7 +69,7 @@ public class TaskManagerIntTest {
      */
     @Test(expected = PersistentIDAssignmentException.class )
     public void testIDFormatInsert() {
-        Task testData = new Task("name", 1, 1, LocalDateTime.now(), LocalDate.now(), null);
+        Task testData = new Task("name", Priority.HIGH, Difficulty.HARD, LocalDateTime.now(), LocalDate.now(), null);
         testData.setId(1);
         taskManager.addTask(testData);
     }
@@ -76,7 +81,7 @@ public class TaskManagerIntTest {
     @Test
     public void testDateConversion() {
         LocalDate day = LocalDate.now();
-        Task testData = new Task("name", 1, 1, LocalDateTime.now(), day, null);
+        Task testData = new Task("name", Priority.HIGH, Difficulty.HARD, LocalDateTime.now(), day, null);
         taskManager.addTask(testData);
 
         taskSorter.getTasksByPriority(tasks -> {
@@ -90,7 +95,7 @@ public class TaskManagerIntTest {
      */
     @Test(expected = PersistentIDAssignmentException.class)
     public void testIDFormatUpdate() {
-        Task testData = new Task("name", 1, 1, LocalDateTime.now(), LocalDate.now(), null);
+        Task testData = new Task("name", Priority.HIGH, Difficulty.HARD, LocalDateTime.now(), LocalDate.now(), null);
         testData.setId(0);
         taskManager.updateTask(testData);
     }
@@ -100,22 +105,13 @@ public class TaskManagerIntTest {
      */
     @Test(expected = ObjectFormatException.class)
     public void testCompletionChecking(){
-        Task testData = new Task("name", 1, 1, LocalDateTime.now(), LocalDate.now(), LocalDateTime.now());
-        taskManager.addTask(testData);
-    }
-
-    /**
-     * Tests that insertion priorty checking is functional
-     */
-    @Test(expected = ObjectFormatException.class)
-    public void testPriorityChecking(){
-        Task testData = new Task("name", -1, 1, LocalDateTime.now(), LocalDate.now(), null);
+        Task testData = new Task("name", Priority.HIGH, Difficulty.HARD, LocalDateTime.now(), LocalDate.now(), LocalDateTime.now());
         taskManager.addTask(testData);
     }
 
     @Test
     public void testCompleteTask(){
-        Task testData = new Task("name", 1, 1, LocalDateTime.now(), LocalDate.now(), null);
+        Task testData = new Task("name", Priority.HIGH, Difficulty.HARD, LocalDateTime.now(), LocalDate.now(), null);
         taskManager.addTask(testData);
 
         EventDispatch.registerListener(new ProductiveListener() {
@@ -130,7 +126,7 @@ public class TaskManagerIntTest {
     @Test
     public void testUpdateEvent(){
         AtomicBoolean success = new AtomicBoolean(false);
-        Task testData = new Task("name", 1, 1, LocalDateTime.now(), LocalDate.now(), null);
+        Task testData = new Task("name", Priority.HIGH, Difficulty.HARD, LocalDateTime.now(), LocalDate.now(), null);
         taskManager.addTask(testData);
 
         EventDispatch.registerListener(new ProductiveListener() {
@@ -158,12 +154,7 @@ public class TaskManagerIntTest {
                 assertTrue("TaskManager failed to trigger a user create event when necessary.",success.get());
             }
         });
-        Task testData = new Task("name", 1, 1, LocalDateTime.now(), LocalDate.now(), null);
+        Task testData = new Task("name", Priority.HIGH, Difficulty.HARD, LocalDateTime.now(), LocalDate.now(), null);
         taskManager.addTask(testData);
     }
-
-
-
-
-
 }

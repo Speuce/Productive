@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
-    android:layout_height="190dp"
+    android:layout_height="200dp"
     android:background="@color/pastel_blue"
     android:visibility="visible">
 
     <ImageView
-        android:layout_width="520dp"
-        android:layout_height="150dp"
+        android:layout_width="584dp"
+        android:layout_height="158dp"
         android:background="@drawable/bg_rounded_corners_smoke_white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,10 +23,10 @@
         android:background="@drawable/bg_completed"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintHorizontal_bias="0.949"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25" />
+        app:layout_constraintVertical_bias="0.253" />
 
     <ImageView
         android:layout_width="50dp"
@@ -34,10 +34,10 @@
         android:background="@drawable/bg_edit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintHorizontal_bias="0.949"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.75" />
+        app:layout_constraintVertical_bias="0.746" />
 
     <ImageView
         android:layout_width="50dp"
@@ -45,10 +45,10 @@
         android:background="@drawable/ic_done"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintHorizontal_bias="0.949"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25" />
+        app:layout_constraintVertical_bias="0.253" />
 
     <ImageView
         android:layout_width="50dp"
@@ -56,10 +56,10 @@
         android:background="@drawable/ic_edit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintHorizontal_bias="0.949"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.75" />
+        app:layout_constraintVertical_bias="0.746" />
 
     <Button
         android:id="@+id/editButton"
@@ -69,14 +69,13 @@
         android:layout_below="@+id/taskCompleteToggleButton"
         android:layout_alignParentEnd="true"
         android:elevation="10dp"
-        android:text=""
         android:textColor="@color/primary_purple"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.75" />
+        app:layout_constraintVertical_bias="0.746" />
 
     <Button
         android:id="@+id/taskCompleteToggleButton"
@@ -86,14 +85,12 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:elevation="10dp"
-        android:text=""
-        android:textSize="13dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintHorizontal_bias="0.949"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25" />
+        app:layout_constraintVertical_bias="0.253" />
 
     <TextView
         android:id="@+id/taskDifficultyTextView"
@@ -101,17 +98,45 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/taskNameTextView"
-        android:text="Difficulty"
-        android:textStyle="bold"
+        android:text="@string/difficulty"
         android:textColor="@color/pastel_blue"
-        android:textSize="18dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.125"
+        app:layout_constraintHorizontal_bias="0.049"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.775" />
+        app:layout_constraintVertical_bias="0.782" />
+
+    <TextView
+        android:id="@+id/difficultyText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/difficulty"
+        android:textColor="@color/light_blue"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.048"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.622" />
+
+    <TextView
+        android:id="@+id/dueText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/due_date"
+        android:textColor="@color/light_blue"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.461"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.622" />
 
     <TextView
         android:id="@+id/taskDueDateTextView"
@@ -120,30 +145,30 @@
         android:layout_below="@+id/taskDifficultyTextView"
         android:layout_alignParentBottom="true"
         android:layout_toEndOf="@+id/taskNameTextView"
-        android:text="Due Date"
-        android:textStyle="bold"
+        android:text="@string/due_date"
         android:textColor="@color/pastel_blue"
-        android:textSize="18dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.622"
+        app:layout_constraintHorizontal_bias="0.485"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.781" />
+        app:layout_constraintVertical_bias="0.782" />
 
     <TextView
-        android:id="@+id/dueText"
+        android:id="@+id/priorityText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Due"
+        android:text="@string/priority"
         android:textColor="@color/light_blue"
-        android:textSize="18dp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.547"
+        app:layout_constraintHorizontal_bias="0.251"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.624" />
+        app:layout_constraintVertical_bias="0.622" />
 
     <TextView
         android:id="@+id/taskPriorityTextView"
@@ -151,61 +176,63 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/taskNameTextView"
         android:layout_toEndOf="@+id/taskNameTextView"
-        android:text="Priority"
-        android:textStyle="bold"
+        android:text="@string/priority"
         android:textColor="@color/pastel_blue"
-        android:textSize="18dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.373"
+        app:layout_constraintHorizontal_bias="0.262"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.775" />
+        app:layout_constraintVertical_bias="0.782" />
 
     <TextView
-        android:id="@+id/priorityText"
+        android:id="@+id/categoryText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Priority"
+        android:text="@string/category"
         android:textColor="@color/light_blue"
-        android:textSize="18dp"
+
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.357"
+        app:layout_constraintHorizontal_bias="0.688"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.618" />
+        app:layout_constraintVertical_bias="0.622" />
 
     <TextView
-        android:id="@+id/difficultyText"
-        android:layout_width="wrap_content"
+        android:id="@+id/taskCategoryTextView"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
-        android:text="Difficulty"
-        android:textColor="@color/light_blue"
-        android:textSize="18dp"
+        android:text="Category"
+        android:textColor="@color/pastel_blue"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.122"
+        app:layout_constraintHorizontal_bias="0.772"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.618" />
+        app:layout_constraintVertical_bias="0.782" />
 
     <TextView
         android:id="@+id/taskNameTextView"
-        android:layout_width="420dp"
+        android:layout_width="454dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:text="Name"
+        android:text="@string/stats_name"
         android:textColor="@color/pastel_red"
-        android:textSize="40dp"
+        android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.355"
+        app:layout_constraintHorizontal_bias="0.171"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.272" />
+        app:layout_constraintVertical_bias="0.258" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

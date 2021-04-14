@@ -8,6 +8,8 @@ import com.productive6.productive.logic.task.ITaskSorter;
 import com.productive6.productive.logic.task.impl.PersistentTaskManager;
 import com.productive6.productive.logic.task.impl.PersistentTaskSorter;
 import com.productive6.productive.objects.Task;
+import com.productive6.productive.objects.enums.Difficulty;
+import com.productive6.productive.objects.enums.Priority;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
 import com.productive6.productive.objects.events.task.TaskCreateEvent;
@@ -46,7 +48,7 @@ public class TaskManagerTest {
      */
     @Test
     public void testIDFormatInsert() {
-        Task testData = new Task("name", 1, 1, LocalDateTime.now(), LocalDate.now(), null);
+        Task testData = new Task("name", Priority.LOW, Difficulty.EASY, LocalDateTime.now(), LocalDate.now(), null);
         testData.setId(1);
         assertThrows(
                 "Task Manager didn't catch an id exception on insert.",
@@ -62,7 +64,7 @@ public class TaskManagerTest {
      */
     @Test
     public void testIDFormatUpdate() {
-        Task testData = new Task("name", 1, 1, LocalDateTime.now(), LocalDate.now(), null);
+        Task testData = new Task("name", Priority.LOW, Difficulty.EASY, LocalDateTime.now(), LocalDate.now(), null);
         testData.setId(0);
         assertThrows(
                 "Task Manager didn't catch an id exception on update.",
@@ -78,19 +80,8 @@ public class TaskManagerTest {
      */
     @Test
     public void testCompletionChecking(){
-        Task testData = new Task("name", 1, 1, LocalDateTime.now(), LocalDate.now(), LocalDateTime.now());
+        Task testData = new Task("name", Priority.LOW, Difficulty.EASY, LocalDateTime.now(), LocalDate.now(), LocalDateTime.now());
         assertThrows("Task Manager missed a 'completed' flag = true",
-                ObjectFormatException.class,
-                () -> taskManager.addTask(testData));
-    }
-
-    /**
-     * Tests that insertion priorty checking is functional
-     */
-    @Test
-    public void testPriorityChecking(){
-        Task testData = new Task("name", -1, 1, LocalDateTime.now(), LocalDate.now(), null);
-        assertThrows("Task Manager missed a negative priority",
                 ObjectFormatException.class,
                 () -> taskManager.addTask(testData));
     }
@@ -98,7 +89,7 @@ public class TaskManagerTest {
 
     @Test
     public void testCompleteTask(){
-        Task testData = new Task("name", 1, 1, LocalDateTime.now(), LocalDate.now(), null);
+        Task testData = new Task("name", Priority.LOW, Difficulty.EASY, LocalDateTime.now(), LocalDate.now(), null);
         taskManager.addTask(testData);
         taskManager.completeTask(testData);
         assertTrue("Task Manager didn't autofill completion correctly.", testData.isCompleted());
@@ -113,7 +104,7 @@ public class TaskManagerTest {
                 success.set(true);
             }
         });
-        Task testData = new Task("name", 1, 1, LocalDateTime.now(), LocalDate.now(), null);
+        Task testData = new Task("name", Priority.LOW, Difficulty.EASY, LocalDateTime.now(), LocalDate.now(), null);
         taskManager.addTask(testData);
         taskManager.updateTask(testData);
         assertTrue("TaskManager failed to trigger a user updated event when necessary.",success.get());
@@ -128,7 +119,7 @@ public class TaskManagerTest {
                 success.set(true);
             }
         });
-        Task testData = new Task("name", 1, 1, LocalDateTime.now(), LocalDate.now(), null);
+        Task testData = new Task("name", Priority.LOW, Difficulty.EASY, LocalDateTime.now(), LocalDate.now(), null);
         taskManager.addTask(testData);
         assertTrue("TaskManager failed to trigger a user create event when necessary.",success.get());
     }

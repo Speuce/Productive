@@ -7,36 +7,24 @@
     tools:context=".ui.dashboard.DashboardFragment">
 
     <ImageView
-        android:layout_width="194dp"
-        android:layout_height="50dp"
-        android:src="@drawable/bg_edit"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.896"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.047" />
-
-    <ImageView
         android:id="@+id/streak_box"
         android:layout_width="172dp"
         android:layout_height="50dp"
-        android:src="@drawable/bg_edit"
+        android:src="@drawable/bg_rounded_corners_smoke_white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/buttonBarChart"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.27"
         app:layout_constraintStart_toStartOf="@+id/empty_view"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.049" />
+        app:layout_constraintVertical_bias="0.047" />
 
     <TextView
         android:id="@+id/streak_text"
         android:layout_width="164dp"
         android:layout_height="48dp"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="4dp"
         android:gravity="center"
-        android:text="Streak Bonus: 1"
+        android:text="@string/streak"
         android:textColor="@color/pastel_red"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -47,32 +35,20 @@
         app:layout_constraintTop_toTopOf="@+id/streak_box"
         app:layout_constraintVertical_bias="0.265" />
 
-    <ImageView
-        android:layout_width="37dp"
-        android:layout_height="34dp"
-        android:clickable="false"
-        android:src="@drawable/ic_drop_down"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.888"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.06" />
-
     <Spinner
         android:id="@+id/sortTasksDropdown"
-        android:layout_width="158dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="386dp"
-        android:layout_marginTop="36dp"
-        android:background="@null"
+        android:layout_width="160dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@null"
+        android:background="@drawable/bg_edit"
+        android:gravity="center"
         android:spinnerMode="dropdown"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.142"
+        app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.006" />
+        app:layout_constraintVertical_bias="0.047" />
 
     <Button
         android:id="@+id/buttonBarChart"
@@ -83,7 +59,7 @@
         app:backgroundTint="@color/smoke_black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintHorizontal_bias="0.578"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.047" />
@@ -95,7 +71,7 @@
         android:src="@drawable/ic_chart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintHorizontal_bias="0.578"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.047" />

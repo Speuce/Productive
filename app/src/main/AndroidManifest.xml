@@ -10,7 +10,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Productive">
-        <activity android:name=".ui.stats.StatsActivity"></activity>
+        <activity
+            android:name=".ui.stats.StatsActivity"
+            android:label="My Productivity">
+        </activity>
+        <activity
+            android:name=".ui.inventory.InventoryActivity"
+            android:label="My Inventory">
+        </activity>
         <activity
             android:name=".ui.MainActivity"
             android:label="@string/app_name">
@@ -22,7 +29,18 @@
         </activity>
         <activity
             android:name=".ui.title.TitleSelection"
-            android:label="Select Title"></activity>
+            android:label="Select Title">
+        </activity>
+        <activity
+            android:name=".ui.shop.ShopActivity"
+            android:label="Treat Yourself">
+        </activity>
+
+        <receiver
+            android:name=".ui.notifications.MyAlarmReceiver"
+            android:process=":remote" >
+        </receiver>
+
     </application>
 
 </manifest>

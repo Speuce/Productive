@@ -4,19 +4,11 @@ import com.productive6.productive.logic.statstics.ICoinsStatsManager;
 import com.productive6.productive.logic.statstics.ITaskStatsManager;
 import com.productive6.productive.logic.statstics.IXPStatsManager;
 import com.productive6.productive.objects.tuples.DayIntTuple;
-import com.productive6.productive.objects.tuples.EpochIntTuple;
-import com.productive6.productive.persistence.Converters;
 import com.productive6.productive.persistence.datamanage.IDataManager;
 
-import java.time.DayOfWeek;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.temporal.ChronoUnit;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -58,7 +50,6 @@ public class StatsManager implements ITaskStatsManager, ICoinsStatsManager, IXPS
                 boolean found = false;
                 for (Iterator<DayIntTuple> iterator = list.iterator(); iterator.hasNext(); ) {
                     DayIntTuple tuple = iterator.next();
-                    //long dt = Converters.dateToTimestamp(tuple.getDate());
 
                     if (tuple.getDate().equals(day)) {
                         found = true;
@@ -71,7 +62,6 @@ public class StatsManager implements ITaskStatsManager, ICoinsStatsManager, IXPS
                     callback.accept(new DayIntTuple(day, 0));
                 }
             });
-            //list.forEach(callback);
         });
     }
 

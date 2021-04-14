@@ -6,18 +6,57 @@
     <string name="task_scheduled">TASK_SCHEDULED</string>
     <string name="month_name">MONTH_NAME</string>
     <string name="addTaskPrompt">Tap \'Add Task\' to add a new Task</string>
+    <string name="addTaskPromptCalendar">Add tasks from To-do to see them here</string>
     <string name="add">Add Task</string>
     <string name="rewards">Rewards</string>
     <string name="todo">To-do</string>
     <string name="schedule">Calendar</string>
     <string name="my_productivity">My Productivity</string>
     <string name="date_range">Date Range</string>
-    <string name="tasks_completed">Tasks Completed</string>
+    <string name="tasks_completed">TASK COMPLETED</string>
+    <string name="stats_return">RETURN</string>
+    <string name="stats_name">Name</string>
+    <string name="submit">Submit</string>
+    <string name="streak">Streak Bonus: </string>
+    <string name="titles">Slayer of TASKS</string>
+    <string name="coins">1111</string>
+    <string name="level">35</string>
+    <string name="deadline">Deadline</string>
+    <string name="priority">Priority</string>
+    <string name="difficulty">Difficulty</string>
+    <string name="due_date">Due Date</string>
+    <string name="category">Category</string>
+    <string name="high">High</string>
+    <string name="hard">Hard</string>
+    <string name="medium">Medium</string>
+    <string name="low">Low</string>
+    <string name="easy">Easy</string>
+    <string name="channel_name">Productive</string>
+    <string name="channel_description">Productive App</string>
+    <string name="inventory">INVENTORY</string>
+    <string name="confirmFavMessage">Are you sure you want to set %s as your favorite?</string>
+    <string name="confirmNoFav">Stop using %s as your favorite?</string>
+    <string name="selectFavPrompt">Select favorite item in Inventory</string>
+    <string name="buyText">Buy</string>
+    <string name="itemName">Armor 1</string>
+    <string name="confirmMessage">Are you sure you want to spend %s coins for %s?</string>
+    <string name="shopActiv">Shop</string>
+    <string name="inventoryPrompt">You have nothing here, go to Shop to buy items!</string>
+    <string name="shopPrompt">You bought everything here!!!</string>
 
     <string-array name="dateRangeSelectionArray">
         <item>7 days</item>
         <item>14 days</item>
         <item>30 days</item>
+    </string-array>
+
+    <string-array name="categories">
+        <item>Uncategorized</item>
+        <item>School</item>
+        <item>Home</item>
+        <item>Work</item>
+        <item>Personal</item>
+        <item>Social</item>
     </string-array>
 
 </resources>

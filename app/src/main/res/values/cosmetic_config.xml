@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="CosmeticNameArray">
+        <item>Armor 1</item>
+        <item>Armor 2</item>
+        <item>Armor 3</item>
+        <item>Armor 4</item>
+        <item>Arrow 1</item>
+        <item>Arrow 2</item>
+        <item>Arrow 3</item>
+        <item>Arrow 4</item>
+        <item>Bow 1</item>
+        <item>Bow 2</item>
+        <item>Bow 3</item>
+        <item>Bow 4</item>
+        <item>Coin 1</item>
+        <item>Coin 2</item>
+        <item>Coin 3</item>
+        <item>Coin 4</item>
+        <item>Crystal 1</item>
+        <item>Crystal 2</item>
+        <item>Crystal 3</item>
+        <item>Crystal 4</item>
+        <item>Hat 1</item>
+        <item>Hat 2</item>
+        <item>Hat 3</item>
+        <item>Hat 4</item>
+        <item>Helmet 1</item>
+        <item>Helmet 2</item>
+        <item>Helmet 3</item>
+        <item>Helmet 4</item>
+        <item>Necklace 1</item>
+        <item>Necklace 2</item>
+        <item>Necklace 3</item>
+        <item>Necklace 4</item>
+        <item>Ring 1</item>
+        <item>Ring 2</item>
+        <item>Ring 3</item>
+        <item>Ring 4</item>
+        <item>Shield 1</item>
+        <item>Shield 2</item>
+        <item>Shield 3</item>
+        <item>Shield 4</item>
+        <item>Staff 1</item>
+        <item>Staff 2</item>
+        <item>Staff 3</item>
+        <item>Staff 4</item>
+        <item>Sword 1</item>
+        <item>Sword 2</item>
+        <item>Sword 3</item>
+        <item>Sword 4</item>
+    </string-array>
+
+    <integer-array name="CosmeticCostArray">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+        <item>32</item>
+        <item>33</item>
+        <item>34</item>
+        <item>35</item>
+        <item>36</item>
+        <item>37</item>
+        <item>38</item>
+        <item>39</item>
+        <item>40</item>
+        <item>41</item>
+        <item>42</item>
+        <item>43</item>
+        <item>44</item>
+        <item>45</item>
+        <item>46</item>
+        <item>47</item>
+        <item>48</item>
+    </integer-array>
+
+    <integer-array name="CosmeticIdArray">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+        <item>32</item>
+        <item>33</item>
+        <item>34</item>
+        <item>35</item>
+        <item>36</item>
+        <item>37</item>
+        <item>38</item>
+        <item>39</item>
+        <item>40</item>
+        <item>41</item>
+        <item>42</item>
+        <item>43</item>
+        <item>44</item>
+        <item>45</item>
+        <item>46</item>
+        <item>47</item>
+        <item>48</item>
+    </integer-array>
+
+    <integer-array name="CosmeticResourceIdArray">
+        <item>@drawable/prop_armor_1</item>
+        <item>@drawable/prop_armor_2</item>
+        <item>@drawable/prop_armor_3</item>
+        <item>@drawable/prop_armor_4</item>
+        <item>@drawable/prop_arrow_1</item>
+        <item>@drawable/prop_arrow_2</item>
+        <item>@drawable/prop_arrow_3</item>
+        <item>@drawable/prop_arrow_4</item>
+        <item>@drawable/prop_bow_1</item>
+        <item>@drawable/prop_bow_2</item>
+        <item>@drawable/prop_bow_3</item>
+        <item>@drawable/prop_bow_4</item>
+        <item>@drawable/prop_coin_1</item>
+        <item>@drawable/prop_coin_2</item>
+        <item>@drawable/prop_coin_3</item>
+        <item>@drawable/prop_coin_4</item>
+        <item>@drawable/prop_crystal_1</item>
+        <item>@drawable/prop_crystal_2</item>
+        <item>@drawable/prop_crystal_3</item>
+        <item>@drawable/prop_crystal_4</item>
+        <item>@drawable/prop_hat_1</item>
+        <item>@drawable/prop_hat_2</item>
+        <item>@drawable/prop_hat_3</item>
+        <item>@drawable/prop_hat_4</item>
+        <item>@drawable/prop_helmet_1</item>
+        <item>@drawable/prop_helmet_2</item>
+        <item>@drawable/prop_helmet_3</item>
+        <item>@drawable/prop_helmet_4</item>
+        <item>@drawable/prop_necklace_1</item>
+        <item>@drawable/prop_necklace_2</item>
+        <item>@drawable/prop_necklace_3</item>
+        <item>@drawable/prop_necklace_4</item>
+        <item>@drawable/prop_ring_1</item>
+        <item>@drawable/prop_ring_2</item>
+        <item>@drawable/prop_ring_3</item>
+        <item>@drawable/prop_ring_4</item>
+        <item>@drawable/prop_shield_1</item>
+        <item>@drawable/prop_shield_2</item>
+        <item>@drawable/prop_shield_3</item>
+        <item>@drawable/prop_shield_4</item>
+        <item>@drawable/prop_staff_1</item>
+        <item>@drawable/prop_staff_2</item>
+        <item>@drawable/prop_staff_3</item>
+        <item>@drawable/prop_staff_4</item>
+        <item>@drawable/prop_sword_1</item>
+        <item>@drawable/prop_sword_2</item>
+        <item>@drawable/prop_sword_3</item>
+        <item>@drawable/prop_sword_4</item>
+    </integer-array>
+
+
+</resources>

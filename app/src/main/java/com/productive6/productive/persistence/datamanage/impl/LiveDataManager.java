@@ -5,7 +5,7 @@ import android.content.Context;
 
 import com.productive6.productive.persistence.datamanage.IStatisticsDataManager;
 import com.productive6.productive.services.executor.IRunnableExecutor;
-import com.productive6.productive.persistence.ProductiveDB;
+import com.productive6.productive.persistence.room.ProductiveDB;
 import com.productive6.productive.persistence.datamanage.IDataManager;
 import com.productive6.productive.persistence.datamanage.ITaskPersistenceManager;
 import com.productive6.productive.persistence.datamanage.IUserPersistenceManager;

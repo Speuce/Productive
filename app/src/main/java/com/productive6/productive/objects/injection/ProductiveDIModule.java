@@ -2,29 +2,33 @@ package com.productive6.productive.objects.injection;
 
 import android.content.Context;
 import android.content.res.Resources;
-import com.productive6.productive.R;
+import android.content.res.TypedArray;
 
+import com.productive6.productive.R;
+import com.productive6.productive.logic.adapters.ICosmeticAdapter;
+import com.productive6.productive.logic.adapters.impl.DefaultCosmeticAdapter;
+import com.productive6.productive.logic.cosmetics.ICosmeticManager;
+import com.productive6.productive.logic.cosmetics.impl.CosmeticManager;
 import com.productive6.productive.logic.rewards.IRewardManager;
+import com.productive6.productive.logic.rewards.IRewardSpenderManager;
 import com.productive6.productive.logic.rewards.IStreakRewardManager;
-import com.productive6.productive.logic.rewards.impl.RewardManager;
-import com.productive6.productive.logic.rewards.impl.StreakRewardManager;
+import com.productive6.productive.logic.rewards.ITitleManager;
+import com.productive6.productive.logic.rewards.impl.DefaultTitleManager;
+import com.productive6.productive.logic.rewards.impl.RewardSpenderManager;
 import com.productive6.productive.logic.statstics.ICoinsStatsManager;
 import com.productive6.productive.logic.statstics.ITaskStatsManager;
 import com.productive6.productive.logic.statstics.IXPStatsManager;
 import com.productive6.productive.logic.statstics.impl.StatsManager;
 import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.logic.task.ITaskSorter;
+import com.productive6.productive.logic.task.impl.PersistentTaskManager;
 import com.productive6.productive.logic.task.impl.PersistentTaskSorter;
 import com.productive6.productive.logic.user.IUserManager;
-import com.productive6.productive.services.executor.IRunnableExecutor;
-import com.productive6.productive.services.executor.impl.AndroidExecutor;
-import com.productive6.productive.logic.rewards.ITitleManager;
-import com.productive6.productive.logic.rewards.impl.DefaultTitleManager;
-
-import com.productive6.productive.logic.task.impl.PersistentTaskManager;
 import com.productive6.productive.logic.user.impl.PersistentSingleUserManager;
 import com.productive6.productive.persistence.datamanage.IDataManager;
-import com.productive6.productive.persistence.datamanage.impl.PersistentAndroidDataManager;
+import com.productive6.productive.persistence.room.impl.PersistentAndroidDataManager;
+import com.productive6.productive.services.executor.IRunnableExecutor;
+import com.productive6.productive.services.executor.impl.AndroidExecutor;
 
 import javax.inject.Singleton;
 
@@ -44,14 +48,35 @@ public class ProductiveDIModule {
 
     @Singleton
     @Provides
+    public ICosmeticAdapter provideICosmeticAdapter( @ApplicationContext Context context){
+        Resources res = context.getResources();
+        int[][] keyAdapter = new int[2][];
+
+        keyAdapter[0] = res.getIntArray(R.array.CosmeticIdArray);
+
+        TypedArray imagesArr = res.obtainTypedArray(R.array.CosmeticResourceIdArray);
+        int[] arrImg = new int[imagesArr.length()];
+        for (int i = 0; i < imagesArr.length(); i++)
+            arrImg[i] = imagesArr.getResourceId(i, 0);
+        keyAdapter[1] = arrImg;
+        imagesArr.recycle();
+
+        int[] costArr = res.getIntArray(R.array.CosmeticCostArray);
+        String[] names = res.getStringArray(R.array.CosmeticNameArray);
+
+        return new DefaultCosmeticAdapter(keyAdapter,costArr,names);
+    }
+
+    @Singleton
+    @Provides
     public IRunnableExecutor provideExecutorService(){
         return new AndroidExecutor();
     }
 
     @Singleton
     @Provides
-    public IDataManager provideDataManager(@ApplicationContext Context context, IRunnableExecutor e){
-        IDataManager d = new PersistentAndroidDataManager(context, e);
+    public IDataManager provideDataManager(@ApplicationContext Context context, IRunnableExecutor e, ICosmeticAdapter cosmeticAdapter){
+        IDataManager d = new PersistentAndroidDataManager(context, e, cosmeticAdapter);
         d.init();
         return d;
     }
@@ -59,7 +84,7 @@ public class ProductiveDIModule {
     @Singleton
     @Provides
     public ITaskManager provideTaskManager(IDataManager d, @ApplicationContext Context context){
-        int configValues[] = new int[2];
+        int[] configValues = new int[2];
         configValues[0] = context.getResources().getInteger(R.integer.minimumpriority);
         configValues[1] = context.getResources().getInteger(R.integer.minimumdifficulty);
 
@@ -85,8 +110,7 @@ public class ProductiveDIModule {
         Resources res = context.getResources();
         String[] titlesStrings = res.getStringArray(R.array.TitleStringArray);
         int[] levelArr = res.getIntArray(R.array.TitleLevelArray);
-        ITitleManager tm = new DefaultTitleManager(userManager,titlesStrings,levelArr);
-        return tm;
+        return new DefaultTitleManager(userManager,titlesStrings,levelArr);
     }
 
     @Singleton
@@ -115,7 +139,7 @@ public class ProductiveDIModule {
 
     @Singleton
     @Provides
-    public IStreakRewardManager provideIStreakRewardManager(IUserManager data, ITaskSorter sort, ITaskManager taskManager, @ApplicationContext Context context){
+    public IRewardSpenderManager provideIRewardSpenderManager(IUserManager data, ITaskSorter sort, ITaskManager taskManager, @ApplicationContext Context context){
 
         int[] configValues = new int[5];
 
@@ -124,8 +148,13 @@ public class ProductiveDIModule {
         configValues[2] = context.getResources().getInteger(R.integer.levelupvalue);
         configValues[3] = context.getResources().getInteger(R.integer.streakhours);
 
-        IStreakRewardManager rm = new StreakRewardManager(data,sort, taskManager ,configValues);
-        return rm;
+        return new RewardSpenderManager(data, sort, taskManager, configValues);
+    }
+
+    @Singleton
+    @Provides
+    public IStreakRewardManager provideIStreakRewardManager(IRewardSpenderManager spenderManager){
+        return  spenderManager;
     }
 
     @Singleton
@@ -134,6 +163,11 @@ public class ProductiveDIModule {
         return  streak;
     }
 
+    @Singleton
+    @Provides
+    public ICosmeticManager provideICosmeticManager (ICosmeticAdapter newAdapter, IUserManager data){
+        return new CosmeticManager(newAdapter,data);
+    }
 
 
 }

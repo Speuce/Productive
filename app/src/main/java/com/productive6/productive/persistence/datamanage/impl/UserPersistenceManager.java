@@ -2,7 +2,7 @@ package com.productive6.productive.persistence.datamanage.impl;
 
 import com.productive6.productive.services.executor.IRunnableExecutor;
 import com.productive6.productive.objects.User;
-import com.productive6.productive.persistence.access.IUserAccess;
+import com.productive6.productive.persistence.room.access.IUserAccess;
 import com.productive6.productive.persistence.datamanage.IUserPersistenceManager;
 
 import java.util.List;
@@ -46,7 +46,9 @@ public class UserPersistenceManager implements IUserPersistenceManager {
     }
 
     @Override
-    public void updateUser(final User u) {
-        executor.runASync(() -> access.updateUser(u));
+    public void updateUser(final User u, final Runnable after) {
+        executor.runASync(() -> {
+            access.updateUser(u);
+            executor.runSync(after);});
     }
 }

@@ -1,0 +1,13 @@
+# section information
+section:
+  name: Our Demo
+  id: video
+  enable: true
+  weight: 3
+  showOnNavbar: true
+  # Can optionally hide the title in sections
+  # hideTitle: true
+
+# Your Skills.
+# Give a summary of you each skill in the summary section.
+url: "https://www.youtube.com/embed/k1PEaisXUa8"

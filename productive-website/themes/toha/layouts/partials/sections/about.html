@@ -1,0 +1,18 @@
+{{ $sectionID := replace (lower .section.name) " " "-"  }}
+{{ if .section.id }}
+  {{ $sectionID = .section.id }}
+{{ end }}
+
+<div class="fluid-container anchor p-lg-5 about-section" id="{{ $sectionID }}">
+  <div class="row pt-sm-2 pt-md-4 align-self-center">
+      
+    {{ range .topics }}
+    <div class="col-sm-6">
+      <h3 class="p-1">{{ .subject }}</h3>
+      {{ .summary | markdownify}}
+      <hr>
+    </div>
+    {{ end }}
+
+  </div>
+</div>

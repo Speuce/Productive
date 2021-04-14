@@ -1,8 +1,7 @@
 package com.productive6.productive.persistence.datamanage.impl;
 
 import com.productive6.productive.objects.tuples.DayIntTuple;
-import com.productive6.productive.objects.tuples.EpochIntTuple;
-import com.productive6.productive.persistence.access.ITaskStatsticsAccess;
+import com.productive6.productive.persistence.room.access.ITaskStatsticsAccess;
 import com.productive6.productive.persistence.datamanage.IStatisticsDataManager;
 import com.productive6.productive.services.executor.IRunnableExecutor;
 

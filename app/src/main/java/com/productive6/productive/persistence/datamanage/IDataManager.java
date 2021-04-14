@@ -1,8 +1,5 @@
 package com.productive6.productive.persistence.datamanage;
 
-import com.productive6.productive.persistence.access.ITaskAccess;
-import com.productive6.productive.persistence.access.IUserAccess;
-
 /**
  * Interface for classes managing persistent data
  * @author matt

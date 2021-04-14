@@ -1,18 +1,14 @@
 # Group 6
 
-# Productive Vision Statement 
+# Project's Purpose
+Productive is an app that allows the user to track and monitor their productivity using a task system and a difficulty scale. The app will encourage and reward the user by gamifying the tasks that they define for themselves.  These mechanics will create the incentive necessary to encourage the user to keep on schedule, entirely for free.
 
-&emsp; Productive is an app that allows the user to track and monitor their productivity using a task system and a difficulty scale. The app will encourage and reward the user by gamifying the tasks that they define for themselves.  These mechanics will create the incentive necessary to encourage the user to keep on schedule, entirely for free. Most importantly, Productive makes both difficult and mundane tasks fun!  
-
-&emsp; Productive is an app designed for those who may struggle with scheduling and self-motivation, especially students. In these uncertain times, it is more arduous than ever for students to find a way to motivate themselves and stay on task. Productive will provide a satisfying anchor for those busy, forgetful, and easily-distracted students. Students are the largest consumer of games –– among other distractions –– which will expedite their indoctrination into the world of gamified tasks!  
-
-&emsp; Unlike existing productivity apps, Productive will assist the users in the completion of their mundane or difficult tasks, such as doing the dishes or writing an essay through the use of an experience system. Users will be able to attach a visible value to their tasks, and Productive will use these values to assign an experience value as a reward for completing a task. Similar to a video game, a user will use this experience to unlock various cosmetic features for their personalization within the app. This gamifying of tasks will aid the user by making their tasks feel as satisfying as the other distractions available to them. The experience system in Productive will also incentivise users to complete repeated tasks, such as weekly laundry, through the use of ‘streaks’. As the user keeps up with their repeated tasks, they will build a ‘streak’ which will increase their experience gain. These pieces come together to build a cohesive and game-like productivity tracking app.  
-
-&emsp; A growing issue for students in the modern world is procrastination –– the ‘pushing off’ of their schedule, especially given the multitude of distractions available. Productive will encourage users to stay on track with their designed schedule through the use of schedule reminders and experience rewards for completing their tasks on schedule. Users will add and manage tasks to create a schedule to help the users organize their day. Productive will use this schedule to remind users of the tasks that they still need to complete that day, thereby alleviating procrastination caused by distraction or forgetfulness. Users can rest assured that they will be reminded of their tasks, small and large alike, and won’t need to occupy their memory with every menial item on their to-do list.
-
-&emsp; The goal of the app is to reach as many people as possible. As such, the goal of Productive is to achieve 100,000 regular users. The reason we chose this as our success criteria is because the number of total downloads would include many people who download the app without using it regularly, and thus fails to portray the engagement of the user base. A regular user is a user who adds or completes at least one task, a minimum of three days a week. This way, we can objectively measure the usefulness of Productive, instead of its marketing. 
+# How To Run
 
 # Required Documentation
+
+### Vision Statement
+[VISION.md](https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/blob/master/VISION.md)
 
 ### Branching Strategy
 [BranchingStrategy](https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/blob/master/BranchingStratagy.md)
@@ -25,43 +21,68 @@
 
 **Iteration 2:** [Worksheet 2](https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/blob/master/i2_worksheet.md)
 
+**Iteration 3:** [Worksheet 3](https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/blob/master/i3_worksheet.md)
+
+### Retrospective
+[RETROSPECTIVE.md](https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/blob/master/RETROSPECTIVE.md)
+
 # Device
 
 We are using the **Nexus 7 API 30**, with target: **Android 11.0(Google APIs)**.
 
+# Flaky Tests
+## Notification Test
+Our notification test is a textbook example of a flaky test. Sometimes it works, sometimes it doesn't. The reason for this is because in order for the notification to show, you need to EXIT the app. So we had to use another library to EXIT the app and test that the notification is actually sent. Problem is, this test is kinda dependant on your device. Some devices block notifications by default (so the test will fail). Other times, the emulator may have issues with being able to swipe down to see the notification panel (this happened more than once for us), and therefore the system test will fail to open the notification pane, and fail.
+Its a symptom of the device itself.
+If you'd like to test the notification by hand, do the following
+```
+1) Start the app from a fresh install
+2) Tap 'todo' to navigate to the todo list
+3) Tap the 'add task' button to open the task addition popup
+4) tap the switch next to 'due date' to activate the due date
+5) tap 'submit'
+6) exit the app
+7) wait up to one minute, and a notification should appear saying that you have 1 task(s) due today
+```
+
+
 # Known Warnings/Errors
 
 ### Warning: 'Accessing Hidden Field', Error 'Access denied finding property "ro.serialno"'
-Occassionally, when running the application in Android Studio, tens to hundreds of lines of 'Accessing hidden field ...'. This seems to be a result of utilizing Android Studio's built in 'database inspector', rather than the direct result of our code. See here for more info: https://stackoverflow.com/a/66201148/6047183
+Occasionally, when running the application in Android Studio, tens to hundreds of lines of 'Accessing hidden field ...'. This seems to be a result of utilizing Android Studio's built in 'database inspector', rather than the direct result of our code. See here for more info: https://stackoverflow.com/a/66201148/6047183
 
 ### "Failed to choose config with EGL SWAP BEHAVIOR PRESERVED, retrying without"
 Not a result of our code. See: https://stackoverflow.com/a/54917041/6047183.
 
-### Use of @SupressWarning annotation
-Although we do not directly use this annotation in our project, some of the libraries that we use (Hilt and Room) autogenerate class implementations which DO use these annotations. This isn't a direct result of our code.
+### Use of @SuppressWarning annotation
+Although we do not directly use this annotation in our project, some of the libraries that we use (Hilt and Room) auto-generate class implementations which DO use these annotations. This isn't a direct result of our code.
 
 
-# Libaries in Use
-All of these libaries are added using gradle. You (the person trying to run this app in Android Studio) may need to open this gradle file at first and Click 'Sync Now' to have gradle download the required libraries for the project.
-Additionally, some of these libaries generate class implemenations at compile-time, so until you first build the project, there MAY be some apparent red compiler issues. Have no fear, a build shall fix all of this!
+# Libraries in Use
+All of these libraries are added using gradle. You (the person trying to run this app in Android Studio) may need to open this gradle file at first and Click 'Sync Now' to have gradle download the required libraries for the project.
+Additionally, some of these libraries generate class implementations at compile-time, so until you first build the project, there MAY be some apparent red compiler issues. Have no fear, a build shall fix all of this!
 
 ### Room
 &emsp; [Room](https://developer.android.com/jetpack/androidx/releases/room) is an ORM that takes care of our real persistence layer with relative ease. Annotations are used throughout our codebase for integration with room. Although room is android specific, many of the annotations used are _very_ similar to annotations for desktop ORM. Additionally, we added a layer of Interfaces ontop of what is required by room so that we could easily swap out implementations if we so decide to switch libraries.
 
 ### Hilt
-&emsp; We use [Hilt](https://dagger.dev/hilt/) to take care of some of our dependency injection of single-instance classes. Hilt can be used for both android and desktop applications. The annotations @AndroidEntryPoint is specific to the android hilt, but other with all other fields marked with @Inject are platform-inspecific.  
+&emsp; We use [Hilt](https://dagger.dev/hilt/) to take care of some of our dependency injection of single-instance classes. Hilt can be used for both android and desktop applications. The annotations @AndroidEntryPoint is specific to the android hilt, but other with all other fields marked with @Inject are platform non-specific.  
 
 ### Mockito  
-&emsp; We use [Mockito](https://mvnrepository.com/artifact/org.mockito/mockito-core) to create mocks of classes (mostly databases) to allow for easy unit testing of logic layer classes. Mokito is an industry standerd and cross-platform testing framework for java. mock(myClass.class) creates an object that mocks or dummies myClass. Which can be used with .when(method parameters) and .returns() to simulate dependant classes for testing purposes.
+&emsp; We use [Mockito](https://mvnrepository.com/artifact/org.mockito/mockito-core) to create mocks of classes (mostly databases) to allow for easy unit testing of logic layer classes. Mockito is an industry standard and cross-platform testing framework for java. mock(myClass.class) creates an object that mocks or dummies myClass. Which can be used with .when(method parameters) and .returns() to simulate dependant classes for testing purposes.
 
 ### CompactCalendarView
 &emsp; We use [CompactCalendarView](https://github.com/SundeepK/CompactCalendarView), a library specific to android applications, which offers a wide range of features in addition to the default CalendarView. The library allows theming, animations, and adding dots underneath dates as an indication to the user about the presence of tasks on that day.
 
 ### MPAndroidChart
-&emsp; We use [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart), a library specific to android applications, which allows us to display our data in graphs for the user. This library enables lots of customization for how the graphs look and behave, including a little animation we use that is played upon first opening the graph. This Library is entirely front-end in its use, so we expanded our logic layer to include more specific get functions route to accomidate this limitation.
+&emsp; We use [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart), a library specific to android applications, which allows us to display our data in graphs for the user. This library enables lots of customization for how the graphs look and behave, including a little animation we use that is played upon first opening the graph. This Library is entirely front-end in its use, so we expanded our logic layer to include a more specific get functions route to accommodate this limitation.
+
+### UIAutomator
+&emsp; We use [UIAutomator](https://developer.android.com/training/testing/ui-automator), a library specific to android applications, for one specific system test that needs to test *outside* the context of the app itself.
+
 
 # Unit/Integration Tests
-We have our unit tests under the com.productive6.productive (test) foler.
+We have our unit tests under the com.productive6.productive (test) folder.
 Our integration tests are instrumented tests, so they are under the com.productive6.productive (androidTest) folder
 
 Code coverage cannot be obtained normally with instrumented tests in Android Studio, so you will need to go through some extra steps to get coverage of our integration tests:
@@ -79,3 +100,7 @@ Let it do its thing. Then once it's done, you will have to go into file explorer
 Once you do, go to app > build > reports > coverage > debug, and open 'index.html' in your favourite web browser.
 
 There ya go!
+
+## Website
+Website folder: [Productive-website](https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/tree/master/productive-website)  
+The index.html for the website is located: [`./productive-website/public/`](https://code.cs.umanitoba.ca/3350-winter-2021-a01/Productive-6/-/tree/master/productive-website/public)

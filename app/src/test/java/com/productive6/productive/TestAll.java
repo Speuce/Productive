@@ -1,8 +1,12 @@
 package com.productive6.productive;
 
+import com.productive6.productive.logic.rewards.impl.RewardSpenderManager;
 import com.productive6.productive.logic.statstics.impl.StatsManager;
+import com.productive6.productive.unit.CosmeticAdapterTest;
+import com.productive6.productive.unit.CosmeticManagerTest;
 import com.productive6.productive.unit.EventDispatchTest;
 import com.productive6.productive.unit.RewardManagerTest;
+import com.productive6.productive.unit.RewardSpenderManagerTest;
 import com.productive6.productive.unit.StatsManagerTest;
 import com.productive6.productive.unit.StreakManagerTest;
 import com.productive6.productive.unit.TaskManagerTest;
@@ -19,6 +23,7 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+        RewardSpenderManagerTest.class,
         TaskManagerTest.class,
         TitleManagerTest.class,
         EventDispatchTest.class,
@@ -26,7 +31,10 @@ import org.junit.runners.Suite;
         RewardManagerTest.class,
         TaskSorterTest.class,
         StatsManagerTest.class,
-        StreakManagerTest.class
+        StreakManagerTest.class,
+        CosmeticManagerTest.class,
+        CosmeticAdapterTest.class
 })
+
 public class TestAll {
 }

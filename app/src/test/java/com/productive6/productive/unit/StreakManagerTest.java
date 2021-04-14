@@ -10,6 +10,8 @@ import com.productive6.productive.logic.task.ITaskSorter;
 import com.productive6.productive.logic.user.IUserManager;
 import com.productive6.productive.logic.util.DateUtilities;
 import com.productive6.productive.objects.User;
+import com.productive6.productive.objects.enums.Difficulty;
+import com.productive6.productive.objects.enums.Priority;
 import com.productive6.productive.objects.events.task.TaskCompleteEvent;
 import com.productive6.productive.objects.events.user.UserLoadedEvent;
 import com.productive6.productive.objects.Task;
@@ -56,7 +58,7 @@ public class StreakManagerTest {
     public void testStreak(){
 
         for(int i = 0; i < 4; i++) {
-            Task temp = new Task(""+i, 3, 3);
+            Task temp = new Task(""+i,  Priority.LOW, Difficulty.EASY);
             temp.setCompleted(strToDate("2000-01-01 1" + i %10 + ":30"));
             EventDispatch.dispatchEvent(new DummyTaskEvent(temp));
             EventDispatch.dispatchEvent(new TaskCompleteEvent(temp));
@@ -71,12 +73,12 @@ public class StreakManagerTest {
     public void testNotStreak(){
 
         for(int i = 0; i < 4; i++) {
-            Task temp = new Task(""+i, 3, 3);
+            Task temp = new Task(""+i, Priority.LOW, Difficulty.EASY);
             temp.setCompleted(strToDate("2000-01-01 1" + i %10 + ":30"));
             EventDispatch.dispatchEvent(new DummyTaskEvent(temp));
         }
 
-        Task compTask = new Task("COMP", 3, 3);
+        Task compTask = new Task("COMP",  Priority.LOW, Difficulty.EASY);
         compTask.setCompleted(strToDate("2000-01-02 20:30"));
 
         EventDispatch.dispatchEvent(new TaskCompleteEvent(compTask));
@@ -88,22 +90,17 @@ public class StreakManagerTest {
     public void testSuddenStreak(){
 
         for(int i = 0; i < 4; i++) {
-            Task temp = new Task(""+i, 3, 3);
+            Task temp = new Task(""+i,  Priority.LOW, Difficulty.EASY);
             temp.setCompleted(DateUtilities.strToDate("2000-01-01 1" + i %10 + ":30"));
             EventDispatch.dispatchEvent(new DummyTaskEvent(temp));
         }
 
-        Task compTask = new Task("COMP", 3, 3);
+        Task compTask = new Task("COMP",  Priority.LOW, Difficulty.EASY);
         compTask.setCompleted(DateUtilities.strToDate("2000-01-01 20:30"));
 
         EventDispatch.dispatchEvent(new TaskCompleteEvent(compTask));
         assertEquals("Number of coins did not equal 5",5,streakRewardManager.getCoins());
 
-    }
-
-    @Test
-    public void testConst(){
-        assertEquals("Streak const was not 24 hours", 24, streakRewardManager.getStreakConstant());
     }
 
 }

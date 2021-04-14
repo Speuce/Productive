@@ -1,0 +1,63 @@
+# section information
+section:
+  name: Our Post-mortem
+  id: Postmortem
+  enable: true
+  weight: 4
+  showOnNavbar: true
+  template: sections/postmortem
+
+topics:
+  - subject: "What was the overall architecture of your system?"
+    summary: "
+      \n- The **activities** load certain layouts to the screen
+      \n- The **UI adapters** fill the dynamic portions of the layouts
+      \n- The **adapters** get their data from the **logic** layer
+      \n- The **logic** layer processes data from the **persistence** layer
+      \n- And the **persistence** layer exists in the background.
+      \n- **Executors** are in here somewhere, they act as an observer class, triggering things like updates in the **adapters** when new tasks are added to the **persistence** layer.\n"
+
+  - subject: "Can you draw any conclusions from what you’ve done?"
+    summary: "5 chefs don’t make the food arrive 5x faster. The communication and coordination overhead tax the performance of a team.  \n
+      But with the coordination and communication prowess of our team, we saw the great potential for development speed improvements that come from working as a team."
+
+  - subject: "What did you learn about team or large project development? What will you start doing, keep doing, or stop doing next time?"
+    summary: "Commit messages are important! It saves so much time if you can tell at a glance what part of what feature came from where."
+
+  - subject: "How did the project change from your initial (iteration 0) vision or stories, or did it work out as predicted?"
+    summary: "The app came out fantastic. The scope of the app was just right, as to not need many features dropped. And the product developed into a real, bug free(to our knowledge), productivity tracking app."
+
+  - subject: "Did any features work better than expected?"
+    summary: "The features surrounding the core functionality of the app, i.e. the task, and how it gives users exp points and coins worked really well. This can also be chained to have “streaks” of completed tasks for bonus exp. "
+
+  - subject: "What went right in the development process?"
+    summary: "
+      \n- Our estimates were pretty good. When either the time committed or the time estimated were over the other, it was still by a small margin
+      \n- We planned our features well, to the extent that we didn’t have to cut any features from the final app "
+
+  - subject: "What went wrong in the development process?"
+    summary: "Because of time constraints, we were unable to design our own pixel art for the items users can buy with the coins they earn"
+
+  - subject: "What would you do differently, if you had the chance to start over?"
+    summary: "
+    \n- Spend more time initially figuring out which parts of the project everyone wants/prefers to work on. The best development happens when everyone gets to stuff they’re passionate about.
+    \n- Focus more on communication. Although we eventually got the communication down it took a little while. Good communication is the lifeblood of any significant team project."
+
+  - subject: "Are there any outstanding bugs?"
+    summary: "No outstanding bugs were found from our testing/usage. The only potential issue, is one flaky system test"
+
+  - subject: "Are there any particular design smells, or brilliant design decisions?"
+    summary: "We made an event dispatching/listener system and that proved incredibly helpful in multiple components of the project. Every class could talk to one shared instance of an EventDispatch class, and either subscribe themselves to a certain event list, or send out a certain event to all classes that were listening. This is based off the widely-known observer pattern."
+
+  - subject: "What took the most time? The least? Any surprises?"
+    summary: "It took significantly longer than expected to integrate the ORM in a way that would technically allow a swapping of ORM libraries. Initially, we thought this would be fairly straightforward, but unfortunately this took much, much longer and involved making interfaces on top of interfaces, and multiple implementations of classes that uses these interfaces. It was a bit of a surprise with how much effort that took."
+
+  - subject: "Are you using any technologies other than what was required (e.g. JMock, GUI builders, etc.)?"
+    summary: "
+    \n- Room - Room is an ORM that takes care of our real persistence layer with relative ease. Annotations are used throughout our codebase for integration with room. Although room is android specific, many of the annotations used are _very_ similar to annotations for desktop ORM. Additionally, we added a layer of Interfaces ontop of what is required by room so that we could easily swap out implementations if we so decide to switch libraries.
+    \n- Hilt - We use Hilt to take care of some of our dependency injection of single-instance classes. Hilt can be used for both android and desktop applications. The annotations @AndroidEntryPoint is specific to the android hilt, but others with all other fields marked with @Inject are platform non-specific.
+    \n- Mockito  -  We use Mockito to create mocks of classes (mostly databases) to allow for easy unit testing of logic layer classes. Mockito is an industry standard and cross-platform testing framework for java. mock(myClass.class) creates an object that mocks or dummies myClass. Which can be used with .when(method parameters) and .returns() to simulate dependent classes for testing purposes.
+    \n- CompactCalendarView - We use CompactCalendarView,  a library specific to android applications, which offers a wide range of features in addition to the default CalendarView. The library allows theming, animations, and adding dots underneath dates as an indication to the user about the presence of tasks on that day.
+    \n- MPAndroidChart - We use MPAndroidChart, a library specific to android applications, which allows us to display our data in graphs for the user. This library enables lots of customization for how the graphs look and behave, including a little animation we use that is played upon first opening the graph. This Library is entirely front-end in its use, so we expanded our logic layer to include a more specific get functions route to accommodate this limitation.
+    \n- UIAutomator - We use UIAutomator , a library specific to android applications, for one specific system test that needs to test outside the context of the app itself.
+    "

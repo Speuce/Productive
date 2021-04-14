@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.ImageView;
-
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -20,7 +18,6 @@ import com.productive6.productive.R;
 import com.productive6.productive.logic.exceptions.ObjectFormatException;
 import com.productive6.productive.logic.task.ITaskManager;
 import com.productive6.productive.logic.util.CalenderUtilities;
-import com.productive6.productive.logic.util.TaskUtilities;
 import com.productive6.productive.objects.Task;
 import com.productive6.productive.objects.events.ProductiveEventHandler;
 import com.productive6.productive.objects.events.ProductiveListener;
@@ -55,13 +52,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
      * Holds the recyclerView view and it's components
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
-        //        private final TextView id;
         private final TextView taskName;
         private final TextView taskPriority;
         private final TextView taskDifficulty;
         private final TextView taskDueDate;
         private final Button taskComplete;
         private final TextView dueText;
+        private final TextView taskCategory;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -73,22 +70,21 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
             Button editTask = itemView.findViewById(R.id.editButton);
             dueText = itemView.findViewById(R.id.dueText);
 
-            //id = itemView.findViewById(R.id.taskId);
-            //initPopupWindow();
+            taskCategory = itemView.findViewById(R.id.taskCategoryTextView);
 
             //listener on 'complete'
             taskComplete.setOnClickListener(v -> {
                 try {
                     taskManager.completeTask(tasks.get(getAdapterPosition()));
                     setAnimation(itemView, getAdapterPosition());
-                    if(getItemCount() == 1){// If item being completed is the last in the list.
-                        Spinner sort_by = (Spinner)rootView.findViewById(R.id.sortTasksDropdown);
-                        if(sort_by != null){
+                    if (getItemCount() == 1) { // If item being completed is the last in the list.
+                        Spinner sort_by = (Spinner) rootView.findViewById(R.id.sortTasksDropdown);
+                        if (sort_by != null) {
                             sort_by.setEnabled(false);
                             sort_by.setClickable(false);
                         }
                     }
-                }catch(ObjectFormatException e){
+                } catch (ObjectFormatException e) {
                     taskComplete.setTextColor(0xFF00000);
                     taskComplete.setText("There was an issue with this task..");
                 }
@@ -137,8 +133,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.taskName.setText(tasks.get(position).getTaskName());
-        holder.taskPriority.setText(TaskUtilities.getPriorityInString(tasks.get(position)));
-        holder.taskDifficulty.setText(TaskUtilities.getDifficultyInString(tasks.get(position)));
+        holder.taskPriority.setText(tasks.get(position).getPriority().getString());
+        holder.taskDifficulty.setText(tasks.get(position).getDifficulty().getString());
+        holder.taskCategory.setText(tasks.get(position).getCategory().getString());
         if (tasks.get(position).getDueDate() != null) {
             holder.taskDueDate.setVisibility(View.VISIBLE);
             holder.dueText.setVisibility(View.VISIBLE);
