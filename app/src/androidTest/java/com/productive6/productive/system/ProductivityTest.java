@@ -75,13 +75,14 @@ public class ProductivityTest {
                                 3),
                         isDisplayed()));
         materialButton.perform(click());
+
         //switch between date ranges
         ViewInteraction textView = onView(
-                allOf(withId(android.R.id.text1), withText("7 days"),
+                allOf(withId(android.R.id.text1), withText("7 Days"),
                         withParent(allOf(withId(R.id.dateRangeSelection),
                                 withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
                         isDisplayed()));
-        textView.check(matches(withText("7 days")));
+        textView.check(matches(withText("7 Days")));
 
         ViewInteraction appCompatSpinner = onView(
                 allOf(withId(R.id.dateRangeSelection),
@@ -102,11 +103,11 @@ public class ProductivityTest {
 
         //switch between date ranges again
         ViewInteraction textView2 = onView(
-                allOf(withId(android.R.id.text1), withText("14 days"),
+                allOf(withId(android.R.id.text1), withText("14 Days"),
                         withParent(allOf(withId(R.id.dateRangeSelection),
                                 withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
                         isDisplayed()));
-        textView2.check(matches(withText("14 days")));
+        textView2.check(matches(withText("14 Days")));
 
         ViewInteraction appCompatSpinner2 = onView(
                 allOf(withId(R.id.dateRangeSelection),
@@ -127,11 +128,11 @@ public class ProductivityTest {
 
         //switch between date ranges again
         ViewInteraction textView3 = onView(
-                allOf(withId(android.R.id.text1), withText("30 days"),
+                allOf(withId(android.R.id.text1), withText("30 Days"),
                         withParent(allOf(withId(R.id.dateRangeSelection),
                                 withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
                         isDisplayed()));
-        textView3.check(matches(withText("30 days")));
+        textView3.check(matches(withText("30 Days")));
 
         //Assert stats display exists on the page
         ViewInteraction recyclerView = onView(
